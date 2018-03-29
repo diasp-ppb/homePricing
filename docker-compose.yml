@@ -1,0 +1,41 @@
+version: '2.1'
+
+services:
+  postgres:
+    build: ./services/database
+    volumes:
+      - /var/lib/postgresql
+    environment: 
+      POSTGRES_PASSWORD: ldso
+      POSTGRES_USER: ldso-master
+      POSTGRES_DB: postgres
+  r:
+    build: ./services/r/random
+    volumes:
+      - ./services/r:/usr/src/app
+  node:
+    build: .
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    environment:
+      NODE_ENV: production
+      DATABASE_URL: postgres://ldso-master:ldso@postgres:5432/postgres
+      R_URL: 'http://r:4321'
+    ports:
+      - "80:3000"
+    depends_on:
+      - postgres
+      - r
+  pgadmin:
+    links:
+      - postgres:postgres
+    image: fenglc/pgadmin4
+    environment: 
+      DEFAULT_USER: ldso-master
+      DEFAULT_PASSWORD: ldso
+    volumes:
+      - /data/pgadmin:/root/.pgadmin
+    ports:
+      - "5050:5050"
+
