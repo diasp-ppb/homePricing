@@ -1,4 +1,4 @@
-
+	
 # Home Pricing
 
 
@@ -11,7 +11,12 @@
 
 3. Create Emulator and install android SDK https://facebook.github.io/react-native/docs/getting-started.html
 
-## Docker 
+## Docker Intall
+
+#### UBUNTO
+
+1. https://www.digitalocean.com/community/tutorials/como-instalar-e-usar-o-docker-no-ubuntu-16-04-pt
+
 
 ### Mobile 
 
