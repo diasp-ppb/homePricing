@@ -2,8 +2,16 @@
 # Home Pricing
 
 
+## Docker 
 
-## Instalation without docker
+### UBUNTU
+
+1. https://www.digitalocean.com/community/tutorials/como-instalar-e-usar-o-docker-no-ubuntu-16-04-pt
+
+
+## Mobile 
+
+### Instalation without docker
 
 1. Download Android Studio (https://developer.android.com/studio/index.html)
 
@@ -15,22 +23,31 @@
     ```
     $ sh install.sh
     ```
+### To Run
 
-## Docker Install
-
-#### UBUNTU
-
-1. https://www.digitalocean.com/community/tutorials/como-instalar-e-usar-o-docker-no-ubuntu-16-04-pt
+ * Start android Emulator
+ * Run $ react-native start
+ * Run $ react-native run-Android
 
 
-### Mobile 
+### Instalation with docker
+
+ 1. Run 
+    ```
+    $ cd mobile
+    $ yarn
+    $ sh run-docker.sh
+    ```
+    note: This will take some time :)
 
 #### Connect to container 
- * $ homepricing/scripts/react-native-container.sh 
- 
+ ```
+   $ cd mobile/
+   $ sh react-native-container.sh 
+ ```
 #### Install missing packages [If needed]
 ```
-dev> cd node_modules/react-native/
+dev> cd mobile/node_modules/react-native/
 dev> yarn
 ```
 
@@ -57,7 +74,7 @@ You will also need to access `Dev Settings > Debug server host & port for device
 and enter `localhost:8081`.
 
 
-## Install udev rules
+#### Install udev rules
 
 On your host system, you'll need to install the android udev rules if you want to connect your phone or tablet via USB and deploy the react native app directly to it. You can get the rules from http://source.android.com/source/51-android.rules and you can install them as follows:
 
@@ -66,13 +83,17 @@ wget -S -O - http://source.android.com/source/51-android.rules | sed "s/<usernam
 sudo udevadm control --reload-rules
 ```
 
-## To Run
 
- * Start android Emulator
- * Run $ react-native start
- * Run $ react-native run-Android
-
-
-## Refresh App 
+#### Refresh App 
    
  * Double-tap 'R'
+
+
+
+## Server
+ * Run 
+	```
+	$ cd server
+	$ docker-compose up
+	```
+
