@@ -11,6 +11,11 @@
 
 3. Create Emulator and install android SDK https://facebook.github.io/react-native/docs/getting-started.html
 
+4. Run
+    ```
+    $ sh install.sh
+    ```
+
 ## Docker Install
 
 #### UBUNTU
