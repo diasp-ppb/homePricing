@@ -67,7 +67,6 @@ ENV USERNAME dev
 
 RUN adduser --disabled-password --gecos '' $USERNAME
 
-
 # Add Tini
 ENV TINI_VERSION v0.10.0
 ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /tini
@@ -82,5 +81,6 @@ WORKDIR /home/$USERNAME/app
 # Tell gradle to store dependencies in a sub directory of the android project
 # this persists the dependencies between builds
 ENV GRADLE_USER_HOME /home/$USERNAME/app/android/gradle_deps
+
 
 ENTRYPOINT ["/tini", "--"]
