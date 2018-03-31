@@ -25,6 +25,8 @@ class ImovirtualCrawler(scrapy.Spider):
 
         titleSelector = response.css('.section-offer-title')
         parametersSelector = response.css('.section-offer-params .params-list li')
+        descriptionSelector = response.css('.section-offer-text div.text-contents')
+        mapSelector = response.css('.section-offer-map div.ad-map')
 
         # Title parameters = Title, Zone
         title = titleSelector.css('h1[itemprop="name"]::text').extract_first()
@@ -37,13 +39,20 @@ class ImovirtualCrawler(scrapy.Spider):
         secondaryLabels = self.formatLabels(parametersSelector.css('.sub-list li strong::text').extract())
         secondaryParameters = parametersSelector.css('.sub-list li::text').extract()
 
-        # Characteristics
-        characteristics = parametersSelector.css('.dotted-list li::text').extract()
-
         print(secondaryLabels)
         print(secondaryParameters)
 
+        # Characteristics
+        characteristics = parametersSelector.css('.dotted-list li::text').extract()
 
+        # Description
+        description = descriptionSelector.css('div[itemprop="description"]').extract() #TODO Criar um parser de HTML para texto
+
+        # Address
+        address = mapSelector.css('div.ad-map-location-holder h4.ad-map-location::text').extract_first()
+
+        # Web page
+        webPage = response.url
 
         result = {
             'title': title,
@@ -51,7 +60,10 @@ class ImovirtualCrawler(scrapy.Spider):
             'price': mainParameters[0],
             'area': mainParameters[1],
             'tipology': mainParameters[2],
-            'characteristics': characteristics
+            'characteristics': characteristics,
+            'description': description,
+            'address' : address,
+            'webpage' : webPage
         }
         for i in range(0, len(secondaryLabels)):
             result[secondaryLabels[i]] = secondaryParameters[i]
@@ -73,6 +85,6 @@ class ImovirtualCrawler(scrapy.Spider):
             elif label == u"Negociável:":
                 result.append("negotiable")
             elif label == u"Área bruta (m²):":
-                result.append("bruteArea")
+                result.append("grossArea")
         
         return result;

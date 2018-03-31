@@ -102,3 +102,19 @@ sudo udevadm control --reload-rules
 	$ cd crawler
 	$ sh run-crawler.sh
 	```
+ * JSON retrieved by the crawler
+   * `title` : Title of the advertisement.
+   * `zone` : Locality and District where the property is located.
+   * `price` : Price of the property *(€)*.
+   * `area` : Useful area of the property *(m²)*.
+   * `tipology` : Type of property *(T1, T2, T3, ...)*.
+   * `characteristics` : List of features of the property *(ex: Balcony, Central Heating, Lift, etc.)*.
+   * `description` : Description of the property, written by the owner.
+   * `address` : Address of the property.
+   * `webpage` : Original webpage of the advertisement.
+   * `year` : Year of construction
+   * `energyCertificate` : Degree of energetical efficiency *(ex: A+, A, B, ...)*.
+   * `condition` : Conservation state of the property *(ex: Used, Renewed, In construction)*
+   * `bathrooms` : Number of bathrooms
+   * `negotiable` : Indicates if the price is negotiable or not
+   * `grossArea` : Gross area of the property *(m²)*
