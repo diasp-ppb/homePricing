@@ -96,4 +96,10 @@ sudo udevadm control --reload-rules
 	$ cd server
 	$ docker-compose up
 	```
-
+### Crawler
+ * Run (in the server folder)
+	```
+	$ cd crawler
+	$ rm imovirtual.json   #To remove the previous file, if it exists
+	$ scrapy crawl imovirtual -o imovirtual.json
+	```
