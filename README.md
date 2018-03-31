@@ -2,16 +2,11 @@
 # Home Pricing
 
 
-## Docker 
-
-### UBUNTU
+## Docker Ubunto Instalation
 
 1. https://www.digitalocean.com/community/tutorials/como-instalar-e-usar-o-docker-no-ubuntu-16-04-pt
 
 
-## To Check Containers Available
-  
-   $ docker ps -a
 
 # [1] Mobile Docker Instalation
 
