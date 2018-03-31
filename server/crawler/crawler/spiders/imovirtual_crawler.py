@@ -22,36 +22,46 @@ class ImovirtualCrawler(scrapy.Spider):
         yield response.follow(advertisementPage, self.parseAdvertisement)
 
     def parseAdvertisement(self, response):
-        mainParametersSelector = response.css('.section-offer-params .params-list li .main-list')
-        secondaryParametersSelector = response.css('.section-offer-params .params-list li .sub-list')
 
-        mainParameters = mainParametersSelector.css('li span strong::text').extract()
-        secondaryParameters = secondaryParametersSelector.css('li::text').extract()
-        secondaryLabelsUnformatted = secondaryParametersSelector.css('li strong::text').extract()
-        print(secondaryLabelsUnformatted)
-        print(self.formattedLabels)
-        secondaryLabels = self.formattedLabels(secondaryParametersSelector.css('li strong::text').extract())
+        titleSelector = response.css('.section-offer-title')
+        parametersSelector = response.css('.section-offer-params .params-list li')
+
+        # Title parameters = Title, Zone
+        title = titleSelector.css('h1[itemprop="name"]::text').extract_first()
+        zone = titleSelector.css('p[itemprop="address"]::text').extract_first() #TODO Extrair a freguesia e o distrito
+
+        # Main parameters = Price, Useful Area and Tipology
+        mainParameters = parametersSelector.css('.main-list li span strong::text').extract()
+
+        # Secondary Parameters = Brute Area, Energy Certificate, Construction Year, Condition, No. Bathrooms
+        secondaryLabels = self.formatLabels(parametersSelector.css('.sub-list li strong::text').extract())
+        secondaryParameters = parametersSelector.css('.sub-list li::text').extract()
+
+        # Characteristics
+        characteristics = parametersSelector.css('.dotted-list li::text').extract()
+
         print(secondaryLabels)
         print(secondaryParameters)
 
+
+
         result = {
+            'title': title,
+            'zone' : zone,
             'price': mainParameters[0],
             'area': mainParameters[1],
-            'tipology': mainParameters[2]
+            'tipology': mainParameters[2],
+            'characteristics': characteristics
         }
-
         for i in range(0, len(secondaryLabels)):
             result[secondaryLabels[i]] = secondaryParameters[i]
         
         print(result)
         yield result
 
-    def formattedLabels(self, parameters = []):
-        print(parameters)
+    def formatLabels(self, parameters = []):
         result = []
-        print("Printing labels")
         for label in parameters:
-            print(label)
             if label == u"Ano de construção:":
                 result.append("year")
             elif label == u"Certificado Energético:":
@@ -65,6 +75,4 @@ class ImovirtualCrawler(scrapy.Spider):
             elif label == u"Área bruta (m²):":
                 result.append("bruteArea")
         
-        print("Printing result")
-        print(result)
         return result;

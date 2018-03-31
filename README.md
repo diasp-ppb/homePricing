@@ -100,6 +100,5 @@ sudo udevadm control --reload-rules
  * Run (in the server folder)
 	```
 	$ cd crawler
-	$ rm imovirtual.json   #To remove the previous file, if it exists
-	$ scrapy crawl imovirtual -o imovirtual.json
+	$ sh run-crawler.sh
 	```
