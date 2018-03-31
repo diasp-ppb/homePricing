@@ -13,7 +13,7 @@
   
    $ docker ps -a
 
-# [1] "Mobile" Docker Instalation
+# [1] Mobile Docker Instalation
 
  1. Run cmd
     ```
@@ -68,16 +68,14 @@ dev> yarn
 	$ docker ps -a
 
 
-### Connect to Containers
+### Connect to a certain Container
 
 	// copy container ID
 
 	$ docker exec -t -i CONTAINER_ID /bin/bash
 
 
-### Stop containers
-
-	$ docker ps -a
+### Stop a certain Container
 
 	// copy container ID
 
