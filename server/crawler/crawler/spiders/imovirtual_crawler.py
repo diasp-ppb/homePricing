@@ -39,9 +39,6 @@ class ImovirtualCrawler(scrapy.Spider):
         secondaryLabels = self.formatLabels(parametersSelector.css('.sub-list li strong::text').extract())
         secondaryParameters = parametersSelector.css('.sub-list li::text').extract()
 
-        print(secondaryLabels)
-        print(secondaryParameters)
-
         # Characteristics
         characteristics = parametersSelector.css('.dotted-list li::text').extract()
 
