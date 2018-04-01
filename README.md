@@ -96,6 +96,7 @@ sudo udevadm control --reload-rules
 	$ cd server
 	$ docker-compose up
 	```
+
 ### Crawler
  * Run (in the server folder)
 	```
