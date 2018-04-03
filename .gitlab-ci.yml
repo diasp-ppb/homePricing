@@ -1,0 +1,12 @@
+before_script:
+#  - 
+
+stages:
+  - build
+#  - test
+#  - deploy
+
+preparation-job:
+  stage: build
+  script: 
+    - ls
