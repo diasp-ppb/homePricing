@@ -16,4 +16,4 @@ build-mobile:
     - cd mobile/
     - npm install yarn
     - yarn
-    - sudo sh run-docker.sh
+    - sh run-docker.sh
