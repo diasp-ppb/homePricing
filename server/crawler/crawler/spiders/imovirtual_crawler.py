@@ -16,10 +16,9 @@ class ImovirtualCrawler(scrapy.Spider):
         print("\n\nStarted parse\n")
         listing = response.css('div.listing');
         advertisements = response.css('div.listing .row')[0].css('article');
-        firstAdvertisement = advertisements[0];
-        advertisementPage = firstAdvertisement.xpath('@data-url').extract_first()
-        print(advertisementPage)
-        yield response.follow(advertisementPage, self.parseAdvertisement)
+        for advertisement in advertisements:
+            advertisementPage = advertisement.xpath('@data-url').extract_first()
+            yield response.follow(advertisementPage, self.parseAdvertisement)
 
     def parseAdvertisement(self, response):
 
