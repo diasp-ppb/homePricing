@@ -8,6 +8,8 @@ stages:
 
 build-mobile:
   stage: build
+  before_script:
+    - npm install --progress=false
   script: 
     - cd mobile/
     - npm install yarn
