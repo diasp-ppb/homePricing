@@ -6,7 +6,10 @@ stages:
 #  - test
 #  - deploy
 
-preparation-job:
+build-mobile:
   stage: build
   script: 
-    - ls
+    - cd mobile/
+    - npm install yarn
+    - yarn
+    - sudo sh run-docker.sh
