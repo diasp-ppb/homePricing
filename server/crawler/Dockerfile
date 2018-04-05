@@ -1,5 +1,7 @@
 FROM debian:stretch
 
+WORKDIR /usr/src/app
+
 RUN apt-get update && \
 	apt-get install --assume-yes --no-install-recommends \
 		gcc \
@@ -18,5 +20,7 @@ RUN pip install --upgrade pip && \
 		setuptools \
 		wheel && \
 	pip install --upgrade scrapy
+
+RUN pip install pymongo
 
 CMD ["scrapy", "shell", "--nolog"]

@@ -10,8 +10,12 @@ services:
    crawler:
     container_name: crawler
     build: ./crawler
+    tty: true
+    stdin_open: true
     depends_on: 
     - mongodb
+    volumes:
+    - ./crawler/:/usr/src/app/
 
    api:
     command: npm run dev
