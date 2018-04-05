@@ -8,4 +8,10 @@ const { jwtExpirationInterval } = require('../../config/vars');
 
 
 // Send query to receive data
-exports.houses = (req, res) => res.json("OLA");
+exports.houses = (req, res) => {
+  try {
+  	res.json("RECEIVED")
+  } catch (error) {
+    next(User.checkDuplicateEmail(error));
+  }
+};
