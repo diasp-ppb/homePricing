@@ -8,7 +8,7 @@ stages:
 #  - test
 #  - deploy
 
-#build-image-mobile-staging:
+# build-image-mobile-staging:
 #  only:
 #    - CI # Mudar para a branch development
 #  image: docker:latest
@@ -24,6 +24,17 @@ stages:
 #    - docker build -t registry.gitlab.com/audere/team5c/homepricing/staging/mobile:latest .
 #    - docker push registry.gitlab.com/audere/team5c/homepricing/staging/mobile:latest
 
+# build-mobile-staging:
+#   only:
+#     - CI # Mudar para a branch development
+#   stage: build
+#   before_script:
+#     - npm install --progress=false
+#   script: 
+#     - cd mobile/
+#     - npm install yarn
+#     - yarn
+
 build-mobile-staging:
   only:
     - CI # Mudar para a branch development
@@ -31,10 +42,6 @@ build-mobile-staging:
   image: docker:latest
   services:
     - docker:dind
-  before_script:
-    - npm install --progress=false
   script: 
     - cd mobile/
-    - npm install yarn
-    - yarn
     - sh run-docker.sh
