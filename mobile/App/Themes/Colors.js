@@ -20,8 +20,6 @@ const DeloittePrimary = {
   coolGray7: '#97999B',
   coolGray9: '#75787B',
   coolGray11:'#53565A',
-
-
 };
 
 const DeloitteSecondary = {
