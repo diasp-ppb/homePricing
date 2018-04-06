@@ -54,9 +54,12 @@ build-server:
     - master
     - development
   stage: build
+  image: docker:latest
+  services:
+    - docker:dind
   script:
     - cd server/
-    - apt install docker-compose
-    - docker-compose up
+    - docker build
+    - docker start
 
   
