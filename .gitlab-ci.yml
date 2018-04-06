@@ -50,16 +50,18 @@ build-mobile:
 
 build-server:
   only:
-    - CI
+    - CI #tirar
     - master
     - development
   stage: build
   image: docker:latest
   services:
     - docker:dind
+  before_script:
+    - apk add --no-cache py-pip
+    - pip install docker-compose
   script:
     - cd server/
-    - docker build
-    - docker start
+    - docker-compose up
 
   
