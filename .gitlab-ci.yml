@@ -63,5 +63,6 @@ build-server:
   script:
     - cd server/
     - docker-compose up
+    - docker-compose stop
 
   
