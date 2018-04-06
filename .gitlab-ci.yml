@@ -35,9 +35,11 @@ stages:
 #     - npm install yarn
 #     - yarn
 
-build-mobile-staging:
+build-mobile:
   only:
-    - CI # Mudar para a branch development
+    - CI # Tirar
+    - master
+    - development
   stage: build
   image: docker:latest
   services:
@@ -45,3 +47,15 @@ build-mobile-staging:
   script: 
     - cd mobile/
     - sh run-docker.sh
+
+build-server:
+  only:
+    - CI
+    - master
+    - development
+  stage: build
+  script:
+    - cd server/
+    - docker-compose up
+
+  
