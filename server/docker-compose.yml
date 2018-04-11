@@ -10,13 +10,19 @@ services:
    crawler:
     container_name: crawler
     build: ./crawler
+    tty: true
+    stdin_open: true
     depends_on: 
     - mongodb
+    volumes:
+    - ./crawler/:/usr/src/app/
 
    api:
-    command: yarn dev
+    command: npm run dev
     container_name: api
-    build: ./api
+    build:
+        context: ./api/
+        dockerfile: ./Dockerfile
     environment: 
     - MONGO_URI=mongodb://mongodb:27017/
     ports:
@@ -24,7 +30,7 @@ services:
     depends_on: 
     - mongodb
     volumes:
-    - .:/usr/src/app
+    - ./api/:/usr/src/app
     - /usr/src/app/node_modules/
     
 

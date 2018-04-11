@@ -2,64 +2,79 @@
 # Home Pricing
 
 
-## Docker 
-
-### UBUNTU
+## Docker Ubunto Instalation
 
 1. https://www.digitalocean.com/community/tutorials/como-instalar-e-usar-o-docker-no-ubuntu-16-04-pt
 
 
-## Mobile 
 
-### Instalation without docker
+# [1] Mobile Docker Instalation
 
-1. Download Android Studio (https://developer.android.com/studio/index.html)
-
-2. Instalation guide (https://developer.android.com/studio/install.html)
-
-3. Create Emulator and install android SDK https://facebook.github.io/react-native/docs/getting-started.html
-
-4. Run
-    ```
-    $ sh install.sh
-    ```
-### To Run
-
- * Start android Emulator
- * Run $ react-native start
- * Run $ react-native run-Android
-
-
-### Instalation with docker
-
- 1. Run 
+ 1. Run cmd
     ```
     $ cd mobile
+    $ npm install yarn
     $ yarn
-    $ sh run-docker.sh
+    $ sudo sh run-docker.sh
     ```
     note: This will take some time :)
 
-#### Connect to container 
+### Connect to "Mobile" container 
  ```
    $ cd mobile/
-   $ sh react-native-container.sh 
+   $ sudo sh react-native-container.sh 
+   
+   // To exit container
+   $ exit 
  ```
-#### Install missing packages [If needed]
+
+### Run React-Native Inside "Mobile" Container
+
+Inside container:
+```
+dev> adb reverse tcp:8081 tcp:8081 # CONNECT TO PHONE!you'll need android > 5.1 for this 
+
+dev> react-native start > react-start.log 2>&1 & dev> react-native android
+dev> react-native run-android
+```
+
+### Install missing packages [If needed]
 ```
 dev> cd mobile/node_modules/react-native/
 dev> yarn
 ```
 
-#### Run project
 
-Inside container:
-```
-dev> adb reverse tcp:8081 tcp:8081 # you'll need android > 5.1 for this
-dev> react-native start > react-start.log 2>&1 &
-dev> react-native android
-dev> react-native run-android
-```
+# [2] Server Docker Launch
+
+### Install Docker Compose
+    
+     $ sudo apt install docker-compose
+
+### Run Crawler - Server - Mongo Containers
+ * Run 
+	```
+	$ cd server
+	$ sudo docker-compose up
+	```
+
+### List Container's ID's
+	
+	$ docker ps -a
+
+
+### Connect to a certain Container
+
+	// copy container ID
+
+	$ docker exec -t -i CONTAINER_ID /bin/bash
+
+
+### Stop a certain Container
+
+	// copy container ID
+
+	$ docker stop my_containerID
 
 #### Hot reload
 
@@ -89,13 +104,25 @@ sudo udevadm control --reload-rules
  * Double-tap 'R'
 
 
+### Instalation without docker
 
-## Server
- * Run 
-	```
-	$ cd server
-	$ docker-compose up
-	```
+1. Download Android Studio (https://developer.android.com/studio/index.html)
+
+2. Instalation guide (https://developer.android.com/studio/install.html)
+
+3. Create Emulator and install android SDK https://facebook.github.io/react-native/docs/getting-started.html
+
+4. Run
+    ```
+    $ sh install.sh
+    ```
+### To Run without Docker
+
+ * Start android Emulator
+ * Run $ react-native start
+ * Run $ react-native run-Android
+
+
 
 ### Crawler
  * Run (in the server folder)
