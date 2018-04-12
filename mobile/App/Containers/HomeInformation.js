@@ -10,7 +10,6 @@ import { Container, Header, Body, Title, Content, Text, Button, Fab, Icon, Actio
 import styles from './Styles/LaunchScreenStyles'
 
 
-
 export default class LaunchScreen extends Component {
   constructor(props) {
     super(props);
@@ -27,7 +26,12 @@ export default class LaunchScreen extends Component {
         </Header>
         
         <View>
-         
+          {/*<Image source={Images.background} style={styles.backgroundImage} resizeMode='stretch' />*/} 
+          <Image 
+            style={{width: 66, height: 78}}
+            source={Images.house} style={styles.house} 
+          />
+          
         </View>
        
       </Container>
