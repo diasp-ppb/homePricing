@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import { View, Image, TouchableOpacity } from 'react-native'
 
 // Native Base
-import { Container, Header, Body, Title, Content, Text, Icon, Item, Input, Segment, Button, List, ListItem } from 'native-base'
+import { Container, Header, Left, Right, Body, Title, Content, Button, Text, Icon, Item, Input, Segment, Card, CardItem } from 'native-base'
 
 // Styles
 import styles from './Styles/SearchResultsStyles'
@@ -12,9 +12,11 @@ import styles from './Styles/SearchResultsStyles'
 let res = []
 for (let i = 0; i < 10; i++) {
   res[i] = {
+    numComm: 125 + i,
+    price: '10.000€',
     address: 'Address #' + i,
-    description: 'A house that ... # ' + i,
-    imageURL: 'https://ava.epdonline.com.br/_arquivos_fck/escritorio-advogado.jpg'
+    description: 'House #' + i,
+    imageURL: 'https://appsisecommerces3.s3.amazonaws.com/clientes/cliente7884/produtos/17230/Z21454090411.jpg'
   }
 }
 
@@ -37,18 +39,40 @@ export default class LaunchScreen extends Component {
             <Text>Mapa</Text>
           </Button>
         </Segment>
-        <Content>
-          <List dataArray={res}
-            renderRow={(item) =>
-              <ListItem>
-                <Image source={Images.logo} style={styles.thumbnail} />
-                <Body>
-                  <Text>{ item.description }</Text>
-                  <Text note>{ item.address }</Text>
-                </Body>
-              </ListItem>
-            }>
-          </List>
+        <Content padder style={{ marginBottom: 15 }}>
+          {
+            res.map((item, index)=>{
+              return (
+                <Card key={index}>
+                  <CardItem>
+                    <Left>
+                      <Body>
+                        <Text>{item.description}</Text>
+                        <Text style={styles.address}>
+                          <Icon ios={'ios-pin'} android={'md-pin'} style={styles.address} /> {item.address}
+                        </Text>
+                      </Body>
+                    </Left>
+                  </CardItem>
+                  <CardItem cardBody>
+                    <Image source={{ uri: item.imageURL }} style={{ height: 200, width: null, flex: 1 }}/>
+                  </CardItem>
+                  <CardItem>
+                    <Left>
+                      <Text style={styles.info}>
+                        <Icon ios={'ios-cash'} android={'md-cash'} style={styles.info} /> {item.price}
+                      </Text>
+                    </Left>
+                    <Right>
+                      <Text style={styles.info}>
+                        <Icon ios={'ios-chatbubbles'} android={'md-chatbubbles'} style={styles.info} /> {item.numComm}
+                      </Text>
+                    </Right>
+                  </CardItem>
+                </Card>
+              )
+            })
+          }
         </Content>
       </Container>
     )

@@ -6,5 +6,13 @@ export default StyleSheet.create({
     width: 100,
     height: 100,
     resizeMode: 'contain'
+  },
+  address: {
+    color: 'gray',
+    fontSize: 13.5
+  },
+  info: {
+    fontSize: 15,
+    color: 'black'
   }
 })
