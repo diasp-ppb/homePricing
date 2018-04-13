@@ -3,16 +3,17 @@ import { Metrics, ApplicationStyles } from '../../Themes/'
 
 export default StyleSheet.create({
   ...ApplicationStyles.screen,
-  container: {
-    paddingBottom: Metrics.baseMargin
-  },
   logo: {
-    marginTop: Metrics.doubleSection,
-    height: Metrics.images.logo,
+    marginTop: 50,
+    marginBottom: 120,
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    resizeMode: 'contain',
     width: Metrics.images.logo,
-    resizeMode: 'contain'
+    height: Metrics.images.logo
   },
-  centered: {
-    alignItems: 'center'
+  btns: {
+    flex: 1,
+    flexDirection: 'row'
   }
 })
