@@ -48,13 +48,13 @@ export default class LoginScreen extends Component {
                                 </Button>
                             </Form>
                             
-                            <Text style={{color: 'blue', textAlign: 'center', marginTop: 60}}
+                            <Text style={styles.registerText}
                                 onPress={() => Linking.openURL('http://google.com')}>
                                 Registar{"\n"}
                             </Text>
-                            <Text style={{color: 'blue', textAlign: 'center'}}
+                            <Text style={styles.recoverPassword}
                                 onPress={() => Linking.openURL('http://google.com')}>
-                            Recuperar palavra-passe
+                                Recuperar palavra-passe
                             </Text>
                                 
                         </Col>

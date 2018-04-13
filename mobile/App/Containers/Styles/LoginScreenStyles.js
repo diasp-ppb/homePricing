@@ -17,11 +17,21 @@ export default StyleSheet.create({
         marginTop: 10,
     },
     logo: {
-        marginTop: 50,
+        marginBottom: 70,
         marginLeft: 'auto',
         marginRight: 'auto',
         resizeMode: 'contain',
         width: Metrics.images.logo,
         height: Metrics.images.logo
-      },
+    },
+    registerText: {
+        color: 'blue',
+        textAlign: 'center',
+        marginTop: 70
+    },
+    recoverPassword: {
+        color: 'blue',
+        textAlign: 'center',
+    }
+
 })
