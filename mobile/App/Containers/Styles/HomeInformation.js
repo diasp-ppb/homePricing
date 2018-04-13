@@ -15,5 +15,12 @@ export default StyleSheet.create({
   btns: {
     flex: 1,
     flexDirection: 'row'
+  },
+
+  head:{
+    width: 22,
+    height: 22,
+    color: 'red'
   }
+
 })

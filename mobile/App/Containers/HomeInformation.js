@@ -19,7 +19,7 @@ export default class LaunchScreen extends Component {
   render () {
     return (
       <Container>
-        <Header>
+        <Header >
           <Body>
             <Title>House Information:</Title>
           </Body>
@@ -27,13 +27,21 @@ export default class LaunchScreen extends Component {
         
         <View>
           {/*<Image source={Images.background} style={styles.backgroundImage} resizeMode='stretch' />*/} 
-          <Image 
-            style={{width: 66, height: 78}}
-            source={Images.house} style={styles.house} 
-          />
-          
+          <Image  source={Images.house} style={styles.house}/>
         </View>
-       
+        
+        <Row style={{ paddingLeft:10, paddingTop: 4, marginTop: -60, height:32, fontSize:11, opacity:0.6,  backgroundColor: 'white' }}>
+          <Col size={48}>
+            <Text> 70 228€ </Text>
+          </Col>
+        </Row>
+
+         <Row style={{ paddingLeft:10, marginTop: -0, height:30, opacity:0.6,  backgroundColor: 'white' }}>
+          <Col size={48}>
+            <Text> Property</Text>
+          </Col>
+        </Row>
+
       </Container>
     )
   }

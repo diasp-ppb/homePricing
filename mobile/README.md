@@ -20,6 +20,7 @@
     * run `react-native run-ios`
   * for Android
     * Run Genymotion
+    * run `react-native start`
     * run `react-native run-android`
 
 ## :no_entry_sign: Standard Compliant
