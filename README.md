@@ -15,14 +15,14 @@
     $ cd mobile
     $ npm install yarn
     $ yarn
-    $ sudo sh run-docker.sh
+    $ sh run-docker.sh
     ```
     note: This will take some time :)
 
 ### Connect to "Mobile" container 
  ```
    $ cd mobile/
-   $ sudo sh react-native-container.sh 
+   $ sh react-native-container.sh
    
    // To exit container
    $ exit 
@@ -34,7 +34,7 @@ Inside container:
 ```
 dev> adb reverse tcp:8081 tcp:8081 # CONNECT TO PHONE!you'll need android > 5.1 for this 
 
-dev> react-native start > react-start.log 2>&1 & dev> react-native android
+dev> react-native start > react-start.log 2>&1
 dev> react-native run-android
 ```
 
