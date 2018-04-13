@@ -39,40 +39,42 @@ export default class LaunchScreen extends Component {
             <Text>Mapa</Text>
           </Button>
         </Segment>
-        <Content padder style={{ marginBottom: 15 }}>
-          {
-            res.map((item, index)=>{
-              return (
-                <Card key={index}>
-                  <CardItem>
-                    <Left>
-                      <Body>
-                        <Text>{item.description}</Text>
-                        <Text style={styles.address}>
-                          <Icon ios={'ios-pin'} android={'md-pin'} style={styles.address} /> {item.address}
+        <Content padder>
+          <View style={{ marginBottom: 20 }}>
+            {
+              res.map((item, index)=>{
+                return (
+                  <Card key={index}>
+                    <CardItem>
+                      <Left>
+                        <Body>
+                          <Text>{item.description}</Text>
+                          <Text style={styles.address}>
+                            <Icon ios={'ios-pin'} android={'md-pin'} style={styles.address} /> {item.address}
+                          </Text>
+                        </Body>
+                      </Left>
+                    </CardItem>
+                    <CardItem cardBody>
+                      <Image source={{ uri: item.imageURL }} style={{ height: 200, width: null, flex: 1 }}/>
+                    </CardItem>
+                    <CardItem>
+                      <Left>
+                        <Text style={styles.info}>
+                          <Icon ios={'ios-cash'} android={'md-cash'} style={styles.info} /> {item.price}
                         </Text>
-                      </Body>
-                    </Left>
-                  </CardItem>
-                  <CardItem cardBody>
-                    <Image source={{ uri: item.imageURL }} style={{ height: 200, width: null, flex: 1 }}/>
-                  </CardItem>
-                  <CardItem>
-                    <Left>
-                      <Text style={styles.info}>
-                        <Icon ios={'ios-cash'} android={'md-cash'} style={styles.info} /> {item.price}
-                      </Text>
-                    </Left>
-                    <Right>
-                      <Text style={styles.info}>
-                        <Icon ios={'ios-chatbubbles'} android={'md-chatbubbles'} style={styles.info} /> {item.numComm}
-                      </Text>
-                    </Right>
-                  </CardItem>
-                </Card>
-              )
-            })
-          }
+                      </Left>
+                      <Right>
+                        <Text style={styles.info}>
+                          <Icon ios={'ios-chatbubbles'} android={'md-chatbubbles'} style={styles.info} /> {item.numComm}
+                        </Text>
+                      </Right>
+                    </CardItem>
+                  </Card>
+                )
+              })
+            }
+          </View>
         </Content>
       </Container>
     )
