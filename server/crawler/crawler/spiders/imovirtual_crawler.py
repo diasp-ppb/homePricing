@@ -11,6 +11,22 @@ class ImovirtualCrawler(scrapy.Spider):
 
         for url in urls:
             yield scrapy.Request(url=url, callback=self.parse)
+			
+	def formatNumber(stringNumber):
+		return int(filter(str.isdigit, stringNumber))
+    
+	def formatName(stringName):
+		name_list = stringName.split(",")
+		result = []
+		for val in name_list:
+			result.append(val.lstrip())
+		return result
+    
+	def formatCharacteristics(characteristics):
+		char_list = []
+		for val in characteristics:
+			char_list.append(val.lstrip())
+		return char_list
 
     def parse(self, response):
         print("\n\nStarted parse\n")
