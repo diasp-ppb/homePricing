@@ -62,7 +62,7 @@ build-server:
     - pip install docker-compose
   script:
     - cd server/
-    - docker-compose up -d
-    - docker-compose stop
+    #- docker-compose up -d
+    #- docker-compose stop
 
   
