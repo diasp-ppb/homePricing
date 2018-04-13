@@ -27,6 +27,7 @@ export default class LaunchScreen extends Component {
   }
 
   render () {
+    const { navigate } = this.props.navigation;
     return (
       <Container>
         <Header>
@@ -56,7 +57,9 @@ export default class LaunchScreen extends Component {
               </Button>
               <Row style={{ marginTop: 8 }}>
                 <Col size={48}>
-                  <Button primary block>
+                  <Button primary block onPress={() =>
+                    navigate('Login')
+                  }>
                     <Text>Login</Text>
                   </Button>
                 </Col>
