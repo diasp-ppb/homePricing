@@ -3,36 +3,77 @@ import { Metrics, ApplicationStyles } from '../../Themes/'
 
 export default StyleSheet.create({
   // ...ApplicationStyles.screen,
-  house: {
-    marginTop: 2,
-    marginBottom: 120,
-    marginLeft: 'auto',
-    marginRight: 'auto',
-    resizeMode: 'contain',
-    width: Metrics.images.logo,
-    height: Metrics.images.logo
+  pageTitle:{
+    fontSize:15,
+    marginLeft:-40,
+    fontFamily: 'tahoma'
   },
+
   btns: {
     flex: 1,
     flexDirection: 'row'
   },
 
-  headerPrice:{
-    paddingLeft: 10, 
-    paddingTop: 10, 
-    marginTop: -10, 
-    height:52, 
-    opacity:0.55, 
-    backgroundColor: 'blue' 
-  },
+  headerBG:{
+    backgroundColor:'#2C5234'
+  }, 
 
-  headerName:{
-      paddingLeft:10,
-      paddingTop: 8,
-      marginTop: -90,
-      height:38,
-      opacity:0.55,
-      backgroundColor: 'red'
+  arrow:{
+    fontSize:18.2,
+    marginTop:8,
+    color:'white'
+  },
+  infTab:{
+     marginTop:-61,
+     paddingLeft:18,
+     paddingBottom:8,
+     paddingTop:8,
+     backgroundColor: 'white',
+     opacity:0.55, 
+     elevation: 3
+  },
+  priceText:{
+    paddingBottom:6,
+    fontWeight:'bold',
+    color:'black'
+  },
+  typeText:{
+    fontSize:12,
+    color:'#262626'
+  },
+  box1:{
+     flex:1, flexDirection:'row',
+     padding: 15,
+     marginTop: 10,
+     marginHorizontal: 10,
+     backgroundColor: 'white',
+     elevation: 3 
+  },
+  box2:{
+    flexDirection:'row',
+    marginBottom: 15,
+    flex:1,
+    padding: 15,
+    marginTop: 10,
+    marginHorizontal: 10,
+    backgroundColor: 'white',
+    elevation: 3 
+  },
+  streetText:{
+    fontSize:13 ,
+    color: '#262626'
+  },
+  properties:{
+    fontSize:13,
+    padding:2,
+    fontWeight:'bold',
+    color: '#262626'
+  },
+  data:{
+    fontSize:13 ,
+    padding:2 , 
+    color:'#8c8c8c'
   }
+
 
 })
