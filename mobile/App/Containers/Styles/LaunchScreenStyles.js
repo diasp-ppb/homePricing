@@ -2,18 +2,43 @@ import { StyleSheet } from 'react-native'
 import { Metrics, ApplicationStyles } from '../../Themes/'
 
 export default StyleSheet.create({
-  ...ApplicationStyles.screen,
   logo: {
-    marginTop: 50,
-    marginBottom: 120,
-    marginLeft: 'auto',
-    marginRight: 'auto',
-    resizeMode: 'contain',
-    width: Metrics.images.logo,
-    height: Metrics.images.logo
+    width: 150,
+    height: 150,
+    resizeMode: 'contain'
   },
-  btns: {
-    flex: 1,
-    flexDirection: 'row'
+  content: {
+    flex: 1
+  },
+  halfRow: {
+    flex: 0.5,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  btnGroup: {
+    flexDirection: 'row',
+    justifyContent: 'center'
+  },
+  btn: {
+    margin: 5,
+    width: 100,
+    padding: 15,
+    fontSize: 15,
+    elevation: 3,
+    color: '#fff',
+    borderRadius: 5,
+    textAlign: 'center',
+    backgroundColor: 'blue'
+  },
+  topBtn: {
+    margin: 5,
+    width: 210,
+    padding: 15,
+    fontSize: 15,
+    elevation: 3,
+    color: '#fff',
+    borderRadius: 5,
+    textAlign: 'center',
+    backgroundColor: 'blue'
   }
 })
