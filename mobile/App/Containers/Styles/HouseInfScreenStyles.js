@@ -17,10 +17,13 @@ export default StyleSheet.create({
     flexDirection: 'row'
   },
 
-  head:{
-    width: 22,
-    height: 22,
-    color: 'red'
+  headerBody:{
+    paddingLeft:10, 
+    paddingTop: 10, 
+    marginTop: -70, 
+    height:32, 
+    opacity:0.55, 
+    backgroundColor: 'white' 
   }
 
 })
