@@ -22,23 +22,11 @@ export default StyleSheet.create({
   btn: {
     margin: 5,
     width: 100,
-    padding: 15,
-    fontSize: 15,
-    elevation: 3,
-    color: '#fff',
-    borderRadius: 5,
-    textAlign: 'center',
-    backgroundColor: 'blue'
+    justifyContent: 'center'
   },
   topBtn: {
     margin: 5,
     width: 210,
-    padding: 15,
-    fontSize: 15,
-    elevation: 3,
-    color: '#fff',
-    borderRadius: 5,
-    textAlign: 'center',
-    backgroundColor: 'blue'
+    justifyContent: 'center'
   }
 })

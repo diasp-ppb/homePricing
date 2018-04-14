@@ -1,9 +1,9 @@
 import { Images } from '../Themes'
 import React, { Component } from 'react'
-import { View, Image, TouchableOpacity } from 'react-native'
+import { View, Image } from 'react-native'
 
 // Native Base
-import { Container, Header, Body, Title, Text, Fab, Icon, ActionSheet } from 'native-base'
+import { Container, Header, Body, Title, Button, Text, Fab, Icon, ActionSheet } from 'native-base'
 
 // Styles
 import styles from './Styles/LaunchScreenStyles'
@@ -40,29 +40,27 @@ export default class LaunchScreen extends Component {
             <Image source={Images.logo} style={styles.logo} />
           </View>
           <View style={styles.halfRow}>
-            <TouchableOpacity onPress={() =>
-              ActionSheet.show(
-                {
-                  options: OPTIONS,
-                  cancelButtonIndex: CANCEL_INDEX,
-                  destructiveButtonIndex: DESTRUCTIVE_INDEX,
-                  title: "Localizações Disponíveis"
-                },
-                buttonIndex => {
-                  this.setState({ clicked: OPTIONS[buttonIndex] })
-                }
-              )}>
-              <Text style={styles.topBtn}>Pesquisar</Text>
-            </TouchableOpacity>
+            <View style={{ justifyContent: 'center' }}>
+              <Button style={styles.topBtn} onPress={() => ActionSheet.show({
+                    options: OPTIONS,
+                    cancelButtonIndex: CANCEL_INDEX,
+                    destructiveButtonIndex: DESTRUCTIVE_INDEX,
+                    title: "Localizações Disponíveis"
+                  },
+                  buttonIndex => {
+                    this.setState({ clicked: OPTIONS[buttonIndex] })
+                  }
+                )}>
+                <Text>Pesquisar</Text>
+              </Button>
+            </View>
             <View style={styles.btnGroup}>
-              <TouchableOpacity onPress={() =>
-                  navigate('SearchResults')
-                }>
-                <Text style={styles.btn}>Login</Text>
-              </TouchableOpacity>
-              <TouchableOpacity>
-                <Text style={styles.btn}>GPS</Text>
-              </TouchableOpacity>
+              <Button style={styles.btn} onPress={() => navigate('SearchResults')}>
+                <Text>Login</Text>
+              </Button>
+              <Button style={styles.btn}>
+                <Text>GPS</Text>
+              </Button>
             </View>
           </View>
         </View>
