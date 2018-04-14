@@ -31,7 +31,7 @@ export default class LoginScreen extends Component {
                     </Left>
 
                     <Body>
-                        <Title>Login</Title>
+                        <Title>Registar</Title>
                     </Body>
 
                     <Right />
@@ -41,12 +41,16 @@ export default class LoginScreen extends Component {
                     <View style={styles.logoBox}>
                         <Image source={Images.logo} style={styles.logo} />
                     </View>
-                    <View style={styles.loginBox}>
+                    <View style={styles.registerBox}>
                         <View style={styles.spaceBox}></View>
 
-                        <Form style={styles.inputBox}>
+                        <Form style={styles.inputRegisterBox}>
                             <Item style={styles.inputText} regular>
                                 <Input placeholder="Nome de utilizador" />
+                            </Item>
+
+                            <Item style={styles.inputText} regular>
+                                <Input placeholder="E-mail" />
                             </Item>
 
                             <Item style={styles.inputText} regular>
@@ -54,24 +58,11 @@ export default class LoginScreen extends Component {
                             </Item>
 
                             <Button primary block style={styles.btn}>
-                                <Text>Login</Text>
+                                <Text>Registar</Text>
                             </Button>
                         </Form>
 
                         <View style={styles.spaceBox}></View>
-                    </View>
-
-                    <View style={styles.linkBox}>       
-                        <Text 
-                            style={styles.linkStyle} 
-                            onPress={() => navigate('Register')}
-                        >
-                            Registar{"\n"}
-                        </Text>
-                        <Text style={styles.linkStyle}
-                            onPress={() => Linking.openURL('http://google.com')}>
-                            Recuperar palavra-passe
-                        </Text>
                     </View>
                 </View>
             </Container>
