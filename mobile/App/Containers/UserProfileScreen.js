@@ -25,20 +25,20 @@ const rows = [
   // DataSource template object
   const ds = new ListView.DataSource({rowHasChanged})
 
-
+  
 export default class UserProfileScreen extends Component {
   constructor(props) {
     super(props);
     
   }
 
-  state = {
-    dataSource: ds.cloneWithRows(rows)
-  }
+  
 
-  clickRow = (rowData) => {
-    switch(rowData){
+  navPath(RowId){
+
+    switch(RowId){
         case 0:
+            return 'LaunchScreen';
             break;
         case 1: 
             break;
@@ -55,9 +55,13 @@ export default class UserProfileScreen extends Component {
     }
   }
 
+  state = {
+    dataSource: ds.cloneWithRows(rows)
+  }
+
   renderRow = (rowData) => {
     return (  
-        <TouchableOpacity key = {rowData.id} onPress = {() => this.clickRow(rowData)}>
+        <TouchableOpacity key = {rowData.id} onPress={() => this.props.navigation.navigate(this.navPath(rowData.id))}>
             <View style={styles.listItem}>
                 <Image source = {rowData.icon} style = {styles.listIcons}/>
                 <Text style= {styles.text}>
@@ -70,6 +74,7 @@ export default class UserProfileScreen extends Component {
   }
 
   render () {
+    
     return (
       <Container>
         <Header>
