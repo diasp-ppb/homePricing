@@ -27,7 +27,7 @@ export default class LaunchScreen extends Component {
       <Container>
         <Header searchBar rounded hasSegment>
           <Item>
-            <Icon name="ios-search" />
+            <Icon ios={'ios-search'} android={'md-search'} />
             <Input placeholder="Pesquisar Anúncios" />
           </Item>
         </Header>
