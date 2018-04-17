@@ -4,7 +4,8 @@ import { Images } from '../Themes'
 
 // Native Base
 import { Col, Row, Grid } from 'react-native-easy-grid';
-import { Container, Header, Left, Right, Body, Title, Content, Text, Button, Fab, Icon, ActionSheet } from 'native-base'
+
+import { Container,Segment, Header, Left, Right, Body, Title, Content, Text, Button, Fab, Icon, ActionSheet } from 'native-base'
 
 // Styles
 import styles from './Styles/HouseInfScreenStyles'
@@ -31,7 +32,9 @@ export default class LaunchScreen extends Component {
             <Title style={styles.pageTitle}>House Information</Title>
           </Body>
         </Header>
+
         <Content>
+
           <Image  source={Images.house}/>
 
            <View style={styles.infTab}>
@@ -48,7 +51,7 @@ export default class LaunchScreen extends Component {
             </View>      
           </View>
 
-          <View style={styles.box2}>
+          <View style={styles.box1}>
             <View style={{ flex:0.5}}> 
               <Text style={styles.properties}>Area: </Text>
               <Text style={styles.properties}>Certificado Ener: </Text>
@@ -63,6 +66,16 @@ export default class LaunchScreen extends Component {
               <Text style={styles.data}>Rented</Text>
             </View>
           </View>
+
+          <View style={styles.box2}>
+            <View>
+              <Text style={styles.descriptionTitle}> Description </Text>
+              <Text style={styles.descriptionText}> Do apartamento visualiza-se facilmente o jardim a  
+              piscina e no quarto das traseiras tem vista serra de Sintra, 
+              com garagem, com portão, arrecadação 20M2. Como novo! </Text>
+            </View> 
+          </View>
+
         </Content>
       </Container>
     )

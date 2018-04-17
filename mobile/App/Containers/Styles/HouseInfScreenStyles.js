@@ -15,7 +15,7 @@ export default StyleSheet.create({
   },
 
   headerBG:{
-    backgroundColor:'#2C5234'
+    backgroundColor:'#53565A'
   }, 
 
   arrow:{
@@ -47,7 +47,8 @@ export default StyleSheet.create({
      marginTop: 10,
      marginHorizontal: 10,
      backgroundColor: 'white',
-     elevation: 3 
+     elevation: 2,
+     borderRadius: 2
   },
   box2:{
     flexDirection:'row',
@@ -57,7 +58,8 @@ export default StyleSheet.create({
     marginTop: 10,
     marginHorizontal: 10,
     backgroundColor: 'white',
-    elevation: 3 
+    elevation: 2,
+    borderRadius: 2
   },
   streetText:{
     fontSize:13 ,
@@ -73,7 +75,16 @@ export default StyleSheet.create({
     fontSize:13 ,
     padding:2 , 
     color:'#8c8c8c'
+  },
+  descriptionTitle:{
+    marginBottom: 6,
+    fontWeight: 'bold',
+    color: '#262626'
+  },
+  descriptionText:{
+    fontSize:13 ,
+    padding:2 , 
+    color:'#8c8c8c'
   }
-
 
 })
