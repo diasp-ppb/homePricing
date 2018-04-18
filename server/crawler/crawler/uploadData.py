@@ -2,14 +2,14 @@
 from pymongo import MongoClient
 from datetime import datetime
 import json
-with open('./imovirtual.json') as json_file:
+with open('./crawler/crawler/imovirtual.json') as json_file:
     json_data = json.load(json_file)
 
 connection = 'Starting connection...'
 print(connection)
 
 # localhost on port number 27017 connection
-client = MongoClient('mongodb://mongodb:27017/')
+client = MongoClient('mongodb://localhost:27017/')
 
 #choosing database
 db = client.test
