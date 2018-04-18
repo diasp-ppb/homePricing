@@ -15,8 +15,9 @@ RUN apt-get update && \
 	apt-get clean && \
 	rm -rf /var/cache/apt/archives/* /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-RUN pip install --upgrade pip && \
-	pip install --upgrade \
+RUN pip install --upgrade pip
+
+RUN	pip install --upgrade \
 		setuptools \
 		wheel && \
 	pip install --upgrade scrapy

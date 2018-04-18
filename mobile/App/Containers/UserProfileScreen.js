@@ -84,6 +84,7 @@ export default class UserProfileScreen extends Component {
         </Header>
         <View style={styles.userInfo}>
           <Image source={Images.profileIcon} style={styles.icon} />
+          <Text> Jon Doe </Text>
         </View>
           <ListView
             dataSource={this.state.dataSource}
