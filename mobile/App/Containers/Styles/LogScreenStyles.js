@@ -2,6 +2,9 @@ import { StyleSheet } from 'react-native'
 import { Colors, Metrics, ApplicationStyles } from '../../Themes/'
 
 export default StyleSheet.create({
+    icon: {
+        color: Colors.colors.snow,
+    },
     logo: {
         width: 150,
         height: 150,
