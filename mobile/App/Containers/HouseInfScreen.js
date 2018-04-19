@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Image, View } from 'react-native'
+import { Image, View, Alert } from 'react-native'
 import { Images } from '../Themes'
 
 // Native Base
@@ -11,18 +11,45 @@ import { Container,Segment, Header, Left, Right, Body, Title, Content, Text, But
 import styles from './Styles/HouseInfScreenStyles'
 
 
+
 export default class LaunchScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {};
   }
 
+
+  /*
+  ------------ Start RN communication with /server/api/src/api/routes/v1/index.js ------------
+  */
+  componentDidMount() {  
+    return fetch("http://localhost:3000/v1/status.json")
+        .then(function(response){
+          return response.json();
+        })
+        .then(function(json){
+          Alert.alert("plssssssssss");
+        })
+  }
+
+  /*getHouseInfo = () => {
+    fetch("http://localhost:3000/v1/status")
+     .then((response) => { return response.json() } ) 
+     .then((response) => {
+       console.warn(response)
+     })
+     .catch((error) => console.warn("fetch error:", error))
+     
+  }*/
+  
+
+
   render () {
     return (
       <Container>
         <Header style={styles.headerBG}>
           <Left>
-            <Button transparent>
+            <Button transparent onPress={this.getHouseInfo}>
               <Text>
                 <Icon style={styles.arrow} ios={'ios-arrow-back'} android={'md-arrow-back'} />
               </Text>
