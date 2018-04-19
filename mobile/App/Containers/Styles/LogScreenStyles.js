@@ -2,6 +2,9 @@ import { StyleSheet } from 'react-native'
 import { Colors, Metrics, ApplicationStyles } from '../../Themes/'
 
 export default StyleSheet.create({
+    /*
+        Logo stylings on register/login screen
+    */
     icon: {
         color: Colors.colors.snow,
     },
@@ -10,6 +13,10 @@ export default StyleSheet.create({
         height: 150,
         resizeMode: 'contain'
     },
+
+    /*
+        Content layout styling
+    */
     content: {
         flex: 1,
         flexDirection: 'column',
@@ -34,6 +41,10 @@ export default StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center'
     },
+
+    /*
+        Form layout styling
+    */
     inputBox: {
         flex:0.8,
         justifyContent: 'center',
@@ -44,6 +55,10 @@ export default StyleSheet.create({
     spaceBox: {
         flex:0.1,
     },
+
+    /*
+        Specific components' styling
+    */
     inputText: {
         backgroundColor: Colors.colors.snow,
     },
