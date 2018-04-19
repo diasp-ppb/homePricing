@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Image, View } from 'react-native'
+import { Image, View, Alert } from 'react-native'
 import { Images } from '../Themes'
 
 import { Col, Row, Grid } from 'react-native-easy-grid'
@@ -26,8 +26,32 @@ export default class LoginScreen extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
+    registerSuccess() {
+        this.setState({name : ''});
+        this.setState({email : ''});
+        this.setState({password : ''})
+        Alert.alert("Registado com sucesso!")
+    }
+
     handleSubmit(event) {
-        alert('Submitted: ' + this.state.name);
+        fetch("http://172.30.29.238:3000/v1/auth/register", {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                email: this.state.email,
+                name: this.state.name,
+                password: this.state.password
+            }),
+        })
+        .then(
+            () => this.registerSuccess()
+        )
+        .catch((error) => {
+            console.error(error);
+        });
     }
     
     render () {

@@ -55,4 +55,7 @@ export default StyleSheet.create({
         textAlign: 'center',
         fontSize: 18,
     },
+    inputError: {
+        borderColor: '#FF0000',
+    }
 })
