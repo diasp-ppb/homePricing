@@ -9,16 +9,16 @@ import { Container, Header, Body, Content,
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 import { Images } from '../Themes'
-import { loginSuccess, 
-    loginInvalidEmail, loginInvalidParam, 
-    missingFields } from '../Services/LogToasts'
+import { SUCCESS_LOGIN, 
+    ERROR_INVALID_EMAIL, ERROR_INVALID_PARAM_LOGIN, 
+    WARN_MISSING } from '../Services/LogToasts'
+import { ToastSuccess, ToastError, ToastWarning } from '../Services/LogToasts'
 import styles from './Styles/LogScreenStyles'
 
 export default class LoginScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            showToast: false,
             email: '',
             password: '',
         };
@@ -27,43 +27,49 @@ export default class LoginScreen extends Component {
 
     checkResponse(responseJson) {
         this.setState({password : ''})
-
+        
         if (responseJson.code == '400') {
-            loginInvalidEmail();
+            ToastError(ERROR_INVALID_EMAIL);
         } else if (responseJson.code == '401') {
-            loginInvalidParam();
+            ToastError(ERROR_INVALID_PARAM_LOGIN);
         } else {
             const { navigate } = this.props.navigation;
-            
             this.setState({email : ''});
-
             navigate('Launch');
-            loginSuccess();
+            ToastSuccess(SUCCESS_LOGIN);
         }
     }
 
+    login(email, password) {
+        fetch("http://172.30.29.238:3000/v1/auth/login", {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                email: email,
+                password: password
+            }),
+        })
+        .then(
+          (response) => response.json()
+        )
+        .then(
+          (responseJson) => this.checkResponse(responseJson)
+        )
+        .catch((error) => {
+            console.error(error);
+        });
+    }
+
     handleSubmit(event) {
+        event.preventDefault();
+
         if (this.state.email == '' || this.state.password == '') {
-            missingFields();
+            ToastWarning(WARN_MISSING);
         } else {
-            fetch("http://172.30.29.238:3000/v1/auth/login", {
-                method: 'POST',
-                headers: {
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    email: this.state.email,
-                    password: this.state.password
-                }),
-            })
-            .then((response) => response.json())
-            .then(
-                (responseJson) => this.checkResponse(responseJson)
-            )
-            .catch((error) => {
-                console.error(error);
-            });
+            this.login(this.state.email, this.state.password);
         }
     }
     
