@@ -43,7 +43,6 @@ export default StyleSheet.create({
     },
     inputText: {
         backgroundColor: Colors.colors.snow,
-        margin: 2,
     },
     btn: {
         marginTop: 5,
