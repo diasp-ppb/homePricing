@@ -1,17 +1,17 @@
 import React, { Component } from 'react'
-import { Image, View, Alert } from 'react-native'
-import { Images } from '../Themes'
+import { Image, View } from 'react-native'
 
 import { Col, Row, Grid } from 'react-native-easy-grid'
 import { Container, Header, Body, Content, 
     Title, Left, Right,     
     Icon, Text, Button, 
-    Form, Item, Input,
-    Toast } from 'native-base'
-
+    Form, Item, Input } from 'native-base'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
-// Styles
+import { Images } from '../Themes'
+import { registerSuccess, 
+    registerInvalidParam, registerEmailExists, 
+    missingFields } from '../Services/LogToasts'
 import styles from './Styles/LogScreenStyles'
 
 export default class LoginScreen extends Component {
@@ -30,19 +30,9 @@ export default class LoginScreen extends Component {
         this.setState({password : ''})
 
         if (responseJson.code == '400') {
-            Toast.show({
-                text: 'Parâmetro(s) inválido(s)!',
-                buttonText: 'Ok!',
-                duration: 10000,
-                type: "danger",
-            });
+            registerInvalidParam();
         } else if (responseJson.code == '409') {
-            Toast.show({
-                text: 'E-mail já existe!',
-                buttonText: 'Ok!',
-                duration: 10000,
-                type: "danger",
-            });
+            registerEmailExists();
         } else {
             const { navigate } = this.props.navigation;
 
@@ -50,23 +40,13 @@ export default class LoginScreen extends Component {
             this.setState({email : ''});
 
             navigate('Login');
-            Toast.show({
-                text: 'Registo bem-sucedido :)',
-                buttonText: 'Ok!',
-                duration: 5000,
-                type: "success",
-            });
+            registerSuccess();
         }
     }
 
     handleSubmit(event) {
         if (this.state.name == '' || this.state.email == '' || this.state.password == '') {
-            Toast.show({
-                text: 'Preencha os campos em falta!',
-                buttonText: 'Ok!',
-                duration: 10000,
-                type: "warning",
-            });
+            missingFields();
         } else {
             fetch("http://172.30.29.238:3000/v1/auth/register", {
                 method: 'POST',
