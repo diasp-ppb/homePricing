@@ -26,32 +26,47 @@ export default class LoginScreen extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    registerSuccess() {
+    checkResponse(responseJson) {
+        const { navigate } = this.props.navigation;
+
         this.setState({name : ''});
         this.setState({email : ''});
         this.setState({password : ''})
-        Alert.alert("Registado com sucesso!")
+
+        if (responseJson.code == '400') {
+            Alert.alert("Palavra-passe tem de ter mais de 6 caracteres!!!!");
+        } else if (responseJson.code == '409') {
+            Alert.alert("E-mail já existe!!!!!");
+        } else {
+            Alert.alert("Registado com sucesso!");
+            navigate('Login');
+        }
     }
 
     handleSubmit(event) {
-        fetch("http://172.30.29.238:3000/v1/auth/register", {
-            method: 'POST',
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                email: this.state.email,
-                name: this.state.name,
-                password: this.state.password
-            }),
-        })
-        .then(
-            () => this.registerSuccess()
-        )
-        .catch((error) => {
-            console.error(error);
-        });
+        if (this.state.name == '' || this.state.email == '' || this.state.password == '') {
+            Alert.alert("Preencha os campos em falta!!! :<");
+        } else {
+            fetch("http://172.30.29.238:3000/v1/auth/register", {
+                method: 'POST',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    email: this.state.email,
+                    name: this.state.name,
+                    password: this.state.password
+                }),
+            })
+            .then((response) => response.json())
+            .then(
+                (responseJson) => this.checkResponse(responseJson)
+            )
+            .catch((error) => {
+                console.error(error);
+            });
+        }
     }
     
     render () {
