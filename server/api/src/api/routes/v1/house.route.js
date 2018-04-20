@@ -7,7 +7,7 @@ const house_controller = require('../../controllers/house.controller');
 /// HOUSE ROUTES ///
 
 // GET request for one house.
-router.get('/house/:id', house_controller.house_detail);
+router.get('/:houseId', house_controller.house_detail);
 
 // /* GET users listing. */
 // router.get('/', function(req, res, next) {

@@ -1,6 +1,14 @@
-var House = require('../models/house.model');
+let House = require('../models/house.model');
 
-// Display detail page for a specific House.
-exports.house_detail = function (req, res) {
-    res.send('NOT IMPLEMENTED: House detail: ' + req.params.id);
+/**
+ * Load house and append to req.
+ * @public
+ */
+exports.house_detail = async (req, res) => {
+    try {
+        const house = await House.get(req.params.houseId);
+        res.json(house);
+    } catch (error) {
+        return errorHandler(error, req, res);
+    }
 };
