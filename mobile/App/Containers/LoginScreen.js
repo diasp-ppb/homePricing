@@ -9,11 +9,9 @@ import { Container, Header, Body, Content,
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 import { Images } from '../Themes'
-import { SUCCESS_LOGIN, 
-    ERROR_INVALID_EMAIL, ERROR_INVALID_PARAM_LOGIN, 
-    WARN_MISSING } from '../Services/LogToasts'
-import { ToastSuccess, ToastError, ToastWarning } from '../Services/LogToasts'
-import { addUser } from '../Redux/LoginState'
+import { WARN_MISSING, ToastWarning } from '../Services/LogToasts'
+import { loginAPI } from '../Services/Api'
+import { addUser } from '../Redux/LoginRedux'
 
 import styles from './Styles/LogScreenStyles'
 
@@ -27,42 +25,9 @@ export default class LoginScreen extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    checkResponse(responseJson) {
-        this.setState({password : ''})
-        
-        if (responseJson.code == '400') {
-            ToastError(ERROR_INVALID_EMAIL);
-        } else if (responseJson.code == '401') {
-            ToastError(ERROR_INVALID_PARAM_LOGIN);
-        } else {
-            const { navigate } = this.props.navigation;
-            this.setState({email : ''});
-            navigate('Launch');
-            ToastSuccess(SUCCESS_LOGIN);
-        }
-    }
-
-    loginAPI(email, password) {
-        fetch("http://172.30.29.238:3000/v1/auth/login", {
-            method: 'POST',
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                email: email,
-                password: password
-            }),
-        })
-        .then(
-          (response) => response.json()
-        )
-        .then(
-          (responseJson) => this.checkResponse(responseJson)
-        )
-        .catch((error) => {
-            console.error(error);
-        });
+    componentWillUnmount() {
+        this.setState({password : ''});
+        this.setState({email : ''});
     }
 
     handleSubmit(event) {
@@ -71,7 +36,8 @@ export default class LoginScreen extends Component {
         if (this.state.email == '' || this.state.password == '') {
             ToastWarning(WARN_MISSING);
         } else {
-            this.loginAPI(this.state.email, this.state.password);
+            this.setState({password : ''});
+            loginAPI(this.state.email, this.state.password, this.props.navigation);
         }
     }
     
@@ -154,4 +120,6 @@ export default class LoginScreen extends Component {
             </KeyboardAwareScrollView>
         );
     }
+
+
 }

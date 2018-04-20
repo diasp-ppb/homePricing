@@ -1,6 +1,81 @@
 // a library to wrap and simplify api calls
 import apisauce from 'apisauce'
 
+import { SUCCESS_LOGIN, 
+  ERROR_INVALID_EMAIL, ERROR_INVALID_PARAM_LOGIN,
+  SUCCESS_REGISTER, 
+  ERROR_INVALID_PARAM_REGISTER, ERROR_EMAIL_EXISTS_REGISTER } from './LogToasts'
+import { ToastSuccess, ToastError } from './LogToasts'
+
+function checkLoginResponse(responseJson, nav) {
+  if (responseJson.code == '400') {
+      ToastError(ERROR_INVALID_EMAIL);
+  } else if (responseJson.code == '401') {
+      ToastError(ERROR_INVALID_PARAM_LOGIN);
+  } else {
+      const { navigate } = nav;
+      navigate('Launch');
+      ToastSuccess(SUCCESS_LOGIN);
+  }
+}
+
+function checkRegisterResponse(responseJson, nav) {
+  if (responseJson.code == '400') {
+      ToastError(ERROR_INVALID_PARAM_REGISTER);
+  } else if (responseJson.code == '409') {
+      ToastError(ERROR_EMAIL_EXISTS_REGISTER);
+  } else {
+      const { navigate } = nav;
+      navigate('Login');
+      ToastSuccess(SUCCESS_REGISTER);
+  }
+}
+
+export function loginAPI(email, password, nav) {
+  fetch("http://172.30.29.238:3000/v1/auth/login", {
+      method: 'POST',
+      headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+          email: email,
+          password: password
+      }),
+  })
+  .then(
+    (response) => response.json()
+  )
+  .then(
+    (responseJson) => checkLoginResponse(responseJson, nav)
+  )
+  .catch((error) => {
+      console.error(error);
+  });
+}
+
+export function registerAPI(name, email, password, nav) {
+  fetch("http://172.30.29.238:3000/v1/auth/register", {
+      method: 'POST',
+      headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+          email: email,
+          name: name,
+          password: password
+      }),
+  })
+  .then((response) => response.json())
+  .then(
+      (responseJson) => checkRegisterResponse(responseJson, nav)
+  )
+  .catch((error) => {
+      console.error(error);
+  });
+}
+
 // our "constructor"
 const create = (baseURL = 'https://api.github.com/') => {
   // ------

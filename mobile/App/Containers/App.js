@@ -5,7 +5,7 @@ import { Provider } from 'react-redux'
 import RootContainer from './RootContainer'
 import createStore from '../Redux'
 import { Root } from "native-base"
-import { application } from "../Redux/LoginState"
+import { application } from "../Redux/LoginRedux"
 
 // create our store
 const store = createStore(application)

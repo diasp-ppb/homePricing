@@ -9,10 +9,9 @@ import { Container, Header, Body, Content,
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 import { Images } from '../Themes'
-import { SUCCESS_REGISTER, 
-    ERROR_INVALID_PARAM_REGISTER, ERROR_EMAIL_EXISTS_REGISTER, 
-    WARN_MISSING } from '../Services/LogToasts'
-import { ToastSuccess, ToastError, ToastWarning } from '../Services/LogToasts'
+import { WARN_MISSING, ToastWarning } from '../Services/LogToasts'
+import { registerAPI } from '../Services/Api'
+
 import styles from './Styles/LogScreenStyles'
 
 export default class LoginScreen extends Component {
@@ -28,47 +27,18 @@ export default class LoginScreen extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    checkResponse(responseJson) {
-        this.setState({password : ''})
-
-        if (responseJson.code == '400') {
-            ToastError(ERROR_INVALID_PARAM_REGISTER);
-        } else if (responseJson.code == '409') {
-            ToastError(ERROR_EMAIL_EXISTS_REGISTER);
-        } else {
-            const { navigate } = this.props.navigation;
-
-            this.setState({name : ''});
-            this.setState({email : ''});
-
-            navigate('Login');
-            ToastSuccess(SUCCESS_REGISTER);
-        }
+    componentWillUnmount() {
+        this.setState({password : ''});
+        this.setState({email : ''});
+        this.setState({name : ''});
     }
 
     handleSubmit(event) {
         if (this.state.name == '' || this.state.email == '' || this.state.password == '') {
             ToastWarning(WARN_MISSING);
         } else {
-            fetch("http://172.30.29.238:3000/v1/auth/register", {
-                method: 'POST',
-                headers: {
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    email: this.state.email,
-                    name: this.state.name,
-                    password: this.state.password
-                }),
-            })
-            .then((response) => response.json())
-            .then(
-                (responseJson) => this.checkResponse(responseJson)
-            )
-            .catch((error) => {
-                console.error(error);
-            });
+            this.setState({password : ''});
+            registerAPI(this.state.name, this.state.email, this.state.password, this.props.navigation);
         }
     }
     
