@@ -27,13 +27,39 @@ const rows = [
 
   
 export default class UserProfileScreen extends Component {
+
+  state = { 
+    user : ''
+  }
+
   constructor(props) {
     super(props);
+    this.user;
+    this.getUserInfo();
     
   }
 
-  
+  getUserInfo(){
+    fetch('http://172.30.27.2:3000/v1/users/5ada124ce6c6b70030e4aba9', {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type' : 'application/json',
+        'Authorization' : 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1MjQyNDU3NzQsImlhdCI6MTUyNDI0MjE3NCwic3ViIjoiNWFkYTEyNGNlNmM2YjcwMDMwZTRhYmE5In0.qlaCnFDYiL6S3gOmWRE3i_BnmuzXk0NJ2tny4iGYAPI'
+      }
+    }).then(
+      (response) => response.json()
+    ).then(
+      (responseJson) => {
+        this.setState({user: responseJson.email});
+      }
+    ).catch((error) => {
+      console.error(error);
+    });
 
+  }
+
+  
   navPath(RowId){
 
     switch(RowId){
@@ -84,7 +110,7 @@ export default class UserProfileScreen extends Component {
         </Header>
         <View style={styles.userInfo}>
           <Image source={Images.profileIcon} style={styles.icon} />
-          <Text> Jon Doe </Text>
+          <Text>{this.state.user}</Text>
         </View>
           <ListView
             dataSource={this.state.dataSource}
