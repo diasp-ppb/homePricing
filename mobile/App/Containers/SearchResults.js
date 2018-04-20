@@ -2,26 +2,35 @@ import { Images } from '../Themes'
 import React, { Component } from 'react'
 import { View, Image, TouchableOpacity } from 'react-native'
 
+import Api from '../Services/SauceApi'
+
 // Native Base
 import { Container, Header, Left, Right, Body, Title, Content, Button, Text, Icon, Item, Input, Segment, Card, CardItem } from 'native-base'
 
 // Styles
 import styles from './Styles/SearchResultsStyles'
 
-// TODO: Fill in data array
-let res = []
-for (let i = 0; i < 10; i++) {
-  res[i] = {
-    numComm: 125 + i,
-    price: '10.000€',
-    address: 'Address #' + i,
-    description: 'House #' + i,
-    imageURL: 'https://appsisecommerces3.s3.amazonaws.com/clientes/cliente7884/produtos/17230/Z21454090411.jpg'
-  }
-}
-
 // Component
 export default class LaunchScreen extends Component {
+  // This component's constructor
+  constructor (props) {
+    super(props)
+    this.state = {
+      houses: []
+    }
+  }
+
+  // Fetch data here
+  componentDidMount () {
+    // Api.getHouses((res) => this.setState({ houses: res.data }))
+  }
+
+  // Clear data here
+  componentWillUnmount () {
+    this.setState({ houses: [] })
+  }
+
+  // Render the screen
   render () {
     return (
       <Container>
@@ -42,7 +51,7 @@ export default class LaunchScreen extends Component {
         <Content padder>
           <View style={{ marginBottom: 20 }}>
             {
-              res.map((item, index)=>{
+              this.state.houses.map((item, index) => {
                 return (
                   <Card key={index}>
                     <CardItem>
