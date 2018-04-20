@@ -12,6 +12,8 @@ services:
     build: ./crawler
     depends_on: 
     - mongodb
+    volumes:
+    - ./crawler:/usr/src/app
 
    api:
     command: yarn dev
