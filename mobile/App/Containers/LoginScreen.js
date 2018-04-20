@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Image, View, AsyncStorage } from 'react-native'
+import { connect } from 'react-redux';
 
 import { Col, Row, Grid } from 'react-native-easy-grid'
 import { Container, Header, Body, Content, 
@@ -11,17 +12,18 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { Images } from '../Themes'
 import { WARN_MISSING, ToastWarning } from '../Services/LogToasts'
 import { loginAPI } from '../Services/Api'
-import { addUser } from '../Redux/LoginRedux'
+import { login } from '../Redux/LoginRedux'
 
 import styles from './Styles/LogScreenStyles'
 
-export default class LoginScreen extends Component {
+class LoginScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
             email: '',
             password: '',
         };
+
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
@@ -37,7 +39,7 @@ export default class LoginScreen extends Component {
             ToastWarning(WARN_MISSING);
         } else {
             this.setState({password : ''});
-            loginAPI(this.state.email, this.state.password, this.props.navigation);
+            loginAPI(this.state.email, this.state.password, this.props);
         }
     }
     
@@ -120,6 +122,19 @@ export default class LoginScreen extends Component {
             </KeyboardAwareScrollView>
         );
     }
-
-
 }
+
+function mapStateToProps(state) {
+    return {
+        user: state.login
+    };
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+      login: (user) => dispatch(login(user))
+    };
+  }
+
+const connectedRegister = connect(mapStateToProps, mapDispatchToProps)(LoginScreen);
+export { connectedRegister as LoginScreen };

@@ -1,21 +1,33 @@
-const initialState = {
+import Immutable from 'seamless-immutable'
+
+/* ------------- Initial State ------------- */
+
+export const INITIAL_STATE = Immutable({
     loggedIn: false,
     user: null,
-}
+})
 
-export function application (state = initialState, action) {
+/* ------------- Reducer ------------- */
+
+export function reducer (state = INITIAL_STATE, action) {
+
     switch (action.type) {
         case 'LOGIN':
-            return Object.assign({}, state, { loggedIn: true, user: action.user })
+            return {
+                ...state,
+                loggedIn: true,
+                user: action.user
+            }
         default:
             return state;
     }
 }
 
-function login(user) {
+export function login(user) {
     return { type: 'LOGIN', user }
 }
 
-export function addUser(store, user) {
-    store.dispatch(login(user));
+function mapStateToProps(state) {
+    console.log("map state to props");
+    return state;
 }

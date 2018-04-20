@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import { Image, View } from 'react-native'
+import { connect } from 'react-redux';
+
 import { Images } from '../Themes'
 
 // Native Base
@@ -20,7 +22,7 @@ for (let i = 0; i < 10; i++) {
 OPTIONS[CANCEL_INDEX] = 'Cancel'
 OPTIONS[DESTRUCTIVE_INDEX] = 'Delete'
 
-export default class LaunchScreen extends Component {
+class LaunchScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -28,6 +30,7 @@ export default class LaunchScreen extends Component {
 
   render () {
     const { navigate } = this.props.navigation;
+
     return (
       <Container>
         <Header>
@@ -79,3 +82,12 @@ export default class LaunchScreen extends Component {
     )
   }
 }
+
+function mapStateToProps(state) {
+  return {
+    user: state.login
+  };
+}
+
+const connectedLaunch = connect(mapStateToProps)(LaunchScreen);
+export { connectedLaunch as LaunchScreen };

@@ -6,32 +6,35 @@ import { SUCCESS_LOGIN,
   SUCCESS_REGISTER, 
   ERROR_INVALID_PARAM_REGISTER, ERROR_EMAIL_EXISTS_REGISTER } from './LogToasts'
 import { ToastSuccess, ToastError } from './LogToasts'
+import { login } from '../Redux/LoginRedux'
 
-function checkLoginResponse(responseJson, nav) {
+function checkLoginResponse(responseJson, props) {
   if (responseJson.code == '400') {
       ToastError(ERROR_INVALID_EMAIL);
   } else if (responseJson.code == '401') {
       ToastError(ERROR_INVALID_PARAM_LOGIN);
   } else {
-      const { navigate } = nav;
+      const { navigate } = props.navigation;
+      
       navigate('Launch');
       ToastSuccess(SUCCESS_LOGIN);
+      props.login(responseJson.user.id);
   }
 }
 
-function checkRegisterResponse(responseJson, nav) {
+function checkRegisterResponse(responseJson, props) {
   if (responseJson.code == '400') {
       ToastError(ERROR_INVALID_PARAM_REGISTER);
   } else if (responseJson.code == '409') {
       ToastError(ERROR_EMAIL_EXISTS_REGISTER);
   } else {
-      const { navigate } = nav;
+      const { navigate } = props.navigation;
       navigate('Login');
       ToastSuccess(SUCCESS_REGISTER);
   }
 }
 
-export function loginAPI(email, password, nav) {
+export function loginAPI(email, password, props) {
   fetch("http://172.30.29.238:3000/v1/auth/login", {
       method: 'POST',
       headers: {
@@ -47,14 +50,14 @@ export function loginAPI(email, password, nav) {
     (response) => response.json()
   )
   .then(
-    (responseJson) => checkLoginResponse(responseJson, nav)
+    (responseJson) => checkLoginResponse(responseJson, props)
   )
   .catch((error) => {
       console.error(error);
   });
 }
 
-export function registerAPI(name, email, password, nav) {
+export function registerAPI(name, email, password, props) {
   fetch("http://172.30.29.238:3000/v1/auth/register", {
       method: 'POST',
       headers: {
@@ -69,7 +72,7 @@ export function registerAPI(name, email, password, nav) {
   })
   .then((response) => response.json())
   .then(
-      (responseJson) => checkRegisterResponse(responseJson, nav)
+      (responseJson) => checkRegisterResponse(responseJson, props)
   )
   .catch((error) => {
       console.error(error);

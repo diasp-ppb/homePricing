@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Image, View } from 'react-native'
+import { connect } from 'react-redux';
 
 import { Col, Row, Grid } from 'react-native-easy-grid'
 import { Container, Header, Body, Content, 
@@ -14,7 +15,7 @@ import { registerAPI } from '../Services/Api'
 
 import styles from './Styles/LogScreenStyles'
 
-export default class LoginScreen extends Component {
+class RegisterScreen extends Component {
     constructor(props) {
         super(props);
 
@@ -38,7 +39,7 @@ export default class LoginScreen extends Component {
             ToastWarning(WARN_MISSING);
         } else {
             this.setState({password : ''});
-            registerAPI(this.state.name, this.state.email, this.state.password, this.props.navigation);
+            registerAPI(this.state.name, this.state.email, this.state.password, this.props);
         }
     }
     
@@ -119,3 +120,12 @@ export default class LoginScreen extends Component {
         );
     }
 }
+
+function mapStateToProps(state) {
+    return {
+        user: state.login
+    };
+}
+
+const connectedRegister = connect(mapStateToProps)(RegisterScreen);
+export { connectedRegister as RegisterScreen };
