@@ -35,6 +35,7 @@ class ImovirtualCrawler(scrapy.Spider):
         parametersSelector = response.css('.section-offer-params .params-list li')
         descriptionSelector = response.css('.section-offer-text div.text-contents')
         mapSelector = response.css('.section-offer-map div.ad-map')
+        imageSelector = response.css('.section-offer-gallery')
 
         # Title parameters = Title, Zone
         title = titleSelector.css('h1[itemprop="name"]::text').extract_first()
@@ -62,6 +63,9 @@ class ImovirtualCrawler(scrapy.Spider):
         # Web page
         webPage = response.url
 
+        # Images
+        images = imageSelector.css('.col-md-offer-content div.slider-for figure img').xpath('@src').extract()
+
         result = {
             'title': title,
             'price': self.format_number(mainParameters[0]),
@@ -70,7 +74,8 @@ class ImovirtualCrawler(scrapy.Spider):
             'characteristics': self.format_characteristics(characteristics),
             'description': self.format_description(description[0]),
             'address' : self.format_address(address),
-            'webpage' : webPage
+            'webpage' : webPage,
+            'images' : images
         }
         result["address"].update(self.format_zone(zone))
         result.update(self.format_secondary_parameters(secondaryDict))
