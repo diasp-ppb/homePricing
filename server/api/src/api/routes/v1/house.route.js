@@ -1,13 +1,18 @@
-let express = require('express');
-let router = express.Router();
+const express = require('express');
+const router = express.Router();
+const { authorize, LOGGED_USER } = require('../../middlewares/auth');
+
 
 // Require controller modules.
 const house_controller = require('../../controllers/house.controller');
 
 /// HOUSE ROUTES ///
+router.param('houseId', house_controller.load);
 
-// GET request for one house.
-router.get('/:houseId', house_controller.house_detail);
+
+router
+  .route('/:houseId')
+  .get(house_controller.get);
 
 // /* GET users listing. */
 // router.get('/', function(req, res, next) {

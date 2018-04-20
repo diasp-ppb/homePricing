@@ -1,87 +1,108 @@
 let mongoose = require('mongoose');
-
-let Schema = mongoose.Schema;
+const httpStatus = require('http-status');
+const { omitBy, isNil } = require('lodash');
+const bcrypt = require('bcryptjs');
+const moment = require('moment-timezone');
+const jwt = require('jwt-simple');
+const uuidv4 = require('uuid/v4');
+const APIError = require('../utils/APIError');
 
 let houseSchema = new mongoose.Schema({
-    area: {
-        type: String,
-        lowercase: true,
-    },
-    bathrooms: {
-        type: Number,
-        minlength: 1,
-    },
-    description: {
-        type: String,
-        maxlength: 128,
-    },
-    zone: {
-        type: String,
-        maxlength: 128,
-    },
-    title: {
-        type: String,
-        maxlength: 128,
-    },
-    webpage: {
-        type: String,
-        trim: true,
-    },
-    characteristics: {
-        type: String,
-    },
-    price: {
-        type: String,
-    },
-    tipology: {
-        type: String,
-    },
-    energyCertificate: {
-        type: String,
-    },
-    address: {
-        type: String,
-    },
-    condition: {
-        type: String,
-        maxlength: 128,
-    },
+  area: {
+    type: String,
+    lowercase: true,
+  },
+  bathrooms: {
+    type: Number,
+    minlength: 1,
+  },
+  description: {
+    type: String,
+    maxlength: 128,
+  },
+  zone: {
+    type: String,
+    maxlength: 128,
+  },
+  title: {
+    type: String,
+    maxlength: 128,
+  },
+  webpage: {
+    type: String,
+    trim: true,
+  },
+  characteristics: {
+    type: String,
+  },
+  price: {
+    type: String,
+  },
+  tipology: {
+    type: String,
+  },
+  energyCertificate: {
+    type: String,
+  },
+  address: {
+    type: String,
+  },
+  condition: {
+    type: String,
+    maxlength: 128,
+  },
 }, {
-        timestamps: true,
-    });
+  timestamps: true,
+});
+
+houseSchema.method({
+  transform() {
+    const transformed = {};
+    const fields = ['id','area'];
+
+    fields.forEach(
+      (field) => {
+      transformed[field] = this[field]
+    }
+  );
+
+    return transformed;
+  }
+});
+
 
 houseSchema.statics = {
 
-/**
- * Get house
- *
- * @param {ObjectId} id - The objectId of house.
- * @returns {Promise<House, APIError>}
- */
-    async get(id) {
-        try {
-            let house;
-            
-            if (mongoose.Types.ObjectId.isValid(id)) {
-                house = await this.findById(id).exec();
-            }
+  /**
+   * Get house
+   *
+   * @param {ObjectId} id - The objectId of house.
+   * @returns {Promise<House, APIError>}
+   */
+  async get(id)
+{
+  try {
+    let house;
 
-            if (house) {
-                return house;
-            }
+    if (mongoose.Types.ObjectId.isValid(id)) {
+      house = await this.findById(id).exec();
+    }
+    if (house) {
+      return house;
+    }
 
-            throw new APIError({
-                message: 'house does not exist',
-                status: httpStatus.NOT_FOUND,
-            });
-        } catch (error) {
-            throw error;
-        }
-    },
-};
+    throw new APIError({
+      message: 'User does not exist',
+      status: httpStatus.NOT_FOUND,
+    });
+  } catch (error) {
+    throw error;
+  }
+}
+}
+
 
 /**
  * @typedef House
  */
-const House = mongoose.model('House', houseSchema);
-module.exports = House;
+module.exports = mongoose.model('House', houseSchema);

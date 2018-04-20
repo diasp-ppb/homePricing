@@ -1,14 +1,26 @@
-let House = require('../models/house.model');
+const httpStatus = require('http-status');
+const { omit } = require('lodash');
+const House = require('../models/house.model');
+const { handler: errorHandler } = require('../middlewares/error');
 
 /**
  * Load house and append to req.
  * @public
  */
-exports.house_detail = async (req, res) => {
-    try {
-        const house = await House.get(req.params.houseId);
-        res.json(house);
-    } catch (error) {
-        return errorHandler(error, req, res);
-    }
+exports.load = async (req, res, next, id) => {
+  try {
+    const house = await House.get(id);
+    req.locals = { house };
+    return next();
+  } catch (error) {
+    return errorHandler(error, req, res);
+  }
+};
+
+/**
+ * Get house
+ * @public
+ */
+exports.get = (req, res) => {
+  res.json(req.locals.house.transform())
 };
