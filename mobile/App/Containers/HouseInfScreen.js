@@ -10,25 +10,25 @@ import { Container,Segment, Header, Left, Right, Body, Title, Content, Text, But
 // Styles
 import styles from './Styles/HouseInfScreenStyles'
 
-
-
 export default class LaunchScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {};
   }
 
-
   /*
   ------------ Start RN communication with /server/api/src/api/routes/v1/index.js ------------
   */
   componentDidMount() {  
-    return fetch("http://localhost:3000/v1/status.json")
+    return fetch("http://localhost:3000/v1/house/5ada04b83041f41cc97f4a92")
         .then(function(response){
           return response.json();
         })
         .then(function(json){
-          Alert.alert("plssssssssss");
+          Alert.alert(json.response);
+        })
+        .catch(function(json) {
+          //Alert.alert("DEU ERRO");
         })
   }
 
