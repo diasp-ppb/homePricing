@@ -24,6 +24,7 @@ export default class LoginScreen extends Component {
             email: '',
             password: '',
         };
+        
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 

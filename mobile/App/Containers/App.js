@@ -5,9 +5,10 @@ import { Provider } from 'react-redux'
 import RootContainer from './RootContainer'
 import createStore from '../Redux'
 import { Root } from "native-base"
+import { application } from "../Redux/LoginState"
 
 // create our store
-const store = createStore()
+const store = createStore(application)
 
 /**
  * Provides an entry point into our application.  Both index.ios.js and index.android.js

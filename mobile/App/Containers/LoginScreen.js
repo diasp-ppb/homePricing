@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Image, View } from 'react-native'
+import { Image, View, AsyncStorage } from 'react-native'
 
 import { Col, Row, Grid } from 'react-native-easy-grid'
 import { Container, Header, Body, Content, 
@@ -13,6 +13,8 @@ import { SUCCESS_LOGIN,
     ERROR_INVALID_EMAIL, ERROR_INVALID_PARAM_LOGIN, 
     WARN_MISSING } from '../Services/LogToasts'
 import { ToastSuccess, ToastError, ToastWarning } from '../Services/LogToasts'
+import { addUser } from '../Redux/LoginState'
+
 import styles from './Styles/LogScreenStyles'
 
 export default class LoginScreen extends Component {
@@ -40,7 +42,7 @@ export default class LoginScreen extends Component {
         }
     }
 
-    login(email, password) {
+    loginAPI(email, password) {
         fetch("http://172.30.29.238:3000/v1/auth/login", {
             method: 'POST',
             headers: {
@@ -69,7 +71,7 @@ export default class LoginScreen extends Component {
         if (this.state.email == '' || this.state.password == '') {
             ToastWarning(WARN_MISSING);
         } else {
-            this.login(this.state.email, this.state.password);
+            this.loginAPI(this.state.email, this.state.password);
         }
     }
     
