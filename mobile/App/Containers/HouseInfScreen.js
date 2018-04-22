@@ -13,22 +13,33 @@ import styles from './Styles/HouseInfScreenStyles'
 export default class LaunchScreen extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+          area: ""
+   };
+   this.house = [];
   }
 
   /*
   ------------ Start RN communication with /server/api/src/api/routes/v1/index.js ------------
   */
-  componentDidMount() {  
-    return fetch("http://localhost:3000/v1/house/5ada04b83041f41cc97f4a92")
+  componentDidMount(id) {  
+
+    Alert.alert("VAI CHAMAR");
+
+    fetch("http://192.168.1.6:3000/v1/house/5ada39ff003ec0f64227a008")
         .then(function(response){
           return response.json();
         })
-        .then(function(json){
-          Alert.alert(json.response);
+        .then(function(responseJson){
+          //this.house = (JSON.stringify(responseJson.area));
+          //this.setState({
+              area: responseJson.area
+          });
+          //Alert.alert((JSON.stringify(responseJson.area)));
+          //Alert.alert("area: " + this.house.area);
         })
         .catch(function(json) {
-          //Alert.alert("DEU ERRO");
+          Alert.alert("DEU ERRO");
         })
   }
 
@@ -49,7 +60,7 @@ export default class LaunchScreen extends Component {
       <Container>
         <Header style={styles.headerBG}>
           <Left>
-            <Button transparent onPress={this.getHouseInfo}>
+            <Button transparent onPress={this.componentDidMount}>
               <Text>
                 <Icon style={styles.arrow} ios={'ios-arrow-back'} android={'md-arrow-back'} />
               </Text>
@@ -87,7 +98,7 @@ export default class LaunchScreen extends Component {
             </View>
 
             <View style={{ flex:0.5}}> 
-              <Text style={styles.data}>45m² </Text>
+              <Text style={styles.data}> {this.house.area}</Text>
               <Text style={styles.data}>A</Text>
               <Text style={styles.data}>3</Text>
               <Text style={styles.data}>Rented</Text>
