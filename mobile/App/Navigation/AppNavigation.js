@@ -1,17 +1,18 @@
 import { StackNavigator } from 'react-navigation'
 import LaunchScreen from '../Containers/LaunchScreen'
-import UserProfileScreen from '../Containers/UserProfileScreen'
 
 import styles from './Styles/NavigationStyles'
 
 // Manifest of possible screens
 const PrimaryNav = StackNavigator({
-  LaunchScreen: { screen: LaunchScreen },
+  Launch: { screen: LaunchScreen },
+  Login: { screen: LoginScreen },
+  Register: { screen: RegisterScreen },
   UserProfileScreen: {screen: UserProfileScreen}
 }, {
   // Default config for all screens
   headerMode: 'none',
-  initialRouteName: 'UserProfileScreen',
+  initialRouteName: 'LaunchScreen',
   navigationOptions: {
     headerStyle: styles.header
   }

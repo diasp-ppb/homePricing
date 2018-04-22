@@ -3,7 +3,6 @@ const userRoutes = require('./user.route');
 const authRoutes = require('./auth.route');
 const searchRoutes = require('./search.route');
 const router = express.Router();
-const app = express();
 
 /**
  * GET v1/status

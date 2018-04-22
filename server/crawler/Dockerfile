@@ -17,10 +17,10 @@ RUN apt-get update && \
 
 RUN pip install --upgrade pip
 
-RUN	pip install --upgrade \
-		setuptools \
-		wheel && \
-	pip install --upgrade scrapy
+RUN pip install --upgrade \
+	setuptools \
+	wheel && \
+pip install --upgrade scrapy
 
 RUN pip install pymongo
 
