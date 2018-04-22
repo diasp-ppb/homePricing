@@ -1,7 +1,6 @@
 const express = require('express');
 const userRoutes = require('./user.route');
 const authRoutes = require('./auth.route');
-const searchRoutes = require('./search.route');
 const router = express.Router();
 
 /**
@@ -18,10 +17,5 @@ router.use('/users', userRoutes);
  * GET v1/users
  */
 router.use('/auth', authRoutes);
-
-/**
- * GET v1/search
- */
-router.use('/search', searchRoutes);
 
 module.exports = router;
