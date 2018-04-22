@@ -15,10 +15,11 @@ function checkLoginResponse(responseJson, props) {
       ToastError(ERROR_INVALID_PARAM_LOGIN);
   } else {
       const { navigate } = props.navigation;
-      
-      navigate('Launch');
+          
       ToastSuccess(SUCCESS_LOGIN);
-      props.login(responseJson.user.id);
+      props.login(responseJson.user.id, responseJson.token.accessToken);
+      navigate('UserProfile');
+      
   }
 }
 
@@ -35,7 +36,7 @@ function checkRegisterResponse(responseJson, props) {
 }
 
 export function loginAPI(email, password, props) {
-  fetch("http://172.30.29.238:3000/v1/auth/login", {
+  fetch("http://192.168.1.75:3000/v1/auth/login", {
       method: 'POST',
       headers: {
           Accept: 'application/json',
@@ -58,7 +59,7 @@ export function loginAPI(email, password, props) {
 }
 
 export function registerAPI(name, email, password, props) {
-  fetch("http://172.30.29.238:3000/v1/auth/register", {
+  fetch("http://192.168.1.75:3000/v1/auth/register", {
       method: 'POST',
       headers: {
           Accept: 'application/json',

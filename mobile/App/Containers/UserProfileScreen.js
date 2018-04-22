@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Image, View, AppRegistry, ListView, StyleSheet, TouchableOpacity } from 'react-native'
 import { Images } from '../Themes'
+import { connect } from 'react-redux';
 
 // Native Base
 import { Col, Row, Grid } from 'react-native-easy-grid';
@@ -34,18 +35,18 @@ export default class UserProfileScreen extends Component {
 
   constructor(props) {
     super(props);
-    this.user;
     this.getUserInfo();
-    
   }
 
   getUserInfo(){
-    fetch('http://172.30.27.2:3000/v1/users/5ada124ce6c6b70030e4aba9', {
+    var url = 'http://192.168.1.75:3000/v1/users/' + this.props.user.user;
+    var auth = 'Bearer ' +this.props.user.token;
+    fetch(url, {
       method: 'GET',
       headers: {
         Accept: 'application/json',
         'Content-Type' : 'application/json',
-        'Authorization' : 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1MjQyNDU3NzQsImlhdCI6MTUyNDI0MjE3NCwic3ViIjoiNWFkYTEyNGNlNmM2YjcwMDMwZTRhYmE5In0.qlaCnFDYiL6S3gOmWRE3i_BnmuzXk0NJ2tny4iGYAPI'
+        'Authorization' : auth
       }
     }).then(
       (response) => response.json()
@@ -120,3 +121,12 @@ export default class UserProfileScreen extends Component {
     )
   }
 }
+
+function mapStateToProps(state) {
+  return {
+      user: state.login
+  };
+}
+
+const connectedRegister = connect(mapStateToProps)(UserProfileScreen);
+export { connectedRegister as UserProfileScreen};
