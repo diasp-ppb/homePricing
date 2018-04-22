@@ -56,16 +56,18 @@ let houseSchema = new mongoose.Schema({
 });
 
 houseSchema.method({
+
   transform() {
+    console.log('------------------------- [ Got To house.Model ] --------------------');
     const transformed = {};
-    const fields = ['id','area'];
+    const fields = ['id','area','price','energyCertificate','bathrooms','tipology','condition','address','zone','description'];
 
     fields.forEach(
       (field) => {
       transformed[field] = this[field]
     }
   );
-
+    console.log(transformed)
     return transformed;
   }
 });

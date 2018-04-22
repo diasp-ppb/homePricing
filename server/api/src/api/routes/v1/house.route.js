@@ -12,6 +12,7 @@ router.param('houseId', house_controller.load);
 
 router
   .route('/:houseId')
+  
   .get(house_controller.get);
 
 // /* GET users listing. */

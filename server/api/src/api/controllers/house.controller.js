@@ -22,5 +22,6 @@ exports.load = async (req, res, next, id) => {
  * @public
  */
 exports.get = (req, res) => {
+	console.log("------------------------- [ Got To house.controller ] --------------------")
   res.json(req.locals.house.transform())
 };
