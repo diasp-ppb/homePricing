@@ -30,7 +30,7 @@ export default class LaunchScreen extends Component {
   */
   componentDidMount(id) {  
 
-    fetch("http://192.168.1.6:3000/v1/house/5add15005f9c61552a848bfc")
+    fetch("http://172.30.29.216:3000/v1/house/5add15005f9c61552a848bf4")
     .then(function(response){
        return response.json();
    })
@@ -72,7 +72,7 @@ export default class LaunchScreen extends Component {
 
         <Content>
 
-          <Image  source={Images.house}/>
+          <Image style={{width: '100%' , height: 200}}  source={{uri: 'https://imagescdn-gabriels-net.akamaized.net/reno/imagereader.aspx?imageurl=http%3A%2F%2Frealestateadminimages.gabriels.net%2F170%2F170-20170406050356974-972.jpg&option=N&w=640&permitphotoenlargement=false'}}/>
 
            <View style={styles.infTab}>
             <Text style={styles.priceText}> {this.state.price} </Text>
