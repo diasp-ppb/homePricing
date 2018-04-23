@@ -1,8 +1,7 @@
-# -*- coding: utf-8 -*-
 from pymongo import MongoClient
 from datetime import datetime
 import json
-with open('./crawler/crawler/imovirtual.json') as json_file:
+with open('./imovirtual.json') as json_file:
     json_data = json.load(json_file)
 
 connection = 'Starting connection...'
@@ -13,20 +12,17 @@ client = MongoClient('mongodb://localhost:27017/')
 
 #choosing database
 db = client.admin
-data = 'Connection established...'
-print(data)
+print('Connection established...')
 
 # Remove data before inserting
-rem = "Removing data..."
-print(rem)
-db.houses.drop()
+print("Removing data...")
+db.houses.remove()
 
 # Insert data into mongodb
-db.houses.insert(json_data)  
-data = 'Database Updatede..'
-print(data)
+db.houses.insert(json_data)
+print('Database Updatede..')
 
 # Print Data from Database
-#cursor = db.Remax.find()
+#cursor = db.houses.find()
 #for document in cursor:
 #    print(document)
