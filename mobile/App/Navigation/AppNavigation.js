@@ -4,7 +4,7 @@ import { LoginScreen } from '../Containers/LoginScreen'
 import { RegisterScreen } from '../Containers/RegisterScreen'
 import { UserProfileScreen} from '../Containers/UserProfileScreen'
 
-import styles from './Styles/NavigationStyles'
+import {HouseInfScreen} from '../Containers/HouseInfScreen'
 
 // Manifest of possible screens
 const PrimaryNav = StackNavigator({
@@ -12,13 +12,11 @@ const PrimaryNav = StackNavigator({
   UserProfile: {screen: UserProfileScreen},
   Login: { screen: LoginScreen },
   Register: { screen: RegisterScreen },
+  HouseInfScreen: { screen: HouseInfScreen }
 }, {
   // Default config for all screens
   headerMode: 'none',
-  initialRouteName: 'Launch',
-  navigationOptions: {
-    headerStyle: styles.header
-  }
+  initialRouteName: 'Launch'
 })
 
 export default PrimaryNav
