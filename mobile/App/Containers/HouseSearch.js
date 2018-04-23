@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {Text, View} from 'react-native'
-import {Button, Container, Content, Picker, Icon, Input, Item, Title} from 'native-base'
+import {Button, Container, Content, Picker, Icon, Input, Item} from 'native-base'
 import Metrics from '../Themes/Metrics'
 // Styles
 import styles from './Styles/HouseSearchStyles'

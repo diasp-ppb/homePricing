@@ -22,6 +22,7 @@ const DeloittePrimary = {
   coolGray11: '#53565A'
 }
 
+
 const DeloitteSecondary = {
   green1: '#E3E48D',
   green5: '#009A44',

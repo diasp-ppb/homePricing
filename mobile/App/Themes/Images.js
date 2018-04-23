@@ -1,6 +1,7 @@
 // leave off @2x/@3x
 const images = {
-  logo: require('../Images/ir.png'),
+  logo: require('../Images/hp-logo.png'),
+
   clearLogo: require('../Images/top_logo.png'),
   launch: require('../Images/launch-icon.png'),
   ready: require('../Images/your-app.png'),
@@ -19,7 +20,14 @@ const images = {
   chevronRight: require('../Images/Icons/chevron-right.png'),
   hamburger: require('../Images/Icons/hamburger.png'),
   backButton: require('../Images/Icons/back-button.png'),
-  closeButton: require('../Images/Icons/close-button.png')
+  closeButton: require('../Images/Icons/close-button.png'),
+  profileIcon: require('../Images/Icons/profile-icon.png'),
+  helpIcon: require('../Images/Icons/help.png'),
+  historyIcon: require('../Images/Icons/history.png'),
+  homeIcon: require('../Images/Icons/home.png'),
+  settingsIcon: require('../Images/Icons/settings.png'),
+  favouriteIcon: require('../Images/Icons/star.png'),
+  userIcon: require('../Images/Icons/user.png')
 }
 
 export default images
