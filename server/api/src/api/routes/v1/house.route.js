@@ -1,6 +1,10 @@
 const express = require('express');
-//const validate = require('express-validation');
+const validate = require('express-validation');
+const { authorize, ADMIN } = require('../../middlewares/auth');
 const controller = require('../../controllers/house.controller');
+const {
+  houseInsert
+} = require('../../validations/house.validation');
 
 const router = express.Router();
 
@@ -17,34 +21,54 @@ router.param('houseId', controller.load);
    * @apiGroup House
    * @apiPermission anyone
    *
-   * @apiParam  {Number{1-}}         [page=1]     List page
-   * @apiParam  {Number{1-100}}      [perPage=1]  Houses per page
-   * @apiParam  {String}             [name]       Houses's name
-   *
    * @apiSuccess {Object[]} houses List of houses.
    * 
    * 
    * * @api {post} v1/houses Create house
    * @apiDescription Create a house
    * @apiVersion 1.0.0
-   * @apiName ListHouses
+   * @apiName CreateHouse
    * @apiGroup House
-   * @apiPermission anyone
-   *
-   * @apiParam  {Number{1-}}         [page=1]     List page
-   * @apiParam  {Number{1-100}}      [perPage=1]  Houses per page
-   * @apiParam  {String}             [name]       Houses's name
+   * @apiPermission Admin
    *
    * @apiSuccess {Object[]} houses List of houses.
    */
 router.route('/')
   .get(controller.list)
-  .post(controller.create);
+  .post(authorize(ADMIN), validate(houseInsert), controller.create);
 
+/**
+ * @api {post} v1/houses/filter List houses that match a filter / criteria
+ * @apiDescription List houses that match a filter / criteria
+ * @apiVersion 1.0.0
+ * @apiName FindHouses
+ * @apiGroup House
+ * @apiPermission anyone
+ *
+ * @apiSuccess {Object[]} houses List of houses.
+ *
+ */
 router.route('/filter')
   .post(controller.filter)
 
+/**
+ * @api {get} v1/houses/:houseId Get house
+ * @apiDescription Get house
+ * @apiVersion 1.0.0
+ * @apiName GetHouse
+ * @apiGroup House
+ * @apiPermission anyone
+ */
 router.route('/:houseId')
-  .get(controller.get);
+  .get(controller.get)
+  /**
+ * @api {get} v1/houses/:houseId Update house
+ * @apiDescription Update house
+ * @apiVersion 1.0.0
+ * @apiName UpdateHouse
+ * @apiGroup House
+ * @apiPermission Admin
+ */
+  .patch(authorize(ADMIN), validate(houseInsert), controller.update)
 
 module.exports = router

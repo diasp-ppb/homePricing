@@ -39,25 +39,6 @@ exports.create = async (req, res, next) => {
 };
 
 /**
- * Replace existing house
- * @public
- */
-exports.replace = async (req, res, next) => {
-  try {
-    const { house } = req.locals;
-    const newHouse = new House(req.body);
-    const newHouseObject = newHouse.toObject();
-
-    await house.update(newUserObject, { override: true, upsert: true });
-    const savedHouse = await House.findById(house._id);
-
-    res.json(savedHouse.transform());
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-/**
  * Update existing house
  * @public
  */

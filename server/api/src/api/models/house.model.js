@@ -81,7 +81,7 @@ const houseSchema = new mongoose.Schema({
   description: {
     type: String,
     maxlength: 2500,
-    //required: true,
+    required: true,
     trim: true,
   },
   area: {
@@ -93,7 +93,7 @@ const houseSchema = new mongoose.Schema({
   },
   title: {
     type: String,
-    //required: true,
+    required: true,
     maxlength: 300
   },
   webpage: {
@@ -116,7 +116,6 @@ const houseSchema = new mongoose.Schema({
   energyCertificate: {
     type: String,
     trim: true,
-    //required: true,
   },
   condition: {
     type: String,
@@ -129,7 +128,7 @@ const houseSchema = new mongoose.Schema({
     type: Array,
   },
 }, {
-    timestamps: true, //TODO: Is this necessary?
+    timestamps: true,
   });
 
 /**
