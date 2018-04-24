@@ -49,7 +49,7 @@ export default class LaunchScreen extends Component {
         });
       })
       .catch(function(json) {
-
+        console.error(json)
       })
   }
 
