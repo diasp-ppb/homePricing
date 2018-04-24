@@ -11,6 +11,10 @@ import styles from './Styles/SearchResultsStyles'
 import {baseURL} from "../Services/Api";
 // Component
 export default class LaunchScreen extends Component {
+  static navigationOptions = ({ navigation }) => ({
+    title: 'Pesquisa',
+  });
+
   // This component's constructor
   constructor (props) {
     super(props)
@@ -41,7 +45,7 @@ export default class LaunchScreen extends Component {
   // Render the screen
   render () {
 
-    const { navigate } = this.props.navigation
+    const { navigate } = this.props.navigation;
 
 
     return (

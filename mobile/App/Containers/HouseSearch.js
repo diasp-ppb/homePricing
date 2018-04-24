@@ -34,6 +34,10 @@ const Tipology = [
 ]
 
 export default class HouseSearch extends Component {
+  static navigationOptions = ({ navigation }) => ({
+    title: 'Pesquisa',
+  });
+
   constructor (props) {
     super(props)
     this.state = {

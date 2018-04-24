@@ -13,6 +13,11 @@ import styles from './Styles/LaunchScreenStyles'
 
 // Component
 export default class LaunchScreen extends Component {
+  static navigationOptions = ({ navigation }) => ({
+    title: 'HomePricing',
+  });
+
+
   constructor (props) {
     super(props)
     this.state = {}
@@ -23,11 +28,6 @@ export default class LaunchScreen extends Component {
 
     return (
       <Container>
-        <Header>
-          <Body>
-          <Title>Home Pricing</Title>
-          </Body>
-        </Header>
         <View style={styles.content}>
           <View style={styles.halfRow}>
             <Image source={Images.logo} style={styles.logo} />

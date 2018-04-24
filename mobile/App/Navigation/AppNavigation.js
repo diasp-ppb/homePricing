@@ -8,11 +8,21 @@ import { UserProfileScreen} from '../Containers/UserProfileScreen'
 import { LoginScreen } from '../Containers/LoginScreen'
 import  HouseInfScreen from '../Containers/HouseInfScreen'
 import HouseSearch from '../Containers/HouseSearch'
+import Colors from '../Themes/Colors'
 
 
 
   // Styles
 import styles from './Styles/NavigationStyles'
+
+
+const navigationOptions = ({ navigation }) => ({
+  headerStyle: { backgroundColor: Colors.blue4 },
+  headerTintColor: 'white',
+  headerBackTitle: null,
+});
+
+
 
 // Manifest of possible screens
 const PrimaryNav = StackNavigator({
@@ -25,7 +35,8 @@ const PrimaryNav = StackNavigator({
   HouseSearch: { screen: HouseSearch},
 }, {
   // Default config for all screens
-  headerMode: 'none',
+  headerMode: 'float',
+  navigationOptions,
   initialRouteName: 'LaunchScreen'
 })
 

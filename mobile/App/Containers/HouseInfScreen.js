@@ -10,6 +10,10 @@ import {baseURL} from "../Services/Api";
 import styles from './Styles/HouseInfScreenStyles'
 
 export default class LaunchScreen extends Component {
+  static navigationOptions = ({ navigation }) => ({
+    title: 'Informação da casa',
+  });
+
   constructor(props) {
     super(props);
     this.state = {
@@ -56,18 +60,6 @@ export default class LaunchScreen extends Component {
   render () {
     return (
       <Container>
-        <Header style={styles.headerBG}>
-          <Left>
-            <Button transparent onPress={() => this.props.navigation.goBack()}>
-              <Text>
-                <Icon style={styles.arrow} ios={'ios-arrow-back'} android={'md-arrow-back'} />
-              </Text>
-            </Button>
-          </Left>
-          <Body>
-          <Title style={styles.pageTitle}>House Information</Title>
-          </Body>
-        </Header>
 
         <Content>
 

@@ -3,9 +3,9 @@ import { Image, View, AsyncStorage } from 'react-native'
 import { connect } from 'react-redux';
 
 import { Col, Row, Grid } from 'react-native-easy-grid'
-import { Container, Header, Body, Content, 
-    Title, Left, Right,     
-    Icon, Text, Button, 
+import { Container, Header, Body, Content,
+    Title, Left, Right,
+    Icon, Text, Button,
     Form, Item, Input } from 'native-base'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
@@ -13,11 +13,18 @@ import { Images } from '../Themes'
 import { WARN_MISSING, ToastWarning } from '../Services/LogToasts'
 import { loginAPI } from '../Services/Api'
 import { login } from '../Redux/LoginRedux'
-
+import Topbar from '../Components/Topbar/Topbar'
 import styles from './Styles/LogScreenStyles'
 
+
+
 class LoginScreen extends Component {
-    constructor(props) {
+  static navigationOptions = ({ navigation }) => ({
+    title: 'Login',
+  });
+
+
+  constructor(props) {
         super(props);
         this.state = {
             email: '',
@@ -43,28 +50,12 @@ class LoginScreen extends Component {
             loginAPI(this.state.email, this.state.password, this.props);
         }
     }
-    
+
     render () {
         const { navigate } = this.props.navigation;
         return (
             <KeyboardAwareScrollView>
                 <Container>
-                    <Header>
-                        <Left>
-                            <Icon
-                                name="arrow-back"
-                                onPress={() => navigate('Launch')}
-                                style={styles.icon}
-                            />
-                        </Left>
-
-                        <Body>
-                            <Title>Login</Title>
-                        </Body>
-
-                        <Right />
-                    </Header>
-                    
                     <View style={styles.content}>
                         <View style={styles.logoBox}>
                             <Image source={Images.logo} style={styles.logo} />
@@ -74,7 +65,7 @@ class LoginScreen extends Component {
 
                             <Form style={styles.inputBox}>
                                 <Item style={styles.inputText} regular>
-                                    
+
                                     <Input
                                         keyboardType = 'email-address'
                                         placeholder="E-mail"
@@ -85,7 +76,7 @@ class LoginScreen extends Component {
                                 </Item>
 
                                 <Item style={styles.inputText} regular>
-                                    
+
                                     <Input
                                         secureTextEntry={true}
                                         placeholder="Palavra-passe"
@@ -95,7 +86,7 @@ class LoginScreen extends Component {
 
                                 </Item>
 
-                                <Button primary block 
+                                <Button primary block
                                     style={styles.btn}
                                     onPress = {this.handleSubmit}
                                 >
@@ -106,9 +97,9 @@ class LoginScreen extends Component {
                             <View style={styles.spaceBox}></View>
                         </View>
 
-                        <View style={styles.linkBox}>       
-                            <Text 
-                                style={styles.linkStyle} 
+                        <View style={styles.linkBox}>
+                            <Text
+                                style={styles.linkStyle}
                                 onPress={() => navigate('Register')}
                             >
                                 Registar{"\n"}
