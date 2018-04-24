@@ -1,7 +1,7 @@
 import apisauce from 'apisauce'
 
 // TODO: Base URL must be set here
-const baseURL = ''
+const baseURL = 'www.github.com'
 
 // Create API object from apisauce
 const api = apisauce.create({

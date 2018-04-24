@@ -1,20 +1,28 @@
-
 from pymongo import MongoClient
 from datetime import datetime
+import json
+with open('./imovirtual.json') as json_file:
+    json_data = json.load(json_file)
 
 connection = 'Starting connection...'
 print(connection)
 
-client = MongoClient('mongodb://mongodb:27017/')
-db = client.test
+# localhost on port number 27017 connection
+client = MongoClient('mongodb://localhost:27017/')
 
-data = 'wating data data...'
-print(data)
+#choosing database
+db = client.admin
+print('Connection established...')
 
-cursor = db.Remax.find()
+# Remove data before inserting
+print("Removing data...")
+db.houses.remove()
 
-for document in cursor:
-    print(document)
+# Insert data into mongodb
+db.houses.insert(json_data)
+print('Database Updatede..')
 
-data = 'RECEIVED data data...'
-print(data)
+# Print Data from Database
+#cursor = db.houses.find()
+#for document in cursor:
+#    print(document)
