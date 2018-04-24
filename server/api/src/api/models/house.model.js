@@ -4,6 +4,72 @@ const { omitBy, isNil } = require('lodash');
 const APIError = require('../utils/APIError');
 const { env } = require('../../config/vars');
 
+
+/**
+ * Auxiliary functions -- Change this to another file, probably
+ * TODO: verify params. Eg: minPrice has to be less than maxPrice
+ */
+function convertParams(paramsToConvert) {
+
+  var str = ' { ';
+  var initial = str;
+
+  // Bathrooms
+  if (paramsToConvert.bathrooms != null ) {
+    str += '"bathrooms" : ' + paramsToConvert.bathrooms;
+  }
+
+  // Property Type
+  if (paramsToConvert.propertyType != null ) {
+    str += '"tipology" : "'  + paramsToConvert.propertyType + '"';
+  }
+
+  // Area
+  if (paramsToConvert.minArea != null && paramsToConvert.maxArea != null ) {
+    if (str != initial) {
+      str += ', ';
+    }
+    str += '"area" : { "$gt" : ' + paramsToConvert.minArea + ', "$lt" : ' + paramsToConvert.maxArea + ' }';
+  }
+  else if (paramsToConvert.minArea != null) {
+    if (str != initial) {
+      str += ", "
+    }
+    str += '"area" : { "$gt" : ' + paramsToConvert.minArea + ' }';
+  }
+  else if (paramsToConvert.maxArea != null) {
+    if (str != initial) {
+      str += ', '
+    }
+    str += '"area" : { "$lt" : ' + paramsToConvert.maxArea + ' }';
+  }
+
+  // Price
+  if (paramsToConvert.minPrice != null && paramsToConvert.maxPrice != null ) {
+    if (str != initial) {
+      str += ', '
+    }
+    str += '"price" : { "$gt" : ' + paramsToConvert.minPrice + ', "$lt" : ' + paramsToConvert.maxPrice + ' }';
+  }
+  else if (paramsToConvert.minPrice != null) {
+    if (str != initial) {
+      str += ', '
+    }
+    str += '"price" : { "$gt" : ' + paramsToConvert.minPrice + ' }';
+  }
+  else if (paramsToConvert.maxPrice != null) {
+    if (str != initial) {
+      str += ", "
+    }
+    str += '"area" : { "$lt" : ' + paramsToConvert.maxPrice + ' }';
+  }
+
+  str += ' }';
+
+  return JSON.parse(str);
+}
+
+
 /**
  * House Schema
  * @private
@@ -18,13 +84,17 @@ const houseSchema = new mongoose.Schema({
     //required: true,
     trim: true,
   },
-  grossArea: {
+  area: {
     type: Number,
   },
+  location: {
+    type: String,
+    trim: true
+  },
   title: {
-      type: String,
-      //required: true,
-      maxlength: 300
+    type: String,
+    //required: true,
+    maxlength: 300
   },
   webpage: {
     type: String,
@@ -59,8 +129,8 @@ const houseSchema = new mongoose.Schema({
     type: Array,
   },
 }, {
-  timestamps: true, //TODO: Is this necessary?
-});
+    timestamps: true, //TODO: Is this necessary?
+  });
 
 /**
  * Methods
@@ -68,7 +138,7 @@ const houseSchema = new mongoose.Schema({
 houseSchema.method({
   transform() {
     const transformed = {};
-    const fields = ['id', 'title', 'description', 'bathrooms', 'grossArea', 'webpage', 'characteristics', 'price', 'area', 'tipology', 'energyCertificate', 'condition', 'year', 'images', 'createdAt'];
+    const fields = ['id', 'title', 'description', 'location', 'bathrooms', 'area', 'webpage', 'characteristics', 'price', 'area', 'tipology', 'energyCertificate', 'condition', 'year', 'images', 'createdAt'];
 
     fields.forEach((field) => {
       transformed[field] = this[field];
@@ -117,17 +187,31 @@ houseSchema.statics = {
    * @returns {Promise<House[]>}
    */
   list({
-    page = 1, perPage = 30, title, description
+    page = 1, perPage = 30
   }) {
-    const options = omitBy({ title, description }, isNil);
-
-    return this.find(options)
+    return this.find()
       .sort({ createdAt: -1 })
       .skip(perPage * (page - 1))
       .limit(perPage)
       .exec();
   },
 
+   /**
+   * Filter houses in descending order of 'createdAt' timestamp.
+   *
+   * @param {number} skip - Number of houses to be skipped.
+   * @param {number} limit - Limit number of houses to be returned.
+   * @returns {Promise<House[]>}
+   */
+  filter(params, page = 1, perPage = 30) {
+    var filters = convertParams(params);
+
+    return this.find(filters) 
+      .sort({createdAt: -1})
+      .skip(perPage * (page - 1))
+      .limit(perPage)
+      .exec();
+  },
 };
 
 /**

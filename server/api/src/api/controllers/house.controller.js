@@ -85,6 +85,20 @@ exports.list = async (req, res, next) => {
 };
 
 /**
+ * Filter houses
+ * @public
+ */
+exports.filter = async (req, res, next) => {
+  try {
+    const houses = await House.filter(req.body);
+    const transformedHouses = houses.map(house => house.transform());
+    res.json(houses);
+  } catch (error) {
+    next(error);
+  }
+};
+
+/**
  * Delete house
  * @public
  */
@@ -94,12 +108,4 @@ exports.remove = (req, res, next) => {
   house.remove()
     .then(() => res.status(httpStatus.NO_CONTENT).end())
     .catch(e => next(e));
-};
-
-exports.houses = (req, res) => {
-  try {
-  	res.json("RECEIVED")
-  } catch (error) {
-    next(User.checkDuplicateEmail(error));
-  }
 };
