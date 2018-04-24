@@ -10,7 +10,7 @@ import { login } from '../Redux/LoginRedux'
 export const baseURL = "http://172.30.8.202:3000";
 
 
-function checkLoginResponse(responseJson, props) {
+export function checkLoginResponse(responseJson, props) {
   if (responseJson.code == '400') {
       ToastError(ERROR_INVALID_EMAIL);
   } else if (responseJson.code == '401') {
@@ -25,7 +25,7 @@ function checkLoginResponse(responseJson, props) {
   }
 }
 
-function checkRegisterResponse(responseJson, props) {
+export function checkRegisterResponse(responseJson, props) {
   if (responseJson.code == '400') {
       ToastError(ERROR_INVALID_PARAM_REGISTER);
   } else if (responseJson.code == '409') {
