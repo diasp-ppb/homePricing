@@ -34,7 +34,7 @@ export default class LaunchScreen extends Component {
           </View>
           <View style={styles.halfRow}>
             <View style={{ justifyContent: 'center' }}>
-              <Button style={styles.topBtn} onPress={() => navigate('SearchResults')}>
+              <Button style={styles.topBtn} onPress={() => navigate('HouseSearch')}>
                 <Text>Pesquisar</Text>
               </Button>
 

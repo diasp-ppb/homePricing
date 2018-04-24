@@ -21,7 +21,7 @@ const PrimaryNav = StackNavigator({
   UserProfile: {screen: UserProfileScreen},
   Login: { screen: LoginScreen },
   Register: { screen: RegisterScreen },
-  HouseInfScreen: { screen: HouseInfScreen }
+  HouseInfScreen: { screen: HouseInfScreen },
   HouseSearch: { screen: HouseSearch},
 }, {
   // Default config for all screens

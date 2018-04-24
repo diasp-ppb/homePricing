@@ -60,10 +60,14 @@ export default class HouseSearch extends Component {
   }
 
   submitSearch = () => {
-    return null
+    const { navigate }  = this.props.navigation;
+
+    navigate('SearchResults')
   }
 
   render () {
+
+
     return (
       <Container>
         <Content>
