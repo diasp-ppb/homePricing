@@ -5,7 +5,7 @@ import ImageSlider from 'react-native-image-slider';
 // Native Base
 
 import { Container, Header, Left , Body, Title, Content, Text, Button, Icon} from 'native-base'
-
+import {baseURL} from "../Services/Api";
 // Styles
 import styles from './Styles/HouseInfScreenStyles'
 
@@ -30,7 +30,7 @@ export default class LaunchScreen extends Component {
   componentDidMount() {
     const { navigation } = this.props;
 
-   fetch("http://172.30.8.202:3000/v1/house/" + navigation.state.params.id)
+   fetch(baseURL+"/v1/house/" + navigation.state.params.id)
       .then(function(response){
         return response.json();
       })
@@ -58,7 +58,7 @@ export default class LaunchScreen extends Component {
       <Container>
         <Header style={styles.headerBG}>
           <Left>
-            <Button transparent onPress={this.componentDidMount}>
+            <Button transparent onPress={() => this.props.navigation.goBack()}>
               <Text>
                 <Icon style={styles.arrow} ios={'ios-arrow-back'} android={'md-arrow-back'} />
               </Text>

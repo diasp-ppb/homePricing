@@ -8,7 +8,7 @@ import { Container, Header, Left, Right, Body, Title, Content, Button, Text, Ico
 
 // Styles
 import styles from './Styles/SearchResultsStyles'
-
+import {baseURL} from "../Services/Api";
 // Component
 export default class LaunchScreen extends Component {
   // This component's constructor
@@ -21,7 +21,7 @@ export default class LaunchScreen extends Component {
 
   // Fetch data here
   componentDidMount () {
-    fetch("http://172.30.8.202:3000/v1/houses")
+    fetch(baseURL + "/v1/houses")
       .then(function (response) {
         return response.json();
       })
@@ -29,7 +29,7 @@ export default class LaunchScreen extends Component {
         this.setState({ houses: responseJson });
       })
       .catch(function (json) {
-        //TODO tratar erro
+        console.error(json)
       })
   }
 
