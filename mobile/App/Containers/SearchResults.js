@@ -2,7 +2,6 @@ import { Images } from '../Themes'
 import React, { Component } from 'react'
 import { View, Image, TouchableOpacity } from 'react-native'
 
-import Api from '../Services/SauceApi'
 
 // Native Base
 import { Container, Header, Left, Right, Body, Title, Content, Button, Text, Icon, Item, Input, Segment, Card, CardItem } from 'native-base'
