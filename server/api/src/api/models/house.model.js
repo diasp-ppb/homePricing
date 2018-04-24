@@ -100,7 +100,12 @@ houseSchema.statics = {
   } catch (error) {
     throw error;
   }
-}
+},
+  list() {
+
+    return this.find().exec();
+  },
+
 }
 
 

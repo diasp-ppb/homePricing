@@ -21,7 +21,18 @@ export default class LaunchScreen extends Component {
 
   // Fetch data here
   componentDidMount () {
-    // Api.getHouses((res) => this.setState({ houses: res.data }))
+    fetch("http://172.30.8.202:3000/v1/houses") //TODO pass this to props
+      .then(function (response) {
+        alert(response)
+        return response.json();
+      })
+      .then(responseJson => {
+        alert(responseJson)
+        this.setState({ houses: responseJson });
+      })
+      .catch(function (json) {
+        alert(json)
+      })
   }
 
   // Clear data here

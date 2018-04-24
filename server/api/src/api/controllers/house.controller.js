@@ -17,6 +17,20 @@ exports.load = async (req, res, next, id) => {
   }
 };
 
+/** Get house list
+ * @public
+ */
+exports.list = async (req, res, next) => {
+  try {
+    const houses = await House.list();
+    const transformedHouses = houses.map(house => house.transform());
+    res.json(transformedHouses);
+  } catch (error) {
+    next(error);
+  }
+};
+
+
 /**
  * Get house
  * @public
