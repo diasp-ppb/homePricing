@@ -27,9 +27,10 @@ export default class LaunchScreen extends Component {
   /*
   ------------ Start RN communication with /server/api/src/api/routes/v1/index.js ------------
   */
-  componentDidMount(id) {
+  componentDidMount() {
+    const { navigation } = this.props;
 
-    fetch("http://172.30.29.216:3000/v1/house/5add15005f9c61552a848bf4") //TODO pass this to props
+   fetch("http://172.30.8.202:3000/v1/house/" + navigation.state.params.id)
       .then(function(response){
         return response.json();
       })

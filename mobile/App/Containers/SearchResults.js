@@ -21,17 +21,15 @@ export default class LaunchScreen extends Component {
 
   // Fetch data here
   componentDidMount () {
-    fetch("http://172.30.8.202:3000/v1/houses") //TODO pass this to props
+    fetch("http://172.30.8.202:3000/v1/houses")
       .then(function (response) {
-        alert(response)
         return response.json();
       })
       .then(responseJson => {
-        alert(responseJson)
         this.setState({ houses: responseJson });
       })
       .catch(function (json) {
-        alert(json)
+        //TODO tratar erro
       })
   }
 
@@ -42,6 +40,10 @@ export default class LaunchScreen extends Component {
 
   // Render the screen
   render () {
+
+    const { navigate } = this.props.navigation
+
+
     return (
       <Container>
         <Header searchBar rounded hasSegment>
@@ -64,7 +66,7 @@ export default class LaunchScreen extends Component {
               this.state.houses.map((item, index) => {
                 return (
                   <Card key={index}>
-                    <CardItem>
+                    <CardItem button onPress={() => navigate('HouseInfScreen',{id: item.id })}>
                       <Left>
                         <Body>
                           <Text>{item.description}</Text>
