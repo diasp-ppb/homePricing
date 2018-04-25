@@ -118,6 +118,7 @@ sudo udevadm control --reload-rules
    * `bathrooms` : Number of bathrooms
    * `negotiable` : Indicates if the price is negotiable or not
    * `grossArea` : Gross area of the property *(m²)*
+   * `coordinates` : Latitude and Longitude of the property
  * Example:
 ```
 [
@@ -131,6 +132,7 @@ sudo udevadm control --reload-rules
 "tipology": "T4", 
 "energyCertificate": "B", 
 "year": 2003, 
-"condition": "Usado"}
+"condition": "Usado",
+"coordinates": [41.1556608, -8.6022932]}
 ]
 ```

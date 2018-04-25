@@ -4,14 +4,21 @@ import html2text
 
 class ImovirtualCrawler(scrapy.Spider):
     name = "imovirtual"
+    urls = [
+            'https://www.imovirtual.com/comprar/apartamento/porto/'
+    ]
+    test_url = ""
+
+    def __init__(self, test_url=None, *args, **kwargs):
+        super(ImovirtualCrawler, self).__init__(*args, **kwargs)
+        self.test_url = test_url
 
     def start_requests(self):
-        urls = [
-            'https://www.imovirtual.com/comprar/apartamento/porto/'
-        ]
-
-        for url in urls:
-            yield scrapy.Request(url=url, callback=self.parse)
+        for url in self.urls:
+            if not self.test_url:
+                yield scrapy.Request(url=url, callback=self.parse)
+            else:
+                yield scrapy.Request(url=self.test_url, callback=self.parseAdvertisement)
 
     def parse(self, response):
         print("\n\nStarted parse\n")
@@ -30,57 +37,19 @@ class ImovirtualCrawler(scrapy.Spider):
         '''
 
     def parseAdvertisement(self, response):
-
-        titleSelector = response.css('.section-offer-title')
-        parametersSelector = response.css('.section-offer-params .params-list li')
-        descriptionSelector = response.css('.section-offer-text div.text-contents')
-        mapSelector = response.css('.section-offer-map div.ad-map')
-        imageSelector = response.css('.section-offer-gallery')
-
-        # Title parameters = Title, Zone
-        title = titleSelector.css('h1[itemprop="name"]::text').extract_first()
-        zone = titleSelector.css('p[itemprop="address"]::text').extract_first()
-
-        # Main parameters = Price, Useful Area and Tipology
-        mainParameters = parametersSelector.css('.main-list li span strong::text').extract()
-
-        # Secondary Parameters = Brute Area, Energy Certificate, Construction Year, Condition, No. Bathrooms
-        secondaryLabels = self.format_labels(parametersSelector.css('.sub-list li strong::text').extract())
-        secondaryParameters = parametersSelector.css('.sub-list li::text').extract()
-        secondaryDict = {}
-        for i in range(0, len(secondaryLabels)):
-            secondaryDict[secondaryLabels[i]] = secondaryParameters[i]
-
-        # Characteristics
-        characteristics = parametersSelector.css('.dotted-list li::text').extract()
-
-        # Description
-        description = descriptionSelector.css('div[itemprop="description"]').extract() #TODO Criar um parser de HTML para texto
-
-        # Address
-        address = mapSelector.css('div.ad-map-location-holder h4.ad-map-location::text').extract_first()
-
-        # Web page
-        webPage = response.url
-
-        # Images
-        images = imageSelector.css('.col-md-offer-content div.slider-for figure img').xpath('@src').extract()
-
         result = {
-            'title': title,
-            'price': self.format_number(mainParameters[0]),
-            'area': self.format_area(mainParameters[1]),
-            'tipology': mainParameters[2],
-            'characteristics': self.format_characteristics(characteristics),
-            'description': self.format_description(description[0]),
-            'address' : self.format_address(address),
-            'webpage' : webPage,
-            'images' : images
+            'title': self.extract_title(response),
+            'price': self.extract_price(response),
+            'area': self.extract_area(response),
+            'tipology': self.extract_tipology(response),
+            'characteristics': self.extract_characteristics(response),
+            'description': self.extract_description(response),
+            'address' : self.extract_address(response),
+            'webpage' : response.url,
+            'images' : self.extract_images(response),
+            'coordinates' : self.extract_coordinates(response)
         }
-        result["address"].update(self.format_zone(zone))
-        result.update(self.format_secondary_parameters(secondaryDict))
-        
-        print(result)
+        result.update(self.extract_secondary_parameters(response))
         yield result
 
     def format_labels(self, parameters = []):
@@ -160,3 +129,67 @@ class ImovirtualCrawler(scrapy.Spider):
         result["town"] = ",".join(zone_list[:-1]).lstrip()
         result["district"] = zone_list[-1].lstrip()
         return result
+
+    def format_coordinates(self, coordinates):
+        result = []
+        for val in coordinates:
+            result.append(float(val))
+        return result
+
+    def extract_title(self, response):
+        titleSelector = response.css('.section-offer-title')
+        title = titleSelector.css('h1[itemprop="name"]::text').extract_first()
+        return title
+    
+    def extract_price(self, response):
+        parametersSelector = response.css('.section-offer-params .params-list li')
+        price = parametersSelector.css('.main-list li span strong::text').extract()[0]
+        return self.format_number(price)
+
+    def extract_area(self, response):
+        parametersSelector = response.css('.section-offer-params .params-list li')
+        area = parametersSelector.css('.main-list li span strong::text').extract()[1]
+        return self.format_area(area)
+
+    def extract_tipology(self, response):
+        parametersSelector = response.css('.section-offer-params .params-list li')
+        tipology = parametersSelector.css('.main-list li span strong::text').extract()[2]
+        return tipology
+
+    def extract_characteristics(self, response):
+        parametersSelector = response.css('.section-offer-params .params-list li')
+        characteristics = parametersSelector.css('.dotted-list li::text').extract()
+        return self.format_characteristics(characteristics)
+
+    def extract_description(self, response):
+        descriptionSelector = response.css('.section-offer-text div.text-contents')
+        description = descriptionSelector.css('div[itemprop="description"]').extract_first()
+        return self.format_description(description)
+
+    def extract_address(self, response):
+        mapSelector = response.css('.section-offer-map div.ad-map')
+        titleSelector = response.css('.section-offer-title')
+        address = self.format_address(mapSelector.css('div.ad-map-location-holder h4.ad-map-location::text').extract_first())
+        zone = titleSelector.css('p[itemprop="address"]::text').extract_first()
+        address.update(self.format_zone(zone))
+        return address
+
+    def extract_images(self, response):
+        imageSelector = response.css('.section-offer-gallery')
+        images = imageSelector.css('.col-md-offer-content div.slider-for figure img').xpath('@src').extract()
+        return images
+
+    def extract_secondary_parameters(self, response):
+        parametersSelector = response.css('.section-offer-params .params-list li')
+        secondaryLabels = self.format_labels(parametersSelector.css('.sub-list li strong::text').extract())
+        secondaryParameters = parametersSelector.css('.sub-list li::text').extract()
+        secondaryDict = {}
+        for i in range(0, len(secondaryLabels)):
+            secondaryDict[secondaryLabels[i]] = secondaryParameters[i]
+        return self.format_secondary_parameters(secondaryDict)
+
+    def extract_coordinates(self, response):
+        mapSelector = response.css('.section-offer-map div.ad-map-holder')
+        latitude = mapSelector.css('#adDetailInlineMap').xpath('@data-poi-lat').extract_first()
+        longitude = mapSelector.css('#adDetailInlineMap').xpath('@data-poi-lon').extract_first()
+        return self.format_coordinates([latitude, longitude])
