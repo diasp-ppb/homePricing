@@ -64,14 +64,13 @@ houseSchema.method({
 
     fields.forEach(
       (field) => {
-      transformed[field] = this[field]
+      transformed[field] = this[field];
     }
   );
     console.log(transformed)
     return transformed;
   }
 });
-
 
 houseSchema.statics = {
 
@@ -81,33 +80,43 @@ houseSchema.statics = {
    * @param {ObjectId} id - The objectId of house.
    * @returns {Promise<House, APIError>}
    */
-  async get(id)
-{
-  try {
-    let house;
+  async get(id) {
+    try {
+      let house;
 
-    if (mongoose.Types.ObjectId.isValid(id)) {
-      house = await this.findById(id).exec();
+      if (mongoose.Types.ObjectId.isValid(id)) {
+        house = await this.findById(id).exec();
+      }
+      if (house) {
+        return house;
+      }
+
+      throw new APIError({
+        message: 'User does not exist',
+        status: httpStatus.NOT_FOUND,
+      });
+    } catch (error) {
+      throw error;
     }
-    if (house) {
-      return house;
-    }
-
-    throw new APIError({
-      message: 'User does not exist',
-      status: httpStatus.NOT_FOUND,
-    });
-  } catch (error) {
-    throw error;
-  }
-},
-  list() {
-
-    return this.find().exec();
   },
 
-}
+  /**
+   * List houses.
+   *
+   * @param {number} skip - Number of houses to be skipped.
+   * @param {number} limit - Limit number of houses to be returned.
+   * @returns {Promise<House[]>}
+   */
+  list({
+    page = 1, perPage = 10,
+  }) {
 
+    return this.find()
+      .skip(perPage * (page - 1))
+      .limit(perPage)
+      .exec();
+  },
+}
 
 /**
  * @typedef House

@@ -1,8 +1,8 @@
 const express = require('express');
 const userRoutes = require('./user.route');
 const authRoutes = require('./auth.route');
-const houseRoutes = require('./house.route');
 const housesRoutes = require('./houses.route');
+const userPreferencesRoutes = require('./user-preferences.route');
 const router = express.Router();
 
 /**
@@ -21,11 +21,13 @@ router.use('/users', userRoutes);
 router.use('/auth', authRoutes);
 
 /**
- * GET v1/house
+ * GET v1/houses
  */
-router.use('/house', houseRoutes);
-
 router.use('/houses', housesRoutes);
 
+/**
+ * GET v1/user/preferences
+ */
+router.use('/user/preferences', userPreferencesRoutes);
 
 module.exports = router;

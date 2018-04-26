@@ -34,7 +34,7 @@ export default class LaunchScreen extends Component {
   componentDidMount() {
     const { navigation } = this.props;
 
-   fetch(baseURL+"/v1/house/" + navigation.state.params.id)
+   fetch(baseURL+"/v1/houses/" + navigation.state.params.id)
       .then(function(response){
         return response.json();
       })
