@@ -6,6 +6,7 @@ import SearchResults from '../Containers/SearchResults'
 import { RegisterScreen } from '../Containers/RegisterScreen'
 import { UserProfileScreen} from '../Containers/UserProfileScreen'
 import { LoginScreen } from '../Containers/LoginScreen'
+import Favorites from '../Containers/FavoritesScreen'
 import  HouseInfScreen from '../Containers/HouseInfScreen'
 import HouseSearch from '../Containers/HouseSearch'
 import Colors from '../Themes/Colors'
@@ -33,6 +34,7 @@ const PrimaryNav = StackNavigator({
   Register: { screen: RegisterScreen },
   HouseInfScreen: { screen: HouseInfScreen },
   HouseSearch: { screen: HouseSearch},
+  Favorites: {screen: Favorites}
 }, {
   // Default config for all screens
   headerMode: 'float',

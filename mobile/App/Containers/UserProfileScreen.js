@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Image, View, AppRegistry, ListView, StyleSheet, TouchableOpacity } from 'react-native'
 import { Images } from '../Themes'
 import { connect } from 'react-redux';
+import { login } from '../Redux/LoginRedux'
 
 // Native Base
 import { Col, Row, Grid } from 'react-native-easy-grid';
@@ -28,18 +29,24 @@ const rows = [
 
   
 export default class UserProfileScreen extends Component {
+  static navigationOptions = ({ navigation }) => ({
+    title: 'Profile',
+  });
 
-  state = { 
-    user : ''
-  }
+  
 
   constructor(props) {
     super(props);
+    this.state = {
+      dataSource: ds.cloneWithRows(rows),
+      user: '',
+      login: this.props.user
+    }
     this.getUserInfo();
   }
 
   getUserInfo(){
-    var url = 'http://192.168.1.75:3000/v1/users/' + this.props.user.user;
+    var url = 'http://192.168.1.75/v1/users/' + this.props.user.user;
     var auth = 'Bearer ' +this.props.user.token;
     fetch(url, {
       method: 'GET',
@@ -63,32 +70,29 @@ export default class UserProfileScreen extends Component {
   
   navPath(RowId){
 
-    switch(RowId){
-        case 0:
+    switch(RowId){       
+        case 0: //Return Home
             return 'LaunchScreen';
             break;
-        case 1: 
+        case 1: //History Page
             break;
-        case 2:
+        case 2: //User Preferences
             break;
-        case 3:
+        case 3:  //Favorites
+            return 'Favorites';
             break;
-        case 4:
+        case 4:  //Profile Settngs
             break;
-        case 5:
+        case 5:  //Help page
             break;
         default:
             break;
     }
   }
 
-  state = {
-    dataSource: ds.cloneWithRows(rows)
-  }
-
   renderRow = (rowData) => {
     return (  
-        <TouchableOpacity key = {rowData.id} onPress={() => this.props.navigation.navigate(this.navPath(rowData.id))}>
+        <TouchableOpacity key = {rowData.id} onPress={() => this.props.navigation.navigate(this.navPath(rowData.id),{user: this.props.user})}>
             <View style={styles.listItem}>
                 <Image source = {rowData.icon} style = {styles.listIcons}/>
                 <Text style= {styles.text}>
@@ -104,11 +108,6 @@ export default class UserProfileScreen extends Component {
     
     return (
       <Container>
-        <Header>
-          <Body>
-            <Title>Perfil</Title>
-          </Body>
-        </Header>
         <View style={styles.userInfo}>
           <Image source={Images.profileIcon} style={styles.icon} />
           <Text>{this.state.user}</Text>
@@ -127,6 +126,7 @@ function mapStateToProps(state) {
       user: state.login
   };
 }
+
 
 const connectedRegister = connect(mapStateToProps)(UserProfileScreen);
 export { connectedRegister as UserProfileScreen};

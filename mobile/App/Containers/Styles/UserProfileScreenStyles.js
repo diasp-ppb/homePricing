@@ -2,7 +2,6 @@ import { StyleSheet } from 'react-native'
 import { Metrics, ApplicationStyles } from '../../Themes/'
 
 export default StyleSheet.create({
-  ...ApplicationStyles.screen,
   icon: {
     marginTop: 10,
     marginBottom: 10,
