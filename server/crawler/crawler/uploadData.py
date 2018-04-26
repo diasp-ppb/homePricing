@@ -1,7 +1,7 @@
 from pymongo import MongoClient
 from datetime import datetime
 import json
-with open('./imovirtual.json') as json_file:
+with open('./smallJson.json') as json_file:
     json_data = json.load(json_file)
 
 connection = 'Starting connection...'
