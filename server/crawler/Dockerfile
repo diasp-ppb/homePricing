@@ -25,4 +25,4 @@ RUN pip install pymongo
 
 RUN pip install html2text
 
-CMD /bin/sh /usr/src/app/run-crawler.sh
+CMD /bin/sh /usr/src/app/test-crawler.sh && /bin/sh /usr/src/app/run-crawler.sh

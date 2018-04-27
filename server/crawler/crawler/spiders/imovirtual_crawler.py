@@ -82,7 +82,7 @@ class ImovirtualCrawler(scrapy.Spider):
             elif label == "bathrooms":
                 result[label] = self.format_number(value)
             elif label == "negotiable":
-                result[label] = self.format_name(value)
+                result[label] = self.format_name(value)[0]
             elif label == "grossArea":
                 result[label] = self.format_area(value)
 
