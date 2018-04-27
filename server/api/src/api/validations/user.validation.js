@@ -24,6 +24,22 @@ module.exports = {
     },
   },
 
+  // PATCH /v1/user/preferences/
+  updateUserPreferences: {
+    body: {
+      finality: Joi.string().min(1),
+      type: Joi.string().max(128),
+      tipology: Joi.string().max(128),
+      areaMin: Joi.number().min(1),
+      areaMax: Joi.number().min(1),
+      priceMin: Joi.number().min(0),
+      priceMax: Joi.number().min(1),
+    },/* 
+    params: {
+      userId: Joi.string().regex(/^[a-fA-F0-9]{24}$/).required(),
+    }, */
+  },
+
   // PUT /v1/users/:userId
   replaceUser: {
     body: {
