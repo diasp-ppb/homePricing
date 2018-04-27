@@ -70,7 +70,7 @@ export default class LaunchScreen extends Component {
               this.state.houses.map((item, index) => {
                 return (
                   <Card key={index}>
-                    <CardItem button onPress={() => navigate('HouseInfScreen',{id: item.id })}>
+                    <CardItem button onPress={() => navigate('HouseInformation',{id: item.id })}>
                       <Left>
                         <Body>
                           <Text>{item.description}</Text>

@@ -6,7 +6,7 @@ import SearchResults from '../Containers/SearchResults'
 import { RegisterScreen } from '../Containers/RegisterScreen'
 import { UserProfileScreen} from '../Containers/UserProfileScreen'
 import { LoginScreen } from '../Containers/LoginScreen'
-import  HouseInfScreen from '../Containers/HouseInfScreen'
+import HouseInfScreen from '../Containers/HouseInfScreen'
 import HouseSearch from '../Containers/HouseSearch'
 import GpsScreen from '../Containers/GpsScreen'
 import Colors from '../Themes/Colors'
@@ -32,9 +32,9 @@ const PrimaryNav = StackNavigator({
   UserProfile: {screen: UserProfileScreen},
   Login: { screen: LoginScreen },
   Register: { screen: RegisterScreen },
-  HouseInfScreen: { screen: HouseInfScreen },
   HouseSearch: { screen: HouseSearch},
-  GpsScreen: { screen: GpsScreen}
+  HouseInformation: { screen: HouseInfScreen },
+  Gps: { screen: GpsScreen}
 }, {
   // Default config for all screens
   headerMode: 'float',

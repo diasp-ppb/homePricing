@@ -48,7 +48,7 @@ export default class LaunchScreen extends Component {
                 </Col>
                 <Col size={4} />
                 <Col size={48}>
-                  <Button primary block onPress={() => navigate('GpsScreen')}>
+                  <Button primary block onPress={() => navigate('Gps')}>
                     <Text>GPS</Text>
                   </Button>
                 </Col>
