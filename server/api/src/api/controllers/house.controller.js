@@ -2,6 +2,7 @@ const httpStatus = require('http-status');
 const { omit } = require('lodash');
 const House = require('../models/house.model');
 const { handler: errorHandler } = require('../middlewares/error');
+const convertParams = require('../middlewares/convert').convertParams;
 
 /**
  * Load house and append to req.
@@ -71,7 +72,10 @@ exports.list = async (req, res, next) => {
  */
 exports.filter = async (req, res, next) => {
   try {
-    const houses = await House.filter(req.body);
+    var filters = convertParams(req.body);
+    console.log("ASDASD");
+    console.log(filters);
+    const houses = await House.filter(filters);
     const transformedHouses = houses.map(house => house.transform());
     res.json(houses);
   } catch (error) {

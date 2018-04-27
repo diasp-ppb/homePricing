@@ -35,7 +35,7 @@ router.param('houseId', controller.load);
    */
 router.route('/')
   .get(controller.list)
-  .post(authorize(ADMIN), validate(houseInsert), controller.create);
+  .post(/*authorize(ADMIN), validate(houseInsert), */controller.create);
 
 /**
  * @api {post} v1/houses/filter List houses that match a filter / criteria
