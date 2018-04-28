@@ -12,6 +12,10 @@ const houseSchema = new mongoose.Schema({
   bathrooms: {
     type: Number
   },
+  type: {
+    type: String,
+    trim: true,
+  },
   description: {
     type: String,
     maxlength: 2500,
@@ -21,10 +25,9 @@ const houseSchema = new mongoose.Schema({
   area: {
     type: Number,
   },
-  location: {
+  coordinates: [{
     type: String,
-    trim: true
-  },
+  }],
   title: {
     type: String,
     required: true,
@@ -34,9 +37,9 @@ const houseSchema = new mongoose.Schema({
     type: String,
     trim: true,
   },
-  characteristics: {
-    type: Array,
-  },
+  characteristics: [{
+    type: String,
+  }],
   price: {
     type: Number,
   },
@@ -58,9 +61,12 @@ const houseSchema = new mongoose.Schema({
   year: {
     type: Number,
   },
-  images: {
-    type: Array,
-  },
+  images: [{
+    type: String,
+  }],
+  address: {
+    type: Object
+  }
 }, {
     timestamps: true,
   });
@@ -71,7 +77,7 @@ const houseSchema = new mongoose.Schema({
 houseSchema.method({
   transform() {
     const transformed = {};
-    const fields = ['id', 'title', 'description', 'location', 'bathrooms', 'area', 'webpage', 'characteristics', 'price', 'area', 'tipology', 'energyCertificate', 'condition', 'year', 'images', 'createdAt'];
+    const fields = ['id', 'title', 'description', 'type', 'address', 'coordinates', 'bathrooms', 'area', 'webpage', 'characteristics', 'price', 'area', 'tipology', 'energyCertificate', 'condition', 'year', 'images', 'createdAt'];
 
     fields.forEach((field) => {
       transformed[field] = this[field];

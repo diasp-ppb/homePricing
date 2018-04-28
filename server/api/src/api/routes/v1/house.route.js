@@ -3,7 +3,8 @@ const validate = require('express-validation');
 const { authorize, ADMIN } = require('../../middlewares/auth');
 const controller = require('../../controllers/house.controller');
 const {
-  houseInsert
+  houseInsert,
+  request
 } = require('../../validations/house.validation');
 
 const router = express.Router();
@@ -35,7 +36,7 @@ router.param('houseId', controller.load);
    */
 router.route('/')
   .get(controller.list)
-  .post(/*authorize(ADMIN), validate(houseInsert), */controller.create);
+  .post(authorize(ADMIN), validate(houseInsert), controller.create);
 
 /**
  * @api {post} v1/houses/filter List houses that match a filter / criteria
@@ -49,7 +50,7 @@ router.route('/')
  *
  */
 router.route('/filter')
-  .post(controller.filter)
+  .post(validate(request), controller.filter)
 
 /**
  * @api {get} v1/houses/:houseId Get house

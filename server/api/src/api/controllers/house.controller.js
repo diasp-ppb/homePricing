@@ -73,8 +73,6 @@ exports.list = async (req, res, next) => {
 exports.filter = async (req, res, next) => {
   try {
     var filters = convertParams(req.body);
-    console.log("ASDASD");
-    console.log(filters);
     const houses = await House.filter(filters);
     const transformedHouses = houses.map(house => house.transform());
     res.json(houses);
