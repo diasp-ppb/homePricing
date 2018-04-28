@@ -132,13 +132,12 @@ sudo udevadm control --reload-rules
 	```
  * JSON retrieved by the crawler
    * `title` : Title of the advertisement.
-   * `zone` : Locality and District where the property is located.
    * `price` : Price of the property *(€)*.
    * `area` : Useful area of the property *(m²)*.
    * `tipology` : Type of property *(T1, T2, T3, ...)*.
    * `characteristics` : List of features of the property *(ex: Balcony, Central Heating, Lift, etc.)*.
    * `description` : Description of the property, written by the owner.
-   * `address` : Address of the property.
+   * `address` : Dictionary with the address of the property. *(ex: Zipcode, Town, County and District)*.
    * `webpage` : Original webpage of the advertisement.
    * `year` : Year of construction
    * `energyCertificate` : Degree of energetical efficiency *(ex: A+, A, B, ...)*.
@@ -146,20 +145,21 @@ sudo udevadm control --reload-rules
    * `bathrooms` : Number of bathrooms
    * `negotiable` : Indicates if the price is negotiable or not
    * `grossArea` : Gross area of the property *(m²)*
+   * `coordinates` : Latitude and Longitude of the property
  * Example:
 ```
 [
-{"area": "198 m²", 
-"description": ["<div itemprop=\"description\">\n                            <br><p>Comercializado por: Sábio Êxito</p><p>Licença AMI: 9745</p><br><br><p>T4 Dúplex condominio fechado Garagem fechada 2 Carros – Vilar do Paraíso<br>Apartamento em condominio fechado, em bom estado de conservação, área de 198m2, disposição solar poente, ar condicionado e aquecimento cntral, caixilharia dupla, com 2 solários e uma varanda, garagem fechada para 2/3 carros<br>Cozinha remodelada, lavandaria, sala com recuperador de calor, varanda, hall de entrada, despensa, 2 banho um de serviço e um completo, remodelados, 2 quartos com roupeiro<br>1º Andar - Hall de quartos, 2 quartos com roupeiros embutidos, 2 suites remodeladas, 2 solários <br>Garagem fechada para 2/3 carros 40 m2 mais arrumos<br>Possibilidade de permuta<br>Perto de acessos auto estrada a 400 mtos, perto de serviços, mercados, farmacias, etc<br>Classificação Energética:B<br>Marque a Sua Visita<br>Benjamim Silva</p>                        </div>"],
-"zone": "Mafamude e Vilar do Paraíso, Porto", 
+{"area": 198, 
+"description": "Sala com Lareira\n\ndespensa\n\nGrande Cozinha\n\nVaranda\n\nExcelentes quartos com roupeiro\n\nCondomínio reservado com grandes àreas ajardinadas\n\nNão hesite... Visite!...\n\n",
 "title": "T4 Dúplex condomínio fechado Garagem 2 Carros – Vilar do Paraíso",
 "webpage": "https://www.imovirtual.com/anuncio/t4-duplex-condominio-fechado-garagem-2-carros-vilar-do-paraiso-IDEmyR.html", 
 "characteristics": ["Aquecimento Central", " Ar Condicionado", " Condomínio fechado", " Cozinha Equipada", " Elevador", " Gás Canalizado", " Parqueamento (2 carros)", " Suite", " Terraço", " Varanda"], 
-"price": "230 000 €", 
-"address": " 4400-004, Vila Nova de Gaia, Mafamude e Vilar do Paraíso",
+"price": 230 000, 
+"address": {"county": "Matosinhos", "town": "Matosinhos e Leça da Palmeira", "zipcode": "4450-346", "district": "Porto"},
 "tipology": "T4", 
-"energyCertificate": " B", 
-"year": " 2003", 
-"condition": " Usado"}
+"energyCertificate": "B", 
+"year": 2003, 
+"condition": "Usado",
+"coordinates": [41.1556608, -8.6022932]}
 ]
 ```

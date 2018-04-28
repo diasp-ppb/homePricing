@@ -67,4 +67,8 @@ fastlane/readme.md
 
 # Crawler output files
 imovirtual.json
+*.json
+testfile.json
 
+# Python Binaries
+*.pyc

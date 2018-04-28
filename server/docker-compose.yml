@@ -15,7 +15,7 @@ services:
     depends_on: 
     - mongodb
     volumes:
-    - ./crawler/:/usr/src/app/
+    - ./crawler:/usr/src/app
 
    api:
     command: npm run dev
