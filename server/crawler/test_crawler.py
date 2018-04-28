@@ -76,7 +76,7 @@ class ImovirtualCrawlerTests(unittest.TestCase):
 
     def test_extract_negotiable(self):
         page = read_test_file()
-        value = u"Não"
+        value = u"Sim"
         self.assertEqual(page['negotiable'], value)
 
     
