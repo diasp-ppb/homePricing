@@ -3,6 +3,7 @@ const userRoutes = require('./user.route');
 const authRoutes = require('./auth.route');
 const housesRoutes = require('./houses.route');
 const userPreferencesRoutes = require('./user-preferences.route');
+const favoritesRoutes = require('./favorites.route');
 const router = express.Router();
 
 /**
@@ -29,5 +30,7 @@ router.use('/houses', housesRoutes);
  * GET v1/user/preferences
  */
 router.use('/user/preferences', userPreferencesRoutes);
+
+router.use('/favorites', favoritesRoutes);
 
 module.exports = router;
