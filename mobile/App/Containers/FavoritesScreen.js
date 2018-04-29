@@ -60,7 +60,8 @@ export default class FavoritesScreen extends Component {
         let responseJson = await response.json();
         let aux = responseJson.tipology.concat(" ", responseJson.condition);
         favs.push({
-          id: i, 
+          id: i,
+          idHouse : param[i].houseId, 
           text: aux, 
           location:responseJson.zone,  
           price: responseJson.price,
@@ -81,7 +82,7 @@ export default class FavoritesScreen extends Component {
 
   renderRow = (rowData) => {
     return (  
-        <TouchableOpacity key = {rowData.id}>
+        <TouchableOpacity key = {rowData.id} onPress={() => this.props.navigation.navigate('HouseInfScreen',{id: rowData.idHouse})}>
             <View style={styles.listItem}>
                 <Image source = {rowData.icon} style = {styles.image}/>
                 <View style={styles.data}>
