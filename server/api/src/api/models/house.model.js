@@ -43,9 +43,6 @@ const houseSchema = new mongoose.Schema({
   price: {
     type: Number,
   },
-  area: {
-    type: Number,
-  },
   tipology: {
     type: String,
     trim: true,

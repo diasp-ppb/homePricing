@@ -1,6 +1,6 @@
 exports.convertParams = function (paramsToConvert) {
   var str = ' { ';
-  var initial = str;
+  const initial = str;
   const COMA = ', ';
   
   //TODO: Think about this
@@ -18,6 +18,14 @@ exports.convertParams = function (paramsToConvert) {
   }
   else if (paramsToConvert.rent) {
     str += '"type" : "rent"';
+  }
+
+  // City
+  if (paramsToConvert.city != null) {
+    if (str != initial) {
+      str += COMA;
+    }
+    str += '"address.district" : "' + paramsToConvert.city + '"';
   }
 
   // Bathrooms
@@ -77,7 +85,6 @@ exports.convertParams = function (paramsToConvert) {
   }
 
   str += ' }';
-  console.log(str)
 
   return JSON.parse(str);
 }

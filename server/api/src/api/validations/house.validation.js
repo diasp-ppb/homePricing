@@ -43,7 +43,8 @@ module.exports = {
             hospital: Joi.boolean().required(),
             school: Joi.boolean().required(),
             shopping: Joi.boolean().required(),
-            transport: Joi.boolean().required()
+            transport: Joi.boolean().required(),
+            city: Joi.string().required()
         },
     },
 

@@ -3,6 +3,7 @@ const { omit } = require('lodash');
 const House = require('../models/house.model');
 const { handler: errorHandler } = require('../middlewares/error');
 const convertParams = require('../middlewares/convert').convertParams;
+const searchHouses = require('../middlewares/search').searchHouses;
 
 /**
  * Load house and append to req.
@@ -73,7 +74,8 @@ exports.list = async (req, res, next) => {
 exports.filter = async (req, res, next) => {
   try {
     var filters = convertParams(req.body);
-    const houses = await House.filter(filters);
+    const propertyCentricHouses = await House.filter(filters);
+    const houses = await searchHouses(propertyCentricHouses, req.body);
     const transformedHouses = houses.map(house => house.transform());
     res.json(houses);
   } catch (error) {
