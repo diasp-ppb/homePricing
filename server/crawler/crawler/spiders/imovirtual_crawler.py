@@ -22,7 +22,7 @@ class ImovirtualCrawler(scrapy.Spider):
                 yield scrapy.Request(url=self.test_url, callback=self.parseAdvertisement)
 
     def parse(self, response):
-        print("\n\nStarted parse\n")
+        print("\n\nStarted parse: " + response.url +  "\n")
         listing = response.css('div.listing');
         advertisements = response.css('div.listing .row')[0].css('article');
         for advertisement in advertisements:
@@ -110,8 +110,7 @@ class ImovirtualCrawler(scrapy.Spider):
 			char_list.append(val.lstrip())
 		return char_list
 
-    #TODO Change the args again!
-    def format_address(self, address, response):
+    def format_address(self, address):
         result = {}
         address_list = address.split(",")
         if self.check_zipcode(address_list[0].lstrip()):
@@ -120,8 +119,6 @@ class ImovirtualCrawler(scrapy.Spider):
             result["town"] = ",".join(address_list[2:]).lstrip()
         else:
             result["town"] = address
-            logging.log(logging.INFO, response.url)
-            logging.log(logging.INFO, address)
         return result
 
     def format_description(self, description):
@@ -175,8 +172,7 @@ class ImovirtualCrawler(scrapy.Spider):
     def extract_address(self, response):
         mapSelector = response.css('.section-offer-map div.ad-map')
         titleSelector = response.css('.section-offer-title')
-        #TODO Change args
-        address = self.format_address(mapSelector.css('div.ad-map-location-holder h4.ad-map-location::text').extract_first(), response)
+        address = self.format_address(mapSelector.css('div.ad-map-location-holder h4.ad-map-location::text').extract_first())
         zone = titleSelector.css('p[itemprop="address"]::text').extract_first()
         address.update(self.format_zone(zone))
         return address
