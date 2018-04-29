@@ -7,5 +7,6 @@ module.exports = {
     uri: "mongodb://mongodb:27017/"
   },
   logs: 'combined',
-  googleKey: "AIzaSyA_fgmevMEaWv19X13yXXSC_pYmm5EaSwA"
+  googlePlacesKey: "AIzaSyA_fgmevMEaWv19X13yXXSC_pYmm5EaSwA",
+  googleMatrixKey: "AIzaSyAN5r0_AWwuPC2cHPDexRZlSfHFyZrkqx4"
 };

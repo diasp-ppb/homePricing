@@ -44,7 +44,9 @@ module.exports = {
             school: Joi.boolean().required(),
             shopping: Joi.boolean().required(),
             transport: Joi.boolean().required(),
-            city: Joi.string().required()
+            city: Joi.string().required(),
+            workLocation: Joi.string().allow(null).required(),
+            workDistance: Joi.number().positive().allow(null).required()
         },
     },
 

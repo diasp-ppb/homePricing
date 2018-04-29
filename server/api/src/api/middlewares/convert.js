@@ -103,5 +103,8 @@ exports.convertParams = function (paramsToConvert) {
 // 	"hospital" : false,
 // 	"school" : false,
 // 	"shopping" : false,
-// 	"transport" : false
+//   "transport" : false,
+//   "city" : "Porto",
+//   "workLocation" : "ChIJ3S-JXmauEmsRUcIaWtf4MzE",
+//   "workDistance" : 3 
 // }
