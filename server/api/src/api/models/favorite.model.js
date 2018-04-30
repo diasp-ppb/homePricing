@@ -37,7 +37,6 @@ favoriteSchema.method({
 });
 
 favoriteSchema.statics = {
-  
   list() {
     return this.find();
   },
@@ -50,6 +49,10 @@ favoriteSchema.statics = {
   get(params) {
     return this.find(params);
   },
+
+  removeFav(params){
+      return this.remove(params);
+  }
 
 }
 

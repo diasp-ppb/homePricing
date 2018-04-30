@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Image, View, AppRegistry, ListView, StyleSheet, TouchableOpacity } from 'react-native'
 import { Images } from '../Themes'
 import { connect } from 'react-redux';
-import {baseURL} from "../Services/Api";
+import {baseURL, createFavoriteAPI, deleteFavoriteAPI} from "../Services/Api";
 
 // Native Base
 import { Col, Row, Grid } from 'react-native-easy-grid';
@@ -65,7 +65,8 @@ export default class FavoritesScreen extends Component {
           text: aux, 
           location:responseJson.zone,  
           price: responseJson.price,
-          icon: Images.houseImage
+          icon: Images.houseImage,
+          active : true
         });
       } catch (error) {
         console.error(error);
@@ -78,6 +79,18 @@ export default class FavoritesScreen extends Component {
 
   componentDidMount(){
     this.getFavorites(this.state.user.user);
+  }
+
+  changeFavorite = (id) => {
+    if(this.state.rows[id].active === true){
+      this.state.rows[id].active = false;
+      deleteFavoriteAPI(this.state.user.user, this.state.rows[id].idHouse);
+    }else{
+      this.state.rows[id].active = true;
+      createFavoriteAPI(this.state.user.user, this.state.rows[id].idHouse);
+    }
+    this.setState({rows: this.state.rows});
+    this.setState({dataSource: ds.cloneWithRows(this.state.rows)});
   }
 
   renderRow = (rowData) => {
@@ -98,7 +111,9 @@ export default class FavoritesScreen extends Component {
                     </Text>
                   </View>
                 </View>
-                <Image source={Images.fullStarIcon} style= {styles.star}/>
+                <TouchableOpacity key = {rowData.id} onPress={() => this.changeFavorite(rowData.id)}>
+                  <Image source={rowData.active === true ? Images.fullStarIcon : Images.starLines} style= {styles.star} />
+                </TouchableOpacity>
             </View>
         </TouchableOpacity>
         
@@ -110,7 +125,7 @@ export default class FavoritesScreen extends Component {
     dataSource={this.state.dataSource}
     renderRow={this.renderRow}
     />;
-    const message = <Text style={styles.info}> Ainda não tem favoritos</Text>;
+    const message = <Text style ={styles.noFav}> Ainda não tem favoritos</Text>;
     return (
       <Container>
           {this.state.rows.length > 0 ? list : message}

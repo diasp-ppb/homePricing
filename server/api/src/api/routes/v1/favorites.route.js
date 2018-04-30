@@ -1,12 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const validate = require('express-validation');
-const { authorize, ADMIN } = require('../../middlewares/auth');
+const { authorize, ADMIN, LOGGED_USER } = require('../../middlewares/auth');
 const {
   favoritesInsert,
   userFavorites
 } = require('../../validations/favorites.validation');
-
 
 const controller = require('../../controllers/favorites.controller');
 
@@ -40,7 +39,7 @@ router
  *
  * @apiSuccess {Object[]} 
  */
-  .post(validate(userFavorites),controller.userFavorites); //TODO ADD Access Token
+  .post(validate(userFavorites),controller.userFavorites);
 
 /**
  * @api {post} v1/favorites/create 
@@ -53,11 +52,19 @@ router
  * @apiSuccess {Object[]} 
  */
 router.route('/create')
-  .post(validate(favoritesInsert),controller.create); //TODO ADD Access Token
+  .post(validate(favoritesInsert),controller.create);
 
-
-
-
-
+/**
+ * @api {post} v1/favorites/remove 
+ * @apiDescription Remove a favorite
+ * @apiVersion 1.0.0
+ * @apiName RemoveFavorite
+ * @apiGroup Favorite
+ * @apiPermission Logged User
+ *
+ * @apiSuccess {Object[]} 
+ */
+router.route('/remove')
+  .delete(controller.removeFavorite);
 
 module.exports = router;

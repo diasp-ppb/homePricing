@@ -3,6 +3,8 @@ const { omit } = require('lodash');
 const Favorite = require('../models/favorite.model');
 const { handler: errorHandler } = require('../middlewares/error');
 
+
+
 /**
  * Load favorite and append to req.
  * @public
@@ -61,6 +63,27 @@ exports.userFavorites = async (req, res, next) => {
       next(error);
     }
   };
+
+  /**
+ * Remove from favorites
+ * @public
+ */
+exports.removeFavorite = async (req, res, next) => {
+  try {
+    const favorites = await (Favorite.removeFavorite(req.body)).save();
+    const FavoriteTransformed = favorites.transform();
+    res.status(httpStatus.CREATED);
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.removeFavorite = async (req, res, next) => {
+  Favorite.remove(req.body)
+    .then(() => res.status(httpStatus.NO_CONTENT).end())
+    .catch(e => next(e));
+};
+
   
 
 

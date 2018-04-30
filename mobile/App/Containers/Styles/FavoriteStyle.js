@@ -39,5 +39,8 @@ export default StyleSheet.create({
         height: Metrics.images.normal,
         marginRight: 20,
         marginTop:10
+    },
+    noFav: {
+        marginTop: 18,
     }
 })

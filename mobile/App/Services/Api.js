@@ -81,3 +81,42 @@ export function registerAPI(name, email, password, props) {
       console.error(error);
   });
 }
+
+export function createFavoriteAPI(user, house){
+    fetch(baseURL + "/v1/favorites/create", {
+        method: 'POST',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            userId: user,
+            houseId: house
+        }),
+    })
+    .then((response) => response.json())
+    .then(
+        (responseJson) => responseJson
+    )
+    .catch((error) => {
+        console.error(error);
+    });
+}
+
+export function deleteFavoriteAPI(user, house){
+    fetch(baseURL + "/v1/favorites/remove", {
+        method: 'DELETE',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            userId: user,
+            houseId: house
+        }),
+    })
+    .then()
+    .catch((error) => {
+        console.error(error);
+    });
+}
