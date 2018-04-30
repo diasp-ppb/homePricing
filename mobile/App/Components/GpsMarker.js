@@ -5,8 +5,12 @@ import {
   StyleSheet,
   View,
   Text,
-  Image
+  ImageBackground
 } from 'react-native';
+
+import { Icon }  from 'native-base';
+import Colors from '../Themes/Colors';
+
 
 const propTypes = {
   amount: PropTypes.number.isRequired,
@@ -28,22 +32,27 @@ class GpsMarker extends React.Component {
       (
         <View style={styles.container}>
           <View style={styles.bubble}>
-            <Image
+            <ImageBackground
               style={styles.image}
               source={{uri: "https://upload.wikimedia.org/wikipedia/commons/3/33/F-Am%C3%A9ricas.png"}}
-            />
+            >
+              <View style={styles.textcontainer}>
+                <Text style={styles.streetText}>{amount} €</Text>
+                <Text style={styles.streetText}>Escritorio, Vila Do Conde</Text>
+              </View>
+            </ImageBackground>
+
           </View>
         </View>
       )
       :
       (
       <View style={styles.container}>
-        <View style={styles.bubble}>
-          <Text style={styles.dollar}>€</Text>
-          <Text style={[styles.amount, { fontSize }]}>{amount}</Text>
-        </View>
-        <View style={styles.arrowBorder} />
-        <View style={styles.arrow} />
+        <Icon
+          ios='ios-pin'
+          android="md-pin"
+          style={{color: Colors.green4}}
+        />
       </View>
     )
     return renderSelector;
@@ -62,39 +71,26 @@ const styles = StyleSheet.create({
     flex: 0,
     flexDirection: 'row',
     alignSelf: 'flex-start',
-    backgroundColor: '#FF5A5F',
     padding: 2,
     borderRadius: 3,
-    borderColor: '#D23F44',
     borderWidth: 0.5,
-  },
-  dollar: {
-    color: '#FFFFFF',
-    fontSize: 10,
   },
   amount: {
     color: '#FFFFFF',
     fontSize: 13,
   },
-  arrow: {
-    backgroundColor: 'transparent',
-    borderWidth: 4,
-    borderColor: 'transparent',
-    borderTopColor: '#FF5A5F',
-    alignSelf: 'center',
-    marginTop: -9,
-  },
-  arrowBorder: {
-    backgroundColor: 'transparent',
-    borderWidth: 4,
-    borderColor: 'transparent',
-    borderTopColor: '#D23F44',
-    alignSelf: 'center',
-    marginTop: -0.5,
-  },
   image: {
-    width: 100,
-    height: 120,
+    width: 120,
+    height: 80,
+  },
+  textcontainer: {
+    marginTop: 30,
+    backgroundColor: Colors.white,
+    opacity:0.80
+  },
+  streetText:{
+    fontSize:13 ,
+    color: Colors.black
   }
 });
 

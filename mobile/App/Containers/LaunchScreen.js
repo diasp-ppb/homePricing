@@ -57,10 +57,9 @@ export default class LaunchScreen extends Component {
             <Col size={20} />
           </View>
         </View>
-        <Fab>
-          <TouchableOpacity onPress={() => navigate("Camera")}>
-            <Icon name="camera" />
-          </TouchableOpacity>
+        <Fab
+          onPress={ () =>navigate("Camera") }>
+          <Icon name="camera" style={{color: "#ffffff"}} />
         </Fab>
       </Container>
     )

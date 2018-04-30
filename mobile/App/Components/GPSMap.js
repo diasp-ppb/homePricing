@@ -41,10 +41,10 @@ export default class GpsMap extends Component {
                   amount={marker.amount}
                   moreInfo={marker.moreInfo}
                 />
-
-                <Callout style={styles.callout} onPress={() => navigate('HouseInformation', { id: 'asdasdqwdqwdq' })}>
-                  <Text>Press me</Text>
+                <Callout style={styles.callout} onPress={() => navigate('HouseInformation', {id: 'asdasdqwdqwdq'})}>
+                  <Text style={{fontSize:13}}>Mais detalhes</Text>
                 </Callout>
+
 
               </Marker>
             ))
@@ -54,12 +54,12 @@ export default class GpsMap extends Component {
           <View>
             <TouchableOpacity
               style={{
-            borderWidth: 0,
-            marginTop: 440,
-            marginLeft: 10,
-            backgroundColor: Colors.colors.transparent,
-            borderColor: Colors.transparent,
-          }}
+                borderWidth: 0,
+                marginTop: 440,
+                marginLeft: 10,
+                backgroundColor: Colors.colors.transparent,
+                borderColor: Colors.transparent,
+              }}
               onPress={() => focusOnLocation()}
             >
               <Icon
@@ -71,7 +71,7 @@ export default class GpsMap extends Component {
             </TouchableOpacity>
           </View>
         ) : (null)
-         }
+        }
       </Container>
 
     );
@@ -84,8 +84,7 @@ const styles = StyleSheet.create({
   },
 
   callout: {
-    width: 60,
-    height: 20,
-  },
-
+    width: 90,
+    height: 25,
+  }
 });
