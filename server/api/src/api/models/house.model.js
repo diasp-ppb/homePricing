@@ -26,7 +26,7 @@ const houseSchema = new mongoose.Schema({
     type: Number,
   },
   coordinates: [{
-    type: String,
+    type: Number,
   }],
   title: {
     type: String,
@@ -132,17 +132,17 @@ houseSchema.statics = {
       .exec();
   },
 
-   /**
-   * Filter houses in descending order of 'createdAt' timestamp.
-   *
-   * @param {number} skip - Number of houses to be skipped.
-   * @param {number} limit - Limit number of houses to be returned.
-   * @returns {Promise<House[]>}
-   */
+  /**
+  * Filter houses in descending order of 'createdAt' timestamp.
+  *
+  * @param {number} skip - Number of houses to be skipped.
+  * @param {number} limit - Limit number of houses to be returned.
+  * @returns {Promise<House[]>}
+  */
   filter(params, page = 1, perPage = 30) {
 
-    return this.find(params) 
-      .sort({createdAt: -1})
+    return this.find(params)
+      .sort({ createdAt: -1 })
       .skip(perPage * (page - 1))
       .limit(perPage)
       .exec();
