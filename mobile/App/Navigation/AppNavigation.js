@@ -8,6 +8,7 @@ import { UserProfileScreen} from '../Containers/UserProfileScreen'
 import { LoginScreen } from '../Containers/LoginScreen'
 import  HouseInfScreen from '../Containers/HouseInfScreen'
 import HouseSearch from '../Containers/HouseSearch'
+import HistoricScreen2 from '../Containers/HistoricScreen2'
 import Colors from '../Themes/Colors'
 
 
@@ -33,11 +34,12 @@ const PrimaryNav = StackNavigator({
   Register: { screen: RegisterScreen },
   HouseInfScreen: { screen: HouseInfScreen },
   HouseSearch: { screen: HouseSearch},
+  HistoricScreen2: { screen: HistoricScreen2},
 }, {
   // Default config for all screens
   headerMode: 'float',
   navigationOptions,
-  initialRouteName: 'LaunchScreen'
+  initialRouteName: 'HistoricScreen2'
 })
 
 export default PrimaryNav

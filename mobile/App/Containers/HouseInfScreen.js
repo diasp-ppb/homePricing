@@ -10,6 +10,7 @@ import {baseURL} from "../Services/Api";
 import styles from './Styles/HouseInfScreenStyles'
 
 export default class LaunchScreen extends Component {
+  
   static navigationOptions = ({ navigation }) => ({
     title: 'Informação da casa',
   });
