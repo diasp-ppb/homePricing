@@ -68,6 +68,7 @@ export default class UserProfileScreen extends Component {
             return 'LaunchScreen';
             break;
         case 1: 
+            return 'HistoricScreen2'; 
             break;
         case 2:
             break;
