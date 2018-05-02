@@ -3,7 +3,7 @@
 
 * Standard compliant React Native App Utilizing [Ignite](https://github.com/infinitered/ignite)
 
-## :arrow_up: How to Setup
+## :arrow_up: How to Setup 
 
 **Step 1:** git clone this repo:
 
@@ -20,6 +20,7 @@
     * run `react-native run-ios`
   * for Android
     * Run Genymotion
+    * run `react-native start`
     * run `react-native run-android`
 
 ## :no_entry_sign: Standard Compliant

@@ -223,7 +223,7 @@ userSchema.statics = {
     return this.create({
       services: { [service]: id }, email, password, name, picture,
     });
-  },
+  }
 };
 
 /**

@@ -34,6 +34,10 @@ const Tipology = [
 ]
 
 export default class HouseSearch extends Component {
+  static navigationOptions = ({ navigation }) => ({
+    title: 'Pesquisa',
+  });
+
   constructor (props) {
     super(props)
     this.state = {
@@ -60,10 +64,14 @@ export default class HouseSearch extends Component {
   }
 
   submitSearch = () => {
-    return null
+    const { navigate }  = this.props.navigation;
+
+    navigate('SearchResults')
   }
 
   render () {
+
+
     return (
       <Container>
         <Content>

@@ -1,92 +1,78 @@
-const mongoose = require('mongoose');
+let mongoose = require('mongoose');
 const httpStatus = require('http-status');
 const { omitBy, isNil } = require('lodash');
+const bcrypt = require('bcryptjs');
+const moment = require('moment-timezone');
+const jwt = require('jwt-simple');
+const uuidv4 = require('uuid/v4');
 const APIError = require('../utils/APIError');
-const { env } = require('../../config/vars');
 
-/**
- * House Schema
- * @private
- */
-const houseSchema = new mongoose.Schema({
-  bathrooms: {
-    type: Number
-  },
-  type: {
+let houseSchema = new mongoose.Schema({
+  area: {
     type: String,
-    trim: true,
+    lowercase: true,
+  },
+  bathrooms: {
+    type: Number,
+    minlength: 1,
   },
   description: {
     type: String,
-    maxlength: 2500,
-    required: true,
-    trim: true,
+    maxlength: 128,
   },
-  area: {
-    type: Number,
+  zone: {
+    type: String,
+    maxlength: 128,
   },
-  coordinates: [{
-    type: Number,
-  }],
   title: {
     type: String,
-    required: true,
-    maxlength: 300
+    maxlength: 128,
   },
   webpage: {
     type: String,
     trim: true,
   },
-  characteristics: [{
+  characteristics: {
     type: String,
-  }],
+  },
   price: {
-    type: Number,
+    type: String,
   },
   tipology: {
     type: String,
-    trim: true,
   },
   energyCertificate: {
     type: String,
-    trim: true,
+  },
+  address: {
+    type: String,
   },
   condition: {
     type: String,
-    trim: true,
+    maxlength: 128,
   },
-  year: {
-    type: Number,
-  },
-  images: [{
-    type: String,
-  }],
-  address: {
-    type: Object
-  }
 }, {
-    timestamps: true,
-  });
+  timestamps: true,
+});
 
-/**
- * Methods
- */
 houseSchema.method({
+
   transform() {
+    console.log('------------------------- [ Got To house.Model ] --------------------');
     const transformed = {};
-    const fields = ['id', 'title', 'description', 'type', 'address', 'coordinates', 'bathrooms', 'area', 'webpage', 'characteristics', 'price', 'area', 'tipology', 'energyCertificate', 'condition', 'year', 'images', 'createdAt'];
+    const fields = ['id','area','price','energyCertificate','bathrooms','tipology','condition','address','zone','description'];
 
-    fields.forEach((field) => {
-      transformed[field] = this[field];
-    });
-
+    fields.forEach(
+      (field) => {
+      transformed[field] = this[field]
+    }
+  );
+    console.log(transformed)
     return transformed;
   }
 });
 
-/**
- * Statics
- */
+
 houseSchema.statics = {
 
   /**
@@ -95,59 +81,33 @@ houseSchema.statics = {
    * @param {ObjectId} id - The objectId of house.
    * @returns {Promise<House, APIError>}
    */
-  async get(id) {
-    try {
-      let house;
+  async get(id)
+{
+  try {
+    let house;
 
-      if (mongoose.Types.ObjectId.isValid(id)) {
-        house = await this.findById(id).exec();
-      }
-      if (house) {
-        return house;
-      }
-
-      throw new APIError({
-        message: 'House does not exist',
-        status: httpStatus.NOT_FOUND,
-      });
-    } catch (error) {
-      throw error;
+    if (mongoose.Types.ObjectId.isValid(id)) {
+      house = await this.findById(id).exec();
     }
+    if (house) {
+      return house;
+    }
+
+    throw new APIError({
+      message: 'User does not exist',
+      status: httpStatus.NOT_FOUND,
+    });
+  } catch (error) {
+    throw error;
+  }
+},
+  list() {
+
+    return this.find().exec();
   },
 
-  /**
-   * List houses in descending order of 'createdAt' timestamp.
-   *
-   * @param {number} skip - Number of houses to be skipped.
-   * @param {number} limit - Limit number of houses to be returned.
-   * @returns {Promise<House[]>}
-   */
-  list({
-    page = 1, perPage = 30
-  }) {
-    return this.find()
-      .sort({ createdAt: -1 })
-      .skip(perPage * (page - 1))
-      .limit(perPage)
-      .exec();
-  },
+}
 
-  /**
-  * Filter houses in descending order of 'createdAt' timestamp.
-  *
-  * @param {number} skip - Number of houses to be skipped.
-  * @param {number} limit - Limit number of houses to be returned.
-  * @returns {Promise<House[]>}
-  */
-  filter(params, page = 1, perPage = 30) {
-
-    return this.find(params)
-      .sort({ createdAt: -1 })
-      .skip(perPage * (page - 1))
-      .limit(perPage)
-      .exec();
-  },
-};
 
 /**
  * @typedef House
