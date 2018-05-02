@@ -6,23 +6,19 @@ import SearchResults from '../Containers/SearchResults'
 import { RegisterScreen } from '../Containers/RegisterScreen'
 import { UserProfileScreen} from '../Containers/UserProfileScreen'
 import { LoginScreen } from '../Containers/LoginScreen'
-import  HouseInfScreen from '../Containers/HouseInfScreen'
+import HouseInfScreen from '../Containers/HouseInfScreen'
 import HouseSearch from '../Containers/HouseSearch'
+import HelpScreen from '../Containers/HelpScreen'
 import Colors from '../Themes/Colors'
 
-
-
-  // Styles
+// Styles
 import styles from './Styles/NavigationStyles'
-
 
 const navigationOptions = ({ navigation }) => ({
   headerStyle: { backgroundColor: Colors.blue4 },
   headerTintColor: 'white',
   headerBackTitle: null,
 });
-
-
 
 // Manifest of possible screens
 const PrimaryNav = StackNavigator({
@@ -33,11 +29,12 @@ const PrimaryNav = StackNavigator({
   Register: { screen: RegisterScreen },
   HouseInfScreen: { screen: HouseInfScreen },
   HouseSearch: { screen: HouseSearch},
+  HelpScreen: { screen: HelpScreen }
 }, {
   // Default config for all screens
   headerMode: 'float',
   navigationOptions,
-  initialRouteName: 'LaunchScreen'
+  initialRouteName: 'HelpScreen'
 })
 
 export default PrimaryNav

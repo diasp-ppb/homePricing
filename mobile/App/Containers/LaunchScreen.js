@@ -9,14 +9,11 @@ import { Container, Header, Body, Title, Button, Text, Fab, Icon, Row , Col } fr
 // Styles
 import styles from './Styles/LaunchScreenStyles'
 
-
-
 // Component
 export default class LaunchScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
-    title: 'HomePricing',
+    title: 'Home Pricing',
   });
-
 
   constructor (props) {
     super(props)
@@ -37,24 +34,15 @@ export default class LaunchScreen extends Component {
               <Button style={styles.topBtn} onPress={() => navigate('HouseSearch')}>
                 <Text>Pesquisar</Text>
               </Button>
-
-              <Row style={{ marginTop: 8 }}>
-                <Col size={48}>
-                  <Button primary block onPress={() =>
-                    navigate('Login')
-                  }>
-                    <Text>Login</Text>
-                  </Button>
-                </Col>
-                <Col size={4} />
-                <Col size={48}>
-                  <Button primary block>
-                    <Text>GPS</Text>
-                  </Button>
-                </Col>
-              </Row>
             </View>
-            <Col size={20} />
+            <View style={styles.btnGroup}>
+              <Button style={styles.btn} onPress={() => navigate('Login')}>
+                <Text>Login</Text>
+              </Button>
+              <Button style={styles.btn}>
+                <Text>GPS</Text>
+              </Button>
+            </View>
           </View>
         </View>
         <Fab><Icon name="camera" /></Fab>

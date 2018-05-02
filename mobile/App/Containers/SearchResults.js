@@ -9,6 +9,7 @@ import { Container, Header, Left, Right, Body, Title, Content, Button, Text, Ico
 // Styles
 import styles from './Styles/SearchResultsStyles'
 import {baseURL} from "../Services/Api";
+
 // Component
 export default class LaunchScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
