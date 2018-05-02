@@ -15,7 +15,7 @@ export default class GpsMap extends Component {
 
   render() {
     const {
-      region, showUserLocation, addMoreMarkers, navigate, markers, moreInfo, focusOnLocation,
+      region, showUserLocation, addMoreMarkers, navigate, houses, moreInfo, focusOnLocation,
     } = this.props;
 
     return (
@@ -23,26 +23,30 @@ export default class GpsMap extends Component {
         <MapView
           provider={PROVIDER_GOOGLE}
           style={styles.map}
-          region={region}
+          initialRegion={region}
           showsUserLocation={showUserLocation}
-          onRegionChange={() => addMoreMarkers()}
+          onRegionChangeComplete={(newRegion) => addMoreMarkers(newRegion)}
           loadingEnabled
           loadingIndicatorColor="#666666"
           loadingBackgroundColor="#eeeeee"
         >
           {
-            this.props.markers.map((marker, i) => (
+            houses.map((house, i) => (
               <Marker
-                coordinate={marker.latlong}
+                coordinate={{
+                  latitude: parseFloat(house.coordinates[0]),
+                  longitude: parseFloat(house.coordinates[1]),
+                }}
                 key={i}
                 onPress={() => moreInfo(i)}
               >
                 <GpsMarker
-                  amount={marker.amount}
-                  moreInfo={marker.moreInfo}
+                  amount={house.price}
+                  moreInfo={house.moreInfo}
+                  image={house.images[0]}
                 />
-                <Callout style={styles.callout} onPress={() => navigate('HouseInformation', {id: 'asdasdqwdqwdq'})}>
-                  <Text style={{fontSize:13}}>Mais detalhes</Text>
+                <Callout style={styles.callout} onPress={() => navigate('HouseInformation', { house })}>
+                  <Text style={{ fontSize: 13 }}>Mais detalhes</Text>
                 </Callout>
 
 
@@ -50,15 +54,15 @@ export default class GpsMap extends Component {
             ))
           }
         </MapView>
-        {showUserLocation ? (
           <View>
             <TouchableOpacity
               style={{
                 borderWidth: 0,
-                marginTop: 440,
+                marginTop: '90%',
                 marginLeft: 10,
                 backgroundColor: Colors.colors.transparent,
                 borderColor: Colors.transparent,
+                width: 50,
               }}
               onPress={() => focusOnLocation()}
             >
@@ -70,8 +74,6 @@ export default class GpsMap extends Component {
               />
             </TouchableOpacity>
           </View>
-        ) : (null)
-        }
       </Container>
 
     );
@@ -86,5 +88,5 @@ const styles = StyleSheet.create({
   callout: {
     width: 90,
     height: 25,
-  }
+  },
 });

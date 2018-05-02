@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import GpsMap from '../Components/GPSMap';
+import { baseURL } from '../Services/Api';
 
 export default class GpsScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -18,23 +19,16 @@ export default class GpsScreen extends Component {
         latitudeDelta: 0.0050,
         longitudeDelta: 0.0025,
       },
-      markers: [{
-        latlong: {
-          latitude: 41.1743668,
-          longitude: -8.58457610000005,
-        },
-        amount: 40000,
-        moreInfo: false,
-      }],
+      houses: [],
     };
 
     this.addMoreMarkers = this.addMoreMarkers.bind(this);
     this.moreInfo = this.moreInfo.bind(this);
     this.focusOnLocation = this.focusOnLocation.bind(this);
+    this.getMarkerOnLocation = this.getMarkerOnLocation.bind(this);
   }
 
   componentDidMount() {
-
     this.watchId = navigator.geolocation.watchPosition(
       (position) => {
         this.setState({
@@ -42,7 +36,8 @@ export default class GpsScreen extends Component {
           longitude: position.coords.longitude,
           error: null,
         });
-        this.setState();
+        this.focusOnLocation();
+        this.getMarkerOnLocation(this.state.latitude, this.state.longitude);
       },
       (error) => this.setState({ error: error.message }),
       {
@@ -59,6 +54,37 @@ export default class GpsScreen extends Component {
   }
 
 
+  getMarkerOnLocation() {
+    fetch(`${baseURL}/v1/houses/findbygps`, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        latitude: this.state.region.latitude,
+        longitude: this.state.region.longitude,
+        latitudeDelta: this.state.region.latitudeDelta,
+        longitudeDelta: this.state.region.longitudeDelta,
+      }),
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((houses) => {
+        const newhouses = houses;
+        for (let i = 0; i < newhouses.length; i++) {
+          const house = newhouses[i];
+          house.moreInfo = false;
+        }
+        this.setState({ houses: newhouses });
+      })
+      .catch((json) => {
+        console.error(json);
+      });
+  }
+
+
   focusOnLocation() {
     if (this.state.latitude != null || this.state.latitude != null) {
       const region = { ...this.state.region };
@@ -68,33 +94,31 @@ export default class GpsScreen extends Component {
     }
   }
 
-  addMoreMarkers() {
-    // Query to request more markers
+  addMoreMarkers(region) {
+    this.setState({ region });
+    this.getMarkerOnLocation();
   }
 
 
-  moreInfo(marker) {
-    const markers = this.state.markers;
-    markers[marker].moreInfo = !markers[marker].moreInfo;
-    this.setState({
-      markers,
-    });
+  moreInfo(house) {
+    const houses = this.state.houses;
+    houses[house].moreInfo = !houses[house].moreInfo;
+    this.setState({ houses });
   }
 
 
   render() {
-
     const { navigate } = this.props.navigation;
 
     return (
       <GpsMap
         region={this.state.region}
-        showsUserLocation={true}
+        showsUserLocation
         addMoreMarkers={this.addMoreMarkers}
-        markers={this.state.markers}
         navigate={navigate}
         moreInfo={this.moreInfo}
         focusOnLocation={this.focusOnLocation}
+        houses={this.state.houses}
       />
     );
   }

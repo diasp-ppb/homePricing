@@ -26,7 +26,7 @@ class GpsMarker extends React.Component {
 
 
   render() {
-    const { fontSize, amount, moreInfo } = this.props;
+    const { fontSize, amount, moreInfo, image } = this.props;
 
     const renderSelector = moreInfo ?
       (
@@ -34,7 +34,7 @@ class GpsMarker extends React.Component {
           <View style={styles.bubble}>
             <ImageBackground
               style={styles.image}
-              source={{uri: "https://upload.wikimedia.org/wikipedia/commons/3/33/F-Am%C3%A9ricas.png"}}
+              source={{uri: image}}
             >
               <View style={styles.textcontainer}>
                 <Text style={styles.streetText}>{amount} €</Text>

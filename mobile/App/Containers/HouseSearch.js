@@ -39,7 +39,7 @@ export default class HouseSearch extends Component {
   });
 
   constructor (props) {
-    super(props)
+    super(props);
     this.state = {
       rent: false,
       buy: false,
@@ -51,11 +51,11 @@ export default class HouseSearch extends Component {
       hospital: false,
       school: false,
       shopping: false,
-      transport: false
-    }
+      transport: false,
+    };
   }
 
-  addPickerItems = (items) => {
+  addPickerItems(items)  {
     return items.map((item, key) => {
       return (
         <Picker.Item key={key} label={item.label} value={item.value} />
@@ -63,10 +63,24 @@ export default class HouseSearch extends Component {
     })
   }
 
-  submitSearch = () => {
+  submitSearch() {
     const { navigate }  = this.props.navigation;
 
-    navigate('SearchResults')
+    const form = {
+      rent: this.state.rent,
+      buy: this.state.buy,
+      propertyType: (this.state.propertyType === undefined) ? (null) : this.state.propertyType,
+      minArea: (this.state.minArea === undefined) ? (null) : this.state.minArea,
+      maxArea: (this.state.maxArea === undefined) ? (null) : this.state.maxArea,
+      minPrice: (this.state.minPrice === undefined) ? (null) : this.state.minPrice,
+      maxPrice: (this.state.maxPrice === undefined) ? (null) : this.state.maxPrice,
+      hospital: this.state.hospital,
+      school: this.state.school,
+      shopping: this.state.shopping,
+      transport: this.state.transport,
+    }
+
+    navigate('SearchResults', {form: form})
   }
 
   render () {
@@ -81,19 +95,19 @@ export default class HouseSearch extends Component {
 
             <View style={styles.obectivePanel}>
               <Button style={(this.state.rent === false) ? [styles.objectiveButton, {marginRight: Metrics.baseMargin}] : [styles.objectiveButtonSelected, {marginRight: Metrics.baseMargin}]}
-                onPress={() =>
-                this.setState(previousState => {
-                  return { rent: !previousState.rent }
-                })}
+                      onPress={() =>
+                        this.setState(previousState => {
+                          return { rent: !previousState.rent }
+                        })}
               >
                 <Text style={(this.state.rent === false) ? styles.text : styles.objectiveButtonSelectedText} > Alugar </Text>
               </Button>
 
               <Button style={(this.state.buy === false) ? [styles.objectiveButton] : [styles.objectiveButtonSelected]}
-                onPress={() =>
-                this.setState(previousState => {
-                  return { buy: !previousState.buy }
-                })}
+                      onPress={() =>
+                        this.setState(previousState => {
+                          return { buy: !previousState.buy }
+                        })}
               >
                 <Text style={(this.state.buy === false) ? styles.text : styles.objectiveButtonSelectedText} > Comprar </Text>
               </Button>
@@ -158,7 +172,7 @@ export default class HouseSearch extends Component {
                   placeholderIconColor='#007aff'
                   selectedValue={this.state.minPrice}
                   onValueChange={(value) => this.setState({minPrice: value})}
-              >
+                >
                   {this.addPickerItems(Price)}
                 </Picker>
 
@@ -173,7 +187,7 @@ export default class HouseSearch extends Component {
                   placeholderIconColor='#007aff'
                   selectedValue={this.state.maxPrice}
                   onValueChange={(value) => this.setState({maxPrice: value})}
-              >
+                >
                   {this.addPickerItems(Price)}
                 </Picker>
               </View>
@@ -185,25 +199,25 @@ export default class HouseSearch extends Component {
 
           <View style={styles.servicesPanel}>
             <Button style={(this.state.hospital === false) ? styles.serviceButton : styles.serviceButtonSelected}
-              onPress={() => this.setState({hospital: !this.state.hospital})}>
+                    onPress={() => this.setState({hospital: !this.state.hospital})}>
               <Icon ios={'ios-heart-outline'} android={'md-heart-outline'} style={(this.state.hospital === false) ? styles.icon : styles.iconSelected} />
               <Text style={(this.state.hospital === false) ? styles.serviceButtonText : styles.serviceButtonTextSelected}> Hospital </Text>
             </Button>
 
             <Button style={(this.state.school === false) ? styles.serviceButton : styles.serviceButtonSelected}
-              onPress={() => this.setState({school: !this.state.school})} >
+                    onPress={() => this.setState({school: !this.state.school})} >
               <Icon ios={'ios-book-outline'} android={'md-book'} style={(this.state.school === false) ? styles.icon : styles.iconSelected} />
               <Text style={(this.state.school === false) ? styles.serviceButtonText : styles.serviceButtonTextSelected}> Escolas </Text>
             </Button >
 
             <Button style={(this.state.shopping === false) ? styles.serviceButton : styles.serviceButtonSelected}
-              onPress={() => this.setState({shopping: !this.state.shopping})}>
+                    onPress={() => this.setState({shopping: !this.state.shopping})}>
               <Icon ios={'ios-basket-outline'} android={'md-basket'} style={(this.state.shopping === false) ? styles.icon : styles.iconSelected} />
               <Text style={(this.state.shopping === false) ? styles.serviceButtonText : styles.serviceButtonTextSelected}> Shopping </Text>
             </Button>
 
             <Button style={(this.state.transport === false) ? styles.serviceButton : styles.serviceButtonSelected}
-              onPress={() => this.setState({transport: !this.state.transport})}>
+                    onPress={() => this.setState({transport: !this.state.transport})}>
               <Icon ios={'ios-car'} android={'md-car'} style={(this.state.transport === false) ? styles.icon : styles.iconSelected} />
               <Text style={(this.state.transport === false) ? styles.serviceButtonText : styles.serviceButtonTextSelected}> Transportes </Text>
             </Button>

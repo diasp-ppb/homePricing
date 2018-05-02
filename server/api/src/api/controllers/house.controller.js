@@ -4,7 +4,6 @@ const House = require('../models/house.model');
 const { handler: errorHandler } = require('../middlewares/error');
 const convertParams = require('../middlewares/convert').convertParams;
 const searchHouses = require('../middlewares/search').searchHouses;
-
 /**
  * Load house and append to req.
  * @public
@@ -84,6 +83,35 @@ exports.filter = async (req, res, next) => {
   }
 };
 
+
+/**
+ * Find houses by gps
+ * @public
+ */
+exports.findbygps = async (req, res, next ) => {
+  try {
+    const params = req.body;
+
+    let Lat = params.latitude;
+    let Long = params.longitude;
+    let deltaLathalf = params.latitudeDelta / 2;
+    let deltaLonhalf = params.longitudeDelta / 2;
+
+    let minLat = Lat - deltaLathalf;
+    let maxLat = Lat + deltaLathalf;
+
+    let minLong = Long - deltaLonhalf;
+    let maxLong = Long + deltaLonhalf;
+
+
+    const houses = await House.findByLocation(minLat, maxLat, minLong, maxLong);
+    console.warn(houses)
+    res.json(houses);
+
+  } catch (error) {
+    next(error);
+  }
+}
 /**
  * Delete house
  * @public

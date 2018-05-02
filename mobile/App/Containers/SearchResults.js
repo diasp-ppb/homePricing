@@ -1,10 +1,9 @@
-import { Images } from '../Themes';
 import React, { Component } from 'react';
-import {View, Image, TouchableOpacity, StyleSheet} from 'react-native';
+import { Image, ScrollView } from 'react-native';
 
 
 // Native Base
-import { Container, Header, Left, Right, Body, Content, Button, Text, Icon, Item, Input, Segment, Card, CardItem } from 'native-base';
+import { Container, Header, Left, Body, Button, Text, Icon, Item, Input, Segment, Card, CardItem } from 'native-base';
 
 // Styles
 import styles from './Styles/SearchResultsStyles';
@@ -23,7 +22,6 @@ export default class LaunchScreen extends Component {
     this.state = {
       houses: [],
       map: false,
-      markers: [],
       region: {
         latitude: 41.1743667,
         longitude: -8.58457610000005,
@@ -38,12 +36,22 @@ export default class LaunchScreen extends Component {
 
   // Fetch data here
   componentDidMount() {
-    fetch(`${baseURL}/v1/houses`)
+    const { navigation } = this.props;
+    const form = navigation.state.params.form;
+
+    fetch(`${baseURL}/v1/houses/filter`, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(form),
+    })
       .then((response) => {
         return response.json();
       })
-      .then((responseJson) => {
-        this.setState({ houses: responseJson });
+      .then((houses) => {
+        this.setState({ houses });
         this.generateMarkers();
       })
       .catch((json) => {
@@ -57,85 +65,100 @@ export default class LaunchScreen extends Component {
   }
 
   generateMarkers() {
-    const markers = [];
-    for (let i = 0; i < this.state.houses.lengt; i++) {
-      const marker = {
-        latlong: {
-          latitude: 41.1743668,
-          longitude: -8.58457610000005,
-        },
-        amount: 40000,
-        moreInfo: false,
-      };
-      markers.push(marker);
+    let minLat = 1000;
+    let maxLat = -1000;
+    let minLong = 1000;
+    let maxLong = -1000;
+
+    const houses = this.state.houses;
+    for (let i = 0; i < houses.length; i++) {
+      const house = houses[i];
+      const lat = parseFloat(house.coordinates[0]);
+      const long = parseFloat(house.coordinates[1]);
+
+      if (minLat > lat) { minLat = lat; }
+      if (maxLat < lat) { maxLat = lat; }
+      if (minLong > long) { minLong = long; }
+      if (maxLong < long) { maxLong = long; }
+
+      house.moreInfo = false;
     }
 
-    this.setState({ markers });
+    const deltaLong = maxLong - minLong;
+    const deltaLat = maxLat - minLat;
+
+    const region = { ...this.state.region };
+    region.latitudeDelta = deltaLat;
+    region.longitudeDelta = deltaLong;
+    region.latitude = minLat + (deltaLat / 2);
+    region.longitude = minLong + (deltaLong / 2);
+
+    this.setState({ region });
+    this.setState({ houses });
   }
 
-  addMoreMarkers() {}
+  addMoreMarkers(region) {
+    this.setState({ region });
+  }
 
-  moreInfo(marker) {
-    const markers = this.state.markers;
-    markers[marker].moreInfo = !markers[marker].moreInfo;
-    this.setState({
-      markers,
-    });
+  moreInfo(house) {
+    const houses = this.state.houses;
+    houses[house].moreInfo = !houses[house].moreInfo;
+    this.setState({ houses });
   }
 
 
   renderTab() {
-
     const { navigate } = this.props.navigation;
 
-    const tab = this.state.map ? (
-      <Container style={{flex: 1, flexWrap: 'wrap'}}>
+    const tab = this.state.map === true ? (
+      <Container style={{ flex: 1, flexWrap: 'wrap' }}>
         <GPSMap
           region={this.state.region}
           showsUserLocation={false}
           addMoreMarkers={this.addMoreMarkers}
-          markers={this.state.markers}
+          houses={this.state.houses}
           navigate={navigate}
           moreInfo={this.moreInfo}
         />
       </Container>
     ) : (
-      <View style={{ marginBottom: 20 }}>
+      <ScrollView style={{ marginBottom: 20, flex: 1 }}>
         {
           this.state.houses.map((item, index) => {
             return (
-              <Card key={index}>
-                <CardItem button onPress={() => navigate('HouseInformation', { id: item.id })}>
+              <Card key={index} style={{ flex: 1 }}>
+                <CardItem button onPress={() => navigate('HouseInformation', { house: item })}>
                   <Left>
                     <Body>
-                    <Text>{item.description}</Text>
-                    <Text style={styles.address}>
-                      <Icon ios="ios-pin" android="md-pin" style={styles.address} /> {item.address}
-                    </Text>
+                      <Text>{item.title}</Text>
+                      <Text style={styles.address}>
+                        <Icon ios="ios-pin" android="md-pin" style={styles.address} />
+                        {item.address.zipcode},
+                        {item.address.town},
+                        {item.address.county}
+                      </Text>
                     </Body>
                   </Left>
                 </CardItem>
                 <CardItem cardBody>
-                  <Image source={{ uri: item.imageURL }}
-                         style={{ height: 200, width: null, flex: 1 }} />
+                  <Image
+                    source={{ uri: item.images[0] }}
+                    style={{ height: 200, width: null, flex: 1 }}
+                  />
                 </CardItem>
                 <CardItem>
                   <Left>
                     <Text style={styles.info}>
-                      <Icon ios="ios-cash" android="md-cash" style={styles.info} /> {item.price}
+                      <Icon ios="ios-cash" android="md-cash" style={styles.info} /> {item.price} €
                     </Text>
                   </Left>
-                  <Right>
-                    <Text style={styles.info}>
-                      <Icon ios="ios-chatbubbles" android="md-chatbubbles" style={styles.info} /> {item.numComm}
-                    </Text>
-                  </Right>
                 </CardItem>
               </Card>
             );
           })
         }
-      </View>
+      </ScrollView>
     );
 
     return tab;
@@ -144,8 +167,6 @@ export default class LaunchScreen extends Component {
 
   // Render the screen
   render() {
-
-
     return (
       <Container>
         <Header searchBar rounded hasSegment>

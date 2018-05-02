@@ -50,7 +50,21 @@ router.route('/')
  *
  */
 router.route('/filter')
-  .post(validate(request), controller.filter)
+  .post(controller.filter)
+
+/**
+ * @api {post} v1/houses/findbygps List houses that are inside a area
+ * @apiDescription List houses that match a area
+ * @apiVersion 1.0.0
+ * @apiName FindByGps
+ * @apiGroup House
+ * @apiPermission anyone
+ *
+ * @apiSuccess {Object[]} houses List of houses.
+ *
+ */
+router.route('/findbygps')
+  .post(controller.findbygps)
 
 /**
  * @api {get} v1/houses/:houseId Get house

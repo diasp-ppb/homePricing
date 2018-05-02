@@ -10,7 +10,7 @@ const { env } = require('../../config/vars');
  */
 const houseSchema = new mongoose.Schema({
   bathrooms: {
-    type: Number
+    type: Number,
   },
   type: {
     type: String,
@@ -26,12 +26,12 @@ const houseSchema = new mongoose.Schema({
     type: Number,
   },
   coordinates: [{
-    type: String,
+    type: Number,
   }],
   title: {
     type: String,
     required: true,
-    maxlength: 300
+    maxlength: 300,
   },
   webpage: {
     type: String,
@@ -62,8 +62,8 @@ const houseSchema = new mongoose.Schema({
     type: String,
   }],
   address: {
-    type: Object
-  }
+    type: Object,
+  },
 }, {
   timestamps: true,
 });
@@ -80,7 +80,7 @@ houseSchema.method({
       transformed[field] = this[field];
     });
     return transformed;
-  }
+  },
 });
 
 /**
@@ -123,8 +123,8 @@ houseSchema.statics = {
    * @returns {Promise<House[]>}
    */
   list({
-         page = 1, perPage = 30
-       }) {
+    page = 1, perPage = 30,
+  }) {
     return this.find()
       .sort({ createdAt: -1 })
       .skip(perPage * (page - 1))
@@ -140,12 +140,26 @@ houseSchema.statics = {
    * @returns {Promise<House[]>}
    */
   filter(params, page = 1, perPage = 30) {
-
     return this.find(params)
-      .sort({createdAt: -1})
+      .sort({ createdAt: -1 })
       .skip(perPage * (page - 1))
       .limit(perPage)
       .exec();
+  },
+
+  async findByLocation(minLat, maxLat, minLong, maxLong, page = 1, perPage = 30) {
+    let house =  await this.find({
+      $and: [
+        { coordinates: { $elemMatch: { $gte: minLat, $lt: maxLat } } },
+        { coordinates: { $elemMatch: { $gte: minLong, $lt: maxLong } } },
+      ],
+    })
+      .sort({ createdAt: -1 })
+      .skip(perPage * (page - 1))
+      .limit(perPage)
+      .exec();
+
+    return house;
   },
 };
 
