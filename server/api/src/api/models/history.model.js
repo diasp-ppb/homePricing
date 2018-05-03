@@ -5,7 +5,7 @@ const APIError = require('../utils/APIError');
 const { env } = require('../../config/vars');
 
 /**
- * House Schema
+ * History Schema
  * @private
  */
 const historySchema = new mongoose.Schema({
@@ -43,7 +43,7 @@ historySchema.method({
 historySchema.statics = {
 
     /**
-     * Get house
+     * Get history
      *
      * @param {ObjectId} id - The userId.
      * @returns {Promise<History, APIError>}
@@ -76,6 +76,6 @@ historySchema.statics = {
 };
 
 /**
- * @typedef House
+ * @typedef History
  */
 module.exports = mongoose.model('History', historySchema);
