@@ -127,3 +127,57 @@ export function updateUserPreferences(bodyContent, props) {
     })
     .catch((error) => { console.error(error); });
 }
+
+export function getUserPreferences(updateUserPreferences) {
+
+    var url = baseURL + '/v1/users/preferences';
+    var auth = 'Bearer ' + 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1MjUzODY0OTksImlhdCI6MTUyNTM4Mjg5OSwic3ViIjoiNWFkN2Y2OTgxNTI1ODcwMDFlNDc4OWU3In0.9La6VF-1z3aWwYKvYxdm8ZYkMJM-flS1wR4V__wGKpg';
+    
+    fetch(url, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type' : 'application/json',
+        'Authorization' : auth
+      }
+    }).then(
+      (response) => response.json()
+    )
+    .then((responseJson) => {
+
+        if(responseJson.code == '401') {
+            console.error('Jwt expired!');
+        }
+
+        var services = responseJson.services.map(function(item) {
+            return {
+                service: item.service,
+                distance: item.distance,
+                quantity: item.quantity
+            };
+        });
+
+        if(services.length == 0) {
+            updateUserPreferences.setState({getData: false});
+            return;
+        }
+
+        updateUserPreferences.setState({goal: responseJson.finality});
+        updateUserPreferences.setState({propertyType: responseJson.type});
+        updateUserPreferences.setState({tipology: responseJson.tipology})
+        updateUserPreferences.setState({minArea: responseJson.areaMin});
+        updateUserPreferences.setState({maxArea: responseJson.areaMax});
+        updateUserPreferences.setState({minPrice: responseJson.priceMin});
+        updateUserPreferences.setState({maxPrice: responseJson.priceMax});
+        updateUserPreferences.setState({workPlace: responseJson.workAddress});
+        updateUserPreferences.setState({workDistance: responseJson.workMaxDistance});              
+        updateUserPreferences.setState({hospitalDist: services[0].distance});
+        updateUserPreferences.setState({hospitalQtn: services[0].quantity});
+        updateUserPreferences.setState({schoolDist: services[1].distance});
+        updateUserPreferences.setState({schoolQtn:services[1].quantity});
+    }
+    ).catch((error) => {
+      console.error(error);
+    });
+
+}

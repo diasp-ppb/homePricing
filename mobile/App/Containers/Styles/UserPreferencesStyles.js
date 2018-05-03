@@ -2,27 +2,6 @@ import { StyleSheet } from 'react-native'
 import { Metrics, ApplicationStyles, Colors, Fonts } from '../../Themes/'
 
 export default StyleSheet.create({
-  root: {
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignContent: 'center'
-  },
-
-  text: {
-    color: Colors.blue6,
-    alignContent: 'center'
-  },
-
-  serviceButton: {
-    marginRight: Metrics.baseMargin / 2,
-    backgroundColor: Colors.white,
-    borderWidth: 0,
-    borderColor: Colors.transparent,
-    height: 85,
-    width: 85,
-    flexDirection: 'column'
-  },
-
   serviceButtonSelected: {
     marginRight: Metrics.baseMargin / 2,
     backgroundColor: Colors.blue5,
@@ -31,22 +10,6 @@ export default StyleSheet.create({
     height: 85,
     width: 85,
     flexDirection: 'column'
-  },
-
-  servicesPanel: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignContent: 'center',
-    width: Metrics.screenWidth
-  },
-
-  obectivePanel: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignContent: 'center',
-    marginRight: Metrics.baseMargin,
-    marginLeft: Metrics.baseMargin,
-    width: Metrics.screenWidth - 2 * Metrics.baseMargin ,
   },
   mainTitle: {
     textAlign: 'center',
@@ -62,47 +25,6 @@ export default StyleSheet.create({
     marginTop: Metrics.doubleBaseMargin,
     marginBottom: Metrics.baseMargin
   },
-
-  objectiveButton: {
-    backgroundColor: Colors.white,
-    borderWidth: 0,
-    borderColor: Colors.transparent,
-    alignSelf: 'stretch',
-    flex: 1,
-    alignContent: 'center',
-    justifyContent: 'center'
-  },
-
-  objectiveButtonSelected: {
-    backgroundColor: Colors.blue5,
-    borderWidth: 0,
-    borderColor: Colors.transparent,
-    alignSelf: 'stretch',
-    flex: 1,
-    alignContent: 'center',
-    justifyContent: 'center'
-  },
-
-  objectiveButtonSelectedText: {
-    color: Colors.white
-  },
-  icon: {
-    fontSize: Metrics.icons.medium,
-    color: Colors.blue2,
-    marginTop: Metrics.baseMargin
-  },
-
-  iconSelected: {
-    fontSize: Metrics.icons.medium,
-    color: Colors.white,
-    marginTop: Metrics.baseMargin
-  },
-
-
-
-  buttonText: {
-    alignSelf: 'center'
-  },
   SideBySide: {
     flexDirection: 'row',
     alignSelf: 'center',
@@ -111,9 +33,6 @@ export default StyleSheet.create({
   input: {
     width: 200,
     backgroundColor: Colors.white
-  },
-  pickerFinalidade: {
-  color: Colors.blue6
   },
 
   pickerBackground: {
@@ -130,7 +49,6 @@ export default StyleSheet.create({
     color: Colors.white,
     fontSize: 10
   },
-
   separator: {
     marginTop: Metrics.baseMargin,
     borderBottomColor: Colors.coolGray2,

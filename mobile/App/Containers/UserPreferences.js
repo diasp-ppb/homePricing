@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import Metrics from '../Themes/Metrics'
 import { createBodyUserPreferences } from '../Services/Api'
 import { updateUserPreferences } from '../Services/Api'
-import {baseURL} from "../Services/Api";
+import { getUserPreferences } from "../Services/Api";
 
 // Styles
 import Colors from '../Themes/Colors'
@@ -59,61 +59,7 @@ export default class UserPreferences extends Component {
     }
     
     componentDidMount() {
-        this.getUserPreferences();
-    }
-
-    getUserPreferences() {
-
-        var url = baseURL + '/v1/users/preferences';
-        var auth = 'Bearer ' + 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1MjUzODY0OTksImlhdCI6MTUyNTM4Mjg5OSwic3ViIjoiNWFkN2Y2OTgxNTI1ODcwMDFlNDc4OWU3In0.9La6VF-1z3aWwYKvYxdm8ZYkMJM-flS1wR4V__wGKpg';
-        
-        fetch(url, {
-          method: 'GET',
-          headers: {
-            Accept: 'application/json',
-            'Content-Type' : 'application/json',
-            'Authorization' : auth
-          }
-        }).then(
-          (response) => response.json()
-        )
-        .then((responseJson) => {
-
-            if(responseJson.code == '401') {
-                console.error('Jwt expired!');
-            }
-
-            var services = responseJson.services.map(function(item) {
-                return {
-                    service: item.service,
-                    distance: item.distance,
-                    quantity: item.quantity
-                };
-            });
-
-            if(services.length == 0) {
-                this.setState({getData: false});
-                return;
-            }
-
-            this.setState({goal: responseJson.finality});
-            this.setState({propertyType: responseJson.type});
-            this.setState({tipology: responseJson.tipology})
-            this.setState({minArea: responseJson.areaMin});
-            this.setState({maxArea: responseJson.areaMax});
-            this.setState({minPrice: responseJson.priceMin});
-            this.setState({maxPrice: responseJson.priceMax});
-            this.setState({workPlace: responseJson.workAddress});
-            this.setState({workDistance: responseJson.workMaxDistance});              
-            this.setState({hospitalDist: services[0].distance});
-            this.setState({hospitalQtn: services[0].quantity});
-            this.setState({schoolDist: services[1].distance});
-            this.setState({schoolQtn:services[1].quantity});
-        }
-        ).catch((error) => {
-          console.error(error);
-        });
-
+        getUserPreferences(this);
     }
 
     addPickerItems = (items) => {
@@ -141,15 +87,15 @@ export default class UserPreferences extends Component {
         return (
             <Container>
                 <Content>
-                    <View style={styles.root}>
+                    <View>
                         <Text style={styles.mainTitle}>Preferências de casa</Text>
                         <View style={{flexDirection: 'row', alignItems: 'center', marginTop: Metrics.baseMargin}}>
                             <View style={{flex:.4, marginLeft: Metrics.baseMargin}}>
                                 <Text style={styles.title}>Finalidade: </Text>
                             </View>
                             <View style={[styles.pickerBackground, {marginLeft: Metrics.baseMargin, marginRight: Metrics.baseMargin, flex: .6}]}>
-                            <Form>
-                                <Picker
+                                <Form>
+                                    <Picker
                                         mode='dropdown'
                                         iosIcon={<Icon name='ios-arrow-down-outline' />}
                                         placeholder='Finalidade'
