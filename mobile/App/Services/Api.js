@@ -81,3 +81,50 @@ export function registerAPI(name, email, password, props) {
       console.error(error);
   });
 }
+
+export function createBodyUserPreferences(goal, propertyType, tipology, 
+    minArea, maxArea, 
+    minPrice, maxPrice, 
+    hospitalDist, hospitalQtn, 
+    schoolDist, schoolQtn, 
+    workPlace, workDistance) {
+        return JSON.stringify({
+            finality: goal,
+            type: propertyType,
+            tipology: tipology,
+            areaMin: minArea,
+            areaMax: maxArea,
+            priceMin: minPrice,
+            priceMax: maxPrice,
+            services: [{
+                service: 'Hospital',
+                distance: hospitalDist,
+                quantity: hospitalQtn
+            },
+            {
+                service: 'School',
+                distance: schoolDist,
+                quantity: schoolQtn                
+            }],
+            workAddress: workPlace,
+            workMaxDistance: workDistance
+        });
+}
+
+export function updateUserPreferences(bodyContent, props) {
+    var url = baseURL + '/v1/preferences/';
+    var auth = 'Bearer ' + props.user.token;
+    fetch(url, {
+      method: 'PATCH',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type' : 'application/json',
+        'Authorization' : auth
+      },
+      body: bodyContent,
+    }).then(
+      (response) => response.json()
+    ).catch((error) => {
+      console.error(error);
+    });
+}

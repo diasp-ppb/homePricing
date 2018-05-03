@@ -105,11 +105,11 @@ export default StyleSheet.create({
   },
   SideBySide: {
     flexDirection: 'row',
-    alignSelf: 'center'
+    alignSelf: 'center',
+    marginTop: Metrics.baseMargin
   },
   input: {
     width: 200,
-    //color: Colors.blue6,
     backgroundColor: Colors.white
   },
   pickerFinalidade: {
