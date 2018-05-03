@@ -8,7 +8,7 @@ import { UserProfileScreen} from '../Containers/UserProfileScreen'
 import { LoginScreen } from '../Containers/LoginScreen'
 import  HouseInfScreen from '../Containers/HouseInfScreen'
 import HouseSearch from '../Containers/HouseSearch'
-import HistoricScreen2 from '../Containers/HistoricScreen2'
+import HistoricScreen from '../Containers/HistoricScreen'
 import Colors from '../Themes/Colors'
 
 
@@ -18,9 +18,13 @@ import styles from './Styles/NavigationStyles'
 
 
 const navigationOptions = ({ navigation }) => ({
-  headerStyle: { backgroundColor: Colors.blue4 },
-  headerTintColor: 'white',
-  headerBackTitle: null,
+  headerStyle: { backgroundColor: '#1a1a1a' },
+  headerTintColor: '#f2f2f2',
+  fontSize: 6,
+  textAlignVertical: 'center',
+  headerTitleStyle: {
+        fontSize: 12,
+      }
 });
 
 
@@ -34,12 +38,12 @@ const PrimaryNav = StackNavigator({
   Register: { screen: RegisterScreen },
   HouseInfScreen: { screen: HouseInfScreen },
   HouseSearch: { screen: HouseSearch},
-  HistoricScreen2: { screen: HistoricScreen2},
+  HistoricScreen: { screen: HistoricScreen},
 }, {
   // Default config for all screens
   headerMode: 'float',
   navigationOptions,
-  initialRouteName: 'HistoricScreen2'
+  initialRouteName: 'HistoricScreen'
 })
 
 export default PrimaryNav
