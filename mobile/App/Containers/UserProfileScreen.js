@@ -10,6 +10,7 @@ import { Container, Header, Body, Title, Content, Text, Button, Fab, Icon, Actio
 // Styles
 import styles from './Styles/UserProfileScreenStyles'
 
+
 //List Rows
 const rows = [
     {id: 0, text: 'Home', icon: Images.homeIcon },
@@ -25,6 +26,7 @@ const rows = [
   
   // DataSource template object
   const ds = new ListView.DataSource({rowHasChanged})
+
 
   
 export default class UserProfileScreen extends Component {
@@ -68,7 +70,7 @@ export default class UserProfileScreen extends Component {
             return 'LaunchScreen';
             break;
         case 1: 
-            return 'HistoricScreen2'; 
+            return 'HistoricScreen'; 
             break;
         case 2:
             break;
@@ -105,11 +107,6 @@ export default class UserProfileScreen extends Component {
     
     return (
       <Container>
-        <Header>
-          <Body>
-            <Title>Perfil</Title>
-          </Body>
-        </Header>
         <View style={styles.userInfo}>
           <Image source={Images.profileIcon} style={styles.icon} />
           <Text>{this.state.user}</Text>

@@ -17,7 +17,7 @@ export default class LaunchScreen extends Component {
     title: 'Historic',
     headerTitleStyle: {
         fontSize: 12,
-        marginLeft: '43%',
+        marginLeft: '32%',
       }
   });
 

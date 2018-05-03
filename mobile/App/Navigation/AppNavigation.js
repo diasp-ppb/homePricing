@@ -23,8 +23,8 @@ const navigationOptions = ({ navigation }) => ({
   fontSize: 6,
   textAlignVertical: 'center',
   headerTitleStyle: {
-        fontSize: 12,
-      }
+    fontSize: 12,
+  }
 });
 
 
@@ -43,7 +43,7 @@ const PrimaryNav = StackNavigator({
   // Default config for all screens
   headerMode: 'float',
   navigationOptions,
-  initialRouteName: 'HistoricScreen'
+  initialRouteName: 'UserProfile'
 })
 
 export default PrimaryNav
