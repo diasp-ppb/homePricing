@@ -48,7 +48,10 @@ export default class HouseSearch extends Component {
       maxArea: undefined,
       minPrice: undefined,
       maxPrice: undefined,
-      
+      hospital: false,
+      school: false,
+      shopping: false,
+      transport: false
     }
   }
 
