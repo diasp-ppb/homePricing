@@ -82,12 +82,14 @@ export function registerAPI(name, email, password, props) {
   });
 }
 
-export function createFavoriteAPI(user, house){
+export function createFavoriteAPI(user, house, token){
+    var auth = 'Bearer ' + token;
     fetch(baseURL + "/v1/favorites/create", {
         method: 'POST',
         headers: {
             Accept: 'application/json',
-            'Content-Type': 'application/json',
+            'Content-Type' : 'application/json',
+            'Authorization' : auth
         },
         body: JSON.stringify({
             userId: user,
@@ -103,12 +105,14 @@ export function createFavoriteAPI(user, house){
     });
 }
 
-export function deleteFavoriteAPI(user, house){
+export function deleteFavoriteAPI(user, house, token){
+    var auth = 'Bearer ' + token;
     fetch(baseURL + "/v1/favorites/remove", {
         method: 'DELETE',
         headers: {
             Accept: 'application/json',
             'Content-Type': 'application/json',
+            'Authorization' : auth
         },
         body: JSON.stringify({
             userId: user,

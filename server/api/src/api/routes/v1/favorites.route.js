@@ -39,7 +39,7 @@ router
  *
  * @apiSuccess {Object[]} 
  */
-  .post(validate(userFavorites),controller.userFavorites);
+  .post(authorize(LOGGED_USER),validate(userFavorites),controller.userFavorites);
 
 /**
  * @api {post} v1/favorites/create 
@@ -52,7 +52,7 @@ router
  * @apiSuccess {Object[]} 
  */
 router.route('/create')
-  .post(validate(favoritesInsert),controller.create);
+  .post(authorize(LOGGED_USER),validate(favoritesInsert),controller.create);
 
 /**
  * @api {post} v1/favorites/remove 

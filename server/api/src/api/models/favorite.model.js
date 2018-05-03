@@ -6,6 +6,7 @@ const moment = require('moment-timezone');
 const jwt = require('jwt-simple');
 const uuidv4 = require('uuid/v4');
 const APIError = require('../utils/APIError');
+const roles = ['user', 'admin'];
 
 let favoriteSchema = new mongoose.Schema({
   userId: {
@@ -37,10 +38,21 @@ favoriteSchema.method({
   );
     console.log(transformed)
     return transformed;
+  },
+
+  token() {
+    const playload = {
+      exp: moment().add(jwtExpirationInterval, 'minutes').unix(),
+      iat: moment().unix(),
+      sub: this._id,
+    };
+    return jwt.encode(playload, jwtSecret);
   }
 });
 
 favoriteSchema.statics = {
+  roles,
+
   list() {
     return this.find();
   },

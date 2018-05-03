@@ -32,13 +32,15 @@ export default class FavoritesScreen extends Component {
     }
   }
 
-  async getFavorites(id){
+  async getFavorites(id,token){
+    var auth = 'Bearer ' + token;
     try {
       let response = await fetch(baseURL + "/v1/favorites", {
         method: 'POST',
         headers: {
             Accept: 'application/json',
             'Content-Type': 'application/json',
+            'Authorization' : auth
         },
         body: JSON.stringify({
             userId: id
@@ -54,23 +56,29 @@ export default class FavoritesScreen extends Component {
 
   async getParseFavorites(param) {
     var favs=[];
+    var auxId = 0;
     for(let i = 0 ; i < param.length; i++){
       try {
         let response = await fetch(baseURL+"/v1/houses/" + param[i].houseId);
         let responseJson = await response.json();
-        let aux = responseJson.tipology.concat(" ", responseJson.condition);
-        favs.push({
-          id: i,
-          idHouse : param[i].houseId, 
-          text: aux, 
-          location:responseJson.zone,  
-          price: responseJson.price,
-          icon: Images.houseImage,
-          active : true
-        });
+        if(responseJson.code !== 404){
+          let aux = responseJson.tipology.concat(" ", responseJson.condition);
+          favs.push({
+            id: auxId,
+            idHouse : param[i].houseId, 
+            text: aux, 
+            location:responseJson.zone,  
+            price: responseJson.price,
+            icon: Images.houseImage,
+            active : true
+          });
+        }else{
+          auxId--;
+        }
       } catch (error) {
         console.error(error);
       }
+      auxId++;
     }
     this.setState({rows: favs});
     this.setState({dataSource: ds.cloneWithRows(favs)}); 
@@ -78,16 +86,16 @@ export default class FavoritesScreen extends Component {
   }
 
   componentDidMount(){
-    this.getFavorites(this.state.user.user);
+    this.getFavorites(this.state.user.user,this.state.user.token);
   }
 
   changeFavorite = (id) => {
     if(this.state.rows[id].active === true){
       this.state.rows[id].active = false;
-      deleteFavoriteAPI(this.state.user.user, this.state.rows[id].idHouse);
+      deleteFavoriteAPI(this.state.user.user, this.state.rows[id].idHouse,this.state.user.token);
     }else{
       this.state.rows[id].active = true;
-      createFavoriteAPI(this.state.user.user, this.state.rows[id].idHouse);
+      createFavoriteAPI(this.state.user.user, this.state.rows[id].idHouse,this.state.user.token);
     }
     this.setState({rows: this.state.rows});
     this.setState({dataSource: ds.cloneWithRows(this.state.rows)});
