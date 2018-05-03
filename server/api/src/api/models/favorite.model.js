@@ -11,14 +11,18 @@ let favoriteSchema = new mongoose.Schema({
   userId: {
     type: String,
     lowercase: true,
+    index: true
   },
   houseId: {
     type: String,
     lowercase: true,
+    index: true
   }
 }, {
-  timestamps: true,
+  timestamps: true
 });
+
+favoriteSchema.index({ userId: 1, houseId: 1 }, { unique: true });
 
 favoriteSchema.method({
 
