@@ -41,19 +41,19 @@ export default class UserPreferences extends Component {
         super(props)
         this.state = {
             getData: true,
-            goal: '',
-            propertyType: '',
-            tipology: '',
-            minArea: '',
-            maxArea: '',
-            minPrice: '',
-            maxPrice: '',
-            hospitalDist: '',
-            hospitalQtn: '',
-            schoolDist: '',
-            schoolQtn: '',
-            workPlace: '',
-            workDistance: ''
+            goal: undefined,
+            propertyType: undefined,
+            tipology: undefined,
+            minArea: undefined,
+            maxArea: undefined,
+            minPrice: undefined,
+            maxPrice: undefined,
+            hospitalDist: undefined,
+            hospitalQtn: undefined,
+            schoolDist: undefined,
+            schoolQtn: undefined,
+            workPlace: undefined,
+            workDistance: undefined
         }
         this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -65,7 +65,7 @@ export default class UserPreferences extends Component {
     getUserPreferences() {
 
         var url = baseURL + '/v1/users/preferences';
-        var auth = 'Bearer ' + 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1MjUzNzg2NjgsImlhdCI6MTUyNTM3NTA2OCwic3ViIjoiNWFkN2RkNzcxNTI1ODcwMDFlNDc4OWRiIn0.QMJ-xf6u00DlvFEzOsf3OsHWqOEdyOsrZv0TDw6GOmc';
+        var auth = 'Bearer ' + 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1MjUzODY0OTksImlhdCI6MTUyNTM4Mjg5OSwic3ViIjoiNWFkN2Y2OTgxNTI1ODcwMDFlNDc4OWU3In0.9La6VF-1z3aWwYKvYxdm8ZYkMJM-flS1wR4V__wGKpg';
         
         fetch(url, {
           method: 'GET',
@@ -76,8 +76,13 @@ export default class UserPreferences extends Component {
           }
         }).then(
           (response) => response.json()
-        ).then(
-          (responseJson) => {
+        )
+        .then((responseJson) => {
+
+            if(responseJson.code == '401') {
+                console.error('Jwt expired!');
+            }
+
             var services = responseJson.services.map(function(item) {
                 return {
                     service: item.service,
@@ -85,10 +90,12 @@ export default class UserPreferences extends Component {
                     quantity: item.quantity
                 };
             });
+
             if(services.length == 0) {
                 this.setState({getData: false});
                 return;
             }
+
             this.setState({goal: responseJson.finality});
             this.setState({propertyType: responseJson.type});
             this.setState({tipology: responseJson.tipology})
@@ -119,8 +126,6 @@ export default class UserPreferences extends Component {
 
     handleSubmit(event) {
         event.preventDefault();
-
-        console.warn(this.state.minPrice);
 
         var body = createBodyUserPreferences(this.state.goal, this.state.propertyType, this.state.tipology, 
             this.state.minArea, this.state.maxArea, 
@@ -207,14 +212,14 @@ export default class UserPreferences extends Component {
                                             placeholder='Mínimo' 
                                             keyboardType='numeric'
                                             onChangeText={(value) => this.setState({minArea: value})}
-                                            value={`${this.state.minArea}`}
+                                            value={this.state.minArea}
                                             />
                                         <Input 
                                             style={[styles.input, {marginLeft: Metrics.baseMargin}]} 
                                             placeholder='Máximo' 
                                             keyboardType='numeric'
                                             onChangeText={(value) => this.setState({maxArea: value})}
-                                            value={`${this.state.maxArea}`}
+                                            value={this.state.maxArea}
                                         />
                                 </View>
                             </View>
@@ -231,14 +236,14 @@ export default class UserPreferences extends Component {
                                             placeholder='Mínimo' 
                                             keyboardType='numeric'
                                             onChangeText={(value) => this.setState({minPrice: value})}
-                                            value={`${this.state.minPrice}`}
+                                            value={this.state.minPrice}
                                         />
                                         <Input 
                                             style={[styles.input, {marginLeft: Metrics.baseMargin}]}
                                             placeholder='Máximo'
                                             keyboardType='numeric'
                                             onChangeText={(value) => this.setState({maxPrice: value})}
-                                            value={`${this.state.maxPrice}`}
+                                            value={this.state.maxPrice}
                                         />
                                 </View>
                             </View>
@@ -259,7 +264,7 @@ export default class UserPreferences extends Component {
                                         placeholder='Distância' 
                                         keyboardType='numeric'
                                         onChangeText={(value) => this.setState({hospitalDist: value})}
-                                        value={`${this.state.hospitalDist}`}
+                                        value={this.state.hospitalDist}
                                     />
                                 </View>
 
@@ -272,7 +277,7 @@ export default class UserPreferences extends Component {
                                         placeholder='n/a'
                                         keyboardType='numeric'
                                         onChangeText={(value) => this.setState({hospitalQtn: value})}
-                                        value={`${this.state.hospitalQtn}`}
+                                        value={this.state.hospitalQtn}
                                     />
                                 </View>
 
@@ -293,7 +298,7 @@ export default class UserPreferences extends Component {
                                         placeholder='Distância' 
                                         keyboardType='numeric'
                                         onChangeText={(value) => this.setState({schoolDist: value})}
-                                        value={`${this.state.schoolDist}`}
+                                        value={this.state.schoolDist}
                                     />
                                 </View>
 
@@ -306,7 +311,7 @@ export default class UserPreferences extends Component {
                                         placeholder='n/a'
                                         keyboardType='numeric'
                                         onChangeText={(value) => this.setState({schoolQtn: value})}
-                                        value={`${this.state.schoolQtn}`}
+                                        value={this.state.schoolQtn}
                                     />
                                 </View>
 
@@ -345,7 +350,7 @@ export default class UserPreferences extends Component {
                                         placeholder='Distância'
                                         keyboardType='numeric'
                                         onChangeText={(value) => this.setState({workDistance: value})}
-                                        value={`${this.state.workDistance}`}
+                                        value={this.state.workDistance}
                                 />
                                 <Text>km</Text>                            
                             </View>

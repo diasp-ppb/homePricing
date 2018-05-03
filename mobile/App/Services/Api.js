@@ -87,8 +87,9 @@ export function createBodyUserPreferences(goal, propertyType, tipology,
     minPrice, maxPrice, 
     hospitalDist, hospitalQtn, 
     schoolDist, schoolQtn, 
-    workPlace, workDistance) {
-        return JSON.stringify({
+    workPlace, workDistance)
+    {
+        return body = JSON.stringify({
             finality: goal,
             type: propertyType,
             tipology: tipology,
@@ -112,19 +113,17 @@ export function createBodyUserPreferences(goal, propertyType, tipology,
 }
 
 export function updateUserPreferences(bodyContent, props) {
-    var url = baseURL + '/v1/preferences/';
-    var auth = 'Bearer ' + eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1MjUzNzg2NjgsImlhdCI6MTUyNTM3NTA2OCwic3ViIjoiNWFkN2RkNzcxNTI1ODcwMDFlNDc4OWRiIn0.QMJ-xf6u00DlvFEzOsf3OsHWqOEdyOsrZv0TDw6GOmc;
+    var url = baseURL + '/v1/users/preferences';
+    var auth = 'Bearer ' + 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1MjUzODY0OTksImlhdCI6MTUyNTM4Mjg5OSwic3ViIjoiNWFkN2Y2OTgxNTI1ODcwMDFlNDc4OWU3In0.9La6VF-1z3aWwYKvYxdm8ZYkMJM-flS1wR4V__wGKpg';
+    
     fetch(url, {
-      method: 'PATCH',
-      headers: {
+        method: 'PATCH',
+        headers: {
         Accept: 'application/json',
         'Content-Type' : 'application/json',
         'Authorization' : auth
-      },
-      body: bodyContent,
-    }).then(
-      (response) => response.json()
-    ).catch((error) => {
-      console.error(error);
-    });
+        },
+        body: bodyContent,
+    })
+    .catch((error) => { console.error(error); });
 }
