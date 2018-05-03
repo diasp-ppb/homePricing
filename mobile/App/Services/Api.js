@@ -114,7 +114,7 @@ export function createBodyUserPreferences(goal, propertyType, tipology,
 
 export function updateUserPreferences(bodyContent, props) {
     var url = baseURL + '/v1/users/preferences';
-    var auth = 'Bearer ' + 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1MjUzODY0OTksImlhdCI6MTUyNTM4Mjg5OSwic3ViIjoiNWFkN2Y2OTgxNTI1ODcwMDFlNDc4OWU3In0.9La6VF-1z3aWwYKvYxdm8ZYkMJM-flS1wR4V__wGKpg';
+    var auth = 'Bearer ' + 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1MjUzOTE1ODIsImlhdCI6MTUyNTM4Nzk4Mywic3ViIjoiNWFkN2Y2OTgxNTI1ODcwMDFlNDc4OWU3In0.Vy8Z2SAc0s6xkfy1tDSdYn2vDg6iubyQ6tGbFuHtFYk';
     
     fetch(url, {
         method: 'PATCH',
@@ -131,7 +131,7 @@ export function updateUserPreferences(bodyContent, props) {
 export function getUserPreferences(updateUserPreferences) {
 
     var url = baseURL + '/v1/users/preferences';
-    var auth = 'Bearer ' + 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1MjUzODY0OTksImlhdCI6MTUyNTM4Mjg5OSwic3ViIjoiNWFkN2Y2OTgxNTI1ODcwMDFlNDc4OWU3In0.9La6VF-1z3aWwYKvYxdm8ZYkMJM-flS1wR4V__wGKpg';
+    var auth = 'Bearer ' + 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1MjUzOTE1ODIsImlhdCI6MTUyNTM4Nzk4Mywic3ViIjoiNWFkN2Y2OTgxNTI1ODcwMDFlNDc4OWU3In0.Vy8Z2SAc0s6xkfy1tDSdYn2vDg6iubyQ6tGbFuHtFYk';
     
     fetch(url, {
       method: 'GET',

@@ -89,11 +89,12 @@ export default class UserPreferences extends Component {
                 <Content>
                     <View>
                         <Text style={styles.mainTitle}>Preferências de casa</Text>
-                        <View style={{flexDirection: 'row', alignItems: 'center', marginTop: Metrics.baseMargin}}>
-                            <View style={{flex:.4, marginLeft: Metrics.baseMargin}}>
-                                <Text style={styles.title}>Finalidade: </Text>
+
+                        <View style={styles.alignInput}>
+                            <View style={styles.labelFlex1}>
+                                <Text style={styles.label}>Finalidade: </Text>
                             </View>
-                            <View style={[styles.pickerBackground, {marginLeft: Metrics.baseMargin, marginRight: Metrics.baseMargin, flex: .6}]}>
+                            <View style={styles.pickerFlex}>
                                 <Form>
                                     <Picker
                                         mode='dropdown'
@@ -109,11 +110,11 @@ export default class UserPreferences extends Component {
                             </View>
                         </View>
 
-                        <View style={{flexDirection: 'row', alignItems: 'center', marginTop: Metrics.baseMargin}}>
-                            <View style={{flex:.4, marginLeft: Metrics.baseMargin}}>
-                                <Text style={styles.title}>Tipo: </Text>
+                        <View style={styles.alignInput}>
+                            <View style={styles.labelFlex1}>
+                                <Text style={styles.label}>Tipo: </Text>
                             </View>
-                            <View style={[styles.pickerBackground, {marginLeft: Metrics.baseMargin, marginRight: Metrics.baseMargin, flex: .6}]}>
+                            <View style={styles.pickerFlex}>
                                 <Form>
                                     <Picker
                                         mode='dropdown'
@@ -129,11 +130,11 @@ export default class UserPreferences extends Component {
                             </View>
                         </View>
 
-                        <View style={[styles.SideBySide, {marginTop: Metrics.baseMargin}]}>
-                            <View style={{flex:.4, marginLeft: Metrics.baseMargin}}>
-                                <Text style={styles.title}>Tipologia: </Text>
+                        <View style={styles.alignInput}>
+                            <View style={styles.labelFlex1}>
+                                <Text style={styles.label}>Tipologia: </Text>
                             </View>
-                            <View style={[styles.pickerBackground, {marginLeft: Metrics.baseMargin, marginRight: Metrics.baseMargin, flex: .6}]}>
+                            <View style={styles.pickerFlex}>
                                 <Picker
                                     mode='dropdown'
                                     iosIcon={<Icon name='ios-arrow-down-outline' />}
@@ -147,9 +148,9 @@ export default class UserPreferences extends Component {
                             </View>
                         </View>
 
-                        <View style={[styles.SideBySide, {marginTop: Metrics.baseMargin} ]}>
-                            <View style={{flex:.4, marginLeft: Metrics.baseMargin}}>
-                                <Text style={styles.title}>Área Útil (m2): </Text>
+                       <View style={styles.alignInput}>
+                            <View style={styles.labelFlex1}>
+                                <Text style={styles.label}>Área Útil (m2): </Text>
                             </View>
                             <View style={{marginLeft: Metrics.baseMargin, marginRight: Metrics.baseMargin, flex: .6}}>
                                 <View style={styles.SideBySide}>
@@ -171,9 +172,9 @@ export default class UserPreferences extends Component {
                             </View>
                         </View>
 
-                        <View style={[styles.SideBySide, {marginTop: Metrics.baseMargin} ]}>
-                            <View style={{flex:.4, marginLeft: Metrics.baseMargin}}>
-                                <Text style={styles.title}>Preço: </Text>
+                        <View style={styles.alignInput}>
+                            <View style={styles.labelFlex1}>
+                                <Text style={styles.label}>Preço: </Text>
                             </View>
                             <View style={{marginLeft: Metrics.baseMargin, marginRight: Metrics.baseMargin, flex: .6}}>
                                 <View style={styles.SideBySide}>
@@ -199,12 +200,12 @@ export default class UserPreferences extends Component {
 
                         <Text style={styles.mainTitle}>Serviços úteis</Text>
 
-                        <View style={[styles.SideBySide, {marginTop: Metrics.baseMargin}]}>
-                            <View style={{marginLeft: Metrics.baseMargin, flex: 0.3}}>
-                                <Text style={styles.title}>Hospital: </Text>
+                        <View style={styles.alignInput}>
+                            <View style={styles.labelFlex2}>
+                                <Text style={styles.label}>Hospital: </Text>
                             </View>
 
-                            <View style={[styles.SideBySide, {flex: 0.7, marginTop: Metrics.baseMargin, marginLeft: Metrics.baseMargin, marginRight: Metrics.baseMargin}]}>
+                            <View style={[styles.SideBySide, styles.serviceFlex]}>
                                 <View style={[styles.input,{flex: 0.3}]}>
                                     <Input 
                                         placeholder='Distância' 
@@ -233,13 +234,13 @@ export default class UserPreferences extends Component {
                             </View>
                         </View>
 
-                        <View style={[styles.SideBySide, {marginTop: Metrics.baseMargin}]}>
-                            <View style={{marginLeft: Metrics.baseMargin, flex: 0.3}}>
-                                <Text style={styles.title}>Escola: </Text>
+                        <View style={styles.alignInput}>
+                            <View style={styles.labelFlex2}>
+                                <Text style={styles.label}>Escola: </Text>
                             </View>
 
-                            <View style={[styles.SideBySide, {flex: 0.7, marginTop: Metrics.baseMargin, marginLeft: Metrics.baseMargin, marginRight: Metrics.baseMargin}]}>
-                                <View style={[styles.input,{flex: 0.3}]}>
+                            <View style={[styles.SideBySide, styles.serviceFlex]}>
+                                <View style={[styles.input, {flex: 0.3}]}>
                                     <Input 
                                         placeholder='Distância' 
                                         keyboardType='numeric'
@@ -271,12 +272,12 @@ export default class UserPreferences extends Component {
 
                         <Text style={styles.mainTitle}>As minhas preferências</Text>
 
-                        <View style={[styles.SideBySide, {marginTop: Metrics.baseMargin}]}>
-                            <View style={{marginLeft: Metrics.baseMargin, flex: 0.4}}>
-                                <Text style={styles.title}>Local de trabalho: </Text>
+                        <View style={styles.alignInput}>
+                            <View style={styles.labelFlex1}>
+                                <Text style={styles.label}>Local de trabalho: </Text>
                             </View>
 
-                            <View style={[styles.SideBySide, styles.input, {flex: 0.7, marginTop: Metrics.baseMargin, marginLeft: Metrics.baseMargin, marginRight: Metrics.baseMargin}]}>
+                            <View style={[styles.SideBySide, styles.pickerFlex]}>
                                 <Input
                                         placeholder='Morada do local de trabalho'
                                         onChangeText={(value) => this.setState({workPlace: value})}
@@ -285,12 +286,12 @@ export default class UserPreferences extends Component {
                             </View>
                         </View>
 
-                        <View style={[styles.SideBySide, {marginTop: Metrics.baseMargin}]}>
-                            <View style={{marginLeft: Metrics.baseMargin, flex: 0.4}}>
-                                <Text style={styles.title}>Distância ideal: </Text>
+                        <View style={styles.alignInput}>
+                            <View style={styles.labelFlex1}>
+                                <Text style={styles.label}>Distância ideal: </Text>
                             </View>
 
-                            <View style={[styles.SideBySide, {flex: 0.7, marginTop: Metrics.baseMargin, marginLeft: Metrics.baseMargin, marginRight: Metrics.baseMargin}]}>
+                            <View style={[styles.SideBySide, styles.workDistFlex]}>
                                 <Input
                                         style={styles.input}
                                         placeholder='Distância'
@@ -303,8 +304,8 @@ export default class UserPreferences extends Component {
                         </View>
 
                         <View style={{margin: Metrics.doubleBaseMargin}}>
-                            <Button style={[styles.serviceButtonSelected, {alignSelf: 'center', width: Metrics.screenWidth * 0.5, height: 50}]} onPress = {this.handleSubmit}>
-                                <Text style={[styles.serviceButtonTextSelected, {fontSize: 15}]}>Alterar preferências</Text>
+                            <Button style={styles.buttonStyle} onPress = {this.handleSubmit}>
+                                <Text style={styles.buttonTextStyle}>Alterar preferências</Text>
                             </Button>
                         </View>
 
