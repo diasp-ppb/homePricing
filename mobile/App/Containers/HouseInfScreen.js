@@ -23,7 +23,6 @@ export default class LaunchScreen extends Component {
       tipology: "",
       energy: "none",
       adress: "",
-      zone: "",
       condition: "",
       description: "",
     };
@@ -35,7 +34,7 @@ export default class LaunchScreen extends Component {
   componentDidMount() {
     const { navigation } = this.props;
 
-   fetch(baseURL+"/v1/house/" + navigation.state.params.id)
+   fetch(baseURL+"/v1/houses/" + navigation.state.params.id)
       .then(function(response){
         return response.json();
       })
@@ -46,9 +45,8 @@ export default class LaunchScreen extends Component {
           price: responseJson.price,
           tipology: responseJson.tipology,
           energy: responseJson.energyCertificate,
-          adress: responseJson.adress,
+          address: responseJson.address.town + ", " + responseJson.address.county + ", " + responseJson.address.district + ", " + responseJson.address.zipcode,
           bathrooms: responseJson.bathrooms,
-          zone: responseJson.zone,
           condition: responseJson.condition,
           description: responseJson.description
         });
@@ -77,7 +75,7 @@ export default class LaunchScreen extends Component {
 
           <View style={styles.box1}>
             <View style={{flex:0.8}}>
-              <Text style={styles.streetText}> {this.state.zone} </Text>
+              <Text style={styles.streetText}> {this.state.address} </Text>
             </View>
             <View style={{flex:0.1}}>
               <Image  source={Images.gps} style={{ marginLeft:8, width:32,height:30}}/>
@@ -86,8 +84,8 @@ export default class LaunchScreen extends Component {
 
           <View style={styles.box1}>
             <View style={{ flex:0.5}}>
-              <Text style={styles.properties}>Area: </Text>
-              <Text style={styles.properties}>Bathrooms: </Text>
+              <Text style={styles.properties}>Área: </Text>
+              <Text style={styles.properties}>WCs: </Text>
               <Text style={styles.properties}>Certificado Ener: </Text>
               <Text style={styles.properties}>Tipologia: </Text>
               <Text style={styles.properties}>Condições: </Text>
@@ -104,7 +102,7 @@ export default class LaunchScreen extends Component {
 
           <View style={styles.box2}>
             <View>
-              <Text style={styles.descriptionTitle}> Description </Text>
+              <Text style={styles.descriptionTitle}> Descrição </Text>
               <Text style={styles.descriptionText}> {this.state.description} </Text>
             </View>
           </View>

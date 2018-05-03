@@ -68,8 +68,8 @@ export default class LaunchScreen extends Component {
                     
                      
                        <Button transparent onPress={() => navigate('HouseInfScreen',{id: item.id })}>
-                        <Text style={styles.address}>
-                          <Icon  ios={'ios-pin'} android={'md-pin'} style={styles.address} /> {item.address}
+                        <Text style={styles.address.town}>
+                          <Icon  ios={'ios-pin'} android={'md-pin'} style={styles.address.town} /> {item.address.town}
                       </Text>
                       </Button>
 
@@ -78,11 +78,7 @@ export default class LaunchScreen extends Component {
                           {item.price}
                       </Text>
 
-
-                    
                   </View>
-
-                 
 
                 </View>
 
