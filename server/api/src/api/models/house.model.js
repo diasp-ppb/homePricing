@@ -66,8 +66,8 @@ const houseSchema = new mongoose.Schema({
     type: Object
   }
 }, {
-  timestamps: true,
-});
+    timestamps: true,
+  });
 
 /**
  * Methods
