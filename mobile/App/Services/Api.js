@@ -7,7 +7,7 @@ import { SUCCESS_LOGIN,
 import { ToastSuccess, ToastError } from './LogToasts'
 import { login } from '../Redux/LoginRedux'
 
-export const baseURL = "http://172.30.6.95";
+export const baseURL = "http://172.30.26.77";
 
 
 export function checkLoginResponse(responseJson, props) {
@@ -113,7 +113,7 @@ export function createBodyUserPreferences(goal, propertyType, tipology,
 
 export function updateUserPreferences(bodyContent, props) {
     var url = baseURL + '/v1/preferences/';
-    var auth = 'Bearer ' + props.user.token;
+    var auth = 'Bearer ' + eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1MjUzNzg2NjgsImlhdCI6MTUyNTM3NTA2OCwic3ViIjoiNWFkN2RkNzcxNTI1ODcwMDFlNDc4OWRiIn0.QMJ-xf6u00DlvFEzOsf3OsHWqOEdyOsrZv0TDw6GOmc;
     fetch(url, {
       method: 'PATCH',
       headers: {

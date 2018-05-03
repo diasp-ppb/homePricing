@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import Metrics from '../Themes/Metrics'
 import { createBodyUserPreferences } from '../Services/Api'
 import { updateUserPreferences } from '../Services/Api'
+import {baseURL} from "../Services/Api";
 
 // Styles
 import Colors from '../Themes/Colors'
@@ -39,6 +40,7 @@ export default class UserPreferences extends Component {
     constructor (props) {
         super(props)
         this.state = {
+            getData: true,
             goal: '',
             propertyType: '',
             tipology: '',
@@ -55,10 +57,16 @@ export default class UserPreferences extends Component {
         }
         this.handleSubmit = this.handleSubmit.bind(this);
     }
+    
+    componentDidMount() {
+        this.getUserPreferences();
+    }
 
     getUserPreferences() {
-        var url = baseURL + '/v1/preferences/';
-        var auth = 'Bearer ' + this.props.user.token;
+
+        var url = baseURL + '/v1/users/preferences';
+        var auth = 'Bearer ' + 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1MjUzNzg2NjgsImlhdCI6MTUyNTM3NTA2OCwic3ViIjoiNWFkN2RkNzcxNTI1ODcwMDFlNDc4OWRiIn0.QMJ-xf6u00DlvFEzOsf3OsHWqOEdyOsrZv0TDw6GOmc';
+        
         fetch(url, {
           method: 'GET',
           headers: {
@@ -70,31 +78,35 @@ export default class UserPreferences extends Component {
           (response) => response.json()
         ).then(
           (responseJson) => {
-            this.setState({goal: responseJson.finality});
-            this.setState({propertyType: responseType.type});
-            this.setState({minArea: responseJson.areaMin});
-            this.setState({maxArea: responseJson.areaMax});
-            this.setState({minPrice: responseJson.priceMin});
-            this.setState({maxPrice: responseJson.priceMax});
-            this.setState({workPlace: responseJson.workAddress});
-            this.setState({workDistance: responseJson.workMaxDistance});
-
-            var services = services.map(function(item) {
+            var services = responseJson.services.map(function(item) {
                 return {
                     service: item.service,
                     distance: item.distance,
                     quantity: item.quantity
                 };
             });
-              
+            if(services.length == 0) {
+                this.setState({getData: false});
+                return;
+            }
+            this.setState({goal: responseJson.finality});
+            this.setState({propertyType: responseJson.type});
+            this.setState({tipology: responseJson.tipology})
+            this.setState({minArea: responseJson.areaMin});
+            this.setState({maxArea: responseJson.areaMax});
+            this.setState({minPrice: responseJson.priceMin});
+            this.setState({maxPrice: responseJson.priceMax});
+            this.setState({workPlace: responseJson.workAddress});
+            this.setState({workDistance: responseJson.workMaxDistance});              
             this.setState({hospitalDist: services[0].distance});
             this.setState({hospitalQtn: services[0].quantity});
             this.setState({schoolDist: services[1].distance});
             this.setState({schoolQtn:services[1].quantity});
-          }
+        }
         ).catch((error) => {
           console.error(error);
         });
+
     }
 
     addPickerItems = (items) => {
@@ -195,12 +207,14 @@ export default class UserPreferences extends Component {
                                             placeholder='Mínimo' 
                                             keyboardType='numeric'
                                             onChangeText={(value) => this.setState({minArea: value})}
+                                            value={`${this.state.minArea}`}
                                             />
                                         <Input 
                                             style={[styles.input, {marginLeft: Metrics.baseMargin}]} 
                                             placeholder='Máximo' 
                                             keyboardType='numeric'
                                             onChangeText={(value) => this.setState({maxArea: value})}
+                                            value={`${this.state.maxArea}`}
                                         />
                                 </View>
                             </View>
@@ -217,12 +231,14 @@ export default class UserPreferences extends Component {
                                             placeholder='Mínimo' 
                                             keyboardType='numeric'
                                             onChangeText={(value) => this.setState({minPrice: value})}
+                                            value={`${this.state.minPrice}`}
                                         />
                                         <Input 
                                             style={[styles.input, {marginLeft: Metrics.baseMargin}]}
                                             placeholder='Máximo'
                                             keyboardType='numeric'
                                             onChangeText={(value) => this.setState({maxPrice: value})}
+                                            value={`${this.state.maxPrice}`}
                                         />
                                 </View>
                             </View>
@@ -243,6 +259,7 @@ export default class UserPreferences extends Component {
                                         placeholder='Distância' 
                                         keyboardType='numeric'
                                         onChangeText={(value) => this.setState({hospitalDist: value})}
+                                        value={`${this.state.hospitalDist}`}
                                     />
                                 </View>
 
@@ -255,6 +272,7 @@ export default class UserPreferences extends Component {
                                         placeholder='n/a'
                                         keyboardType='numeric'
                                         onChangeText={(value) => this.setState({hospitalQtn: value})}
+                                        value={`${this.state.hospitalQtn}`}
                                     />
                                 </View>
 
@@ -275,6 +293,7 @@ export default class UserPreferences extends Component {
                                         placeholder='Distância' 
                                         keyboardType='numeric'
                                         onChangeText={(value) => this.setState({schoolDist: value})}
+                                        value={`${this.state.schoolDist}`}
                                     />
                                 </View>
 
@@ -287,6 +306,7 @@ export default class UserPreferences extends Component {
                                         placeholder='n/a'
                                         keyboardType='numeric'
                                         onChangeText={(value) => this.setState({schoolQtn: value})}
+                                        value={`${this.state.schoolQtn}`}
                                     />
                                 </View>
 
@@ -309,6 +329,7 @@ export default class UserPreferences extends Component {
                                 <Input
                                         placeholder='Morada do local de trabalho'
                                         onChangeText={(value) => this.setState({workPlace: value})}
+                                        value={this.state.workPlace}
                                 />                            
                             </View>
                         </View>
@@ -324,6 +345,7 @@ export default class UserPreferences extends Component {
                                         placeholder='Distância'
                                         keyboardType='numeric'
                                         onChangeText={(value) => this.setState({workDistance: value})}
+                                        value={`${this.state.workDistance}`}
                                 />
                                 <Text>km</Text>                            
                             </View>
