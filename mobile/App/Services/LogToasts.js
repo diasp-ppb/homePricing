@@ -11,6 +11,7 @@ export const ERROR_INVALID_PARAM_REGISTER = 'Parâmetro(s) inválido(s)!';
 export const ERROR_EMAIL_EXISTS_REGISTER = 'E-mail já existe!';
 
 export const UPDATE_USER_PREFERENCES = 'Preferências do utilizador atualizadas com sucesso!';
+export const LOGOUT_SUCCESS = 'Logout bem-sucedido!';
 
 const DURATION_ERROR_MSG = 10000;
 const DURATION_WARN_MSG = 10000;

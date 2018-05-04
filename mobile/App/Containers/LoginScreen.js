@@ -123,7 +123,7 @@ function mapDispatchToProps(dispatch) {
     return {
       login: (user,token) => dispatch(login(user,token))
     };
-  }
+}
 
 const connectedRegister = connect(mapStateToProps, mapDispatchToProps)(LoginScreen);
 export { connectedRegister as LoginScreen };

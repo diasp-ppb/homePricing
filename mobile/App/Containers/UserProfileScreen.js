@@ -6,7 +6,9 @@ import { connect } from 'react-redux';
 // Native Base
 import { Col, Row, Grid } from 'react-native-easy-grid';
 import { Container, Header, Body, Title, Content, Text, Button, Fab, Icon, ActionSheet } from 'native-base'
+import { logoutAPI } from "../Services/Api";
 import { baseURL } from "../Services/Api";
+import { logout } from '../Redux/LoginRedux'
 
 // Styles
 import styles from './Styles/UserProfileScreenStyles'
@@ -37,6 +39,7 @@ export default class UserProfileScreen extends Component {
   constructor(props) {
     super(props);
     this.getUserInfo();
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   getUserInfo(){
@@ -88,6 +91,11 @@ export default class UserProfileScreen extends Component {
     dataSource: ds.cloneWithRows(rows)
   }
 
+  handleSubmit(event) {
+    event.preventDefault();
+    logoutAPI(this.props);
+  }
+
   renderRow = (rowData) => {
     return (  
         <TouchableOpacity key = {rowData.id} onPress={() => this.props.navigation.navigate(this.navPath(rowData.id))}>
@@ -119,6 +127,19 @@ export default class UserProfileScreen extends Component {
             dataSource={this.state.dataSource}
             renderRow={this.renderRow}
             />
+
+            <View style={styles.wrapper}>
+              <View style={styles.spaceBox}></View>
+              <View style={styles.logoutBox}>
+              <Button primary block
+                style={styles.btn}
+                onPress = {this.handleSubmit}
+              >
+                <Text>Logout</Text>
+              </Button>
+              <View style={styles.spaceBox}></View>
+            </View>
+          </View>
       </Container>
     )
   }
@@ -130,5 +151,11 @@ function mapStateToProps(state) {
   };
 }
 
-const connectedRegister = connect(mapStateToProps)(UserProfileScreen);
+function mapDispatchToProps(dispatch) {
+  return {
+    logout: () => dispatch(logout())
+  };
+}
+
+const connectedRegister = connect(mapStateToProps, mapDispatchToProps)(UserProfileScreen);
 export { connectedRegister as UserProfileScreen};

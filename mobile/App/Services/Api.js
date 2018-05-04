@@ -4,7 +4,7 @@ import { SUCCESS_LOGIN,
   ERROR_INVALID_EMAIL, ERROR_INVALID_PARAM_LOGIN,
   SUCCESS_REGISTER,
   ERROR_INVALID_PARAM_REGISTER, ERROR_EMAIL_EXISTS_REGISTER,
-  UPDATE_USER_PREFERENCES } from './LogToasts'
+  UPDATE_USER_PREFERENCES, LOGOUT_SUCCESS } from './LogToasts'
 import { ToastSuccess, ToastError } from './LogToasts'
 import { login } from '../Redux/LoginRedux'
 
@@ -36,6 +36,13 @@ export function checkRegisterResponse(responseJson, props) {
       navigate('Login');
       ToastSuccess(SUCCESS_REGISTER);
   }
+}
+
+export function logoutAPI(props) {
+    const { navigate } = props.navigation;
+    props.logout();
+    navigate('LaunchScreen');
+    ToastSuccess(LOGOUT_SUCCESS);
 }
 
 export function loginAPI(email, password, props) {
