@@ -3,7 +3,8 @@
 import { SUCCESS_LOGIN,
   ERROR_INVALID_EMAIL, ERROR_INVALID_PARAM_LOGIN,
   SUCCESS_REGISTER,
-  ERROR_INVALID_PARAM_REGISTER, ERROR_EMAIL_EXISTS_REGISTER } from './LogToasts'
+  ERROR_INVALID_PARAM_REGISTER, ERROR_EMAIL_EXISTS_REGISTER,
+  UPDATE_USER_PREFERENCES } from './LogToasts'
 import { ToastSuccess, ToastError } from './LogToasts'
 import { login } from '../Redux/LoginRedux'
 
@@ -114,7 +115,7 @@ export function createBodyUserPreferences(goal, propertyType, tipology,
 
 export function updateUserPreferences(bodyContent, props) {
     var url = baseURL + '/v1/users/preferences';
-    var auth = 'Bearer ' + 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1MjUzOTE1ODIsImlhdCI6MTUyNTM4Nzk4Mywic3ViIjoiNWFkN2Y2OTgxNTI1ODcwMDFlNDc4OWU3In0.Vy8Z2SAc0s6xkfy1tDSdYn2vDg6iubyQ6tGbFuHtFYk';
+    var auth = 'Bearer ' + props.user.token;
     
     fetch(url, {
         method: 'PATCH',
@@ -124,6 +125,10 @@ export function updateUserPreferences(bodyContent, props) {
         'Authorization' : auth
         },
         body: bodyContent,
+    }).then(() => {
+        ToastSuccess(UPDATE_USER_PREFERENCES);
+        const { navigate } = props.navigation;
+        navigate('UserProfile');
     })
     .catch((error) => { console.error(error); });
 }
@@ -131,7 +136,7 @@ export function updateUserPreferences(bodyContent, props) {
 export function getUserPreferences(updateUserPreferences) {
 
     var url = baseURL + '/v1/users/preferences';
-    var auth = 'Bearer ' + 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1MjUzOTE1ODIsImlhdCI6MTUyNTM4Nzk4Mywic3ViIjoiNWFkN2Y2OTgxNTI1ODcwMDFlNDc4OWU3In0.Vy8Z2SAc0s6xkfy1tDSdYn2vDg6iubyQ6tGbFuHtFYk';
+    var auth = 'Bearer ' + updateUserPreferences.props.user.token;
     
     fetch(url, {
       method: 'GET',

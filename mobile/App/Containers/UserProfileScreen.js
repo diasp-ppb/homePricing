@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 // Native Base
 import { Col, Row, Grid } from 'react-native-easy-grid';
 import { Container, Header, Body, Title, Content, Text, Button, Fab, Icon, ActionSheet } from 'native-base'
+import { baseURL } from "../Services/Api";
 
 // Styles
 import styles from './Styles/UserProfileScreenStyles'
@@ -39,7 +40,7 @@ export default class UserProfileScreen extends Component {
   }
 
   getUserInfo(){
-    var url = 'http://192.168.1.75:3000/v1/users/' + this.props.user.user;
+    var url = baseURL + '/v1/users/' + this.props.user.user;
     var auth = 'Bearer ' +this.props.user.token;
     fetch(url, {
       method: 'GET',
@@ -70,6 +71,7 @@ export default class UserProfileScreen extends Component {
         case 1: 
             break;
         case 2:
+            return 'UserPreferences';
             break;
         case 3:
             break;

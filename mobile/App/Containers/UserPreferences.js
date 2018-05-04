@@ -32,7 +32,7 @@ const Tipology = [
     { value: 't5+', label: 'T5+' }
 ]
 
-export default class UserPreferences extends Component {
+class UserPreferences extends Component {
     static navigationOptions = ({ navigation }) => ({
         title: 'Preferências de utilizador',
       });
@@ -56,9 +56,6 @@ export default class UserPreferences extends Component {
             workDistance: undefined
         }
         this.handleSubmit = this.handleSubmit.bind(this);
-    }
-    
-    componentDidMount() {
         getUserPreferences(this);
     }
 

@@ -8,7 +8,7 @@ import { UserProfileScreen} from '../Containers/UserProfileScreen'
 import { LoginScreen } from '../Containers/LoginScreen'
 import HouseInfScreen from '../Containers/HouseInfScreen'
 import HouseSearch from '../Containers/HouseSearch'
-import UserPreferences from '../Containers/UserPreferences'
+import { UserPreferences } from '../Containers/UserPreferences'
 import Colors from '../Themes/Colors'
 
 
@@ -39,7 +39,7 @@ const PrimaryNav = StackNavigator({
   // Default config for all screens
   headerMode: 'float',
   navigationOptions,
-  initialRouteName: 'UserPreferences'
+  initialRouteName: 'LaunchScreen'
 })
 
 export default PrimaryNav
