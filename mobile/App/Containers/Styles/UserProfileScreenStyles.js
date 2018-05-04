@@ -36,10 +36,10 @@ export default StyleSheet.create({
   },
   logoutBox: {
     flex:0.6,
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
   spaceBox: {
-      flex:0.2,
+    flex:0.2
   },
   wrapper: {
     flexDirection:'row'

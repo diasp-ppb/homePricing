@@ -44,16 +44,16 @@ class UserPreferences extends Component {
             goal: undefined,
             propertyType: undefined,
             tipology: undefined,
-            minArea: undefined,
-            maxArea: undefined,
-            minPrice: undefined,
-            maxPrice: undefined,
-            hospitalDist: undefined,
-            hospitalQtn: undefined,
-            schoolDist: undefined,
-            schoolQtn: undefined,
+            minArea: "",
+            maxArea: "",
+            minPrice: "",
+            maxPrice: "",
+            hospitalDist: "",
+            hospitalQtn: "",
+            schoolDist: "",
+            schoolQtn: "",
             workPlace: undefined,
-            workDistance: undefined
+            workDistance: ""
         }
         this.handleSubmit = this.handleSubmit.bind(this);
         getUserPreferences(this);
@@ -156,14 +156,14 @@ class UserPreferences extends Component {
                                             placeholder='Mínimo' 
                                             keyboardType='numeric'
                                             onChangeText={(value) => this.setState({minArea: value})}
-                                            value={this.state.minArea}
+                                            value={`${this.state.minArea}`}
                                             />
                                         <Input 
                                             style={[styles.input, {marginLeft: Metrics.baseMargin}]} 
                                             placeholder='Máximo' 
                                             keyboardType='numeric'
                                             onChangeText={(value) => this.setState({maxArea: value})}
-                                            value={this.state.maxArea}
+                                            value={`${this.state.maxArea}`}
                                         />
                                 </View>
                             </View>
@@ -180,14 +180,14 @@ class UserPreferences extends Component {
                                             placeholder='Mínimo' 
                                             keyboardType='numeric'
                                             onChangeText={(value) => this.setState({minPrice: value})}
-                                            value={this.state.minPrice}
+                                            value={`${this.state.minPrice}`}
                                         />
                                         <Input 
                                             style={[styles.input, {marginLeft: Metrics.baseMargin}]}
                                             placeholder='Máximo'
                                             keyboardType='numeric'
                                             onChangeText={(value) => this.setState({maxPrice: value})}
-                                            value={this.state.maxPrice}
+                                            value={`${this.state.maxPrice}`}
                                         />
                                 </View>
                             </View>
@@ -208,7 +208,7 @@ class UserPreferences extends Component {
                                         placeholder='Distância' 
                                         keyboardType='numeric'
                                         onChangeText={(value) => this.setState({hospitalDist: value})}
-                                        value={this.state.hospitalDist}
+                                        value={`${this.state.hospitalDist}`}
                                     />
                                 </View>
 
@@ -221,7 +221,7 @@ class UserPreferences extends Component {
                                         placeholder='n/a'
                                         keyboardType='numeric'
                                         onChangeText={(value) => this.setState({hospitalQtn: value})}
-                                        value={this.state.hospitalQtn}
+                                        value={`${this.state.hospitalQtn}`}
                                     />
                                 </View>
 
@@ -242,7 +242,7 @@ class UserPreferences extends Component {
                                         placeholder='Distância' 
                                         keyboardType='numeric'
                                         onChangeText={(value) => this.setState({schoolDist: value})}
-                                        value={this.state.schoolDist}
+                                        value={`${this.state.schoolDist}`}
                                     />
                                 </View>
 
@@ -255,7 +255,7 @@ class UserPreferences extends Component {
                                         placeholder='n/a'
                                         keyboardType='numeric'
                                         onChangeText={(value) => this.setState({schoolQtn: value})}
-                                        value={this.state.schoolQtn}
+                                        value={`${this.state.schoolQtn}`}
                                     />
                                 </View>
 
@@ -294,7 +294,7 @@ class UserPreferences extends Component {
                                         placeholder='Distância'
                                         keyboardType='numeric'
                                         onChangeText={(value) => this.setState({workDistance: value})}
-                                        value={this.state.workDistance}
+                                        value={`${this.state.workDistance}`}
                                 />
                                 <Text>km</Text>                            
                             </View>

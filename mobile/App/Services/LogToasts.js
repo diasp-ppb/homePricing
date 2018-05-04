@@ -10,7 +10,9 @@ export const SUCCESS_REGISTER = 'Registo bem-sucedido :)';
 export const ERROR_INVALID_PARAM_REGISTER = 'Parâmetro(s) inválido(s)!';
 export const ERROR_EMAIL_EXISTS_REGISTER = 'E-mail já existe!';
 
-export const UPDATE_USER_PREFERENCES = 'Preferências do utilizador atualizadas com sucesso!';
+export const UPDATE_USER_PREFERENCES = 'Preferências atualizadas com sucesso!';
+export const ERROR_AREA = 'Área mínima não pode ser maior que a máxima!';
+export const ERROR_PRICE = 'Preço mínimo não pode ser maior que o máximo!';
 export const LOGOUT_SUCCESS = 'Logout bem-sucedido!';
 
 const DURATION_ERROR_MSG = 10000;

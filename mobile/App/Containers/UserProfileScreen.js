@@ -31,6 +31,9 @@ const rows = [
 
   
 export default class UserProfileScreen extends Component {
+  static navigationOptions = ({ navigation }) => ({
+    title: 'Perfil',
+  });
 
   state = { 
     user : ''
@@ -114,11 +117,6 @@ export default class UserProfileScreen extends Component {
     
     return (
       <Container>
-        <Header>
-          <Body>
-            <Title>Perfil</Title>
-          </Body>
-        </Header>
         <View style={styles.userInfo}>
           <Image source={Images.profileIcon} style={styles.icon} />
           <Text>{this.state.user}</Text>
@@ -130,15 +128,17 @@ export default class UserProfileScreen extends Component {
 
             <View style={styles.wrapper}>
               <View style={styles.spaceBox}></View>
+
               <View style={styles.logoutBox}>
-              <Button primary block
-                style={styles.btn}
-                onPress = {this.handleSubmit}
-              >
-                <Text>Logout</Text>
-              </Button>
+                <Button primary block
+                  style={styles.btn}
+                  onPress = {this.handleSubmit}
+                >
+                  <Text>Logout</Text>
+                </Button>
+              </View>
+
               <View style={styles.spaceBox}></View>
-            </View>
           </View>
       </Container>
     )

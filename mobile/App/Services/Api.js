@@ -4,7 +4,7 @@ import { SUCCESS_LOGIN,
   ERROR_INVALID_EMAIL, ERROR_INVALID_PARAM_LOGIN,
   SUCCESS_REGISTER,
   ERROR_INVALID_PARAM_REGISTER, ERROR_EMAIL_EXISTS_REGISTER,
-  UPDATE_USER_PREFERENCES, LOGOUT_SUCCESS } from './LogToasts'
+  UPDATE_USER_PREFERENCES, LOGOUT_SUCCESS, ToastWarning } from './LogToasts'
 import { ToastSuccess, ToastError } from './LogToasts'
 import { login } from '../Redux/LoginRedux'
 
@@ -67,6 +67,15 @@ export function createBodyUserPreferences(goal, propertyType, tipology,
         });
     }
 
+export function validateArea(minArea, maxArea) {
+    var valid = true;
+    if (minArea >= maxArea) {
+        valid = false;
+        ToastWarning();
+    }
+    return valid;
+}
+
 export function registerAPI(name, email, password, props) {
     fetch(baseURL + "/v1/auth/register", {
         method: 'POST',
@@ -124,7 +133,6 @@ export function logoutAPI(props) {
 export function updateUserPreferences(bodyContent, props) {
     var url = baseURL + '/v1/users/preferences';
     var auth = 'Bearer ' + props.user.token;
-    
     fetch(url, {
         method: 'PATCH',
         headers: {
@@ -134,8 +142,9 @@ export function updateUserPreferences(bodyContent, props) {
         },
         body: bodyContent,
     })
+    .then((response) => response.json())
     .then(
-        () => {
+        (responseJson) => {
             ToastSuccess(UPDATE_USER_PREFERENCES);
             const { navigate } = props.navigation;
             navigate('UserProfile');
@@ -143,10 +152,10 @@ export function updateUserPreferences(bodyContent, props) {
     .catch((error) => console.error(error));
 }
 
-export function getUserPreferences(updateUserPreferences) {
+export function getUserPreferences(thisUser) {
 
     var url = baseURL + '/v1/users/preferences';
-    var auth = 'Bearer ' + updateUserPreferences.props.user.token;
+    var auth = 'Bearer ' + thisUser.props.user.token;
     
     fetch(url, {
         method: 'GET',
@@ -158,13 +167,13 @@ export function getUserPreferences(updateUserPreferences) {
     }).then(
       (response) => response.json()
     )
-    .then((responseJson) => {
+    .then((resp) => {
 
-        if(responseJson.code == '401') {
+        if(resp.code == '401') {
             console.error('Jwt expired!');
         }
 
-        var services = responseJson.services.map(function(item) {
+        var services = resp.services.map(function(item) {
             return {
                 service: item.service,
                 distance: item.distance,
@@ -173,23 +182,23 @@ export function getUserPreferences(updateUserPreferences) {
         });
 
         if(services.length == 0) {
-            updateUserPreferences.setState({getData: false});
+            thisUser.setState({getData: false});
             return;
         }
 
-        updateUserPreferences.setState({goal: responseJson.finality});
-        updateUserPreferences.setState({propertyType: responseJson.type});
-        updateUserPreferences.setState({tipology: responseJson.tipology})
-        updateUserPreferences.setState({minArea: responseJson.areaMin});
-        updateUserPreferences.setState({maxArea: responseJson.areaMax});
-        updateUserPreferences.setState({minPrice: responseJson.priceMin});
-        updateUserPreferences.setState({maxPrice: responseJson.priceMax});
-        updateUserPreferences.setState({workPlace: responseJson.workAddress});
-        updateUserPreferences.setState({workDistance: responseJson.workMaxDistance});              
-        updateUserPreferences.setState({hospitalDist: services[0].distance});
-        updateUserPreferences.setState({hospitalQtn: services[0].quantity});
-        updateUserPreferences.setState({schoolDist: services[1].distance});
-        updateUserPreferences.setState({schoolQtn:services[1].quantity});
+        thisUser.setState({goal: resp.finality});
+        thisUser.setState({propertyType: resp.type});
+        thisUser.setState({tipology: resp.tipology})
+        thisUser.setState({minArea: resp.areaMin !== null ? resp.areaMin : ""});
+        thisUser.setState({maxArea: resp.areaMax !== null ? resp.areaMax : ""});
+        thisUser.setState({minPrice: resp.priceMin !== null ? resp.priceMin : ""});
+        thisUser.setState({maxPrice: resp.priceMax !== null ? resp.priceMax : ""});
+        thisUser.setState({hospitalDist: services[0].distance !== null ? services[0].distance : ""});
+        thisUser.setState({hospitalQtn: services[0].quantity !== null ? services[0].quantity : ""});
+        thisUser.setState({schoolDist: services[1].distance !== null ? services[1].distance : ""});
+        thisUser.setState({schoolQtn: services[1].quantity !== null ? services[1].quantity : ""});
+        thisUser.setState({workPlace: resp.workAddress});
+        thisUser.setState({workDistance: resp.workMaxDistance !== null ? resp.workMaxDistance : ""});
     })
     .catch((error) => console.error(error));
 }
