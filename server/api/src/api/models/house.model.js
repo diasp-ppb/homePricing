@@ -101,6 +101,46 @@ houseSchema.statics = {
   },
 
   /**
+   * Get house typology
+   *
+   * @param {ObjectId} id - The typology of house.
+   * @returns {String}
+   */
+  async getHouseTypology(id) {
+    try {
+      let typology;
+
+      if (mongoose.Types.ObjectId.isValid(id)) {
+        typology = await this.findById(id).select({ tipology: 1, _id: 0 }).exec();
+      }
+
+      if (typology) {
+        return typology;
+      } else {
+        return "";
+      }
+
+    } catch (error) {
+      throw error;
+    }
+  },
+
+  async getRecommendHouses(typologiesRecommendation, houseIdArray) {
+    let recommendHouses = [];
+
+    recommendHouses = await this.find({
+      '$and': [
+        { "_id": { '$nin': houseIdArray } },
+        { "tipology": { '$in': typologiesRecommendation } }
+      ],
+    })
+      .limit(6)
+      .exec();
+
+    return recommendHouses;
+  },
+
+  /**
    * List houses.
    *
    * @param {number} skip - Number of houses to be skipped.

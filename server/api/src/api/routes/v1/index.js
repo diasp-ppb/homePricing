@@ -4,6 +4,7 @@ const authRoutes = require('./auth.route');
 const housesRoutes = require('./houses.route');
 const userPreferencesRoutes = require('./user-preferences.route');
 const favoritesRoutes = require('./favorites.route');
+const recommendationsRoutes = require('./recommendations.route');
 const router = express.Router();
 
 /**
@@ -31,6 +32,14 @@ router.use('/houses', housesRoutes);
  */
 router.use('/user/preferences', userPreferencesRoutes);
 
+/**
+ * GET v1/favorites
+ */
 router.use('/favorites', favoritesRoutes);
+
+/**
+ * GET v1/recommendations
+ */
+router.use('/recommendations', recommendationsRoutes);
 
 module.exports = router;
