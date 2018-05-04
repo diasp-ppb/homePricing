@@ -5,8 +5,8 @@ import { connect } from 'react-redux';
 
 import Metrics from '../Themes/Metrics'
 import { createBodyUserPreferences } from '../Services/Api'
-import { updateUserPreferences } from '../Services/Api'
-import { getUserPreferences } from "../Services/Api";
+import { updateUserPreferences, getUserPreferences } from '../Services/Api'
+import { validateArea, validatePrices, validateServices } from "../Services/Api";
 
 // Styles
 import Colors from '../Themes/Colors'
@@ -70,14 +70,22 @@ class UserPreferences extends Component {
     handleSubmit(event) {
         event.preventDefault();
 
-        var body = createBodyUserPreferences(this.state.goal, this.state.propertyType, this.state.tipology, 
-            this.state.minArea, this.state.maxArea, 
-            this.state.minPrice, this.state.maxPrice, 
-            this.state.hospitalDist, this.state.hospitalQtn, 
+        var validAreas = validateArea(this.state.minArea, this.state.maxArea);
+        var validPrices = validatePrices(this.state.minPrice, this.state.maxPrice);
+        var validServices = validateServices(this.state.hospitalDist, this.state.hospitalQtn, 
             this.state.schoolDist, this.state.schoolQtn, 
-            this.state.workPlace, this.state.workDistance);
-        
-        updateUserPreferences(body, this.props);
+            this.state.workDistance);
+
+        if(validAreas && validPrices && validServices) {
+            var body = createBodyUserPreferences(this.state.goal, this.state.propertyType, this.state.tipology, 
+                this.state.minArea, this.state.maxArea, 
+                this.state.minPrice, this.state.maxPrice, 
+                this.state.hospitalDist, this.state.hospitalQtn, 
+                this.state.schoolDist, this.state.schoolQtn, 
+                this.state.workPlace, this.state.workDistance);
+            
+            updateUserPreferences(body, this.props);
+        }
     }
 
     render () {
