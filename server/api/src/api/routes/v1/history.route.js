@@ -12,8 +12,8 @@ const router = express.Router();
 router.param('userId', controller.load);
 
 router.route('/')
-    // .get(controller.list)
-    .post(validate(createHistory), controller.create)
+    .get(controller.list)
+    .post(/*validate(createHistory), */controller.create)
 /**
  * @api {get} v1/history/:userId Get history of user
  * @apiDescription Get history of user
@@ -25,4 +25,4 @@ router.route('/')
 router.route('/:userId')
     .get(/*authorize(LOGGED_USER), */validate(getHistory), controller.get)
 
-module.exports = router
+module.exports = router 

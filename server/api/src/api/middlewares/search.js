@@ -53,17 +53,15 @@ function verifyHouse(house, filters) {
 
         var obj = createObject(house, filters);
 
+
         Promise.props(obj).then(function (result) {
-            console.log(result)
 
             if (checkObjectResults(result)) {
 
                 if (filters.workLocation != null && filters.workDistance != null) {
-                    console.log("ENTREEEEI")
 
                     googleMatrix(googleMatrixKey, house, filters)
                         .then(function (res) {
-                            console.log(res.status)
 
                             if (res.status == "OK") {
 

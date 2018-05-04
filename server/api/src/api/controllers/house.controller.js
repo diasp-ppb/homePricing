@@ -74,13 +74,9 @@ exports.list = async (req, res, next) => {
 exports.filter = async (req, res, next) => {
   try {
     var filters = convertParams(req.body);
-    console.log(filters);
     const propertyCentricHouses = await House.filter(filters);
-    console.log(propertyCentricHouses);
     const houses = await searchHouses(propertyCentricHouses, req.body);
-    console.log(houses);
     const transformedHouses = houses.map(house => house.transform());
-    console.log(houses)
     res.json(houses);
   } catch (error) {
     next(error);
@@ -109,7 +105,6 @@ exports.findbygps = async (req, res, next ) => {
 
 
     const houses = await House.findByLocation(minLat, maxLat, minLong, maxLong);
-    console.warn(houses)
     res.json(houses);
 
   } catch (error) {

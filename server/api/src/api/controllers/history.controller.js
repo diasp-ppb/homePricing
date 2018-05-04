@@ -1,6 +1,7 @@
 const httpStatus = require('http-status');
 const { omit } = require('lodash');
 const History = require('../models/history.model');
+const House = require('../models/house.model');
 const { handler: errorHandler } = require('../middlewares/error');
 
 /**
@@ -21,11 +22,22 @@ exports.load = async (req, res, next, id) => {
  * Get history
  * @public
  */
-exports.get = (req, res, next) => {
+exports.get = async (req, res, next) => {
   try {
     const history = req.locals.history;
     const transformedHistory = history.map(history => history.transform());
-    res.json(transformedHistory);
+    const houses = [];
+
+    for (var result in history) {
+      try {
+        const house = await House.get(history[result].houseId);
+        const tranformedHouse = house.transform();
+        houses.push(tranformedHouse);
+      } catch (error) {
+        next(error);
+      }
+    }
+    res.json(houses);
   } catch (error) {
     next(error);
   }
@@ -51,12 +63,12 @@ exports.create = async (req, res, next) => {
  * Get history list
  * @public
  */
-// exports.list = async (req, res, next) => {
-//   try {
-//     const history = await History.list(req.query);
-//     const transformedHistory = history.map(history => history.transform());
-//     res.json(transformedHistory);
-//   } catch (error) {
-//     next(error);
-//   }
-// };
+exports.list = async (req, res, next) => {
+  try {
+    const history = await History.list(req.query);
+    const transformedHistory = history.map(history => history.transform());
+    res.json(transformedHistory);
+  } catch (error) {
+    next(error);
+  }
+};

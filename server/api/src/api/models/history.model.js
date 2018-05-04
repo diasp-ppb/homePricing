@@ -51,10 +51,8 @@ historySchema.statics = {
     async get(id) {
         try {
             let history = await this.find(id).exec();
-            console.log(history)
 
             if (mongoose.Types.ObjectId.isValid(id)) {
-                console.log("VALID");
                 history = await this.find(id).exec();
             }
             if (history) {

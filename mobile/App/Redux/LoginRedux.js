@@ -30,6 +30,5 @@ export function login(user, token) {
 }
 
 function mapStateToProps(state) {
-    console.log("map state to props");
     return state;
 }

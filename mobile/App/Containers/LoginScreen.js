@@ -40,7 +40,6 @@ class LoginScreen extends Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        console.log("handle login");
 
         if (this.state.email == '' || this.state.password == '') {
             ToastWarning(WARN_MISSING);
