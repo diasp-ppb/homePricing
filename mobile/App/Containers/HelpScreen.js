@@ -77,7 +77,7 @@ export default class LaunchScreen extends Component {
 									{
 										this.state.general.map((item, index) => {
 											return (
-												<Picker.Item label={item.label} value={item.value} />
+												<Picker.Item key={index} label={item.label} value={item.value} />
 											)
 										})
 									}
@@ -99,7 +99,7 @@ export default class LaunchScreen extends Component {
 									{
 										this.state.security.map((item, index) => {
 											return (
-												<Picker.Item label={item.label} value={item.value} />
+												<Picker.Item key={index} label={item.label} value={item.value} />
 											)
 										})
 									}
