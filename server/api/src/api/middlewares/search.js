@@ -53,18 +53,17 @@ function verifyHouse(house, filters) {
 
         var obj = createObject(house, filters);
 
-        if (Object.keys(obj).length === 0) {
-            resolve(false);
-        }
-
         Promise.props(obj).then(function (result) {
+            console.log(result)
 
             if (checkObjectResults(result)) {
 
                 if (filters.workLocation != null && filters.workDistance != null) {
+                    console.log("ENTREEEEI")
 
                     googleMatrix(googleMatrixKey, house, filters)
                         .then(function (res) {
+                            console.log(res.status)
 
                             if (res.status == "OK") {
 
@@ -108,7 +107,6 @@ exports.searchHouses = async function (housesToFilter, filters) {
         if (housesToFilter[house].coordinates.length != 0) {
 
             var result = await verifyHouse(housesToFilter[house], filters);
-
             if (result) {
                 houses.push(housesToFilter[house]);
             }

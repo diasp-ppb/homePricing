@@ -74,15 +74,48 @@ exports.list = async (req, res, next) => {
 exports.filter = async (req, res, next) => {
   try {
     var filters = convertParams(req.body);
+    console.log(filters);
     const propertyCentricHouses = await House.filter(filters);
+    console.log(propertyCentricHouses);
     const houses = await searchHouses(propertyCentricHouses, req.body);
+    console.log(houses);
     const transformedHouses = houses.map(house => house.transform());
+    console.log(houses)
     res.json(houses);
   } catch (error) {
     next(error);
   }
 };
 
+
+/**
+ * Find houses by gps
+ * @public
+ */
+exports.findbygps = async (req, res, next ) => {
+  try {
+    const params = req.body;
+
+    let Lat = params.latitude;
+    let Long = params.longitude;
+    let deltaLathalf = params.latitudeDelta / 2;
+    let deltaLonhalf = params.longitudeDelta / 2;
+
+    let minLat = Lat - deltaLathalf;
+    let maxLat = Lat + deltaLathalf;
+
+    let minLong = Long - deltaLonhalf;
+    let maxLong = Long + deltaLonhalf;
+
+
+    const houses = await House.findByLocation(minLat, maxLat, minLong, maxLong);
+    console.warn(houses)
+    res.json(houses);
+
+  } catch (error) {
+    next(error);
+  }
+}
 /**
  * Delete house
  * @public

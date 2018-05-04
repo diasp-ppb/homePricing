@@ -54,6 +54,18 @@ router.route('/filter')
   */
   .post(validate(request), controller.filter)
 
+router.route('/findbygps')
+  .post(controller.findbygps)
+
+/**
+ * @api {get} v1/houses/:houseId Get house
+ * @apiDescription Get house
+ * @apiVersion 1.0.0
+ * @apiName GetHouse
+ * @apiGroup House
+ * @apiPermission anyone
+ */
+  
 router.route('/:houseId')
   /**
    * @api {get} v1/houses/:houseId Get house

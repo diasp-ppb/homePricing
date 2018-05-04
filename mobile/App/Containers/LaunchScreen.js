@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Image, View } from 'react-native'
+import { Image, View, TouchableOpacity } from 'react-native'
 import { connect } from 'react-redux';
 import { Images } from '../Themes'
 
@@ -48,7 +48,7 @@ export default class LaunchScreen extends Component {
                 </Col>
                 <Col size={4} />
                 <Col size={48}>
-                  <Button primary block>
+                  <Button primary block onPress={() => navigate('Gps')}>
                     <Text>GPS</Text>
                   </Button>
                 </Col>
@@ -57,7 +57,10 @@ export default class LaunchScreen extends Component {
             <Col size={20} />
           </View>
         </View>
-        <Fab><Icon name="camera" /></Fab>
+        <Fab
+          onPress={ () =>navigate("Camera") }>
+          <Icon name="camera" style={{color: "#ffffff"}} />
+        </Fab>
       </Container>
     )
   }

@@ -32,7 +32,7 @@ const houseSchema = new mongoose.Schema({
   title: {
     type: String,
     required: true,
-    maxlength: 300
+    maxlength: 300,
   },
   webpage: {
     type: String,
@@ -66,8 +66,8 @@ const houseSchema = new mongoose.Schema({
     type: Object
   }
 }, {
-    timestamps: true,
-  });
+  timestamps: true,
+});
 
 /**
  * Methods
@@ -147,6 +147,21 @@ houseSchema.statics = {
       .skip(perPage * (page - 1))
       .limit(perPage)
       .exec();
+  },
+
+  async findByLocation(minLat, maxLat, minLong, maxLong, page = 1, perPage = 30) {
+    let house =  await this.find({
+      $and: [
+        { coordinates: { $elemMatch: { $gte: minLat, $lt: maxLat } } },
+        { coordinates: { $elemMatch: { $gte: minLong, $lt: maxLong } } },
+      ],
+    })
+      .sort({ createdAt: -1 })
+      .skip(perPage * (page - 1))
+      .limit(perPage)
+      .exec();
+
+    return house;
   },
 };
 

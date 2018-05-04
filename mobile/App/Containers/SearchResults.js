@@ -1,14 +1,15 @@
-import { Images } from '../Themes'
-import React, { Component } from 'react'
-import { View, Image, TouchableOpacity } from 'react-native'
+import React, { Component } from 'react';
+import { Image, ScrollView } from 'react-native';
 
 
 // Native Base
-import { Container, Header, Left, Right, Body, Title, Content, Button, Text, Icon, Item, Input, Segment, Card, CardItem } from 'native-base'
+import { Container, Header, Left, Body, Button, Text, Icon, Item, Input, Segment, Card, CardItem } from 'native-base';
 
 // Styles
-import styles from './Styles/SearchResultsStyles'
-import {baseURL} from "../Services/Api";
+import styles from './Styles/SearchResultsStyles';
+import { baseURL } from '../Services/Api';
+import GPSMap from '../Components/GPSMap';
+
 // Component
 export default class LaunchScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -16,92 +17,181 @@ export default class LaunchScreen extends Component {
   });
 
   // This component's constructor
-  constructor (props) {
-    super(props)
+  constructor(props) {
+    super(props);
     this.state = {
-      houses: []
-    }
+      houses: [],
+      map: false,
+      region: {
+        latitude: 41.1743667,
+        longitude: -8.58457610000005,
+        latitudeDelta: 0.0050,
+        longitudeDelta: 0.0025,
+      },
+    };
+
+    this.addMoreMarkers = this.addMoreMarkers.bind(this);
+    this.moreInfo = this.moreInfo.bind(this);
   }
 
   // Fetch data here
-  componentDidMount () {
-    fetch(baseURL + "/v1/houses")
-      .then(function (response) {
+  componentDidMount() {
+    const { navigation } = this.props;
+    const form = navigation.state.params.form;
+    fetch(`${baseURL}/v1/houses/filter`, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(form),
+    })
+      .then((response) => {
         return response.json();
       })
-      .then(responseJson => {
-        this.setState({ houses: responseJson });
+      .then((houses) => {
+        this.setState({ houses });
+        this.generateMarkers();
       })
-      .catch(function (json) {
-        console.error(json)
-      })
+      .catch((json) => {
+        console.error(json);
+      });
   }
 
   // Clear data here
-  componentWillUnmount () {
-    this.setState({ houses: [] })
+  componentWillUnmount() {
+    this.setState({ houses: [] });
   }
 
-  // Render the screen
-  render () {
+  generateMarkers() {
+    let minLat = 1000;
+    let maxLat = -1000;
+    let minLong = 1000;
+    let maxLong = -1000;
 
+    const houses = this.state.houses;
+    for (let i = 0; i < houses.length; i++) {
+      const house = houses[i];
+      const lat = parseFloat(house.coordinates[0]);
+      const long = parseFloat(house.coordinates[1]);
+
+      if (minLat > lat) { minLat = lat; }
+      if (maxLat < lat) { maxLat = lat; }
+      if (minLong > long) { minLong = long; }
+      if (maxLong < long) { maxLong = long; }
+
+      house.moreInfo = false;
+    }
+
+    const deltaLong = maxLong - minLong;
+    const deltaLat = maxLat - minLat;
+
+    const region = { ...this.state.region };
+    region.latitudeDelta = deltaLat;
+    region.longitudeDelta = deltaLong;
+    region.latitude = minLat + (deltaLat / 2);
+    region.longitude = minLong + (deltaLong / 2);
+
+    this.setState({ region });
+    this.setState({ houses });
+  }
+
+  addMoreMarkers(region) {
+    this.setState({ region });
+  }
+
+  moreInfo(house) {
+    const houses = this.state.houses;
+    houses[house].moreInfo = !houses[house].moreInfo;
+    this.setState({ houses });
+  }
+
+
+  renderTab() {
     const { navigate } = this.props.navigation;
 
+    const tab = this.state.map === true ? (
+      <Container style={{ flex: 1, flexWrap: 'wrap' }}>
+        <GPSMap
+          region={this.state.region}
+          showsUserLocation={false}
+          addMoreMarkers={this.addMoreMarkers}
+          houses={this.state.houses}
+          navigate={navigate}
+          moreInfo={this.moreInfo}
+        />
+      </Container>
+    ) : (
+      <ScrollView style={{ marginBottom: 20, flex: 1 }}>
+        {
+          this.state.houses.map((item, index) => {
+            return (
+              <Card key={index} style={{ flex: 1 }}>
+                <CardItem button onPress={() => navigate('HouseInformation', { house: item })}>
+                  <Left>
+                    <Body>
+                      <Text>{item.title}</Text>
+                      <Text style={styles.address}>
+                        <Icon ios="ios-pin" android="md-pin" style={styles.address} />
+                        {item.address.zipcode},
+                        {item.address.town},
+                        {item.address.county}
+                      </Text>
+                    </Body>
+                  </Left>
+                </CardItem>
+                <CardItem cardBody>
+                  <Image
+                    source={{ uri: item.images[0] }}
+                    style={{ height: 200, width: null, flex: 1 }}
+                  />
+                </CardItem>
+                <CardItem>
+                  <Left>
+                    <Text style={styles.info}>
+                      <Icon ios="ios-cash" android="md-cash" style={styles.info} /> {item.price} €
+                    </Text>
+                  </Left>
+                </CardItem>
+              </Card>
+            );
+          })
+        }
+      </ScrollView>
+    );
 
+    return tab;
+  }
+
+
+  // Render the screen
+  render() {
     return (
       <Container>
         <Header searchBar rounded hasSegment>
           <Item>
-            <Icon ios={'ios-search'} android={'md-search'} />
+            <Icon ios="ios-search" android="md-search" />
             <Input placeholder="Pesquisar Anúncios" />
           </Item>
         </Header>
         <Segment>
-          <Button first active>
+          <Button
+            first
+            active={!this.state.map}
+            onPress={() => this.setState({ map: false })}
+          >
             <Text>Lista</Text>
           </Button>
-          <Button last>
+          <Button
+            last
+            active={this.state.map}
+            onPress={() => this.setState({ map: true })}
+          >
             <Text>Mapa</Text>
           </Button>
         </Segment>
-        <Content padder>
-          <View style={{ marginBottom: 20 }}>
-            {
-              this.state.houses.map((item, index) => {
-                return (
-                  <Card key={index}>
-                    <CardItem button onPress={() => navigate('HouseInfScreen',{id: item.id })}>
-                      <Left>
-                        <Body>
-                          <Text>{item.description}</Text>
-                          <Text style={styles.address}>
-                            <Icon ios={'ios-pin'} android={'md-pin'} style={styles.address} /> {item.address}
-                          </Text>
-                        </Body>
-                      </Left>
-                    </CardItem>
-                    <CardItem cardBody>
-                      <Image source={{ uri: item.imageURL }} style={{ height: 200, width: null, flex: 1 }}/>
-                    </CardItem>
-                    <CardItem>
-                      <Left>
-                        <Text style={styles.info}>
-                          <Icon ios={'ios-cash'} android={'md-cash'} style={styles.info} /> {item.price}
-                        </Text>
-                      </Left>
-                      <Right>
-                        <Text style={styles.info}>
-                          <Icon ios={'ios-chatbubbles'} android={'md-chatbubbles'} style={styles.info} /> {item.numComm}
-                        </Text>
-                      </Right>
-                    </CardItem>
-                  </Card>
-                )
-              })
-            }
-          </View>
-        </Content>
+        {this.renderTab()}
       </Container>
-    )
+    );
   }
 }
