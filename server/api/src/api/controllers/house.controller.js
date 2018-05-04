@@ -77,7 +77,7 @@ exports.filter = async (req, res, next) => {
     const propertyCentricHouses = await House.filter(filters);
     const houses = await searchHouses(propertyCentricHouses, req.body);
     const transformedHouses = houses.map(house => house.transform());
-    res.json(houses);
+    res.json(transformedHouses);
   } catch (error) {
     next(error);
   }

@@ -76,7 +76,7 @@ houseSchema.method({
   transform() {
     const transformed = {};
     const fields = ['id', 'title', 'description', 'type', 'address', 'coordinates', 'bathrooms', 'area', 'webpage', 'characteristics', 'price', 'area', 'tipology', 'energyCertificate', 'condition', 'year', 'images', 'createdAt'];
-
+    
     fields.forEach((field) => {
       transformed[field] = this[field];
     });

@@ -8,7 +8,7 @@ import { Container, Header, Left, Right, Body, Title, Content, Button, Text, Ico
 
 // Styles
 import styles from './Styles/HistoricScreenStyles'
-import {baseURL} from "../Services/Api";
+import { baseURL } from "../Services/Api";
 // Component
 class HistoricScreen2 extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -16,7 +16,7 @@ class HistoricScreen2 extends Component {
   });
 
   // This component's constructor
-  constructor (props) {
+  constructor(props) {
 
     super(props)
     this.state = {
@@ -25,7 +25,7 @@ class HistoricScreen2 extends Component {
   }
 
   // Fetch data here
-  componentDidMount () {
+  componentDidMount() {
     fetch(baseURL + "/v1/history/" + this.props.user.user)
       .then(function (response) {
         return response.json();
@@ -39,48 +39,47 @@ class HistoricScreen2 extends Component {
   }
 
   // Clear data here
-  componentWillUnmount () {
+  componentWillUnmount() {
     this.setState({ houses: [] })
   }
 
   // Render the screen
-  render () {
+  render() {
 
     const { navigate } = this.props.navigation;
 
 
     return (
       <Container>
-               
+
         <Content padder>
           <View style={{ marginBottom: 20 }}>
             {
               this.state.houses.map((item, index) => {
                 return (
-                 
 
-                <View style={styles.box1} key={index} >
-                  <View style={{ flex:0.35 , width:'10%' , height:50}} >
-                    {/* <Image style={{ height: 100, width: null, flex: 1 }} source={{ uri: item.images[0] }} /> */}
-                  </View>
 
-                  <View style={{ flex:0.65}}>
-                    
-                     
-                       <Button transparent onPress={() => navigate('HouseInfScreen',{id: item.id })}>
-                        <Text style={styles.address.town}>
-                          <Icon  ios={'ios-pin'} android={'md-pin'} style={styles.address.town} /> { item.address.town }
-                      </Text>
+                  <View style={styles.box1} key={index} >
+                    <View style={{ flex: 0.35, width: '10%', height: 50 }} >
+                      {/* <Image style={{ height: 100, width: null, flex: 1 }} source={{ uri: item.house.images[0] }} /> */}
+                    </View>
+
+                    <View style={{ flex: 0.65 }}>
+
+
+                      <Button transparent onPress={() => navigate('HouseInformation', { house: item.house })}>
+                        <Text style={styles.address}>
+                          <Icon ios={'ios-pin'} android={'md-pin'} style={styles.address} /> {item.house.address.town}
+                        </Text>
                       </Button>
 
-
-                     <Text style={styles.money}> 
-                          {item.price}
+                      <Text style={styles.date}>
+                        {"Seen on: " + item.createdAt}
                       </Text>
 
-                  </View>
+                    </View>
 
-                </View>
+                  </View>
 
 
                 )
@@ -95,7 +94,7 @@ class HistoricScreen2 extends Component {
 
 function mapStateToProps(state) {
   return {
-      user: state.login
+    user: state.login
   };
 }
 

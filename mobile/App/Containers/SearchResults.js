@@ -113,7 +113,7 @@ class SearchResults extends Component {
         Accept: 'application/json',
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ houseId: house._id, userId: this.props.user.user}),
+      body: JSON.stringify({ houseId: house.id, userId: this.props.user.user}),
     })
       .catch((json) => {
         console.error(json);

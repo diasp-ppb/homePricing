@@ -3,6 +3,7 @@ const httpStatus = require('http-status');
 const { omitBy, isNil } = require('lodash');
 const APIError = require('../utils/APIError');
 const { env } = require('../../config/vars');
+const House = require('./house.model');
 
 /**
  * History Schema
@@ -25,13 +26,20 @@ const historySchema = new mongoose.Schema({
  * Methods
  */
 historySchema.method({
-    transform() {
+    async transform() {
         const transformed = {};
-        const fields = ['userId', 'houseId', 'createdAt'];
+        const fields = ['userId', 'createdAt'];
 
-        fields.forEach((field) => {
-            transformed[field] = this[field];
-        });
+        try {
+            const house = await House.get(this['houseId']);
+            transformed['house'] = house.transform();
+
+            fields.forEach((field) => {
+                transformed[field] = this[field];
+            });
+        } catch (error) {
+            console.log(error)
+        }
 
         return transformed;
     }
