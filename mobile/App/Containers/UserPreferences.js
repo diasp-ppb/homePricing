@@ -317,7 +317,7 @@ function mapStateToProps(state) {
     return {
         user: state.login
     };
-  }
+}
   
   const connectedRegister = connect(mapStateToProps)(UserPreferences);
   export { connectedRegister as UserPreferences};

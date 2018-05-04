@@ -10,84 +10,31 @@ import { login } from '../Redux/LoginRedux'
 
 export const baseURL = "http://172.30.26.77";
 
+export function checkRegisterResponse(responseJson, props) {
+    if (responseJson.code == '400') {
+        ToastError(ERROR_INVALID_PARAM_REGISTER);
+    } else if (responseJson.code == '409') {
+        ToastError(ERROR_EMAIL_EXISTS_REGISTER);
+    } else {
+        const { navigate } = props.navigation;
+        navigate('Login');
+        ToastSuccess(SUCCESS_REGISTER);
+    }
+}
 
 export function checkLoginResponse(responseJson, props) {
-  if (responseJson.code == '400') {
-      ToastError(ERROR_INVALID_EMAIL);
-  } else if (responseJson.code == '401') {
-      ToastError(ERROR_INVALID_PARAM_LOGIN);
-  } else {
-      const { navigate } = props.navigation;
 
-      ToastSuccess(SUCCESS_LOGIN);
-      props.login(responseJson.user.id, responseJson.token.accessToken);
-      navigate('UserProfile');
+    if (responseJson.code == '400') {
+        ToastError(ERROR_INVALID_EMAIL);
+    } else if (responseJson.code == '401') {
+        ToastError(ERROR_INVALID_PARAM_LOGIN);
+    } else {
+        const { navigate } = props.navigation;
 
-  }
-}
-
-export function checkRegisterResponse(responseJson, props) {
-  if (responseJson.code == '400') {
-      ToastError(ERROR_INVALID_PARAM_REGISTER);
-  } else if (responseJson.code == '409') {
-      ToastError(ERROR_EMAIL_EXISTS_REGISTER);
-  } else {
-      const { navigate } = props.navigation;
-      navigate('Login');
-      ToastSuccess(SUCCESS_REGISTER);
-  }
-}
-
-export function logoutAPI(props) {
-    const { navigate } = props.navigation;
-    props.logout();
-    navigate('LaunchScreen');
-    ToastSuccess(LOGOUT_SUCCESS);
-}
-
-export function loginAPI(email, password, props) {
-  fetch(baseURL + "/v1/auth/login", {
-      method: 'POST',
-      headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-          email: email,
-          password: password
-      }),
-  })
-  .then(
-    (response) => response.json()
-  )
-  .then(
-    (responseJson) => checkLoginResponse(responseJson, props)
-  )
-  .catch((error) => {
-      console.error(error);
-  });
-}
-
-export function registerAPI(name, email, password, props) {
-  fetch(baseURL + "/v1/auth/register", {
-      method: 'POST',
-      headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-          email: email,
-          name: name,
-          password: password
-      }),
-  })
-  .then((response) => response.json())
-  .then(
-      (responseJson) => checkRegisterResponse(responseJson, props)
-  )
-  .catch((error) => {
-      console.error(error);
-  });
+        ToastSuccess(SUCCESS_LOGIN);
+        props.login(responseJson.user.id, responseJson.token.accessToken);
+        navigate('UserProfile');
+    }
 }
 
 export function createBodyUserPreferences(goal, propertyType, tipology, 
@@ -118,6 +65,60 @@ export function createBodyUserPreferences(goal, propertyType, tipology,
             workAddress: workPlace,
             workMaxDistance: workDistance
         });
+    }
+
+export function registerAPI(name, email, password, props) {
+    fetch(baseURL + "/v1/auth/register", {
+        method: 'POST',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            email: email,
+            name: name,
+            password: password
+        }),
+    })
+    .then(
+        (response) => response.json()
+    )
+    .then(
+        (responseJson) => checkRegisterResponse(responseJson, props)
+    )
+    .catch(
+        (error) => console.error(error)
+    );
+}
+
+export function loginAPI(email, password, props) {
+    fetch(baseURL + "/v1/auth/login", {
+        method: 'POST',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            email: email,
+            password: password
+        }),
+    })
+    .then(
+        (response) => response.json()
+    )
+    .then(
+        (responseJson) => checkLoginResponse(responseJson, props)
+    )
+    .catch(
+        (error) => console.error(error)
+    );
+}
+
+export function logoutAPI(props) {
+    const { navigate } = props.navigation;
+    props.logout();
+    navigate('LaunchScreen');
+    ToastSuccess(LOGOUT_SUCCESS);
 }
 
 export function updateUserPreferences(bodyContent, props) {
@@ -132,12 +133,14 @@ export function updateUserPreferences(bodyContent, props) {
         'Authorization' : auth
         },
         body: bodyContent,
-    }).then(() => {
-        ToastSuccess(UPDATE_USER_PREFERENCES);
-        const { navigate } = props.navigation;
-        navigate('UserProfile');
     })
-    .catch((error) => { console.error(error); });
+    .then(
+        () => {
+            ToastSuccess(UPDATE_USER_PREFERENCES);
+            const { navigate } = props.navigation;
+            navigate('UserProfile');
+        })
+    .catch((error) => console.error(error));
 }
 
 export function getUserPreferences(updateUserPreferences) {
@@ -146,12 +149,12 @@ export function getUserPreferences(updateUserPreferences) {
     var auth = 'Bearer ' + updateUserPreferences.props.user.token;
     
     fetch(url, {
-      method: 'GET',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type' : 'application/json',
-        'Authorization' : auth
-      }
+        method: 'GET',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type' : 'application/json',
+            'Authorization' : auth
+        }
     }).then(
       (response) => response.json()
     )
@@ -187,9 +190,6 @@ export function getUserPreferences(updateUserPreferences) {
         updateUserPreferences.setState({hospitalQtn: services[0].quantity});
         updateUserPreferences.setState({schoolDist: services[1].distance});
         updateUserPreferences.setState({schoolQtn:services[1].quantity});
-    }
-    ).catch((error) => {
-      console.error(error);
-    });
-
+    })
+    .catch((error) => console.error(error));
 }
