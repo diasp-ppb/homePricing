@@ -67,6 +67,7 @@ exports.list = async (req, res, next) => {
   }
 };
 
+
 /**
  * Filter houses
  * @public
@@ -82,7 +83,6 @@ exports.filter = async (req, res, next) => {
     next(error);
   }
 };
-
 
 /**
  * Find houses by gps

@@ -51,6 +51,52 @@ const userSchema = new mongoose.Schema({
     type: String,
     trim: true,
   },
+  finality: {
+    type: String,
+    lowercase: true,
+    minlength: 1,
+    maxlength: 128,
+  },
+  type: {
+    type: String,
+    lowercase: true,
+    minlength: 1,
+    maxlength: 128,
+  },
+  tipology: {
+    type: String,
+    lowercase: true,
+    minlength: 1,
+    maxlength: 128,
+  },
+  areaMin: {
+    type: Number,
+    minlength: 1,
+  },
+  areaMax: {
+    type: Number,
+    minlength: 1,
+  },
+  priceMin: {
+    type: Number,
+    minlength: 0,
+  },
+  priceMax: {
+    type: Number,
+    minlength: 0,
+  },
+  services: {
+    type: Array,
+    minlength: 0,
+  },
+  workAddress: {
+    type: String,
+    minlength: 0,
+  },
+  workMaxDistance: {
+    type: Number,
+    minlength: 0,
+  }
 }, {
   timestamps: true,
 });
@@ -83,6 +129,17 @@ userSchema.method({
   transform() {
     const transformed = {};
     const fields = ['id', 'name', 'email', 'picture', 'role', 'createdAt'];
+
+    fields.forEach((field) => {
+      transformed[field] = this[field];
+    });
+
+    return transformed;
+  },
+
+  transformPreferences() {
+    const transformed = {};
+    const fields = ['finality', 'type', 'tipology', 'areaMin', 'areaMax', 'priceMin', 'priceMax', 'services', 'workAddress', 'workMaxDistance'];
 
     fields.forEach((field) => {
       transformed[field] = this[field];

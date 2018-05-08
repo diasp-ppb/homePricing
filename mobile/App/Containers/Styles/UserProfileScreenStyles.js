@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native'
-import { Metrics, ApplicationStyles } from '../../Themes/'
+import { Metrics, Colors, ApplicationStyles } from '../../Themes/'
 
 export default StyleSheet.create({
   ...ApplicationStyles.screen,
@@ -30,6 +30,19 @@ export default StyleSheet.create({
   userInfo: {
     alignItems: 'center',
     marginBottom: 10
+  },
+  btn: {
+    marginBottom: 20
+  },
+  logoutBox: {
+    flex:0.6,
+    justifyContent: 'center'
+  },
+  spaceBox: {
+    flex:0.2
+  },
+  wrapper: {
+    flexDirection:'row'
   }
-
+  
 })

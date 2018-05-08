@@ -10,6 +10,8 @@ import HouseInfScreen from '../Containers/HouseInfScreen'
 import HouseSearch from '../Containers/HouseSearch'
 import GpsScreen from '../Containers/GpsScreen'
 import CameraScreen from '../Containers/CameraScreen'
+import { UserPreferences } from '../Containers/UserPreferences'
+
 import Colors from '../Themes/Colors'
 
 
@@ -36,7 +38,8 @@ const PrimaryNav = StackNavigator({
   HouseSearch: { screen: HouseSearch},
   HouseInformation: { screen: HouseInfScreen },
   Gps: { screen: GpsScreen},
-  Camera : {screen: CameraScreen}
+  Camera : {screen: CameraScreen},
+  UserPreferences: { screen: UserPreferences}
 }, {
   // Default config for all screens
   headerMode: 'float',

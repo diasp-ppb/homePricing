@@ -1,7 +1,9 @@
 const express = require('express');
 const userRoutes = require('./user.route');
 const authRoutes = require('./auth.route');
+
 const houseRoutes = require('./house.route');
+
 
 const router = express.Router();
 
@@ -16,14 +18,15 @@ router.get('/status.json', (req, res) => res.send({"status": "ok"}));
 router.use('/users', userRoutes);
 
 /**
- * GET v1/users
+ * GET v1/auth
  */
 router.use('/auth', authRoutes);
 
 /**
- * GET v1/house
+ * GET v1/houses
  */
 
 router.use('/houses', houseRoutes);
+
 
 module.exports = router;

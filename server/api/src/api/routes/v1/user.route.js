@@ -7,6 +7,7 @@ const {
   createUser,
   replaceUser,
   updateUser,
+  updateUserPreferences,
 } = require('../../validations/user.validation');
 
 const router = express.Router();
@@ -91,6 +92,57 @@ router
    */
   .get(authorize(), controller.loggedIn);
 
+router
+  .route('/preferences')
+  /**
+   * @api {get} v1/users/preferences User Preferences
+   * @apiDescription Get logged in user preferences information
+   * @apiVersion 1.0.0
+   * @apiName UserPreferences
+   * @apiGroup User
+   * @apiPermission user
+   *
+   * @apiHeader {String} Athorization  User's access token
+   *
+   * @apiSuccess {String}  finality
+   * @apiSuccess {String}  type
+   * @apiSuccess {String}  tipology
+   * @apiSuccess {Number}  areaMin
+   * @apiSuccess {Number}  areaMax
+   * @apiSuccess {Number}  priceMin
+   * @apiSuccess {Number}  priceMax
+   *
+   * @apiError (Unauthorized 401)  Unauthorized  Only authenticated Users can access the data
+   */
+  .get(authorize(), controller.preferences)
+  /**
+   * @api {patch} v1/users/preferences Update User Preferences
+   * @apiDescription Update some fields of a user preferences document
+   * @apiVersion 1.0.0
+   * @apiName UpdateUserPreferences
+   * @apiGroup User
+   * @apiPermission user
+   *
+   * @apiHeader {String} Athorization  User's access token
+   *
+   * @apiParam  {String}             email     User's email
+   * @apiParam  {String{6..128}}     password  User's password
+   * @apiParam  {String{..128}}      [name]    User's name
+   * @apiParam  {String=user,admin}  [role]    User's role
+   * (You must be an admin to change the user's role)
+   *
+   * @apiSuccess {String}  id         User's id
+   * @apiSuccess {String}  name       User's name
+   * @apiSuccess {String}  email      User's email
+   * @apiSuccess {String}  role       User's role
+   * @apiSuccess {Date}    createdAt  Timestamp
+   *
+   * @apiError (Bad Request 400)  ValidationError  Some parameters may contain invalid values
+   * @apiError (Unauthorized 401) Unauthorized Only authenticated users can modify the data
+   * @apiError (Forbidden 403)    Forbidden    Only user with same id or admins can modify the data
+   * @apiError (Not Found 404)    NotFound     User does not exist
+   */
+  .patch(authorize(), validate(updateUserPreferences), controller.updatePreferences);
 
 router
   .route('/:userId')

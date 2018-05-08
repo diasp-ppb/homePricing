@@ -79,13 +79,16 @@ houseSchema.method({
     fields.forEach((field) => {
       transformed[field] = this[field];
     });
+
     return transformed;
   },
 });
 
+
 /**
  * Statics
  */
+
 houseSchema.statics = {
 
   /**
@@ -94,6 +97,7 @@ houseSchema.statics = {
    * @param {ObjectId} id - The objectId of house.
    * @returns {Promise<House, APIError>}
    */
+
 
   async get(id) {
     try {
@@ -107,7 +111,9 @@ houseSchema.statics = {
       }
 
       throw new APIError({
+
         message: 'House does not exist',
+
         status: httpStatus.NOT_FOUND,
       });
     } catch (error) {
@@ -122,9 +128,7 @@ houseSchema.statics = {
    * @param {number} limit - Limit number of houses to be returned.
    * @returns {Promise<House[]>}
    */
-  list({
-    page = 1, perPage = 30,
-  }) {
+  list({ page = 1, perPage = 30 }) {
     return this.find()
       .sort({ createdAt: -1 })
       .skip(perPage * (page - 1))
@@ -140,15 +144,14 @@ houseSchema.statics = {
    * @returns {Promise<House[]>}
    */
   filter(params, page = 1, perPage = 30) {
-    return this.find(params)
-      .sort({ createdAt: -1 })
+    return this.find()
       .skip(perPage * (page - 1))
       .limit(perPage)
       .exec();
   },
 
   async findByLocation(minLat, maxLat, minLong, maxLong, page = 1, perPage = 30) {
-    let house =  await this.find({
+    const house = await this.find({
       $and: [
         { coordinates: { $elemMatch: { $gte: minLat, $lt: maxLat } } },
         { coordinates: { $elemMatch: { $gte: minLong, $lt: maxLong } } },
@@ -162,6 +165,7 @@ houseSchema.statics = {
     return house;
   },
 };
+
 
 /**
  * @typedef House

@@ -19,7 +19,7 @@ export default class LaunchScreen extends Component {
 
     const house = navigation.state.params.house;
 
-    return (house !== undefined) ? (
+    return (
           <Container>
             <Content>
 
@@ -65,6 +65,6 @@ export default class LaunchScreen extends Component {
               </View>
             </Content>
           </Container>
-    ) : (null);
+    );
   }
 }
