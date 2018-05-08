@@ -31,6 +31,7 @@ const rows = [
   
 export default class UserProfileScreen extends Component {
 
+  
   state = { 
     user : ''
   }

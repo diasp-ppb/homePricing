@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Image, View } from 'react-native'
+import { Image, View,TouchableHighlight } from 'react-native'
 import { connect } from 'react-redux';
 import { Images } from '../Themes'
 
@@ -15,7 +15,14 @@ import styles from './Styles/LaunchScreenStyles'
 export default class LaunchScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
     title: 'HomePricing',
+     headerStyle: { backgroundColor: 'transparent', marginTop:-100 },
+    headerTitleStyle: {
+        fontSize: 12,
+        marginLeft: '38%',
+        marginTop:0,
+      }
   });
+
 
 
   constructor (props) {
@@ -27,37 +34,47 @@ export default class LaunchScreen extends Component {
     const { navigate } = this.props.navigation
 
     return (
-      <Container>
+      <Container >
+      <Image source={Images.background} style={styles.backgroundImage} resizeMode='stretch' />
+
         <View style={styles.content}>
+
           <View style={styles.halfRow}>
-            <Image source={Images.logo} style={styles.logo} />
+            <Image source={Images.logo1} style={styles.homePricing} resizeMode='stretch' />
           </View>
+
           <View style={styles.halfRow}>
-            <View style={{ justifyContent: 'center' }}>
+            <Text style={{fontSize:11, color:'white', elevation: 3, padding:15}}>To   S t a r t     E x p l o r i n g</Text>    
+            <View style={{ justifyContent: 'center' , marginTop:0 }}>
               <Button style={styles.topBtn} onPress={() => navigate('HouseSearch')}>
-                <Text>Pesquisar</Text>
+                <Text style={{fontSize:12}}>Pesquisar</Text>
               </Button>
 
-              <Row style={{ marginTop: 8 }}>
-                <Col size={48}>
-                  <Button primary block onPress={() =>
-                    navigate('Login')
-                  }>
-                    <Text>Login</Text>
-                  </Button>
-                </Col>
-                <Col size={4} />
-                <Col size={48}>
-                  <Button primary block>
-                    <Text>GPS</Text>
-                  </Button>
-                </Col>
-              </Row>
+              <Button style={styles.topBtn} onPress={() => navigate('HouseSearch')}>
+                <Text style={{fontSize:12}}>GPS</Text>
+              </Button>
             </View>
-            <Col size={20} />
           </View>
+
+          <View style={styles.halfRow}>
+
+          <Text style={{fontSize:8, color:'white', marginTop:90, padding:12}}> G o   F u r t h e r </Text>    
+            <View style={{flexDirection: 'row',flex: 1}}>
+              <View style={{flex: 0.1}} >   
+                <TouchableHighlight onPress={() => navigate('Register')}>
+                 <Image source={Images.login} style={styles.otherImage} resizeMode='stretch' />
+                </TouchableHighlight>     
+              </View>
+              <View style={{flex: 0.1}}>
+                <TouchableHighlight onPress={() => navigate('UserProfile')}>
+                  <Image source={Images.camara} style={styles.otherImage} resizeMode='stretch' />
+                </TouchableHighlight>
+              </View>
+            </View>
+          </View>
+
         </View>
-        <Fab><Icon name="camera" /></Fab>
+      
       </Container>
     )
   }

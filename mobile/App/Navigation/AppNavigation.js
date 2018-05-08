@@ -43,7 +43,7 @@ const PrimaryNav = StackNavigator({
   // Default config for all screens
   headerMode: 'float',
   navigationOptions,
-  initialRouteName: 'UserProfile'
+  initialRouteName: 'LaunchScreen'
 })
 
 export default PrimaryNav

@@ -8,7 +8,7 @@ const images = {
   ignite: require('../Images/ignite_logo.png'),
   igniteClear: require('../Images/ignite-logo-transparent.png'),
   tileBg: require('../Images/tile_bg.png'),
-  background: require('../Images/BG.png'),
+  background: require('../Images/bgHP.jpg'),
   buttonBackground: require('../Images/button-bg.png'),
   api: require('../Images/Icons/icon-api-testing.png'),
   components: require('../Images/Icons/icon-components.png'),
@@ -27,7 +27,10 @@ const images = {
   homeIcon: require('../Images/Icons/home.png'),
   settingsIcon: require('../Images/Icons/settings.png'),
   favouriteIcon: require('../Images/Icons/star.png'),
-  userIcon: require('../Images/Icons/user.png')
+  userIcon: require('../Images/Icons/user.png'),
+  logo1: require('../Images/logo1.png'),
+  login: require('../Images/login.png'),
+  camara: require('../Images/camara.png')
 }
 
 export default images
