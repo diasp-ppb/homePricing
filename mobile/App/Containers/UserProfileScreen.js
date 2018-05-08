@@ -2,8 +2,7 @@ import React, { Component } from 'react'
 import { Image, View, ListView , TouchableOpacity } from 'react-native'
 import { Images } from '../Themes'
 import { connect } from 'react-redux';
-import { login } from '../Redux/LoginRedux'
-import {baseURL} from "../Services/Api";
+
 
 // Native Base
 import { Container, Text, Button } from 'native-base'

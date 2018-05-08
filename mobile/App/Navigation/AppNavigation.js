@@ -39,7 +39,7 @@ const PrimaryNav = StackNavigator({
   Camera : {screen: CameraScreen},
   UserPreferences: { screen: UserPreferences},
   Favorites: {screen: Favorites},
-  HelpScreen: { screen: HelpScreen }
+  HelpScreen: { screen: HelpScreen },
   PreferenceScreen: { screen: PreferenceScreen},
 }, {
   // Default config for all screens
