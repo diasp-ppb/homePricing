@@ -12,23 +12,18 @@ import GpsScreen from '../Containers/GpsScreen'
 import CameraScreen from '../Containers/CameraScreen'
 import { UserPreferences } from '../Containers/UserPreferences'
 import Favorites from '../Containers/FavoritesScreen'
-
+import HelpScreen from '../Containers/HelpScreen'
 
 import Colors from '../Themes/Colors'
 
-
-
-  // Styles
+// Styles
 import styles from './Styles/NavigationStyles'
-
 
 const navigationOptions = ({ navigation }) => ({
   headerStyle: { backgroundColor: Colors.blue4 },
   headerTintColor: 'white',
   headerBackTitle: null,
 });
-
-
 
 // Manifest of possible screens
 const PrimaryNav = StackNavigator({
@@ -42,12 +37,13 @@ const PrimaryNav = StackNavigator({
   Gps: { screen: GpsScreen},
   Camera : {screen: CameraScreen},
   UserPreferences: { screen: UserPreferences},
-  Favorites: {screen: Favorites}
+  Favorites: {screen: Favorites},
+  HelpScreen: { screen: HelpScreen }
 }, {
   // Default config for all screens
   headerMode: 'float',
   navigationOptions,
-  initialRouteName: 'LaunchScreen'
+  initialRouteName: 'HelpScreen'
 })
 
 export default PrimaryNav

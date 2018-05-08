@@ -10,6 +10,7 @@ import styles from './Styles/SearchResultsStyles';
 import { baseURL } from '../Services/Api';
 import GPSMap from '../Components/GPSMap';
 
+
 // Component
 export default class LaunchScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
