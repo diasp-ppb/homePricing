@@ -2,6 +2,7 @@ const express = require('express');
 const userRoutes = require('./user.route');
 const authRoutes = require('./auth.route');
 const houseRoutes = require('./house.route');
+
 const router = express.Router();
 
 /**
@@ -22,7 +23,7 @@ router.use('/auth', authRoutes);
 /**
  * GET v1/house
  */
-router.use('/house', houseRoutes);
 
+router.use('/houses', houseRoutes);
 
 module.exports = router;
