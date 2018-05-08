@@ -13,6 +13,7 @@ import CameraScreen from '../Containers/CameraScreen'
 import { UserPreferences } from '../Containers/UserPreferences'
 import Favorites from '../Containers/FavoritesScreen'
 import HelpScreen from '../Containers/HelpScreen'
+import PreferenceScreen from '../Containers/PreferenceScreen'
 
 import Colors from '../Themes/Colors'
 
@@ -39,12 +40,13 @@ const PrimaryNav = StackNavigator({
   UserPreferences: { screen: UserPreferences},
   Favorites: {screen: Favorites},
   HelpScreen: { screen: HelpScreen }
+  PreferenceScreen: { screen: PreferenceScreen},
 }, {
   // Default config for all screens
   headerMode: 'float',
   navigationOptions,
-  initialRouteName: 'HelpScreen'
-})
+  initialRouteName: 'LaunchScreen'
+});
 
 export default PrimaryNav
 
