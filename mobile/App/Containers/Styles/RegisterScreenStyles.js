@@ -30,12 +30,12 @@ export default StyleSheet.create({
     },
     loginBox: {
         flex: 2,
-        flexDirection:'row',
+        flexDirection: 'row',
     },
     registerBox: {
         flex: 3,
-        flexDirection:'row',
-    },      
+        flexDirection: 'row',
+    },
     linkBox: {
         flex: 1,
         alignItems: 'center',
@@ -46,14 +46,14 @@ export default StyleSheet.create({
         Form layout styling
     */
     inputBox: {
-        flex:0.8,
+        flex: 0.8,
         justifyContent: 'center',
     },
     inputRegisterBox: {
-        flex:0.8,
+        flex: 0.8,
     },
     spaceBox: {
-        flex:0.1,
+        flex: 0.1,
     },
 
     /*

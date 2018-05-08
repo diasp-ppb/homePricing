@@ -14,7 +14,6 @@ export default StyleSheet.create({
     flex: 0.5,
     alignItems: 'center',
     justifyContent: 'center'
-
   },
   btnGroup: {
     flexDirection: 'row',
@@ -36,23 +35,21 @@ export default StyleSheet.create({
     marginBottom: 3
   },
   backgroundImage: {
-      position: 'absolute',
-      width:'100%',
-      height:'100%',
-      top: 0,
-      left: 0,
-      bottom: 0,
-      right: 0
-    },
-    homePricing: {
-      width:'70%',
-      height:'22%',
-      marginTop:-40
-    },
-
-    otherImage: {
-      width:'72%',
-      height:'68.5%'
-    }
-
+    position: 'absolute',
+    width:'100%',
+    height:'100%',
+    top: 0,
+    left: 0,
+    bottom: 0,
+    right: 0
+  },
+  homePricing: {
+    width:'70%',
+    height:'22%',
+    marginTop:-40
+  },
+  otherImage: {
+    width:'72%',
+    height:'68.5%'
+  }
 })

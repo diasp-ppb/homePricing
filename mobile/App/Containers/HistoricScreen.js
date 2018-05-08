@@ -1,7 +1,6 @@
 import { Images } from '../Themes'
 import React, { Component } from 'react'
 import { View, Image,Alert, TouchableOpacity, StyleSheet } from 'react-native'
-import Grid from 'react-native-grid-list'
 
 
 // Native Base
@@ -14,7 +13,7 @@ import {baseURL} from "../Services/Api";
 // Component
 export default class LaunchScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
-    title: 'Historic',
+    title: 'Histórico',
     headerTitleStyle: {
         fontSize: 12,
         marginLeft: '32%',

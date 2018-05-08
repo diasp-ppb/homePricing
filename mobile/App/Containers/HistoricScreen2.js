@@ -12,7 +12,7 @@ import {baseURL} from "../Services/Api";
 // Component
 export default class LaunchScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
-    title: 'Historico:',
+    title: 'Histórico',
   });
 
   // This component's constructor
