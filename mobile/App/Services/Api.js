@@ -4,8 +4,8 @@ import { SUCCESS_LOGIN,
   ERROR_INVALID_EMAIL, ERROR_INVALID_PARAM_LOGIN,
   SUCCESS_REGISTER,
   ERROR_INVALID_PARAM_REGISTER, ERROR_EMAIL_EXISTS_REGISTER,
-  LOGOUT_SUCCESS, 
-  UPDATE_USER_PREFERENCES, 
+  LOGOUT_SUCCESS,
+  UPDATE_USER_PREFERENCES,
   ERROR_AREAS, ERROR_PRICES,
   error_area, error_price, error_service,
   ToastWarning } from './LogToasts'
@@ -13,6 +13,7 @@ import { ToastSuccess, ToastError } from './LogToasts'
 import { login } from '../Redux/LoginRedux'
 
 export const baseURL = "http://172.30.26.77";
+
 
 export function checkRegisterResponse(responseJson, props) {
     if (responseJson.code == '400') {
@@ -41,11 +42,11 @@ export function checkLoginResponse(responseJson, props) {
     }
 }
 
-export function createBodyUserPreferences(goal, propertyType, tipology, 
-    minArea, maxArea, 
-    minPrice, maxPrice, 
-    hospitalDist, hospitalQtn, 
-    schoolDist, schoolQtn, 
+export function createBodyUserPreferences(goal, propertyType, tipology,
+    minArea, maxArea,
+    minPrice, maxPrice,
+    hospitalDist, hospitalQtn,
+    schoolDist, schoolQtn,
     workPlace, workDistance)
     {
         return body = JSON.stringify({
@@ -64,7 +65,7 @@ export function createBodyUserPreferences(goal, propertyType, tipology,
             {
                 service: 'School',
                 distance: schoolDist,
-                quantity: schoolQtn                
+                quantity: schoolQtn
             }],
             workAddress: workPlace,
             workMaxDistance: workDistance
@@ -75,7 +76,7 @@ export function createBodyUserPreferences(goal, propertyType, tipology,
 function isNotNumeric(num){
     return isNaN(num);
 }
-    
+
 
 export function validateArea(minArea, maxArea) {
     var valid = true;
@@ -83,7 +84,7 @@ export function validateArea(minArea, maxArea) {
     if(minArea != "") {
         if(isNotNumeric(minArea)) {
             valid = false;
-            ToastWarning(error_area('min')); 
+            ToastWarning(error_area('min'));
         }
     }
 
@@ -105,7 +106,7 @@ export function validateArea(minArea, maxArea) {
 
 export function validatePrices(minPrice, maxPrice) {
     var valid = true;
-    
+
     if(minPrice != "") {
         if (isNotNumeric(minPrice)) {
             valid = false;
@@ -235,7 +236,7 @@ export function getUserPreferences(thisUser) {
 
     var url = baseURL + '/v1/users/preferences';
     var auth = 'Bearer ' + thisUser.props.user.token;
-    
+
     fetch(url, {
         method: 'GET',
         headers: {
@@ -281,3 +282,48 @@ export function getUserPreferences(thisUser) {
     })
     .catch((error) => console.error(error));
 }
+
+export function createFavoriteAPI(user, house, token){
+  var auth = 'Bearer ' + token;
+  fetch(baseURL + "/v1/favorites/create", {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type' : 'application/json',
+      'Authorization' : auth
+    },
+    body: JSON.stringify({
+      userId: user,
+      houseId: house
+    }),
+  })
+    .then((response) => response.json())
+    .then(
+      (responseJson) => responseJson
+    )
+    .catch((error) => {
+      console.error(error);
+    });
+}
+
+export function deleteFavoriteAPI(user, house, token){
+  var auth = 'Bearer ' + token;
+  fetch(baseURL + "/v1/favorites/remove", {
+    method: 'DELETE',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      'Authorization' : auth
+    },
+    body: JSON.stringify({
+      userId: user,
+      houseId: house
+    }),
+  })
+    .then()
+    .catch((error) => {
+      console.error(error);
+    });
+}
+
+

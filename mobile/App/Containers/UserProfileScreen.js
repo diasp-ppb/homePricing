@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { Image, View, ListView , TouchableOpacity } from 'react-native'
 import { Images } from '../Themes'
 import { connect } from 'react-redux';
+import { login } from '../Redux/LoginRedux'
+import {baseURL} from "../Services/Api";
 
 // Native Base
 import { Container, Text, Button } from 'native-base'
@@ -31,6 +33,7 @@ const rows = [
 
 export default class UserProfileScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
+
     title: 'Perfil',
   });
 
@@ -40,6 +43,11 @@ export default class UserProfileScreen extends Component {
 
   constructor(props) {
     super(props);
+    this.state = {
+      dataSource: ds.cloneWithRows(rows),
+      user: '',
+      login: this.props.user
+    }
     this.getUserInfo();
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -70,7 +78,7 @@ export default class UserProfileScreen extends Component {
   navPath(RowId){
 
     switch(RowId){
-        case 0:
+        case 0: //Return Home
             return 'LaunchScreen';
             break;
         case 1:
@@ -78,11 +86,12 @@ export default class UserProfileScreen extends Component {
         case 2:
             return 'UserPreferences';
             break;
-        case 3:
+        case 3:  //Favorites
+            return 'Favorites';
             break;
-        case 4:
+        case 4:  //Profile Settngs
             break;
-        case 5:
+        case 5:  //Help page
             break;
         default:
             break;
@@ -110,7 +119,7 @@ export default class UserProfileScreen extends Component {
         </TouchableOpacity>
 
     )
-  }
+  };
 
   render () {
 
@@ -126,7 +135,7 @@ export default class UserProfileScreen extends Component {
             />
 
             <View style={styles.wrapper}>
-              <View style={styles.spaceBox}></View>
+              <View style={styles.spaceBox}/>
 
               <View style={styles.logoutBox}>
                 <Button primary block
@@ -137,7 +146,7 @@ export default class UserProfileScreen extends Component {
                 </Button>
               </View>
 
-              <View style={styles.spaceBox}></View>
+              <View style={styles.spaceBox}/>
           </View>
       </Container>
     )
@@ -150,6 +159,7 @@ function mapStateToProps(state) {
   };
 }
 
+
 function mapDispatchToProps(dispatch) {
   return {
     logout: () => dispatch(logout())
@@ -157,4 +167,5 @@ function mapDispatchToProps(dispatch) {
 }
 
 const connectedRegister = connect(mapStateToProps, mapDispatchToProps)(UserProfileScreen);
+
 export { connectedRegister as UserProfileScreen};

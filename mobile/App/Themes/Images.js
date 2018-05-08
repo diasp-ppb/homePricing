@@ -27,7 +27,10 @@ const images = {
   homeIcon: require('../Images/Icons/home.png'),
   settingsIcon: require('../Images/Icons/settings.png'),
   favouriteIcon: require('../Images/Icons/star.png'),
-  userIcon: require('../Images/Icons/user.png')
+  userIcon: require('../Images/Icons/user.png'),
+  houseImage: require('../Images/house.jpg'),
+  fullStarIcon: require('../Images/Icons/full-star.png'),
+  starLines: require('../Images/Icons/star-line.png')
 }
 
 export default images
