@@ -41,10 +41,10 @@ module.exports = {
             condition: Joi.string(),
             year: Joi.number().min(1000).max(year),
             type: Joi.string().regex(/^(rent)|(buy)$/)
-        },
+        }/*,
         params: {
             houseId: Joi.string().regex(/^[a-fA-F0-9]{24}$/).required()
-        }
+        }*/
     },
 
     // GET /v1/houses/:houseId

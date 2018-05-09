@@ -93,9 +93,8 @@ export default class HouseSearch extends Component {
 
 
     return (
-      <Container>
+      <Container style={{padding:10}} >
         <Content>
-
           <View style={styles.root}>
             <Text style={styles.title}>Finalidade</Text>
 

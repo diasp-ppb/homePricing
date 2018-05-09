@@ -12,7 +12,7 @@ import { baseURL } from "../Services/Api";
 // Component
 class HistoricScreen2 extends Component {
   static navigationOptions = ({ navigation }) => ({
-    title: 'Historico:',
+    title: 'Histórico',
   });
 
   // This component's constructor
@@ -56,12 +56,13 @@ class HistoricScreen2 extends Component {
           <View style={{ marginBottom: 20 }}>
             {
               this.state.houses.map((item, index) => {
+                let image = (item.house.images.length != 0) ? item.house.images[0] : "https://www.glassyconnections.com/images/no-image-available-lrg.jpg";
                 return (
 
 
                   <View style={styles.box1} key={index} >
                     <View style={{ flex: 0.35, width: '10%', height: 50 }} >
-                      {/* <Image style={{ height: 100, width: null, flex: 1 }} source={{ uri: item.house.images[0] }} /> */}
+                      {<Image style={{ height: 100, width: null, flex: 1 }} source={{ uri: image}} />}
                     </View>
 
                     <View style={{ flex: 0.65 }}>

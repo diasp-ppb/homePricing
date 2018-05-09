@@ -13,7 +13,7 @@ import { Images } from '../Themes'
 import { WARN_MISSING, ToastWarning } from '../Services/LogToasts'
 import { registerAPI } from '../Services/Api'
 
-import styles from './Styles/LogScreenStyles'
+import styles from './Styles/RegisterScreenStyles'
 
 class RegisterScreen extends Component {
   static navigationOptions = ({ navigation }) => ({

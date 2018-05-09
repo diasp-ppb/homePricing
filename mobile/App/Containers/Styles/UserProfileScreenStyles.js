@@ -1,10 +1,12 @@
 import { StyleSheet } from 'react-native'
-import { Metrics, Colors, ApplicationStyles } from '../../Themes/'
+import { Metrics, ApplicationStyles } from '../../Themes/'
 
 export default StyleSheet.create({
+  ...ApplicationStyles.screen,
   icon: {
-    marginTop: 10,
+    marginTop: 20,
     marginBottom: 10,
+    padding:25,
     marginLeft: 'auto',
     marginRight: 'auto',
     resizeMode: 'contain',
@@ -28,7 +30,9 @@ export default StyleSheet.create({
   },
   userInfo: {
     alignItems: 'center',
-    marginBottom: 10
+    marginBottom: 10,
+    backgroundColor: '#2C5234',
+    opacity: 0.85
   },
   btn: {
     marginBottom: 20
