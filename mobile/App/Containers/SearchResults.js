@@ -147,8 +147,8 @@ class SearchResults extends Component {
                       <Text>{item.title}</Text>
                       <Text style={styles.address}>
                         <Icon ios="ios-pin" android="md-pin" style={styles.address} />
-                        {item.address.zipcode},
-                        {item.address.town},
+                        {item.address.zipcode}, {" "}
+                        {item.address.town}, {" "}
                         {item.address.county}
                       </Text>
                     </Body>

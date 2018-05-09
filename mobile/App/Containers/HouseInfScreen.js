@@ -18,12 +18,13 @@ export default class LaunchScreen extends Component {
     const { navigation } = this.props;
     const house = navigation.state.params.house;
     const undefined = "Não definido";
+    const images = (house.images.length > 0) ? house.images : ["https://www.glassyconnections.com/images/no-image-available-lrg.jpg"];
 
     return (
       <Container>
         <Content>
 
-          <ImageSlider style={{ width: '100%', height: 200 }} images={house.images} />
+          <ImageSlider style={{ width: '100%', height: 200 }} images={images} />
 
           <View style={styles.infTab}>
             <Text style={styles.priceText}> {house.price}€ </Text>
@@ -33,8 +34,8 @@ export default class LaunchScreen extends Component {
           <View style={styles.box1}>
             <View style={{ flex: 0.8 }}>
               <Text style={styles.streetText}>
-                {house.address.zipcode},
-                {house.address.town},
+                {house.address.zipcode}, {" "}
+                {house.address.town}, {" "}
                 {house.address.county} </Text>
             </View>
             <View style={{ flex: 0.1 }}>
@@ -71,7 +72,7 @@ export default class LaunchScreen extends Component {
             <View>
               <Text style={styles.descriptionTitle}> Caraterísticas </Text>
               {house.characteristics.length != 0 && house.characteristics.map(function (item, index) {
-                return <Text  key={index} style={styles.descriptionText}> {item} </Text>
+                return <Text key={index} style={styles.descriptionText}> {item} </Text>
               })}
               {house.characteristics.length == 0 && <Text style={styles.descriptionText}> {undefined} </Text>}
             </View>
