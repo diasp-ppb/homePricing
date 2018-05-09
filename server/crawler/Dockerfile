@@ -16,12 +16,13 @@ RUN apt-get update && \
 	rm -rf /var/cache/apt/archives/* /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 RUN pip install --upgrade pip
-
-RUN pip install --upgrade \
-	setuptools \
-	wheel && \
-pip install --upgrade scrapy
+RUN	pip install --upgrade \
+		setuptools \
+		wheel && \
+	pip install --upgrade scrapy
 
 RUN pip install pymongo
 
-CMD ["scrapy", "shell", "--nolog"]
+RUN pip install html2text
+
+CMD /bin/sh /usr/src/app/test-crawler.sh && /bin/sh /usr/src/app/run-crawler.sh

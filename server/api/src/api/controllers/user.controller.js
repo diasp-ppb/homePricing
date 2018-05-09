@@ -30,6 +30,12 @@ exports.get = (req, res) => res.json(req.locals.user.transform());
 exports.loggedIn = (req, res) => res.json(req.user.transform());
 
 /**
+ * Get logged in user preferences
+ * @public
+ */
+exports.preferences = (req, res) => res.json(req.user.transformPreferences());
+
+/**
  * Create new user
  * @public
  */
@@ -76,6 +82,20 @@ exports.update = (req, res, next) => {
   user.save()
     .then(savedUser => res.json(savedUser.transform()))
     .catch(e => next(User.checkDuplicateEmail(e)));
+};
+
+/**
+ * Update existing user preferences
+ * @public
+ */
+exports.updatePreferences = (req, res, next) => {
+  //const ommitRole = req.locals.user.role !== 'admin' ? 'role' : '';
+  const updatedUser = omit(req.body);
+  const user = Object.assign(req.user, updatedUser);
+
+  user.save()
+    .then(savedUser => res.json(savedUser.transformPreferences()))
+    .catch(e => console.log(e));
 };
 
 /**

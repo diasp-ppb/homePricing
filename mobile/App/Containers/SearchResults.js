@@ -10,6 +10,7 @@ import styles from './Styles/SearchResultsStyles';
 import { baseURL } from '../Services/Api';
 import GPSMap from '../Components/GPSMap';
 
+
 // Component
 class SearchResults extends Component {
   static navigationOptions = ({ navigation }) => ({

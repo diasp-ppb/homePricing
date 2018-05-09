@@ -1,11 +1,14 @@
 import React, { Component } from 'react'
-import { Image, View, AppRegistry, ListView, StyleSheet, TouchableOpacity } from 'react-native'
+import { Image, View, ListView , TouchableOpacity } from 'react-native'
 import { Images } from '../Themes'
 import { connect } from 'react-redux';
 
+
 // Native Base
-import { Col, Row, Grid } from 'react-native-easy-grid';
-import { Container, Header, Body, Title, Content, Text, Button, Fab, Icon, ActionSheet } from 'native-base'
+import { Container, Text, Button } from 'native-base'
+import { logoutAPI } from "../Services/Api";
+import { baseURL } from "../Services/Api";
+import { logout } from '../Redux/LoginRedux'
 
 // Styles
 import styles from './Styles/UserProfileScreenStyles'
@@ -19,27 +22,37 @@ const rows = [
     {id: 4, text: 'Configurações de conta', icon: Images.settingsIcon},
     {id: 5, text: 'Ajuda', icon: Images.helpIcon}
   ]
-  
+
   // Row comparison function
   const rowHasChanged = (r1, r2) => r1.id !== r2.id
-  
+
   // DataSource template object
   const ds = new ListView.DataSource({rowHasChanged})
 
-  
-export default class UserProfileScreen extends Component {
 
-  state = { 
+export default class UserProfileScreen extends Component {
+  static navigationOptions = ({ navigation }) => ({
+
+    title: 'Perfil',
+  });
+
+  state = {
     user : ''
   }
 
   constructor(props) {
     super(props);
+    this.state = {
+      dataSource: ds.cloneWithRows(rows),
+      user: '',
+      login: this.props.user
+    }
     this.getUserInfo();
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   getUserInfo(){
-    var url = 'http://192.168.1.75:3000/v1/users/' + this.props.user.user;
+    var url = baseURL + '/v1/users/' + this.props.user.user;
     var auth = 'Bearer ' +this.props.user.token;
     fetch(url, {
       method: 'GET',
@@ -60,23 +73,25 @@ export default class UserProfileScreen extends Component {
 
   }
 
-  
+
   navPath(RowId){
 
     switch(RowId){
-        case 0:
+        case 0: //Return Home
             return 'LaunchScreen';
             break;
         case 1: 
             return 'HistoricScreen2'; 
             break;
         case 2:
+            return 'UserPreferences';
             break;
-        case 3:
+        case 3:  //Favorites
+            return 'Favorites';
             break;
-        case 4:
+        case 4:  //Profile Settngs
             break;
-        case 5:
+        case 5:  //Help page
             break;
         default:
             break;
@@ -87,8 +102,13 @@ export default class UserProfileScreen extends Component {
     dataSource: ds.cloneWithRows(rows)
   }
 
+  handleSubmit(event) {
+    event.preventDefault();
+    logoutAPI(this.props);
+  }
+
   renderRow = (rowData) => {
-    return (  
+    return (
         <TouchableOpacity key = {rowData.id} onPress={() => this.props.navigation.navigate(this.navPath(rowData.id))}>
             <View style={styles.listItem}>
                 <Image source = {rowData.icon} style = {styles.listIcons}/>
@@ -97,19 +117,14 @@ export default class UserProfileScreen extends Component {
                 </Text>
             </View>
         </TouchableOpacity>
-        
+
     )
-  }
+  };
 
   render () {
-    
+
     return (
       <Container>
-        <Header>
-          <Body>
-            <Title>Perfil</Title>
-          </Body>
-        </Header>
         <View style={styles.userInfo}>
           <Image source={Images.profileIcon} style={styles.icon} />
           <Text>{this.state.user}</Text>
@@ -118,6 +133,21 @@ export default class UserProfileScreen extends Component {
             dataSource={this.state.dataSource}
             renderRow={this.renderRow}
             />
+
+            <View style={styles.wrapper}>
+              <View style={styles.spaceBox}/>
+
+              <View style={styles.logoutBox}>
+                <Button primary block
+                  style={styles.btn}
+                  onPress = {this.handleSubmit}
+                >
+                  <Text>Logout</Text>
+                </Button>
+              </View>
+
+              <View style={styles.spaceBox}/>
+          </View>
       </Container>
     )
   }
@@ -129,5 +159,13 @@ function mapStateToProps(state) {
   };
 }
 
-const connectedRegister = connect(mapStateToProps)(UserProfileScreen);
+
+function mapDispatchToProps(dispatch) {
+  return {
+    logout: () => dispatch(logout())
+  };
+}
+
+const connectedRegister = connect(mapStateToProps, mapDispatchToProps)(UserProfileScreen);
+
 export { connectedRegister as UserProfileScreen};

@@ -20,6 +20,13 @@ export function reducer (state = INITIAL_STATE, action) {
                 user: action.user,
                 token: action.token
             }
+        case 'LOGOUT':
+            return {
+                ...state,
+                loggedIn: false,
+                user: null,
+                token: null
+            }
         default:
             return state;
     }
@@ -31,4 +38,8 @@ export function login(user, token) {
 
 function mapStateToProps(state) {
     return state;
+}
+
+export function logout() {
+    return { type: 'LOGOUT' }
 }

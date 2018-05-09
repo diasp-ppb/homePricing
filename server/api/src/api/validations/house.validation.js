@@ -80,5 +80,14 @@ module.exports = {
         }
     },
 
-    //TODO: Add more verifications
+    // GET /v1/houses
+    listHouses: {
+        query: {
+            page: Joi.number().min(1),
+            perPage: Joi.number().min(1).max(100),
+        },
+    }
+
+    // TODO Add more verifications
 }
+

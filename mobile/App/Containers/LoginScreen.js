@@ -15,8 +15,6 @@ import { loginAPI } from '../Services/Api'
 import { login } from '../Redux/LoginRedux'
 import styles from './Styles/LogScreenStyles'
 
-
-
 class LoginScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
     title: 'Login',
@@ -124,7 +122,7 @@ function mapDispatchToProps(dispatch) {
     return {
       login: (user,token) => dispatch(login(user,token))
     };
-  }
+}
 
 const connectedRegister = connect(mapStateToProps, mapDispatchToProps)(LoginScreen);
 export { connectedRegister as LoginScreen };
