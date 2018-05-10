@@ -65,7 +65,7 @@ fastlane/readme.md
 # VS code workspace files
 *.code-workspace
 
-# Crawler files
+# Crawler output files
 imovirtual.json
 *.json
 testfile.json

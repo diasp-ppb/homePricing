@@ -12,7 +12,10 @@ import { SUCCESS_LOGIN,
 import { ToastSuccess, ToastError } from './LogToasts'
 import { login } from '../Redux/LoginRedux'
 
-export const baseURL = "http://192.168.1.102:3000"
+
+export const baseURL = "http://172.30.26.77";
+
+
 
 export function checkRegisterResponse(responseJson, props) {
     if (responseJson.code == '400') {
@@ -180,28 +183,27 @@ export function registerAPI(name, email, password, props) {
 }
 
 export function loginAPI(email, password, props) {
-  fetch(baseURL + "/v1/auth/login", {
-      method: 'POST',
-      headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-          email: email,
-          password: password
-      }),
-  })
-  .then(
-    (response) => response.json()
-  )
-  .then(
-    (responseJson) => checkLoginResponse(responseJson, props)
-  )
-  .catch((error) => {
-      console.error(error);
-  });
+    fetch(baseURL + "/v1/auth/login", {
+        method: 'POST',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            email: email,
+            password: password
+        }),
+    })
+    .then(
+        (response) => response.json()
+    )
+    .then(
+        (responseJson) => checkLoginResponse(responseJson, props)
+    )
+    .catch(
+        (error) => console.error(error)
+    );
 }
-
 
 export function logoutAPI(props) {
     const { navigate } = props.navigation;

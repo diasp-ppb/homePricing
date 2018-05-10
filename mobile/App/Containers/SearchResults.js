@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Image, ScrollView } from 'react-native';
-import { connect } from 'react-redux';
+
 
 // Native Base
 import { Container, Header, Left, Body, Button, Text, Icon, Item, Input, Segment, Card, CardItem } from 'native-base';
@@ -12,7 +12,7 @@ import GPSMap from '../Components/GPSMap';
 
 
 // Component
-class SearchResults extends Component {
+export default class LaunchScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
     title: 'Pesquisa',
   });
@@ -39,6 +39,7 @@ class SearchResults extends Component {
   componentDidMount() {
     const { navigation } = this.props;
     const form = navigation.state.params.form;
+
     fetch(`${baseURL}/v1/houses/filter`, {
       method: 'POST',
       headers: {
@@ -107,19 +108,6 @@ class SearchResults extends Component {
     this.setState({ houses });
   }
 
-  addHistory(house) {
-    fetch(`${baseURL}/v1/history`, {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ houseId: house.id, userId: this.props.user.user}),
-    })
-      .catch((json) => {
-        console.error(json);
-      });
-  }
 
   renderTab() {
     const { navigate } = this.props.navigation;
@@ -141,14 +129,14 @@ class SearchResults extends Component {
           this.state.houses.map((item, index) => {
             return (
               <Card key={index} style={{ flex: 1 }}>
-                <CardItem button onPress={() => { this.addHistory(item), navigate('HouseInformation', { house: item })} }>
+                <CardItem button onPress={() => navigate('HouseInformation', { house: item })}>
                   <Left>
                     <Body>
                       <Text>{item.title}</Text>
                       <Text style={styles.address}>
                         <Icon ios="ios-pin" android="md-pin" style={styles.address} />
-                        {item.address.zipcode}, {" "}
-                        {item.address.town}, {" "}
+                        {item.address.zipcode},
+                        {item.address.town},
                         {item.address.county}
                       </Text>
                     </Body>
@@ -209,12 +197,3 @@ class SearchResults extends Component {
     );
   }
 }
-
-function mapStateToProps(state) {
-  return {
-      user: state.login
-  };
-}
-
-const connectedRegister = connect(mapStateToProps)(SearchResults);
-export { connectedRegister as SearchResults };
