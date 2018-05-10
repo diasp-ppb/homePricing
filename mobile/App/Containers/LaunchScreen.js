@@ -48,7 +48,7 @@ export default class LaunchScreen extends Component {
                 <Text style={{fontSize:12}}>Pesquisar</Text>
               </Button>
 
-              <Button style={styles.topBtn} onPress={() => navigate('HouseSearch')}>
+              <Button style={styles.topBtn} onPress={() => navigate('Gps')}>
                 <Text style={{fontSize:12}}>GPS</Text>
               </Button>
             </View>
@@ -64,7 +64,7 @@ export default class LaunchScreen extends Component {
                 </TouchableHighlight>     
               </View>
               <View style={{flex: 0.1}}>
-                <TouchableHighlight onPress={() => navigate('UserProfile')}>
+                <TouchableHighlight onPress={() => navigate('Camera')}>
                   <Icon ios={'ios-camera'} android={'md-camera'} style={{ color: 'white' }} />
                 </TouchableHighlight>
               </View>

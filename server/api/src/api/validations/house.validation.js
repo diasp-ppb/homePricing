@@ -61,7 +61,7 @@ module.exports = {
             rent: Joi.boolean().required(),
             buy: Joi.boolean().required(),
             tipology: Joi.string().allow(null).regex(/^T\d$/).required(),
-            bathrooms: Joi.number().min(0).allow(null).required(),
+            //bathrooms: Joi.number().min(0).allow(null).required(),
             minArea: Joi.number().positive().allow(null).required(),
             maxArea: Joi.number()
                 .when('minArea', { is: null, then: Joi.number().positive().allow(null).required() })
