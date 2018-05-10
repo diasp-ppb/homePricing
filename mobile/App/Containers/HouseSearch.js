@@ -70,6 +70,7 @@ export default class HouseSearch extends Component {
       rent: this.state.rent,
       buy: this.state.buy,
       propertyType: (this.state.propertyType === undefined) ? (null) : this.state.propertyType,
+      tipology: (this.state.tipology === undefined) ? (null) : this.state.tipology,
       minArea: (this.state.minArea === undefined) ? (null) : this.state.minArea,
       maxArea: (this.state.maxArea === undefined) ? (null) : this.state.maxArea,
       minPrice: (this.state.minPrice === undefined) ? (null) : this.state.minPrice,
@@ -78,6 +79,11 @@ export default class HouseSearch extends Component {
       school: this.state.school,
       shopping: this.state.shopping,
       transport: this.state.transport,
+      //HARDCODED
+      city: "Porto",
+      workDistance: null,
+      workLocation: null,
+      bathrooms: null
     }
 
     navigate('SearchResults', {form: form})
@@ -87,9 +93,8 @@ export default class HouseSearch extends Component {
 
 
     return (
-      <Container>
+      <Container style={{padding:10}} >
         <Content>
-
           <View style={styles.root}>
             <Text style={styles.title}>Finalidade</Text>
 

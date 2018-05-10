@@ -36,6 +36,10 @@ export function login(user, token) {
     return { type: 'LOGIN', user, token }
 }
 
+function mapStateToProps(state) {
+    return state;
+}
+
 export function logout() {
     return { type: 'LOGOUT' }
 }

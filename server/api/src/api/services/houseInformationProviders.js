@@ -7,12 +7,12 @@ const axios = require('axios');
  */
 exports.googlePlaces = async (key, data, type) => {
   const url = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json';
-  const params = { 
+  const params = {
     key: key,
     radius: 5000,
     location: data.coordinates[0] + "," + data.coordinates[1],
     type: type
-   };
+  };
   const response = await axios.get(url, { params });
 
   return response.data;
@@ -20,13 +20,13 @@ exports.googlePlaces = async (key, data, type) => {
 
 exports.googleMatrix = async (key, data, filters) => {
   const url = 'https://maps.googleapis.com/maps/api/distancematrix/json';
-  const params = { 
+  const params = {
     key: key,
     origins: "place_id:" + filters.workLocation,
     destinations: data.coordinates[0] + "," + data.coordinates[1]
-   };
+  };
   const response = await axios.get(url, { params });
-  
+
   return response.data;
 };
 

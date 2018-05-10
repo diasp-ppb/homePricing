@@ -13,6 +13,7 @@ import { logout } from '../Redux/LoginRedux'
 // Styles
 import styles from './Styles/UserProfileScreenStyles'
 
+
 //List Rows
 const rows = [
     {id: 0, text: 'Home', icon: Images.homeIcon },
@@ -80,7 +81,8 @@ export default class UserProfileScreen extends Component {
         case 0: //Return Home
             return 'LaunchScreen';
             break;
-        case 1:
+        case 1: 
+            return 'HistoricScreen'; 
             break;
         case 2:
             return 'UserPreferences';

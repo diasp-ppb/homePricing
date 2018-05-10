@@ -11,6 +11,7 @@ const { env } = require('../../config/vars');
 const houseSchema = new mongoose.Schema({
   bathrooms: {
     type: Number,
+    minlength: 1,
   },
   type: {
     type: String,
@@ -62,8 +63,8 @@ const houseSchema = new mongoose.Schema({
     type: String,
   }],
   address: {
-    type: Object,
-  },
+    type: Object
+  }
 }, {
   timestamps: true,
 });
@@ -75,13 +76,13 @@ houseSchema.method({
   transform() {
     const transformed = {};
     const fields = ['id', 'title', 'description', 'type', 'address', 'coordinates', 'bathrooms', 'area', 'webpage', 'characteristics', 'price', 'area', 'tipology', 'energyCertificate', 'condition', 'year', 'images', 'createdAt'];
-
+    
     fields.forEach((field) => {
       transformed[field] = this[field];
     });
 
     return transformed;
-  },
+  }
 });
 
 
@@ -97,8 +98,6 @@ houseSchema.statics = {
    * @param {ObjectId} id - The objectId of house.
    * @returns {Promise<House, APIError>}
    */
-
-
   async get(id) {
     try {
       let house;
@@ -111,9 +110,7 @@ houseSchema.statics = {
       }
 
       throw new APIError({
-
         message: 'House does not exist',
-
         status: httpStatus.NOT_FOUND,
       });
     } catch (error) {
@@ -168,7 +165,9 @@ houseSchema.statics = {
    * @param {number} limit - Limit number of houses to be returned.
    * @returns {Promise<House[]>}
    */
-  list({ page = 1, perPage = 30 }) {
+  list({
+    page = 1, perPage = 30
+  }) {
     return this.find()
       .sort({ createdAt: -1 })
       .skip(perPage * (page - 1))
@@ -177,14 +176,16 @@ houseSchema.statics = {
   },
 
   /**
-   * Filter houses in descending order of 'createdAt' timestamp.
-   *
-   * @param {number} skip - Number of houses to be skipped.
-   * @param {number} limit - Limit number of houses to be returned.
-   * @returns {Promise<House[]>}
-   */
+  * Filter houses in descending order of 'createdAt' timestamp.
+  *
+  * @param {number} skip - Number of houses to be skipped.
+  * @param {number} limit - Limit number of houses to be returned.
+  * @returns {Promise<House[]>}
+  */
   filter(params, page = 1, perPage = 30) {
-    return this.find()
+
+    return this.find(params)
+      .sort({ createdAt: -1 })
       .skip(perPage * (page - 1))
       .limit(perPage)
       .exec();
@@ -206,9 +207,7 @@ houseSchema.statics = {
   },
 };
 
-
 /**
  * @typedef House
  */
-
 module.exports = mongoose.model('House', houseSchema);
