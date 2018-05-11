@@ -20,7 +20,8 @@ db.houses.remove()
 
 # Insert data into mongodb
 db.houses.insert(json_data)
-print('Database Updatede..')
+print('Database Updated')
+print('All tasks done, closing...')
 
 # Print Data from Database
 #cursor = db.houses.find()

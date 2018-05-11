@@ -66,12 +66,16 @@ export default class LaunchScreen extends Component {
   }
 
   generateMarkers() {
+
     let minLat = 1000;
     let maxLat = -1000;
     let minLong = 1000;
     let maxLong = -1000;
 
     const houses = this.state.houses;
+
+    if(houses.length < 1) return;
+
     for (let i = 0; i < houses.length; i++) {
       const house = houses[i];
       const lat = parseFloat(house.coordinates[0]);
@@ -108,6 +112,42 @@ export default class LaunchScreen extends Component {
     this.setState({ houses });
   }
 
+  renderResultList() {
+    const list = this.state.houses.length > 0 ? this.state.houses.map((item, index) => {
+      return (
+        <Card key={index} style={{ flex: 1 }}>
+          <CardItem button onPress={() => navigate('HouseInformation', { house: item })}>
+            <Left>
+              <Body>
+              <Text>{item.title}</Text>
+              <Text style={styles.address}>
+                <Icon ios="ios-pin" android="md-pin" style={styles.address} />
+                {item.address.zipcode},
+                {item.address.town},
+                {item.address.county}
+              </Text>
+              </Body>
+            </Left>
+          </CardItem>
+          <CardItem cardBody>
+            <Image
+              source={{ uri: item.images[0] }}
+              style={{ height: 200, width: null, flex: 1 }}
+            />
+          </CardItem>
+          <CardItem>
+            <Left>
+              <Text style={styles.info}>
+                <Icon ios="ios-cash" android="md-cash" style={styles.info} /> {item.price} €
+              </Text>
+            </Left>
+          </CardItem>
+        </Card>
+      )
+    }) : (<Text> A sua pesquisa nao obteve resultados </Text>);
+
+    return list;
+  }
 
   renderTab() {
     const { navigate } = this.props.navigation;
@@ -126,38 +166,7 @@ export default class LaunchScreen extends Component {
     ) : (
       <ScrollView style={{ marginBottom: 20, flex: 1 }}>
         {
-          this.state.houses.map((item, index) => {
-            return (
-              <Card key={index} style={{ flex: 1 }}>
-                <CardItem button onPress={() => navigate('HouseInformation', { house: item })}>
-                  <Left>
-                    <Body>
-                      <Text>{item.title}</Text>
-                      <Text style={styles.address}>
-                        <Icon ios="ios-pin" android="md-pin" style={styles.address} />
-                        {item.address.zipcode},
-                        {item.address.town},
-                        {item.address.county}
-                      </Text>
-                    </Body>
-                  </Left>
-                </CardItem>
-                <CardItem cardBody>
-                  <Image
-                    source={{ uri: item.images[0] }}
-                    style={{ height: 200, width: null, flex: 1 }}
-                  />
-                </CardItem>
-                <CardItem>
-                  <Left>
-                    <Text style={styles.info}>
-                      <Icon ios="ios-cash" android="md-cash" style={styles.info} /> {item.price} €
-                    </Text>
-                  </Left>
-                </CardItem>
-              </Card>
-            );
-          })
+          this.renderResultList()
         }
       </ScrollView>
     );
