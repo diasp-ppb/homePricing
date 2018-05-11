@@ -32,13 +32,8 @@ const rows = [
 
 class UserProfileScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
-
     title: 'Perfil',
   });
-
-  state = {
-    user : ''
-  }
 
   constructor(props) {
     super(props);
@@ -46,14 +41,14 @@ class UserProfileScreen extends Component {
       dataSource: ds.cloneWithRows(rows),
       user: '',
       login: this.props.user
-    }
+    };
     this.getUserInfo();
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   getUserInfo(){
-    var url = baseURL + '/v1/users/' + this.props.user.user;
-    var auth = 'Bearer ' +this.props.user.token;
+    const url = baseURL + '/v1/users/' + this.props.user.user;
+    const auth = 'Bearer ' +this.props.user.token;
     fetch(url, {
       method: 'GET',
       headers: {
