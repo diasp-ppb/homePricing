@@ -21,8 +21,8 @@ class LoginScreen extends Component {
   constructor(props) {
         super(props);
         this.state = {
-            email: '',
-            password: '',
+            email: 'up@up.pt',
+            password: 'xdlol24P',
         };
 
         this.handleSubmit = this.handleSubmit.bind(this);

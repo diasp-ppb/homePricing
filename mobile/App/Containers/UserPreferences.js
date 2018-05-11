@@ -8,28 +8,15 @@ import { createBodyUserPreferences } from '../Services/Api'
 import { updateUserPreferences, getUserPreferences } from '../Services/Api'
 import { validateArea, validatePrices, validateServices } from "../Services/Api";
 
+import { PropertyType } from "@datatypes/PropertyType";
+import { Price } from "@datatypes/Price";
+import { Goal } from '@datatypes/Goal'
+import { Tipology } from '@datatypes/Tipology'
+
+
+
 // Styles
 import styles from './Styles/UserPreferencesStyles'
-
-const Goal = [
-    { value: 'alugar', label: 'Alugar' },
-    { value: 'comprar', label: 'Comprar' }
-]
-
-const PropertyType = [
-    { value: 'casa', label: 'Casa' },
-    { value: 'apartamento', label: 'Apartamento' }
-]
-
-const Tipology = [
-    { value: 't0', label: 'T0' },
-    { value: 't1', label: 'T1' },
-    { value: 't2', label: 'T2' },
-    { value: 't3', label: 'T3' },
-    { value: 't4', label: 'T4' },
-    { value: 't5', label: 'T5' },
-    { value: 't5+', label: 'T5+' }
-]
 
 class UserPreferences extends Component {
     static navigationOptions = ({ navigation }) => ({

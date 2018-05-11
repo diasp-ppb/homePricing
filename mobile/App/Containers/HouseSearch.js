@@ -1,37 +1,16 @@
 import React, {Component} from 'react'
 import {Text, View} from 'react-native'
-import {Button, Container, Content, Picker, Icon, Input, Item} from 'native-base'
+import {Button, Container, Content, Picker, Icon, Input, Item, Form} from 'native-base'
 import Metrics from '../Themes/Metrics'
 // Styles
 import styles from './Styles/HouseSearchStyles'
 import Colors from '../Themes/Colors'
 
-const Price = [
-  { value: 0, label: '0' },
-  { value: 50, label: '50' },
-  { value: 100, label: '100' },
-  { value: 500, label: '500' },
-  { value: 1000, label: '1 000' },
-  { value: 2000, label: '2 000' },
-  { value: 5000, label: '5 000' },
-  { value: 10000, label: '10 000' },
-  { value: 20000, label: '20 000' }
-]
 
-const PropertyType = [
-  { value: 'casa', label: 'Casa' },
-  { value: 'apartamento', label: 'Apartamento' }
-]
+import {Price} from '@datatypes/Price'
+import {PropertyType} from '@datatypes/PropertyType'
+import {Tipology} from '@datatypes/Tipology'
 
-const Tipology = [
-  { value: 't0', label: 'T0' },
-  { value: 't1', label: 'T1' },
-  { value: 't2', label: 'T2' },
-  { value: 't3', label: 'T3' },
-  { value: 't4', label: 'T4' },
-  { value: 't5', label: 'T5' },
-  { value: 't5+', label: 'T5+' }
-]
 
 export default class HouseSearch extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -119,14 +98,15 @@ export default class HouseSearch extends Component {
               <Picker
                 mode='dropdown'
                 iosIcon={<Icon name='ios-arrow-down-outline' />}
-                placeholder='Tipo de propridade'
                 placeholderStyle={{ color: Colors.white}}
                 placeholderIconColor={Colors.black}
                 style={styles.pickerFinalidade}
                 selectedValue={this.state.propertyType}
                 onValueChange={(value) => this.setState({propertyType: value})}
               >
+                <Picker.Item value='undefined' label='Tipo de Propriedade' />
                 {this.addPickerItems(PropertyType)}
+
               </Picker>
             </View>
 
@@ -142,6 +122,7 @@ export default class HouseSearch extends Component {
                 selectedValue={this.state.tipology}
                 onValueChange={(value) => this.setState({tipology: value})}
               >
+                <Picker.Item value='undefined' label='Tipologia' />
                 {this.addPickerItems(Tipology)}
               </Picker>
             </View>
@@ -173,6 +154,7 @@ export default class HouseSearch extends Component {
                   selectedValue={this.state.minPrice}
                   onValueChange={(value) => this.setState({minPrice: value})}
                 >
+                  <Picker.Item value='undefined' label='Minimo' />
                   {this.addPickerItems(Price)}
                 </Picker>
 
@@ -188,6 +170,7 @@ export default class HouseSearch extends Component {
                   selectedValue={this.state.maxPrice}
                   onValueChange={(value) => this.setState({maxPrice: value})}
                 >
+                  <Picker.Item value='undefined' label='Maximo' />
                   {this.addPickerItems(Price)}
                 </Picker>
               </View>
