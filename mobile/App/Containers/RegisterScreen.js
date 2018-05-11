@@ -2,10 +2,7 @@ import React, { Component } from 'react'
 import { Image, View } from 'react-native'
 import { connect } from 'react-redux';
 
-import { Col, Row, Grid } from 'react-native-easy-grid'
-import { Container, Header, Body, Content,
-    Title, Left, Right,
-    Icon, Text, Button,
+import { Container, Text, Button,
     Form, Item, Input } from 'native-base'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 

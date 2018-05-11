@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import { Image, View } from 'react-native'
+import { View } from 'react-native'
 
 // Native Base
-import { Container, Content, H3, Text, Icon, Form, Picker } from 'native-base'
+import { Container, Content, H3, Text, Icon, Picker } from 'native-base'
 
 // Styles
 import styles from './Styles/HelpScreenStyles'

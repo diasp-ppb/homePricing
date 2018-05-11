@@ -1,12 +1,11 @@
 import React, { Component } from 'react'
-import { Image, View, AppRegistry, ListView, StyleSheet, TouchableOpacity } from 'react-native'
+import { Image, View, ListView, TouchableOpacity } from 'react-native'
 import { Images } from '../Themes'
 import { connect } from 'react-redux';
 import {baseURL, createFavoriteAPI, deleteFavoriteAPI} from "../Services/Api";
 
 // Native Base
-import { Col, Row, Grid } from 'react-native-easy-grid';
-import { Container, Header, Body, Title, Content, Text, Button, Fab, Icon, ActionSheet } from 'native-base'
+import { Container, Text } from 'native-base'
 
 // Styles
 import styles from './Styles/FavoriteStyle'

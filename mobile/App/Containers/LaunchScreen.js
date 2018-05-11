@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
-import { Image, View, TouchableOpacity } from 'react-native'
+import { Image, View } from 'react-native'
 import { connect } from 'react-redux';
 import { Images } from '../Themes'
 
 // Native Base
-import { Container, Header, Body, Title, Button, Text, Fab, Icon, Row , Col } from 'native-base'
+import { Container, Button, Text, Fab, Icon } from 'native-base'
 
 // Styles
 import styles from './Styles/LaunchScreenStyles'
