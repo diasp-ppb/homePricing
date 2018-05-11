@@ -135,8 +135,9 @@ class UserProfileScreen extends Component {
 
               <View style={styles.logoutBox}>
                 <Button primary block
-                  style={styles.btn}
-                  onPress = {this.handleSubmit}
+                        title={"Logout"}
+                        style={styles.btn}
+                        onPress = {this.handleSubmit}
                 >
                   <Text>Logout</Text>
                 </Button>
