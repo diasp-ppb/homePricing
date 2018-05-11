@@ -31,13 +31,11 @@ class RegisterScreen extends Component {
     }
 
     componentWillUnmount() {
-        this.setState({password : ''});
-        this.setState({email : ''});
-        this.setState({name : ''});
+        this.setState({password : '', email:'', name:''});
     }
 
     handleSubmit(event) {
-        if (this.state.name == '' || this.state.email == '' || this.state.password == '') {
+        if (this.state.name === '' || this.state.email === '' || this.state.password === '') {
             ToastWarning(WARN_MISSING);
         } else {
             this.setState({password : ''});
@@ -55,7 +53,7 @@ class RegisterScreen extends Component {
                             <Image source={Images.logo} style={styles.logo} />
                         </View>
                         <View style={styles.registerBox}>
-                            <View style={styles.spaceBox}></View>
+                            <View style={styles.spaceBox}/>
 
                             <Form style={styles.inputRegisterBox}>
                                 <Item style={styles.inputText} regular>
@@ -91,14 +89,15 @@ class RegisterScreen extends Component {
                                 </Item>
 
                                 <Button primary block
-                                    style={styles.btn}
-                                    onPress = {this.handleSubmit}
+                                        title={"Registar"}
+                                        style={styles.btn}
+                                        onPress = {this.handleSubmit}
                                 >
                                     <Text>Registar</Text>
                                 </Button>
                             </Form>
 
-                            <View style={styles.spaceBox}></View>
+                            <View style={styles.spaceBox}/>
                         </View>
                     </View>
                 </Container>
