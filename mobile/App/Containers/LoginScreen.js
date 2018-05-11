@@ -21,8 +21,8 @@ class LoginScreen extends Component {
   constructor(props) {
         super(props);
         this.state = {
-            email: 'up@up.pt',
-            password: 'xdlol24P',
+            email: '',
+            password: '',
         };
 
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -55,7 +55,7 @@ class LoginScreen extends Component {
                             <Image source={Images.logo} style={styles.logo} />
                         </View>
                         <View style={styles.loginBox}>
-                            <View style={styles.spaceBox}></View>
+                            <View style={styles.spaceBox}/>
 
                             <Form style={styles.inputBox}>
                                 <Item style={styles.inputText} regular>
@@ -81,14 +81,15 @@ class LoginScreen extends Component {
                                 </Item>
 
                                 <Button primary block
-                                    style={styles.btn}
-                                    onPress = {this.handleSubmit}
+                                        style={styles.btn}
+                                        title={"Login"}
+                                        onPress = {this.handleSubmit}
                                 >
                                     <Text>Login</Text>
                                 </Button>
                             </Form>
 
-                            <View style={styles.spaceBox}></View>
+                            <View style={styles.spaceBox}/>
                         </View>
 
                         <View style={styles.linkBox}>
