@@ -31,15 +31,15 @@ export default class LaunchScreen extends Component {
           </View>
           <View style={styles.halfRow}>
             <View style={{ justifyContent: 'center' }}>
-              <Button style={styles.topBtn} onPress={() => navigate('HouseSearch')}>
+              <Button style={styles.topBtn} title={"Pesquisar"} onPress={() => navigate('HouseSearch')}>
                 <Text>Pesquisar</Text>
               </Button>
             </View>
             <View style={styles.btnGroup}>
-              <Button style={styles.btn} onPress={() => navigate('Login')}>
+              <Button style={styles.btn} title={"Login"} onPress={() => navigate('Login')}>
                 <Text>Login</Text>
               </Button>
-              <Button style={styles.btn} onPress={() => navigate('Gps')}>
+              <Button style={styles.btn} title={"GPS"} onPress={() => navigate('Gps')}>
                 <Text>GPS</Text>
               </Button>
             </View>
