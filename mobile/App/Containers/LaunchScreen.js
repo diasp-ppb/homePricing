@@ -16,12 +16,12 @@ export default class LaunchScreen extends Component {
   });
 
   constructor (props) {
-    super(props)
+    super(props);
     this.state = {}
   }
 
   render () {
-    const { navigate } = this.props.navigation
+    const { navigate } = this.props.navigation;
 
     return (
       <Container>
