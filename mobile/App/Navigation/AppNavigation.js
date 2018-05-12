@@ -13,6 +13,7 @@ import CameraScreen from '../Containers/CameraScreen'
 import { UserPreferences } from '../Containers/UserPreferences'
 import Favorites from '../Containers/FavoritesScreen'
 import HelpScreen from '../Containers/HelpScreen'
+import HistoricScreen from '../Containers/HistoricScreen'
 import PreferenceScreen from '../Containers/PreferenceScreen'
 
 import Colors from '../Themes/Colors'
@@ -21,9 +22,13 @@ import Colors from '../Themes/Colors'
 import styles from './Styles/NavigationStyles'
 
 const navigationOptions = ({ navigation }) => ({
-  headerStyle: { backgroundColor: Colors.blue4 },
-  headerTintColor: 'white',
-  headerBackTitle: null,
+  headerStyle: { backgroundColor: '#1a1a1a' },
+  headerTintColor: '#f2f2f2',
+  fontSize: 6,
+  textAlignVertical: 'center',
+  headerTitleStyle: {
+    fontSize: 12,
+  },
 });
 
 // Manifest of possible screens
@@ -41,6 +46,7 @@ const PrimaryNav = StackNavigator({
   Favorites: {screen: Favorites},
   HelpScreen: { screen: HelpScreen },
   PreferenceScreen: { screen: PreferenceScreen},
+  HistoricScreen: { screen: HistoricScreen},
 }, {
   // Default config for all screens
   headerMode: 'float',

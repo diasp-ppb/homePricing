@@ -79,15 +79,12 @@ export default class UserProfileScreen extends Component {
     switch(RowId){
         case 0: //Return Home
             return 'LaunchScreen';
-            break;
         case 1:
-            break;
+          return 'HistoricScreen2';
         case 2:
             return 'UserPreferences';
-            break;
         case 3:  //Favorites
             return 'Favorites';
-            break;
         case 4:  //Profile Settngs
             break;
         case 5:  //Help page
