@@ -2,75 +2,48 @@ import { StyleSheet } from 'react-native'
 import { Colors, Metrics, ApplicationStyles } from '../../Themes/'
 
 export default StyleSheet.create({
-    /*
-        Logo stylings on register/login screen
-    */
-    icon: {
-        color: Colors.colors.snow,
-    },
-    logo: {
-        width: 150,
-        height: 150,
-        resizeMode: 'contain'
-    },
-
-    /*
-        Content layout styling
-    */
-    content: {
+    container: {
         flex: 1,
-        flexDirection: 'column',
-        justifyContent: 'space-between',
-        alignItems: 'center',
+        flexDirection: 'column'
     },
-    logoBox: {
-        flex: 2,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    loginBox: {
-        flex: 2,
-        flexDirection: 'row',
-    },
-    registerBox: {
-        flex: 3,
-        flexDirection: 'row',
-    },
-    linkBox: {
-        flex: 1,
+    topRow: {
+        flex: 0.5,
         alignItems: 'center',
         justifyContent: 'center'
     },
-
-    /*
-        Form layout styling
-    */
-    inputBox: {
-        flex: 0.8,
+    bottomRow: {
+        flex: 0.5,
+        alignItems: 'center'
+    },
+    homePricing: {
+        width: '70%',
+        height: '22%',
+        marginTop: -40
+    },
+    backgroundImage: {
+        position: 'absolute',
+        width: '100%',
+        height: '100%',
+        top: 0,
+        left: 0,
+        bottom: 0,
+        right: 0
+    },
+    button: {
         justifyContent: 'center',
+        elevation: 60,
+        backgroundColor: '#046A38',
+        borderRadius: 20,
+        opacity: 0.92,
+        marginBottom: 10
     },
-    inputRegisterBox: {
-        flex: 0.8,
-    },
-    spaceBox: {
-        flex: 0.1,
-    },
-
-    /*
-        Specific components' styling
-    */
-    inputText: {
-        backgroundColor: Colors.colors.snow,
-    },
-    btn: {
-        marginTop: 5,
-    },
-    linkStyle: {
-        color: 'blue',
-        textAlign: 'center',
-        fontSize: 18,
-    },
-    inputError: {
-        borderColor: '#FF0000',
+    headerStyle: {
+        elevation: 0,
+        position: 'absolute',
+        backgroundColor: 'transparent',
+        zIndex: 100,
+        top: 0,
+        left: 0,
+        right: 0
     }
 })

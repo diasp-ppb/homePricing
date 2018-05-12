@@ -21,12 +21,13 @@ export default StyleSheet.create({
         marginTop: -40
     },
     signUp: {
-        marginTop: 10,
+        marginTop: 15,
         color: 'white'
     },
     link: {
         color: 'white',
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        textDecorationLine: 'underline'
     },
     backgroundImage: {
         position: 'absolute',
@@ -44,5 +45,14 @@ export default StyleSheet.create({
         borderRadius: 20,
         opacity: 0.92,
         marginBottom: 10
+    },
+    headerStyle: {
+        elevation: 0,
+        position: 'absolute',
+        backgroundColor: 'transparent',
+        zIndex: 100,
+        top: 0,
+        left: 0,
+        right: 0
     }
 })

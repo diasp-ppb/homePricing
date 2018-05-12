@@ -2,11 +2,7 @@ import React, { Component } from 'react'
 import { Image, View, AsyncStorage } from 'react-native'
 import { connect } from 'react-redux';
 
-import { Col, Row, Grid } from 'react-native-easy-grid'
-import { Container, Header, Body, Content,
-    Title, Left, Right,
-    Icon, Text, Button,
-    Form, Item, Input } from 'native-base'
+import { Container, Text, Button, Form, Item, Input } from 'native-base'
 
 import { Images } from '../Themes'
 import { WARN_MISSING, ToastWarning } from '../Services/LogToasts'
@@ -18,7 +14,8 @@ import styles from './Styles/LoginScreenStyles'
 
 class LoginScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
-    title: 'Login',
+		title: 'Login',
+		headerStyle: styles.headerStyle
   });
 
 
@@ -60,7 +57,7 @@ class LoginScreen extends Component {
                     </View>
                     <View style={styles.bottomRow}>
                         <Form style={{ width: '70%' }}>
-                            <Item style={{ backgroundColor: 'white', marginBottom: 10 }} regular>
+                            <Item style={{ backgroundColor: 'white', marginBottom: 15 }} regular>
                                 <Input
                                     keyboardType='email-address'
                                     placeholder="E-mail"
@@ -68,7 +65,7 @@ class LoginScreen extends Component {
                                     value={this.state.email}
                                 />
                             </Item>
-                            <Item style={{ backgroundColor: 'white', marginBottom: 10 }} regular>
+                            <Item style={{ backgroundColor: 'white', marginBottom: 15 }} regular>
                                 <Input
                                     secureTextEntry={true}
                                     placeholder="Palavra-passe"
@@ -77,7 +74,7 @@ class LoginScreen extends Component {
                                 />
                             </Item>
                             <Button primary block style={styles.button} onPress={this.handleSubmit}>
-                                <Text>Login</Text>
+                                <Text style={{ fontSize: 12 }}>Login</Text>
                             </Button>
                         </Form>
                         <Text style={styles.signUp}>Não tem uma conta? <Text style={styles.link} onPress={() => navigate('Register')}>Registe-se!</Text></Text>
