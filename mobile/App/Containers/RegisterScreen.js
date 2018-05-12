@@ -12,7 +12,6 @@ import styles from './Styles/RegisterScreenStyles'
 
 class RegisterScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
-    title: 'Registo',
     headerStyle: styles.headerStyle
   });
 

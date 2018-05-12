@@ -1,10 +1,9 @@
-import { Images } from '../Themes'
 import React, { Component } from 'react'
-import { View, Image, TouchableOpacity } from 'react-native'
+import { View, Image } from 'react-native'
 
 
 // Native Base
-import { Container, Header, Left, Right, Body, Title, Content, Button, Text, Icon, Item, Input, Segment, Card, CardItem } from 'native-base'
+import { Container, Content, Button, Text, Icon} from 'native-base'
 
 // Styles
 import styles from './Styles/PreferencesScreenStyles'
@@ -50,7 +49,7 @@ export default class LaunchScreen extends Component {
 
     return (
       <Container>
-               
+
         <Content padder>
           <View style={{ marginBottom: 20 }}>
             {
@@ -93,13 +92,13 @@ export default class LaunchScreen extends Component {
                       <Text style={styles.address}>
                           <Icon ios={'ios-pin'} android={'md-pin'} style={styles.address} /> {item.address}
                       </Text>
-                      <Text style={styles.money}> 
+                      <Text style={styles.money}>
                           {item.price}
                       </Text>
                     </View>
                   </View>
 
-                  <View style={{flex:0.18, marginTop: 22}} >      
+                  <View style={{flex:0.18, marginTop: 22}} >
                       <Button transparent onPress={() => navigate('HouseInfScreen',{id: item.id })}>
                         <Text>
                           <Icon style={{fontSize:20, color:'black'}} ios={'ion-ios-arrow-forward'} android={'md-arrow-forward'} />

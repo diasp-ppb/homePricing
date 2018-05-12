@@ -14,7 +14,6 @@ import styles from './Styles/LoginScreenStyles'
 
 class LoginScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
-    title: 'Login',
     headerStyle: styles.headerStyle
   });
 
@@ -35,6 +34,7 @@ class LoginScreen extends Component {
   }
 
   handleSubmit(event) {
+    console.warn("miss you");
     event.preventDefault();
     console.log("handle login");
 

@@ -30,15 +30,10 @@ const rows = [
   const ds = new ListView.DataSource({rowHasChanged})
 
 
-export default class UserProfileScreen extends Component {
+class UserProfileScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
-
     title: 'Perfil',
   });
-
-  state = {
-    user : ''
-  }
 
   constructor(props) {
     super(props);
@@ -46,14 +41,14 @@ export default class UserProfileScreen extends Component {
       dataSource: ds.cloneWithRows(rows),
       user: '',
       login: this.props.user
-    }
+    };
     this.getUserInfo();
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   getUserInfo(){
-    var url = baseURL + '/v1/users/' + this.props.user.user;
-    var auth = 'Bearer ' +this.props.user.token;
+    const url = baseURL + '/v1/users/' + this.props.user.user;
+    const auth = 'Bearer ' +this.props.user.token;
     fetch(url, {
       method: 'GET',
       headers: {
@@ -135,8 +130,9 @@ export default class UserProfileScreen extends Component {
 
               <View style={styles.logoutBox}>
                 <Button primary block
-                  style={styles.btn}
-                  onPress = {this.handleSubmit}
+                        title={"Logout"}
+                        style={styles.btn}
+                        onPress = {this.handleSubmit}
                 >
                   <Text>Logout</Text>
                 </Button>

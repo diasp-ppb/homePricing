@@ -11,7 +11,7 @@ import HouseSearch from '../Containers/HouseSearch'
 import GpsScreen from '../Containers/GpsScreen'
 import CameraScreen from '../Containers/CameraScreen'
 import { UserPreferences } from '../Containers/UserPreferences'
-import Favorites from '../Containers/FavoritesScreen'
+import { FavoritesScreen } from '../Containers/FavoritesScreen'
 import HelpScreen from '../Containers/HelpScreen'
 import HistoricScreen from '../Containers/HistoricScreen'
 import PreferenceScreen from '../Containers/PreferenceScreen'
@@ -43,7 +43,7 @@ const PrimaryNav = StackNavigator({
   Gps: { screen: GpsScreen},
   Camera : {screen: CameraScreen},
   UserPreferences: { screen: UserPreferences},
-  Favorites: {screen: Favorites},
+  Favorites: {screen: FavoritesScreen},
   HelpScreen: { screen: HelpScreen },
   PreferenceScreen: { screen: PreferenceScreen},
   HistoricScreen: { screen: HistoricScreen},

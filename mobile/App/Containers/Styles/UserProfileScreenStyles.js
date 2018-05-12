@@ -1,10 +1,12 @@
 import { StyleSheet } from 'react-native'
-import { Metrics, Colors, ApplicationStyles } from '../../Themes/'
+import { Metrics, ApplicationStyles } from '../../Themes/'
 
 export default StyleSheet.create({
+  ...ApplicationStyles.screen,
   icon: {
-    marginTop: 10,
+    marginTop: 20,
     marginBottom: 10,
+    padding:25,
     marginLeft: 'auto',
     marginRight: 'auto',
     resizeMode: 'contain',
@@ -19,29 +21,19 @@ export default StyleSheet.create({
     marginBottom: 5
   },
   listIcons: {
-      marginLeft: 20,
-      width: 15,
-      height: 15
+    marginLeft: 20,
+    width: 15,
+    height: 15
   },
   text: {
-      marginLeft: 20
+    marginLeft: 20
   },
   userInfo: {
     alignItems: 'center',
-    marginBottom: 10
-  },
-  btn: {
-    marginBottom: 20
-  },
-  logoutBox: {
-    flex:0.6,
-    justifyContent: 'center'
-  },
-  spaceBox: {
-    flex:0.2
-  },
-  wrapper: {
-    flexDirection:'row'
+    marginBottom: 10,
+    backgroundColor: '#2C5234',
+    opacity: 0.85
+
   }
-  
+
 })
