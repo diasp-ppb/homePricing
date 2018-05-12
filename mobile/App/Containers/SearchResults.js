@@ -74,17 +74,25 @@ export default class LaunchScreen extends Component {
 
     const houses = this.state.houses;
 
-    if(houses.length < 1) return;
+    if (houses.length < 1) return;
 
     for (let i = 0; i < houses.length; i++) {
       const house = houses[i];
       const lat = parseFloat(house.coordinates[0]);
       const long = parseFloat(house.coordinates[1]);
 
-      if (minLat > lat) { minLat = lat; }
-      if (maxLat < lat) { maxLat = lat; }
-      if (minLong > long) { minLong = long; }
-      if (maxLong < long) { maxLong = long; }
+      if (minLat > lat) {
+        minLat = lat;
+      }
+      if (maxLat < lat) {
+        maxLat = lat;
+      }
+      if (minLong > long) {
+        minLong = long;
+      }
+      if (maxLong < long) {
+        maxLong = long;
+      }
 
       house.moreInfo = false;
     }
@@ -92,15 +100,15 @@ export default class LaunchScreen extends Component {
     const deltaLong = maxLong - minLong;
     const deltaLat = maxLat - minLat;
 
-    const region = { ...this.state.region };
+    const region = {...this.state.region};
     region.latitudeDelta = deltaLat;
     region.longitudeDelta = deltaLong;
     region.latitude = minLat + (deltaLat / 2);
     region.longitude = minLong + (deltaLong / 2);
 
-    this.setState({ region });
-    this.setState({ houses });
+    this.setState({region: region, houses: houses});
   }
+
 
   addMoreMarkers(region) {
     this.setState({ region });
@@ -113,7 +121,7 @@ export default class LaunchScreen extends Component {
   }
 
   renderResultList() {
-    const list = this.state.houses.length > 0 ? this.state.houses.map((item, index) => {
+    return this.state.houses.length > 0 ? this.state.houses.map((item, index) => {
       return (
         <Card key={index} style={{ flex: 1 }}>
           <CardItem button onPress={() => navigate('HouseInformation', { house: item })}>
@@ -145,14 +153,12 @@ export default class LaunchScreen extends Component {
         </Card>
       )
     }) : (<Text> A sua pesquisa nao obteve resultados </Text>);
-
-    return list;
   }
 
   renderTab() {
     const { navigate } = this.props.navigation;
 
-    const tab = this.state.map === true ? (
+    return this.state.map === true ? (
       <Container style={{ flex: 1, flexWrap: 'wrap' }}>
         <GPSMap
           region={this.state.region}
@@ -170,8 +176,6 @@ export default class LaunchScreen extends Component {
         }
       </ScrollView>
     );
-
-    return tab;
   }
 
 
@@ -188,6 +192,7 @@ export default class LaunchScreen extends Component {
         <Segment>
           <Button
             first
+            title={"Lista"}
             active={!this.state.map}
             onPress={() => this.setState({ map: false })}
           >
@@ -195,6 +200,7 @@ export default class LaunchScreen extends Component {
           </Button>
           <Button
             last
+            title={"Mapa"}
             active={this.state.map}
             onPress={() => this.setState({ map: true })}
           >
