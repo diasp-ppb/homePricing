@@ -21,10 +21,7 @@ const navigationOptions = ({ navigation }) => ({
   headerStyle: { backgroundColor: '#1a1a1a' },
   headerTintColor: '#f2f2f2',
   fontSize: 6,
-  textAlignVertical: 'center',
-  headerTitleStyle: {
-    fontSize: 12,
-  }
+  textAlignVertical: 'center'
 });
 
 

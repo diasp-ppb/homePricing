@@ -7,12 +7,12 @@ export default StyleSheet.create({
         flexDirection: 'column'
     },
     topRow: {
-        flex: 0.5,
+        flex: 0.4,
         alignItems: 'center',
         justifyContent: 'center'
     },
     bottomRow: {
-        flex: 0.5,
+        flex: 0.6,
         alignItems: 'center'
     },
     homePricing: {
@@ -30,12 +30,12 @@ export default StyleSheet.create({
         right: 0
     },
     button: {
-        justifyContent: 'center',
         elevation: 60,
-        backgroundColor: '#046A38',
-        borderRadius: 20,
         opacity: 0.92,
-        marginBottom: 10
+        marginBottom: 10,
+        borderRadius: 20,
+        justifyContent: 'center',
+        backgroundColor: '#046A38'
     },
     headerStyle: {
         elevation: 0,
