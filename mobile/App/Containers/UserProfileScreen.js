@@ -16,12 +16,13 @@ import styles from './Styles/UserProfileScreenStyles'
 //List Rows
 const rows = [
     {id: 0, text: 'Home', icon: Images.homeIcon },
-    {id: 1, text: 'Histórico', icon: Images.historyIcon},
-    {id: 2, text: 'Preferências do utilizador', icon: Images.userIcon},
-    {id: 3, text: 'Favoritos', icon: Images.favouriteIcon},
-    {id: 4, text: 'Configurações de conta', icon: Images.settingsIcon},
-    {id: 5, text: 'Ajuda', icon: Images.helpIcon}
-  ]
+    {id: 1, text: 'Recomendações', icon: Images.homeIcon},
+    {id: 2, text: 'Histórico', icon: Images.historyIcon},
+    {id: 3, text: 'Preferências do utilizador', icon: Images.userIcon},
+    {id: 4, text: 'Favoritos', icon: Images.favouriteIcon},
+    {id: 5, text: 'Configurações de conta', icon: Images.settingsIcon},
+    {id: 6, text: 'Ajuda', icon: Images.helpIcon}
+  ];
 
   // Row comparison function
   const rowHasChanged = (r1, r2) => r1.id !== r2.id
@@ -75,14 +76,16 @@ class UserProfileScreen extends Component {
         case 0: //Return Home
             return 'LaunchScreen';
         case 1:
-          return 'HistoricScreen';
+          return 'PreferenceScreen';
         case 2:
+          return 'HistoricScreen';
+        case 3:
             return 'UserPreferences';
-        case 3:  //Favorites
+        case 4:  //Favorites
             return 'Favorites';
-        case 4:  //Profile Settngs
+        case 5:  //Profile Settngs
             break;
-        case 5:  //Help page
+        case 6:  //Help page
             return 'HelpScreen';
         default:
             break;

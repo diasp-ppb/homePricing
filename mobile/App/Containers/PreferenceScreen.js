@@ -11,15 +11,14 @@ import {baseURL} from "../Services/Api";
 // Component
 export default class LaunchScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
-    title: 'Preferences:',
   });
 
   // This component's constructor
   constructor (props) {
-    super(props)
+    super(props);
     this.state = {
-      houses: []
-    }
+      houses: [],
+    };
   }
 
   // Fetch data here
@@ -55,33 +54,6 @@ export default class LaunchScreen extends Component {
             {
               this.state.houses.map((item, index) => {
                 return (
-                  /*<Card key={index}>
-                    <CardItem button onPress={() => navigate('HouseInfScreen',{id: item.id })}>
-                      <Left>
-                        <Body>
-                          <Text style={styles.address}>
-                            <Icon ios={'ios-pin'} android={'md-pin'} style={styles.address} /> {item.address}
-                          </Text>
-                        </Body>
-                      </Left>
-                    </CardItem>
-                    <CardItem cardBody>
-                      <Image source={{ uri: 'http://cdn.bracioroom.com/2016/05/18/indian-house-images-download-new-design-indian-house-hd-wallpapers-s-f561c74472fc5f74.jpg' }} style={{ height: 200, width: null, flex: 1 }}/>
-                    </CardItem>
-                    <CardItem>
-                      <Left>
-                        <Text style={styles.info}>
-                          <Icon ios={'ios-cash'} android={'md-cash'} style={styles.info} /> {item.price}
-                        </Text>
-                      </Left>
-                      <Right>
-                        <Text style={styles.info}>
-                          <Icon ios={'ios-chatbubbles'} android={'md-chatbubbles'} style={styles.info} /> {item.numComm}
-                        </Text>
-                      </Right>
-                    </CardItem>
-                  </Card>*/
-
                 <View style={styles.box1} key={index} >
                   <View style={{ flex:0.5 , width:'90%' , height:100}} >
                     <Image source={{ uri: 'http://cdn.bracioroom.com/2016/05/18/indian-house-images-download-new-design-indian-house-hd-wallpapers-s-f561c74472fc5f74.jpg' }} style={{ height: 200, width: null, flex: 1 }}/>
@@ -90,7 +62,7 @@ export default class LaunchScreen extends Component {
                   <View style={{ flex:0.4}}>
                     <View style={{ flex:0.5}}>
                       <Text style={styles.address}>
-                          <Icon ios={'ios-pin'} android={'md-pin'} style={styles.address} /> {item.address}
+                          <Icon ios={'ios-pin'} android={'md-pin'} style={styles.address} /> {item.address.town}
                       </Text>
                       <Text style={styles.money}>
                           {item.price}
