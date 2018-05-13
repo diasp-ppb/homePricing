@@ -4,7 +4,7 @@ import { StackNavigator } from 'react-navigation'
 import LaunchScreen from '../Containers/LaunchScreen'
 import { SearchResults } from '../Containers/SearchResults'
 import { RegisterScreen } from '../Containers/RegisterScreen'
-import { UserProfileScreen} from '../Containers/UserProfileScreen'
+import { UserProfileScreen } from '../Containers/UserProfileScreen'
 import { LoginScreen } from '../Containers/LoginScreen'
 import HouseInfScreen from '../Containers/HouseInfScreen'
 import HouseSearch from '../Containers/HouseSearch'
@@ -12,7 +12,7 @@ import { HistoricScreen2 } from '../Containers/HistoricScreen2'
 import GpsScreen from '../Containers/GpsScreen'
 import CameraScreen from '../Containers/CameraScreen'
 import { UserPreferences } from '../Containers/UserPreferences'
-import Favorites from '../Containers/FavoritesScreen'
+import { FavoritesScreen } from '../Containers/FavoritesScreen'
 import HelpScreen from '../Containers/HelpScreen'
 import PreferenceScreen from '../Containers/PreferenceScreen'
 
@@ -35,24 +35,24 @@ const navigationOptions = ({ navigation }) => ({
 const PrimaryNav = StackNavigator({
   LaunchScreen: { screen: LaunchScreen },
   SearchResults: { screen: SearchResults },
-  UserProfile: {screen: UserProfileScreen},
+  UserProfile: { screen: UserProfileScreen },
   Login: { screen: LoginScreen },
   Register: { screen: RegisterScreen },
-  HouseSearch: { screen: HouseSearch},
-  HistoricScreen: { screen: HistoricScreen2},
+  HouseSearch: { screen: HouseSearch },
+  HistoricScreen: { screen: HistoricScreen2 },
   HouseInformation: { screen: HouseInfScreen },
-  Gps: { screen: GpsScreen},
-  Camera : {screen: CameraScreen},
-  UserPreferences: { screen: UserPreferences},
-  Favorites: {screen: Favorites},
+  Gps: { screen: GpsScreen },
+  Camera: { screen: CameraScreen },
+  UserPreferences: { screen: UserPreferences },
+  Favorites: { screen: FavoritesScreen },
   HelpScreen: { screen: HelpScreen },
-  PreferenceScreen: { screen: PreferenceScreen},
+  PreferenceScreen: { screen: PreferenceScreen },
 }, {
-  // Default config for all screens
-  headerMode: 'float',
-  navigationOptions,
-  initialRouteName: 'LaunchScreen'
-});
+    // Default config for all screens
+    headerMode: 'float',
+    navigationOptions,
+    initialRouteName: 'LaunchScreen'
+  });
 
 export default PrimaryNav
 
