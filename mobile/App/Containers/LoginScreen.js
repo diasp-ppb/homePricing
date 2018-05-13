@@ -34,7 +34,6 @@ class LoginScreen extends Component {
   }
 
   handleSubmit(event) {
-    console.warn("miss you");
     event.preventDefault();
     console.log("handle login");
 

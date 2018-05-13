@@ -75,7 +75,7 @@ class UserProfileScreen extends Component {
         case 0: //Return Home
             return 'LaunchScreen';
         case 1:
-          return 'HistoricScreen2';
+          return 'HistoricScreen';
         case 2:
             return 'UserPreferences';
         case 3:  //Favorites
@@ -83,7 +83,7 @@ class UserProfileScreen extends Component {
         case 4:  //Profile Settngs
             break;
         case 5:  //Help page
-            break;
+            return 'HelpScreen';
         default:
             break;
     }

@@ -13,9 +13,7 @@ import GPSMap from '../Components/GPSMap';
 
 // Component
 export default class LaunchScreen extends Component {
-  static navigationOptions = ({ navigation }) => ({
-    title: 'Pesquisa',
-  });
+
 
   // This component's constructor
   constructor(props) {
@@ -121,6 +119,8 @@ export default class LaunchScreen extends Component {
   }
 
   renderResultList() {
+    const { navigate } = this.props.navigation;
+
     return this.state.houses.length > 0 ? this.state.houses.map((item, index) => {
       return (
         <Card key={index} style={{ flex: 1 }}>
@@ -183,12 +183,6 @@ export default class LaunchScreen extends Component {
   render() {
     return (
       <Container>
-        <Header searchBar rounded hasSegment>
-          <Item>
-            <Icon ios="ios-search" android="md-search" />
-            <Input placeholder="Pesquisar Anúncios" />
-          </Item>
-        </Header>
         <Segment>
           <Button
             first
