@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Image, ScrollView } from 'react-native';
-import { connect } from 'react-redux';
+
 
 // Native Base
 import { Container, Header, Left, Body, Button, Text, Icon, Item, Input, Segment, Card, CardItem } from 'native-base';
@@ -12,10 +12,8 @@ import GPSMap from '../Components/GPSMap';
 
 
 // Component
-class SearchResults extends Component {
-  static navigationOptions = ({ navigation }) => ({
-    title: 'Pesquisa',
-  });
+export default class LaunchScreen extends Component {
+
 
   // This component's constructor
   constructor(props) {
@@ -39,6 +37,7 @@ class SearchResults extends Component {
   componentDidMount() {
     const { navigation } = this.props;
     const form = navigation.state.params.form;
+
     fetch(`${baseURL}/v1/houses/filter`, {
       method: 'POST',
       headers: {
@@ -65,21 +64,33 @@ class SearchResults extends Component {
   }
 
   generateMarkers() {
+
     let minLat = 1000;
     let maxLat = -1000;
     let minLong = 1000;
     let maxLong = -1000;
 
     const houses = this.state.houses;
+
+    if (houses.length < 1) return;
+
     for (let i = 0; i < houses.length; i++) {
       const house = houses[i];
       const lat = parseFloat(house.coordinates[0]);
       const long = parseFloat(house.coordinates[1]);
 
-      if (minLat > lat) { minLat = lat; }
-      if (maxLat < lat) { maxLat = lat; }
-      if (minLong > long) { minLong = long; }
-      if (maxLong < long) { maxLong = long; }
+      if (minLat > lat) {
+        minLat = lat;
+      }
+      if (maxLat < lat) {
+        maxLat = lat;
+      }
+      if (minLong > long) {
+        minLong = long;
+      }
+      if (maxLong < long) {
+        maxLong = long;
+      }
 
       house.moreInfo = false;
     }
@@ -87,15 +98,15 @@ class SearchResults extends Component {
     const deltaLong = maxLong - minLong;
     const deltaLat = maxLat - minLat;
 
-    const region = { ...this.state.region };
+    const region = {...this.state.region};
     region.latitudeDelta = deltaLat;
     region.longitudeDelta = deltaLong;
     region.latitude = minLat + (deltaLat / 2);
     region.longitude = minLong + (deltaLong / 2);
 
-    this.setState({ region });
-    this.setState({ houses });
+    this.setState({region: region, houses: houses});
   }
+
 
   addMoreMarkers(region) {
     this.setState({ region });
@@ -107,24 +118,47 @@ class SearchResults extends Component {
     this.setState({ houses });
   }
 
-  addHistory(house) {
-    fetch(`${baseURL}/v1/history`, {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ houseId: house.id, userId: this.props.user.user}),
-    })
-      .catch((json) => {
-        console.error(json);
-      });
+  renderResultList() {
+    const { navigate } = this.props.navigation;
+
+    return this.state.houses.length > 0 ? this.state.houses.map((item, index) => {
+      return (
+        <Card key={index} style={{ flex: 1 }}>
+          <CardItem button onPress={() => navigate('HouseInformation', { house: item })}>
+            <Left>
+              <Body>
+              <Text>{item.title}</Text>
+              <Text style={styles.address}>
+                <Icon ios="ios-pin" android="md-pin" style={styles.address} />
+                {item.address.zipcode},
+                {item.address.town},
+                {item.address.county}
+              </Text>
+              </Body>
+            </Left>
+          </CardItem>
+          <CardItem cardBody>
+            <Image
+              source={{ uri: item.images[0] }}
+              style={{ height: 200, width: null, flex: 1 }}
+            />
+          </CardItem>
+          <CardItem>
+            <Left>
+              <Text style={styles.info}>
+                <Icon ios="ios-cash" android="md-cash" style={styles.info} /> {item.price} €
+              </Text>
+            </Left>
+          </CardItem>
+        </Card>
+      )
+    }) : (<Text> A sua pesquisa nao obteve resultados </Text>);
   }
 
   renderTab() {
     const { navigate } = this.props.navigation;
 
-    const tab = this.state.map === true ? (
+    return this.state.map === true ? (
       <Container style={{ flex: 1, flexWrap: 'wrap' }}>
         <GPSMap
           region={this.state.region}
@@ -138,43 +172,10 @@ class SearchResults extends Component {
     ) : (
       <ScrollView style={{ marginBottom: 20, flex: 1 }}>
         {
-          this.state.houses.map((item, index) => {
-            return (
-              <Card key={index} style={{ flex: 1 }}>
-                <CardItem button onPress={() => { this.addHistory(item), navigate('HouseInformation', { house: item })} }>
-                  <Left>
-                    <Body>
-                      <Text>{item.title}</Text>
-                      <Text style={styles.address}>
-                        <Icon ios="ios-pin" android="md-pin" style={styles.address} />
-                        {item.address.zipcode}, {" "}
-                        {item.address.town}, {" "}
-                        {item.address.county}
-                      </Text>
-                    </Body>
-                  </Left>
-                </CardItem>
-                <CardItem cardBody>
-                  <Image
-                    source={{ uri: item.images[0] }}
-                    style={{ height: 200, width: null, flex: 1 }}
-                  />
-                </CardItem>
-                <CardItem>
-                  <Left>
-                    <Text style={styles.info}>
-                      <Icon ios="ios-cash" android="md-cash" style={styles.info} /> {item.price} €
-                    </Text>
-                  </Left>
-                </CardItem>
-              </Card>
-            );
-          })
+          this.renderResultList()
         }
       </ScrollView>
     );
-
-    return tab;
   }
 
 
@@ -182,15 +183,10 @@ class SearchResults extends Component {
   render() {
     return (
       <Container>
-        <Header searchBar rounded hasSegment>
-          <Item>
-            <Icon ios="ios-search" android="md-search" />
-            <Input placeholder="Pesquisar Anúncios" />
-          </Item>
-        </Header>
         <Segment>
           <Button
             first
+            title={"Lista"}
             active={!this.state.map}
             onPress={() => this.setState({ map: false })}
           >
@@ -198,6 +194,7 @@ class SearchResults extends Component {
           </Button>
           <Button
             last
+            title={"Mapa"}
             active={this.state.map}
             onPress={() => this.setState({ map: true })}
           >
@@ -209,12 +206,3 @@ class SearchResults extends Component {
     );
   }
 }
-
-function mapStateToProps(state) {
-  return {
-      user: state.login
-  };
-}
-
-const connectedRegister = connect(mapStateToProps)(SearchResults);
-export { connectedRegister as SearchResults };

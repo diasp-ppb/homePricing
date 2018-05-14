@@ -98,8 +98,8 @@ const userSchema = new mongoose.Schema({
     minlength: 0,
   }
 }, {
-    timestamps: true,
-  });
+  timestamps: true,
+});
 
 /**
  * Add your

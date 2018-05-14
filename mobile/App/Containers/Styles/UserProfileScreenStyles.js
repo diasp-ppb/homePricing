@@ -21,31 +21,19 @@ export default StyleSheet.create({
     marginBottom: 5
   },
   listIcons: {
-      marginLeft: 20,
-      width: 15,
-      height: 15
+    marginLeft: 20,
+    width: 15,
+    height: 15
   },
   text: {
-      marginLeft: 20
+    marginLeft: 20
   },
   userInfo: {
     alignItems: 'center',
     marginBottom: 10,
     backgroundColor: '#2C5234',
     opacity: 0.85
-  },
-  btn: {
-    marginBottom: 20
-  },
-  logoutBox: {
-    flex:0.6,
-    justifyContent: 'center'
-  },
-  spaceBox: {
-    flex:0.2
-  },
-  wrapper: {
-    flexDirection:'row'
+
   }
-  
+
 })

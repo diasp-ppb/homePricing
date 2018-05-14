@@ -89,8 +89,7 @@ exports.convertParams = function (paramsToConvert) {
 // {
 // 	"rent" : false,
 // 	"buy" : true,
-//  "tipology" : "T1",
-//  "bathrooms" : null,
+// 	"tipology" : "T1",
 // 	"minArea"  : null,
 // 	"maxArea" : 1332,
 // 	"minPrice" : null,
@@ -98,8 +97,8 @@ exports.convertParams = function (paramsToConvert) {
 // 	"hospital" : false,
 // 	"school" : false,
 // 	"shopping" : false,
-//  "transport" : false,
-//  "city" : "Porto",
-//  "workLocation" : "ChIJwVPhxKtlJA0RvBSxQFbZSKY",
-//  "workDistance" : 3 
+//   "transport" : false,
+//   "city" : "Porto",
+//   "workLocation" : "ChIJ3S-JXmauEmsRUcIaWtf4MzE",
+//   "workDistance" : 3 
 // }

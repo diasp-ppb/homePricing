@@ -33,7 +33,7 @@ const images = {
   starLines: require('../Images/Icons/star-line.png'),
   logo1: require('../Images/logo1.png'),
   login: require('../Images/login.png'),
-  camara: require('../Images/camara.png')
-}
+  camara: require('../Images/camara.png'),
+};
 
 export default images

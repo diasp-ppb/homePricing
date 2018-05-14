@@ -1,72 +1,17 @@
 import React, { Component } from 'react'
 import { Text, View } from 'react-native'
-import { Button, Container, Content, Picker, Icon, Input, Item } from 'native-base'
+import { Button, Container, Content, Picker, Icon, Input, Item, Form } from 'native-base'
 import Metrics from '../Themes/Metrics'
 // Styles
 import styles from './Styles/HouseSearchStyles'
 import Colors from '../Themes/Colors'
 
-const MinPrice = [
-  { value: null, label: 'Sem Min' },
-  { value: 50, label: '50' },
-  { value: 100, label: '100' },
-  { value: 500, label: '500' },
-  { value: 1000, label: '1 000' },
-  { value: 2000, label: '2 000' },
-  { value: 5000, label: '5 000' },
-  { value: 10000, label: '10 000' },
-  { value: 20000, label: '20 000' }
-]
 
-const MaxPrice = [
-  { value: null, label: 'Sem Max' },
-  { value: 50, label: '50' },
-  { value: 100, label: '100' },
-  { value: 500, label: '500' },
-  { value: 1000, label: '1 000' },
-  { value: 2000, label: '2 000' },
-  { value: 5000, label: '5 000' },
-  { value: 10000, label: '10 000' },
-  { value: 20000, label: '20 000' }
-]
+import { MinPrice, MaxPrice } from '@datatypes/Price'
+import { District } from '@datatypes/District'
+import { PropertyType } from '@datatypes/PropertyType'
+import { Tipology } from '@datatypes/Tipology'
 
-const PropertyType = [
-  { value: null, label: 'Não especificado' },
-  { value: 'casa', label: 'Casa' },
-  { value: 'apartamento', label: 'Apartamento' }
-]
-
-const Tipology = [
-  { value: null, label: 'Não especificado' },
-  { value: 'T0', label: 'T0' },
-  { value: 'T1', label: 'T1' },
-  { value: 'T2', label: 'T2' },
-  { value: 'T3', label: 'T3' },
-  { value: 'T4', label: 'T4' },
-  { value: 'T5', label: 'T5' },
-  { value: 'T5+', label: 'T5+' }
-]
-
-const District = [
-  { value: 'Aveiro', label: 'Aveiro' },
-  { value: 'Beja', label: 'Beja' },
-  { value: 'Braga', label: 'Braga' },
-  { value: 'Bragança', label: 'Bragança' },
-  { value: 'Castelo Branco', label: 'Castelo Branco' },
-  { value: 'Coimbra', label: 'Coimbra' },
-  { value: 'Évora', label: 'Évora' },
-  { value: 'Faro', label: 'Faro' },
-  { value: 'Guarda', label: 'Guarda' },
-  { value: 'Leiria', label: 'Leiria' },
-  { value: 'Lisboa', label: 'Lisboa' },
-  { value: 'Portalegre', label: 'Portalegre' },
-  { value: 'Porto', label: 'Porto' },
-  { value: 'Santarém', label: 'Santarém' },
-  { value: 'Setúbal', label: 'Setúbal' },
-  { value: 'Viana do Castelo', label: 'Viana do Castelo' },
-  { value: 'Vila Real', label: 'Vila Real' },
-  { value: 'Viseu', label: 'Viseu' }
-]
 
 export default class HouseSearch extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -105,8 +50,8 @@ export default class HouseSearch extends Component {
     const form = {
       rent: this.state.rent,
       buy: this.state.buy,
-      propertyType: (this.state.propertyType === undefined) ? (null) : this.state.propertyType,
       tipology: (this.state.tipology === undefined) ? (null) : this.state.tipology,
+      propertyType: (this.state.propertyType === undefined) ? (null) : this.state.propertyType,
       minArea: (this.state.minArea === undefined) ? (null) : this.state.minArea,
       maxArea: (this.state.maxArea === undefined) ? (null) : this.state.maxArea,
       minPrice: (this.state.minPrice === undefined) ? (null) : this.state.minPrice,
@@ -116,11 +61,10 @@ export default class HouseSearch extends Component {
       shopping: this.state.shopping,
       transport: this.state.transport,
       city: this.state.city,
-      workDistance: null,
-      workLocation: null,
+      workDistance: (this.state.workDistance === undefined) ? (null) : this.state.workDistance,
+      workLocation: (this.state.workLocation === undefined) ? (null) : this.state.workLocation,
       bathrooms: null
     }
-
     navigate('SearchResults', { form: form })
   }
 
@@ -128,8 +72,9 @@ export default class HouseSearch extends Component {
 
 
     return (
-      <Container style={{ padding: 10 }} >
+      <Container>
         <Content>
+
           <View style={styles.root}>
 
             <Text style={styles.title}>Distrito</Text>
@@ -148,7 +93,7 @@ export default class HouseSearch extends Component {
                 {this.addPickerItems(District)}
               </Picker>
             </View>
-            
+
             <Text style={styles.title}>Finalidade</Text>
 
             <View style={styles.obectivePanel}>
@@ -177,7 +122,7 @@ export default class HouseSearch extends Component {
               <Picker
                 mode='dropdown'
                 iosIcon={<Icon name='ios-arrow-down-outline' />}
-                placeholder='Tipo de propridade'
+                placeholder='Tipo de propriedade'
                 placeholderStyle={{ color: Colors.white }}
                 placeholderIconColor={Colors.black}
                 style={styles.pickerFinalidade}
@@ -185,6 +130,7 @@ export default class HouseSearch extends Component {
                 onValueChange={(value) => this.setState({ propertyType: value })}
               >
                 {this.addPickerItems(PropertyType)}
+
               </Picker>
             </View>
 
@@ -292,12 +238,19 @@ export default class HouseSearch extends Component {
           <Text style={styles.title}> Qual o seu local de trabalho? </Text>
 
           <Item regular style={{ marginLeft: Metrics.baseMargin, marginRight: Metrics.baseMargin }}>
-            <Input placeholder='Morada' style={{ backgroundColor: Colors.white, color: Colors.blue6 }} />
+            <Input placeholder='Morada'
+              style={{ backgroundColor: Colors.white, color: Colors.blue6 }}
+              onChangeText={(value) => this.setState({ workLocation: value })}
+              value={this.state.workLocation} />
           </Item>
           <Text style={{ width: 120, marginTop: Metrics.baseMargin * 1.5, marginLeft: Metrics.baseMargin }}> Distância ideal </Text>
 
           <View style={[styles.SideBySide, { marginLeft: Metrics.baseMargin, marginRight: Metrics.baseMargin }]}>
-            <Input placeholder='Máximo de' keyboardType='numeric' style={{ flex: 1, backgroundColor: Colors.white, color: Colors.blue2 }} />
+            <Input placeholder='Máximo de'
+              keyboardType='numeric'
+              style={{ flex: 1, backgroundColor: Colors.white, color: Colors.blue2 }}
+              onChangeText={(value) => this.setState({ workDistance: value })}
+              value={this.state.workDistance} />
             <Text style={{ flex: 3, marginTop: Metrics.baseMargin * 1.5 }}> km </Text>
           </View>
 

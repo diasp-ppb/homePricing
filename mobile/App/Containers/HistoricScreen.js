@@ -1,6 +1,7 @@
 import { Images } from '../Themes'
 import React, { Component } from 'react'
-import { View, Image, TouchableOpacity } from 'react-native'
+import { View, Image, Alert, TouchableOpacity, StyleSheet } from 'react-native'
+import Grid from 'react-native-grid-list'
 import { connect } from 'react-redux';
 
 // Native Base
@@ -26,16 +27,16 @@ class HistoricScreen extends Component {
 
   // Fetch data here
   componentDidMount() {
-    fetch(baseURL + "/v1/history/" + this.props.user.user)
+    fetch(baseURL + "/v1/history/" + this.props.user.user.id)
       .then(function (response) {
         return response.json();
       })
       .then(responseJson => {
         this.setState({ houses: responseJson });
       })
-      .catch(function (json) {
-        console.error(json)
-      })
+    .catch(function (json) {
+      console.error(json)
+    })
   }
 
   // Clear data here
@@ -76,8 +77,6 @@ class HistoricScreen extends Component {
               this.state.houses.map((item, index) => {
                 let image = (item.house.images.length != 0) ? item.house.images[0] : "https://www.glassyconnections.com/images/no-image-available-lrg.jpg";
                 return (
-
-
                   <View style={styles.box1} key={index} >
                     <View style={{ flex: 0.35, width: '10%', height: 50 }} >
                       {<Image style={{ height: 100, width: null, flex: 1 }} source={{ uri: image }} />}
@@ -95,12 +94,8 @@ class HistoricScreen extends Component {
                       <Text style={styles.date}>
                         {"Seen on: " + this.parseDate(item.createdAt).date + " " + this.parseDate(item.createdAt).time}
                       </Text>
-
                     </View>
-
                   </View>
-
-
                 )
               })
             }

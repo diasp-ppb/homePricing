@@ -4,7 +4,6 @@ const House = require('../models/house.model');
 const { handler: errorHandler } = require('../middlewares/error');
 const convertParams = require('../middlewares/convert').convertParams;
 const searchHouses = require('../middlewares/search').searchHouses;
-
 /**
  * Load house and append to req.
  * @public
@@ -18,6 +17,7 @@ exports.load = async (req, res, next, id) => {
     return errorHandler(error, req, res);
   }
 };
+
 
 /**
  * Get house
@@ -74,11 +74,14 @@ exports.list = async (req, res, next) => {
  */
 exports.filter = async (req, res, next) => {
   try {
+    console.log(req.body)
     var filters = convertParams(req.body);
     const propertyCentricHouses = await House.filter(filters);
+    console.log(propertyCentricHouses)
     const houses = await searchHouses(propertyCentricHouses, req.body);
+    console.log(houses)
     const transformedHouses = houses.map(house => house.transform());
-    res.json(transformedHouses);
+    res.json(houses);
   } catch (error) {
     next(error);
   }
@@ -105,6 +108,7 @@ exports.findbygps = async (req, res, next ) => {
 
 
     const houses = await House.findByLocation(minLat, maxLat, minLong, maxLong);
+    console.warn(houses)
     res.json(houses);
 
   } catch (error) {

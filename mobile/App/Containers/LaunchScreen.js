@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Image, View, TouchableHighlight } from 'react-native'
+import { Image, View,TouchableHighlight } from 'react-native'
 import { connect } from 'react-redux';
 import { Images } from '../Themes'
 
@@ -36,7 +36,7 @@ class LaunchScreen extends Component {
         <View style={styles.content}>
 
           <View style={styles.halfRow}>
-            <Image source={Images.logo1} style={styles.homePricing} resizeMode='contain' />
+            <Image source={Images.logo1} style={styles.homePricing} resizeMode='stretch' />
           </View>
 
           <View style={styles.halfRow}>
@@ -54,15 +54,17 @@ class LaunchScreen extends Component {
 
           <View style={styles.halfRow}>
 
-            <Text style={{ fontSize: 8, color: 'white', marginTop: 90, padding: 12 }}> G o   F u r t h e r </Text>
-            <View style={{ flexDirection: 'row', flex: 1 }}>
-              <View style={{ flex: 0.1 }} >
-                <TouchableHighlight onPress={() => {!this.props.user.loggedIn ? navigate('Login') : navigate('UserProfile')}}>
+            <Text style={{fontSize:8, color:'white', marginTop:90, padding:12}}> G o   F u r t h e r </Text>
+            <View style={{flexDirection: 'row',flex: 1}}>
+              { !this.props.user.loggedIn ?
+              <View style={{flex: 0.1}} >
+                <TouchableHighlight onPress={() => navigate('Login')}>
                   <Icon ios={'ios-person'} android={'md-person'} style={{ color: 'white' }} />
                 </TouchableHighlight>
               </View>
-              <View style={{ flex: 0.1 }}>
-                <TouchableHighlight onPress={() => navigate('Camera')}>
+              : null }
+              <View style={{flex: 0.1}}>
+                <TouchableHighlight onPress={() => navigate('userStack')}>
                   <Icon ios={'ios-camera'} android={'md-camera'} style={{ color: 'white' }} />
                 </TouchableHighlight>
               </View>

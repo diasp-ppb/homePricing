@@ -13,7 +13,8 @@ exports.googlePlaces = async (key, data, type) => {
     location: data.coordinates[0] + "," + data.coordinates[1],
     type: type
   };
-  const response = await axios.get(url, { params });
+  const response = await axios.get(url, { params })
+    .catch(error => console.log(error))
 
   return response.data;
 };
@@ -25,9 +26,13 @@ exports.googleMatrix = async (key, data, filters) => {
     origins: "place_id:" + filters.workLocation,
     destinations: data.coordinates[0] + "," + data.coordinates[1]
   };
-  const response = await axios.get(url, { params });
+  const response = await axios.get(url, { params })
+    .catch(error => console.log(error));
 
-  return response.data;
+  if (response == null) {
+    return { status: "ERROR" }
+  }
+  else return response.data;
 };
 
 //41.1556608,-8.6022932|place_id:ChIJ3S-JXmauEmsRUcIaWtf4MzE

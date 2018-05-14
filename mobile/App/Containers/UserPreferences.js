@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Text, View } from 'react-native'
-import { Button, Container, Content, Picker, Icon, Input, Item, Form } from 'native-base'
+import { Button, Container, Content, Picker, Icon, Input, Form } from 'native-base'
 import { connect } from 'react-redux';
 
 import Metrics from '../Themes/Metrics'
@@ -8,35 +8,21 @@ import { createBodyUserPreferences } from '../Services/Api'
 import { updateUserPreferences, getUserPreferences } from '../Services/Api'
 import { validateArea, validatePrices, validateServices } from "../Services/Api";
 
+import { PropertyType } from "@datatypes/PropertyType";
+import { Price } from "@datatypes/Price";
+import { Goal } from '@datatypes/Goal'
+import { Tipology } from '@datatypes/Tipology'
+
+
+
 // Styles
-import Colors from '../Themes/Colors'
 import styles from './Styles/UserPreferencesStyles'
-
-const Goal = [
-    { value: 'alugar', label: 'Alugar' },
-    { value: 'comprar', label: 'Comprar' }
-]
-
-const PropertyType = [
-    { value: 'casa', label: 'Casa' },
-    { value: 'apartamento', label: 'Apartamento' }
-]
-
-const Tipology = [
-    { value: 't0', label: 'T0' },
-    { value: 't1', label: 'T1' },
-    { value: 't2', label: 'T2' },
-    { value: 't3', label: 'T3' },
-    { value: 't4', label: 'T4' },
-    { value: 't5', label: 'T5' },
-    { value: 't5+', label: 'T5+' }
-]
 
 class UserPreferences extends Component {
     static navigationOptions = ({ navigation }) => ({
         title: 'Preferências de utilizador',
       });
-    
+
     constructor (props) {
         super(props)
         this.state = {
@@ -72,18 +58,18 @@ class UserPreferences extends Component {
 
         var validAreas = validateArea(this.state.minArea, this.state.maxArea);
         var validPrices = validatePrices(this.state.minPrice, this.state.maxPrice);
-        var validServices = validateServices(this.state.hospitalDist, this.state.hospitalQtn, 
-            this.state.schoolDist, this.state.schoolQtn, 
+        var validServices = validateServices(this.state.hospitalDist, this.state.hospitalQtn,
+            this.state.schoolDist, this.state.schoolQtn,
             this.state.workDistance);
 
         if(validAreas && validPrices && validServices) {
-            var body = createBodyUserPreferences(this.state.goal, this.state.propertyType, this.state.tipology, 
-                this.state.minArea, this.state.maxArea, 
-                this.state.minPrice, this.state.maxPrice, 
-                this.state.hospitalDist, this.state.hospitalQtn, 
-                this.state.schoolDist, this.state.schoolQtn, 
+            var body = createBodyUserPreferences(this.state.goal, this.state.propertyType, this.state.tipology,
+                this.state.minArea, this.state.maxArea,
+                this.state.minPrice, this.state.maxPrice,
+                this.state.hospitalDist, this.state.hospitalQtn,
+                this.state.schoolDist, this.state.schoolQtn,
                 this.state.workPlace, this.state.workDistance);
-            
+
             updateUserPreferences(body, this.props);
         }
     }
@@ -160,15 +146,15 @@ class UserPreferences extends Component {
                             <View style={{marginLeft: Metrics.baseMargin, marginRight: Metrics.baseMargin, flex: .6}}>
                                 <View style={styles.SideBySide}>
                                         <Input
-                                            style={[styles.input]} 
-                                            placeholder='Mínimo' 
+                                            style={[styles.input]}
+                                            placeholder='Mínimo'
                                             keyboardType='numeric'
                                             onChangeText={(value) => this.setState({minArea: value})}
                                             value={`${this.state.minArea}`}
                                             />
-                                        <Input 
-                                            style={[styles.input, {marginLeft: Metrics.baseMargin}]} 
-                                            placeholder='Máximo' 
+                                        <Input
+                                            style={[styles.input, {marginLeft: Metrics.baseMargin}]}
+                                            placeholder='Máximo'
                                             keyboardType='numeric'
                                             onChangeText={(value) => this.setState({maxArea: value})}
                                             value={`${this.state.maxArea}`}
@@ -183,14 +169,14 @@ class UserPreferences extends Component {
                             </View>
                             <View style={{marginLeft: Metrics.baseMargin, marginRight: Metrics.baseMargin, flex: .6}}>
                                 <View style={styles.SideBySide}>
-                                        <Input 
-                                            style={styles.input} 
-                                            placeholder='Mínimo' 
+                                        <Input
+                                            style={styles.input}
+                                            placeholder='Mínimo'
                                             keyboardType='numeric'
                                             onChangeText={(value) => this.setState({minPrice: value})}
                                             value={`${this.state.minPrice}`}
                                         />
-                                        <Input 
+                                        <Input
                                             style={[styles.input, {marginLeft: Metrics.baseMargin}]}
                                             placeholder='Máximo'
                                             keyboardType='numeric'
@@ -199,7 +185,7 @@ class UserPreferences extends Component {
                                         />
                                 </View>
                             </View>
-                        </View>                     
+                        </View>
 
                         <View style={styles.separator} />
 
@@ -212,8 +198,8 @@ class UserPreferences extends Component {
 
                             <View style={[styles.SideBySide, styles.serviceFlex]}>
                                 <View style={[styles.input,{flex: 0.3}]}>
-                                    <Input 
-                                        placeholder='Distância' 
+                                    <Input
+                                        placeholder='Distância'
                                         keyboardType='numeric'
                                         onChangeText={(value) => this.setState({hospitalDist: value})}
                                         value={`${this.state.hospitalDist}`}
@@ -246,8 +232,8 @@ class UserPreferences extends Component {
 
                             <View style={[styles.SideBySide, styles.serviceFlex]}>
                                 <View style={[styles.input, {flex: 0.3}]}>
-                                    <Input 
-                                        placeholder='Distância' 
+                                    <Input
+                                        placeholder='Distância'
                                         keyboardType='numeric'
                                         onChangeText={(value) => this.setState({schoolDist: value})}
                                         value={`${this.state.schoolDist}`}
@@ -287,7 +273,7 @@ class UserPreferences extends Component {
                                         placeholder='Morada do local de trabalho'
                                         onChangeText={(value) => this.setState({workPlace: value})}
                                         value={this.state.workPlace}
-                                />                            
+                                />
                             </View>
                         </View>
 
@@ -304,7 +290,7 @@ class UserPreferences extends Component {
                                         onChangeText={(value) => this.setState({workDistance: value})}
                                         value={`${this.state.workDistance}`}
                                 />
-                                <Text>km</Text>                            
+                                <Text>km</Text>
                             </View>
                         </View>
 
@@ -326,6 +312,6 @@ function mapStateToProps(state) {
         user: state.login
     };
 }
-  
+
   const connectedRegister = connect(mapStateToProps)(UserPreferences);
   export { connectedRegister as UserPreferences};

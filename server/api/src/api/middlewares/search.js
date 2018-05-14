@@ -8,7 +8,7 @@ async function foundResults(key, house, type) {
     if (result.status == 'OK') {
         return true;
     }
-    
+
     return false;
 }
 
@@ -49,10 +49,9 @@ function checkObjectResults(result) {
 
 function verifyHouse(house, filters) {
 
-    return new Promise(function (resolve) {
+    let promise = new Promise(function (resolve, reject) {
 
         var obj = createObject(house, filters);
-
 
         Promise.props(obj).then(function (result) {
 
@@ -94,18 +93,28 @@ function verifyHouse(house, filters) {
             }
         })
     })
+
+    promise.then()
+    .catch(error => {
+        console.log("Que bom")
+        console.log(error)
+    })
+
+    return promise;
 }
 
+
 exports.searchHouses = async function (housesToFilter, filters) {
-    
+
     var houses = [];
 
     for (house in housesToFilter) {
 
         if (housesToFilter[house].coordinates.length != 0) {
-
             var result = await verifyHouse(housesToFilter[house], filters);
+            console.log(result)
             if (result) {
+                console.log("wtf")
                 houses.push(housesToFilter[house]);
             }
         }

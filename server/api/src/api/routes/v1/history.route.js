@@ -23,6 +23,6 @@ router.route('/')
  * @apiPermission LOGGED_USER
  */
 router.route('/:userId')
-    .get(/*authorize(LOGGED_USER), */validate(getHistory), controller.get)
+    .get(/*authorize(LOGGED_USER), *//*validate(getHistory), */controller.get)
 
-module.exports = router 
+module.exports = router

@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import { Image, View } from 'react-native'
+import { View } from 'react-native'
 
 // Native Base
-import { Container, Content, H3, Text, Icon, Form, Picker } from 'native-base'
+import { Container, Content, H3, Text, Icon, Picker } from 'native-base'
 
 // Styles
 import styles from './Styles/HelpScreenStyles'
@@ -43,15 +43,14 @@ export default class LaunchScreen extends Component {
 			{ label: 'Item #5', value: 'key4' }
 		]
 
-		this.setState({ general: tempGen })
-		this.setState({ security: tempSec })
+		this.setState({ general: tempGen, security: tempSec });
 	}
 
 	// Delete data
 	componentWillUnmount () {
-		this.setState({ general: [] })
-		this.setState({ security: [] })
-	}
+    this.setState({general: [], security: []});
+  }
+
 
 	// Component's renderer
 	render () {
@@ -106,7 +105,7 @@ export default class LaunchScreen extends Component {
 								</Picker>
 							</View>
 						</View>
-						<View style={styles.row}></View>
+						<View style={styles.row}/>
 					</View>
 				</Content>
 			</Container>
