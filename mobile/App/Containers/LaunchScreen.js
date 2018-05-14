@@ -64,7 +64,7 @@ class LaunchScreen extends Component {
               </View>
               : null }
               <View style={{flex: 0.1}}>
-                <TouchableHighlight onPress={() => navigate('userStack')}>
+                <TouchableHighlight onPress={() => navigate('Camera')}>
                   <Icon ios={'ios-camera'} android={'md-camera'} style={{ color: 'white' }} />
                 </TouchableHighlight>
               </View>
