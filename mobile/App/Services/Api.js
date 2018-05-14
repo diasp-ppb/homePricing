@@ -13,7 +13,7 @@ import { ToastSuccess, ToastError } from './LogToasts'
 import { login } from '../Redux/LoginRedux'
 
 
-export const baseURL = "http://192.168.1.112:3000";
+export const baseURL = "http://172.30.15.33:3000";
 
 
 
@@ -39,8 +39,8 @@ export function checkLoginResponse(responseJson, props) {
         const { navigate } = props.navigation;
 
         ToastSuccess(SUCCESS_LOGIN);
-        props.login(responseJson.user.id, responseJson.token.accessToken);
-        navigate('UserProfile');
+        props.login(responseJson.user, responseJson.token.accessToken);
+        navigate('userStack');
     }
 }
 

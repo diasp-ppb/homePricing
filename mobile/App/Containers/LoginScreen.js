@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Image, View, AsyncStorage } from 'react-native'
+import { Image, View } from 'react-native'
 import { connect } from 'react-redux';
 
 import { Container, Text, Button, Form, Item, Input } from 'native-base'
