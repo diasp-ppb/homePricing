@@ -8,7 +8,7 @@ import { UserProfileScreen } from '../Containers/UserProfileScreen'
 import { LoginScreen } from '../Containers/LoginScreen'
 import HouseInfScreen from '../Containers/HouseInfScreen'
 import HouseSearch from '../Containers/HouseSearch'
-import { HistoricScreen2 } from '../Containers/HistoricScreen2'
+import { HistoricScreen } from '../Containers/HistoricScreen'
 import GpsScreen from '../Containers/GpsScreen'
 import CameraScreen from '../Containers/CameraScreen'
 import { UserPreferences } from '../Containers/UserPreferences'
@@ -39,7 +39,7 @@ const PrimaryNav = StackNavigator({
   Login: { screen: LoginScreen },
   Register: { screen: RegisterScreen },
   HouseSearch: { screen: HouseSearch },
-  HistoricScreen: { screen: HistoricScreen2 },
+  HistoricScreen: { screen: HistoricScreen },
   HouseInformation: { screen: HouseInfScreen },
   Gps: { screen: GpsScreen },
   Camera: { screen: CameraScreen },
