@@ -44,10 +44,7 @@ export default class LaunchScreen extends Component {
 
   // Render the screen
   render () {
-
     const { navigate } = this.props.navigation;
-
-
     return (
       <Container>
         <Header searchBar rounded hasSegment>

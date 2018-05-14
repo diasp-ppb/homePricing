@@ -13,12 +13,7 @@ import styles from './Styles/LaunchScreenStyles'
 export default class LaunchScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
     title: 'HomePricing',
-     headerStyle: { backgroundColor: 'transparent', marginTop:-100 },
-    headerTitleStyle: {
-        fontSize: 12,
-        marginLeft: '38%',
-        marginTop:0,
-      }
+    headerStyle: { marginTop: -100 }
   });
 
   constructor (props) {

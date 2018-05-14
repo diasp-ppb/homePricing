@@ -71,7 +71,7 @@ class LoginScreen extends Component {
                                 />
                             </Item>
                             <Button primary block style={styles.button} onPress={this.handleSubmit}>
-                                <Text>Login</Text>
+                                <Text>Log In</Text>
                             </Button>
                         </Form>
                         <Text style={styles.signUp}>Não tem uma conta? <Text style={styles.link} onPress={() => navigate('Register')}>Registe-se!</Text></Text>
