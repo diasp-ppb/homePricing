@@ -9,7 +9,9 @@ const { handler: errorHandler } = require('../middlewares/error');
  */
 exports.load = async (req, res, next, id) => {
   try {
-    const history = await History.find({ userId: id });
+    const history = await History.find({ userId: id })
+      .sort({ createdAt: -1 })
+      .exec();;
     req.locals = { history };
     return next();
   } catch (error) {

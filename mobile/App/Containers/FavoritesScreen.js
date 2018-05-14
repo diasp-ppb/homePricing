@@ -17,7 +17,7 @@ const rowHasChanged = (r1, r2) => r1.id !== r2.id
 // DataSource template object
 const ds = new ListView.DataSource({ rowHasChanged })
 
-export default class FavoritesScreen extends Component {
+class FavoritesScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
     title: 'Favoritos',
   });

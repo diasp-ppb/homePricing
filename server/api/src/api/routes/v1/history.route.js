@@ -13,7 +13,7 @@ router.param('userId', controller.load);
 
 router.route('/')
     .get(controller.list)
-    .post(/*validate(createHistory), */controller.create)
+    .post(validate(createHistory), controller.create)
 /**
  * @api {get} v1/history/:userId Get history of user
  * @apiDescription Get history of user

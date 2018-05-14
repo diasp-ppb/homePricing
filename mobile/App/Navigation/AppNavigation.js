@@ -1,7 +1,7 @@
 import { StackNavigator } from 'react-navigation'
 
 // Import all screens
-import LaunchScreen from '../Containers/LaunchScreen'
+import { LaunchScreen } from '../Containers/LaunchScreen'
 import { SearchResults } from '../Containers/SearchResults'
 import { RegisterScreen } from '../Containers/RegisterScreen'
 import { UserProfileScreen } from '../Containers/UserProfileScreen'

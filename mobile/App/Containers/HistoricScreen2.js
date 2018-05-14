@@ -43,6 +43,24 @@ class HistoricScreen2 extends Component {
     this.setState({ houses: [] })
   }
 
+  // Parse date
+  parseDate(toParse) {
+    var parsed = {};
+    var date = time = "";
+
+    for (var i = 0; i < 16; i++) {
+      if (i >= 0 && i < 10) {
+        date += toParse[i];
+      }
+      if (i > 10) {
+        time += toParse[i];
+      }
+    }
+    parsed.date = date;
+    parsed.time = time;
+    return parsed;
+  }
+
   // Render the screen
   render() {
 
@@ -62,7 +80,7 @@ class HistoricScreen2 extends Component {
 
                   <View style={styles.box1} key={index} >
                     <View style={{ flex: 0.35, width: '10%', height: 50 }} >
-                      {<Image style={{ height: 100, width: null, flex: 1 }} source={{ uri: image}} />}
+                      {<Image style={{ height: 100, width: null, flex: 1 }} source={{ uri: image }} />}
                     </View>
 
                     <View style={{ flex: 0.65 }}>
@@ -75,7 +93,7 @@ class HistoricScreen2 extends Component {
                       </Button>
 
                       <Text style={styles.date}>
-                        {"Seen on: " + item.createdAt}
+                        {"Seen on: " + this.parseDate(item.createdAt).date + " " + this.parseDate(item.createdAt).time}
                       </Text>
 
                     </View>
