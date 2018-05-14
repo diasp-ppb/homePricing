@@ -3,7 +3,7 @@ import ControlPanel from '../Containers/ControlPanel/ControlPanel'
 
 
 // Import all screens
-import LaunchScreen from '../Containers/LaunchScreen'
+import { LaunchScreen } from '../Containers/LaunchScreen'
 import SearchResults from '../Containers/SearchResults'
 import { RegisterScreen } from '../Containers/RegisterScreen'
 import { LoginScreen } from '../Containers/LoginScreen'
@@ -14,7 +14,7 @@ import CameraScreen from '../Containers/CameraScreen'
 import { UserPreferences } from '../Containers/UserPreferences'
 import { FavoritesScreen } from '../Containers/FavoritesScreen'
 import HelpScreen from '../Containers/HelpScreen'
-import HistoricScreen from '../Containers/HistoricScreen'
+import { HistoricScreen } from '../Containers/HistoricScreen'
 import PreferenceScreen from '../Containers/PreferenceScreen'
 
 import Colors from '../Themes/Colors'

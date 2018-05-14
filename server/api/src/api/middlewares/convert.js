@@ -2,12 +2,6 @@ exports.convertParams = function (paramsToConvert) {
   var str = ' { ';
   const initial = str;
   const COMA = ', ';
-  
-  //TODO: Think about this
-  // for (var key in paramsToConvert) {
-  //   if (key == "minPrice") {
-  //   }
-  // }
 
   // Rent or Buy
   if (paramsToConvert.buy && paramsToConvert.rent) {
@@ -29,12 +23,12 @@ exports.convertParams = function (paramsToConvert) {
   }
 
   // Bathrooms
-  if (paramsToConvert.bathrooms != null) {
-    if (str != initial) {
-      str += COMA;
-    }
-    str += '"bathrooms" : ' + paramsToConvert.bathrooms;
-  }
+  // if (paramsToConvert.bathrooms != null) {
+  //   if (str != initial) {
+  //     str += COMA;
+  //   }
+  //   str += '"bathrooms" : ' + paramsToConvert.bathrooms;
+  // }
 
   // Property Type
   if (paramsToConvert.tipology != null) {
