@@ -12,22 +12,22 @@ import { Images } from '../../Themes';
 import { connect } from 'react-redux';
 
 // Native Base
-import { Container, Text, Button } from 'native-base';
+import { Container, Text, Button, Icon } from 'native-base';
 import { logoutAPI } from '../../Services/Api';
 import { logout } from '../../Redux/LoginRedux';
 
 // Styles
-import styles from '../Styles/UserProfileScreenStyles'
+import styles from './ControlPanelStyles'
 
 //List Rows
 const rows = [
-  {id: 0, text: 'Home', icon: Images.homeIcon },
-  {id: 1, text: 'Recomendações', icon: Images.homeIcon},
-  {id: 2, text: 'Histórico', icon: Images.historyIcon},
-  {id: 3, text: 'Preferências do utilizador', icon: Images.userIcon},
-  {id: 4, text: 'Favoritos', icon: Images.favouriteIcon},
-  {id: 5, text: 'Configurações de conta', icon: Images.settingsIcon},
-  {id: 6, text: 'Ajuda', icon: Images.helpIcon},
+  {id: 0, text: 'Home', ios: 'ios-home', android: 'md-home' },
+  {id: 1, text: 'Recomendações', ios: 'ios-bulb', android: 'md-bulb' },
+  {id: 2, text: 'Histórico', ios: 'ios-timer-outline', android: 'md-timer' },
+  {id: 3, text: 'Preferências do utilizador', ios: 'ios-person', android: 'md-person' },
+  {id: 4, text: 'Favoritos', ios: 'ios-star', android: 'md-star' },
+  {id: 5, text: 'Configurações de conta', ios: 'ios-settings', android: 'md-settings' },
+  {id: 6, text: 'Ajuda', ios: 'ios-information-circle', android: 'md-information-circle'},
 ];
 
 class ControlPanel extends Component {
@@ -66,13 +66,11 @@ class ControlPanel extends Component {
 
   renderRow (rowData) {
     return (
-      <TouchableOpacity key = {rowData.id} onPress={() => this.props.navigation.navigate(this.navPath(rowData.id))}>
-        <View style={styles.listItem}>
-          <Image source = {rowData.icon} style = {styles.listIcons}/>
-          <Text style= {styles.text}>
-            {rowData.text}
-          </Text>
-        </View>
+      <TouchableOpacity style={styles.option} key={rowData.id} onPress={() => this.props.navigation.navigate(this.navPath(rowData.id))}>
+        <Icon style={styles.optionIcon} ios={rowData.ios} android={rowData.android}/>
+        <Text style={styles.text}>
+          {rowData.text}
+        </Text>
       </TouchableOpacity>
 
     )
@@ -81,31 +79,26 @@ class ControlPanel extends Component {
   render () {
 
     return (
-      <Container>
+      <Container style={styles.root}>
         <View style={styles.userInfo}>
-          <Image source={Images.profileIcon} style={styles.icon} />
-          <Text>{this.props.user.user.email}</Text>
-        </View>
-        {
-          rows.map((item) => {
-            return this.renderRow(item);
-          })
-        }
-
-        <View style={styles.wrapper}>
-          <View style={styles.spaceBox}/>
-
-          <View style={styles.logoutBox}>
-            <Button primary block
-                    title={"Logout"}
-                    style={styles.btn}
-                    onPress = {this.handleSubmit}
-            >
-              <Text>Logout</Text>
-            </Button>
+          <View style={{ elevation: 1 }}>
+          <Image source={Images.profileIcon} style={[styles.profileImage, styles.center]} />
           </View>
-
-          <View style={styles.spaceBox}/>
+          <Text style={[styles.text, styles.center, { marginLeft: 0 }]}>{this.props.user.user.email}</Text>
+        </View>
+        <View style={styles.options}>
+          {
+            rows.map((item) => {
+              return this.renderRow(item);
+            })
+          }
+          <TouchableOpacity
+                  style={styles.option}
+                  onPress={this.handleSubmit}
+          >
+            <Icon style={styles.optionIcon} ios={'ios-power'} android={'md-power'}/>
+            <Text style={styles.text}>Logout</Text>
+          </TouchableOpacity>
         </View>
       </Container>
     )
