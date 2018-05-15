@@ -12,7 +12,7 @@ import { SUCCESS_LOGIN,
 import { ToastSuccess, ToastError } from './LogToasts'
 import { login } from '../Redux/LoginRedux'
 
-export const baseURL = "http://172.30.1.121:3000"
+export const baseURL = "http://172.30.15.33:3000"
 
 export function checkRegisterResponse(responseJson, props) {
     if (responseJson.code === '400') {
@@ -205,7 +205,7 @@ export function loginAPI(email, password, props) {
 export function logoutAPI(props) {
     const { navigate } = props.navigation;
     props.logout();
-    navigate('LaunchScreen');
+    navigate('visitorStack');
     ToastSuccess(LOGOUT_SUCCESS);
 }
 
@@ -291,7 +291,7 @@ export function createFavoriteAPI(user, house, token){
     headers: {
       Accept: 'application/json',
       'Content-Type' : 'application/json',
-      'Authorization' : auth
+      'Authorization' : auth,
     },
     body: JSON.stringify({
       userId: user,

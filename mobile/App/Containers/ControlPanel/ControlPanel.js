@@ -60,6 +60,7 @@ class ControlPanel extends Component {
   }
 
   handleSubmit(event) {
+
     event.preventDefault();
     logoutAPI(this.props);
   }
@@ -84,7 +85,7 @@ class ControlPanel extends Component {
           <View style={{ elevation: 1 }}>
           <Image source={Images.profileIcon} style={[styles.profileImage, styles.center]} />
           </View>
-          <Text style={[styles.text, styles.center, { marginLeft: 0 }]}>{this.props.user.user.email}</Text>
+          <Text style={[styles.text, styles.center, { marginLeft: 0 }]}>{this.props.user.user ? this.props.user.user.email : null }</Text>
         </View>
         <View style={styles.options}>
           {
