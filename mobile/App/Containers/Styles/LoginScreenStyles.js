@@ -7,18 +7,17 @@ export default StyleSheet.create({
     flexDirection: 'column'
   },
   topRow: {
-    flex: 0.5,
+    flex: 0.45,
     alignItems: 'center',
     justifyContent: 'center'
   },
   bottomRow: {
-    flex: 0.5,
+    flex: 0.55,
     alignItems: 'center'
   },
   homePricing: {
     width: '70%',
-    height: '22%',
-    marginTop: -40
+    height: '22%'
   },
   signUp: {
     marginTop: 15,

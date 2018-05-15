@@ -12,13 +12,8 @@ import styles from './Styles/LaunchScreenStyles'
 // Component
 class LaunchScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
-    title: 'HomePricing',
-    headerStyle: { backgroundColor: 'transparent', marginTop: -100 },
-    headerTitleStyle: {
-      fontSize: 12,
-      marginLeft: '38%',
-      marginTop: 0,
-    }
+    header: null,
+    title: 'Home Pricing'
   });
 
   render() {
@@ -31,49 +26,34 @@ class LaunchScreen extends Component {
           </Button>) : (null);
 
     return (
-      <Container >
+      <Container>
         <Image source={Images.background} style={styles.backgroundImage} resizeMode='stretch' />
-
-        <View style={styles.content}>
+        <View style={styles.container}>
           {menuOption}
-          <View style={styles.halfRow}>
-            <Image source={Images.logo1} style={styles.homePricing} resizeMode='stretch' />
+          <View style={styles.row}>
+            <Image source={Images.logo1} style={styles.homePricing} resizeMode='contain' />
           </View>
-
-          <View style={styles.halfRow}>
-            <Text style={{ fontSize: 11, color: 'white', elevation: 3, padding: 15 }}>To   S t a r t     E x p l o r i n g</Text>
-            <View style={{ justifyContent: 'center', marginTop: 0 }}>
-              <Button style={styles.topBtn} onPress={() => navigate('HouseSearch')}>
-                <Text style={{ fontSize: 12 }}>Pesquisar</Text>
+          <View style={styles.row}>
+            <Text style={styles.txt}>To Start Exploring</Text>
+            <View style={{ width: '70%' }}>
+              <Button primary block style={styles.btn} onPress={() => navigate('HouseSearch')}>
+                <Text>Pesquisar</Text>
               </Button>
-
-              <Button style={styles.topBtn} onPress={() => navigate('Gps')}>
-                <Text style={{ fontSize: 12 }}>GPS</Text>
+              <Button primary block style={styles.btn} onPress={() => navigate('Gps')}>
+                <Text>GPS</Text>
               </Button>
             </View>
           </View>
-
-          <View style={styles.halfRow}>
-
-            <Text style={{fontSize:8, color:'white', marginTop:90, padding:12}}> G o   F u r t h e r </Text>
-            <View style={{flexDirection: 'row',flex: 1}}>
+          <View style={styles.row}>
+            <Text style={styles.txt}>Go Further</Text>
+            <View style={{ width: '70%', flexDirection: 'row', justifyContent: 'center' }}>
               { !this.props.user.loggedIn ?
-              <View style={{flex: 0.1}} >
-                <TouchableHighlight onPress={() => navigate('Login')}>
-                  <Icon ios={'ios-person'} android={'md-person'} style={{ color: 'white' }} />
-                </TouchableHighlight>
-              </View>
+                <Icon ios={'ios-person'} android={'md-person'} style={styles.icon} onPress={() => navigate('Login')} />
               : null }
-              <View style={{flex: 0.1}}>
-                <TouchableHighlight onPress={() => navigate('Camera')}>
-                  <Icon ios={'ios-camera'} android={'md-camera'} style={{ color: 'white' }} />
-                </TouchableHighlight>
-              </View>
+              <Icon ios={'ios-camera'} android={'md-camera'} style={styles.icon} onPress={() => navigate('Camera')} />
             </View>
           </View>
-
         </View>
-
       </Container>
     )
   }
