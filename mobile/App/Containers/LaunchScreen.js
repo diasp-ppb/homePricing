@@ -21,20 +21,21 @@ class LaunchScreen extends Component {
     }
   });
 
-  constructor(props) {
-    super(props)
-    this.state = {}
-  }
-
   render() {
-    const { navigate } = this.props.navigation
+    const { navigate } = this.props.navigation;
+
+    const menuOption = (this.props.user  &&  this.props.user.user) ? (
+          <Button title={"menu"} style={{backgroundColor: 'transparent', elevation: 0}}onPress={() => {
+                this.props.navigation.navigate('DrawerToggle');}}>
+            <Icon ios={"ios-menu"} android={"md-menu"} style={{color: 'white'}}/>
+          </Button>) : (null);
 
     return (
       <Container >
         <Image source={Images.background} style={styles.backgroundImage} resizeMode='stretch' />
 
         <View style={styles.content}>
-
+          {menuOption}
           <View style={styles.halfRow}>
             <Image source={Images.logo1} style={styles.homePricing} resizeMode='stretch' />
           </View>
@@ -78,11 +79,13 @@ class LaunchScreen extends Component {
   }
 }
 
-function mapStateToProps(state) {
-  return {
+const mapStateToProps = (state) => ({
     user: state.login
-  };
+  });
+
+function mapDispatchToProps(dispatch) {
+  return {};
 }
 
-const connectedLaunch = connect(mapStateToProps)(LaunchScreen);
+const connectedLaunch = connect(mapStateToProps, mapDispatchToProps)(LaunchScreen);
 export { connectedLaunch as LaunchScreen };

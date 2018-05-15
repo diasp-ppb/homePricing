@@ -31,4 +31,8 @@ const mapDispatchToProps = (dispatch) => ({
   startup: () => dispatch(StartupActions.startup())
 })
 
-export default connect(null, mapDispatchToProps)(RootContainer)
+const mapStateToProps = (state) => ({
+  user: state.login
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(RootContainer)
