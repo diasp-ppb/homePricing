@@ -74,9 +74,12 @@ exports.list = async (req, res, next) => {
  */
 exports.filter = async (req, res, next) => {
   try {
+    console.log(req.body)
     var filters = convertParams(req.body);
     const propertyCentricHouses = await House.filter(filters);
+    console.log(propertyCentricHouses)
     const houses = await searchHouses(propertyCentricHouses, req.body);
+    console.log(houses)
     const transformedHouses = houses.map(house => house.transform());
     res.json(houses);
   } catch (error) {

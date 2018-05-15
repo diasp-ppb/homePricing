@@ -3,7 +3,10 @@ const validate = require('express-validation');
 const { authorize, ADMIN } = require('../../middlewares/auth');
 const controller = require('../../controllers/house.controller');
 const {
-  houseInsert,
+  insertHouse,
+  updateHouse,
+  getHouse,
+  listHouses,
   request
 } = require('../../validations/house.validation');
 
@@ -36,7 +39,7 @@ router.param('houseId', controller.load);
    */
 router.route('/')
   .get(controller.list)
-  .post(authorize(ADMIN), validate(houseInsert), controller.create);
+  .post(authorize(ADMIN), validate(insertHouse), controller.create);
 
 /**
  * @api {post} v1/houses/filter List houses that match a filter / criteria
@@ -84,6 +87,6 @@ router.route('/:houseId')
  * @apiGroup House
  * @apiPermission Admin
  */
-  .patch(authorize(ADMIN), validate(houseInsert), controller.update)
+  .patch(authorize(ADMIN), validate(updateHouse), controller.update)
 
 module.exports = router

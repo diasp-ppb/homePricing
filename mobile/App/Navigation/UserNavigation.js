@@ -15,7 +15,7 @@ import CameraScreen from '../Containers/CameraScreen'
 import { UserPreferences } from '../Containers/UserPreferences'
 import { FavoritesScreen } from '../Containers/FavoritesScreen'
 import HelpScreen from '../Containers/HelpScreen'
-import HistoricScreen from '../Containers/HistoricScreen'
+import { HistoricScreen } from '../Containers/HistoricScreen'
 import PreferenceScreen from '../Containers/PreferenceScreen'
 
 import Colors from '../Themes/Colors'

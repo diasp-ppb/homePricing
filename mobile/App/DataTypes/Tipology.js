@@ -1,9 +1,10 @@
-export  const Tipology = [
-  { value: 't0', label: 'T0' },
-  { value: 't1', label: 'T1' },
-  { value: 't2', label: 'T2' },
-  { value: 't3', label: 'T3' },
-  { value: 't4', label: 'T4' },
-  { value: 't5', label: 'T5' },
-  { value: 't5+', label: 'T5+' }
+export const Tipology = [
+  { value: null, label: 'Não especificado' },
+  { value: 'T0', label: 'T0' },
+  { value: 'T1', label: 'T1' },
+  { value: 'T2', label: 'T2' },
+  { value: 'T3', label: 'T3' },
+  { value: 'T4', label: 'T4' },
+  { value: 'T5', label: 'T5' },
+  { value: 'T5+', label: 'T5+' }
 ];
