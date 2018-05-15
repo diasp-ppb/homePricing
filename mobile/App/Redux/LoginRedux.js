@@ -5,7 +5,7 @@ import Immutable from 'seamless-immutable'
 export const INITIAL_STATE = Immutable({
     loggedIn: false,
     user: null,
-    token: null, 
+    token: null,
 })
 
 /* ------------- Reducer ------------- */
@@ -18,14 +18,14 @@ export function reducer (state = INITIAL_STATE, action) {
                 ...state,
                 loggedIn: true,
                 user: action.user,
-                token: action.token
+                token: action.token,
             }
         case 'LOGOUT':
             return {
                 ...state,
                 loggedIn: false,
                 user: null,
-                token: null
+                token: null,
             }
         default:
             return state;
