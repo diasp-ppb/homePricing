@@ -12,8 +12,7 @@ import styles from './Styles/LaunchScreenStyles'
 // Component
 class LaunchScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
-    header: null,
-    title: 'Home Pricing'
+    header: null
   });
 
   render() {
