@@ -3,6 +3,7 @@ import { Metrics, ApplicationStyles, Colors, Fonts } from '../../Themes/'
 
 export default StyleSheet.create({
   title: {
+    fontSize: 20,
     color: 'white',
     textAlign: 'center'
   },

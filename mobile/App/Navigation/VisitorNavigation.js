@@ -1,3 +1,6 @@
+import React from 'react'
+import { View } from 'react-native'
+
 import { StackNavigator, DrawerNavigator } from 'react-navigation'
 import ControlPanel from '../Containers/ControlPanel/ControlPanel'
 
@@ -24,6 +27,8 @@ import styles from './Styles/NavigationStyles'
 
 const navigationOptions = ({ navigation }) => ({
   headerStyle: { backgroundColor: '#1a1a1a' },
+  headerTitleStyle: { alignSelf: 'center' },
+  headerRight: (<View />),
   headerTintColor: '#f2f2f2',
   fontSize: 6,
   textAlignVertical: 'center'
