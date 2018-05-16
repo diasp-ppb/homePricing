@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { Image } from 'react-native'
-import { Header } from 'react-navigation'
 import { Button, Container, Content, Picker, Icon, Input, Item, Form, Text, View } from 'native-base'
 import Metrics from '../Themes/Metrics'
 import Images from '../Themes/Images'
@@ -73,8 +72,8 @@ export default class HouseSearch extends Component {
     return (
       <Container>
         <Image source={Images.background} style={styles.backgroundImage} resizeMode='stretch' />
-        <Content padder style={{ paddingTop: Header.HEIGHT }}>
-          <View style={{ paddingBottom: Header.HEIGHT }}>
+        <Content padder style={{ paddingTop: 25 }}>
+          <View style={{ paddingBottom: 25 }}>
             <Text style={styles.title}>Distrito</Text>
             <View style={styles.pkr}>
               <Picker
