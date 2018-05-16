@@ -12,31 +12,32 @@ import { SUCCESS_LOGIN,
 import { ToastSuccess, ToastError } from './LogToasts'
 import { login } from '../Redux/LoginRedux'
 
-export const baseURL = "http://172.30.15.33:3000"
+export const baseURL = "http://172.30.6.8:3000"
 
-export function checkRegisterResponse(responseJson, props) {
-    if (responseJson.code === '400') {
+export function checkRegisterResponse(responseJson, thisUser) {
+    if (responseJson.code == '400') {
         ToastError(ERROR_INVALID_PARAM_REGISTER);
-    } else if (responseJson.code === '409') {
+    } else if (responseJson.code == '409') {
         ToastError(ERROR_EMAIL_EXISTS_REGISTER);
     } else {
-        const { navigate } = props.navigation;
+        const { navigate } = thisUser.props.navigation;
         navigate('Login');
         ToastSuccess(SUCCESS_REGISTER);
     }
 }
 
-export function checkLoginResponse(responseJson, props) {
+export function checkLoginResponse(responseJson, thisUser) {
 
-    if (responseJson.code === '400') {
+    if (responseJson.code == '400') {
+        thisUser.setState({password : ''});
         ToastError(ERROR_INVALID_EMAIL);
-    } else if (responseJson.code === '401') {
+    } else if (responseJson.code == '401') {
+        thisUser.setState({password : ''});
         ToastError(ERROR_INVALID_PARAM_LOGIN);
     } else {
-        const { navigate } = props.navigation;
-
+        const { navigate } = thisUser.props.navigation;
         ToastSuccess(SUCCESS_LOGIN);
-        props.login(responseJson.user, responseJson.token.accessToken);
+        thisUser.props.login(responseJson.user, responseJson.token.accessToken);
         navigate('userStack');
     }
 }
@@ -49,9 +50,9 @@ export function createBodyUserPreferences(goal, propertyType, tipology,
     workPlace, workDistance)
     {
         return body = JSON.stringify({
-            finality: goal,
-            type: propertyType,
-            tipology: tipology,
+            finality: goal != null ? goal : "undefined",
+            type: propertyType != null ? propertyType : "undefined",
+            tipology: tipology != null ? tipology : "undefined",
             areaMin: minArea,
             areaMax: maxArea,
             priceMin: minPrice,
@@ -155,7 +156,7 @@ export function validateServices(hospitalDist, hospitalQtn, schoolDistance, scho
     else return false;
 }
 
-export function registerAPI(name, email, password, props) {
+export function registerAPI(email, password, thisUser) {
     fetch(baseURL + "/v1/auth/register", {
         method: 'POST',
         headers: {
@@ -164,7 +165,6 @@ export function registerAPI(name, email, password, props) {
         },
         body: JSON.stringify({
             email: email,
-            name: name,
             password: password
         }),
     })
@@ -172,14 +172,14 @@ export function registerAPI(name, email, password, props) {
         (response) => response.json()
     )
     .then(
-        (responseJson) => checkRegisterResponse(responseJson, props)
+        (responseJson) => checkRegisterResponse(responseJson, thisUser)
     )
     .catch(
         (error) => console.error(error)
     );
 }
 
-export function loginAPI(email, password, props) {
+export function loginAPI(email, password, thisUser) {
     fetch(baseURL + "/v1/auth/login", {
         method: 'POST',
         headers: {
@@ -195,7 +195,7 @@ export function loginAPI(email, password, props) {
         (response) => response.json()
     )
     .then(
-        (responseJson) => checkLoginResponse(responseJson, props)
+        (responseJson) => checkLoginResponse(responseJson, thisUser)
     )
     .catch(
         (error) => console.error(error)
@@ -226,12 +226,100 @@ export function updateUserPreferences(bodyContent, props) {
         (responseJson) => {
             ToastSuccess(UPDATE_USER_PREFERENCES);
             const { navigate } = props.navigation;
-            navigate('UserProfile');
+            navigate('LaunchScreen');
         })
     .catch((error) => console.error(error));
 }
 
-export function getUserPreferences(thisUser) {
+export function setUserPreferences(resp, thisUser) {
+
+    if(resp.code === '401') {
+        console.error('Jwt expired!');
+    }
+
+    let services = resp.services.map(function(item) {
+        return {
+            service: item.service,
+            distance: item.distance,
+            quantity: item.quantity
+        };
+    });
+
+    if(services.length === 0) {
+        thisUser.setState({getData: false});
+        return;
+    }
+
+    thisUser.setState({
+      goal: resp.finality,
+      propertyType: resp.type,
+      tipology: resp.tipology !== null ? resp.tipology.toUpperCase() : "",
+      minArea: resp.areaMin !== null ? resp.areaMin : "",
+      maxArea: resp.areaMax !== null ? resp.areaMax : "",
+      minPrice: resp.priceMin !== null ? resp.priceMin : "",
+      maxPrice: resp.priceMax !== null ? resp.priceMax : "",
+      hospitalDist: services[0].distance !== null ? services[0].distance : "",
+      hospitalQtn: services[0].quantity !== null ? services[0].quantity : "",
+      schoolDist: services[1].distance !== null ? services[1].distance : "",
+      schoolQtn: services[1].quantity !== null ? services[1].quantity : "",
+      workPlace: resp.workAddress,
+      workDistance: resp.workMaxDistance !== null ? resp.workMaxDistance : ""
+    });
+}
+
+export function setUserPreferencesHouseSearch(resp, thisUser)
+{
+    if(resp.code === '401') {
+        console.error('Jwt expired!');
+    }
+
+    let services = resp.services.map(function(item) {
+        return {
+            service: item.service,
+            distance: item.distance,
+            quantity: item.quantity
+        };
+    });
+    
+    if (services[0].distance != null) {
+        if(services[0].distance > 0) {
+            thisUser.setState({ hospital: true });
+        }
+    }
+
+    if (services[0].quantity != null) {
+        if(services[0].quantity > 0) {
+            thisUser.setState({ hospital: true });
+        }
+    }
+
+    if (services[1].distance != null) {
+        if(services[1].distance > 0) {
+            thisUser.setState({ school: true });
+        }
+    }
+
+    if (services[1].quantity != null) {
+        if(services[1].quantity > 0) {
+            thisUser.setState({ school: true });
+        }   
+    }
+
+    thisUser.setState({
+        rent: resp.finality.toUpperCase() == "ALUGAR" ? true : false,
+        buy: resp.finality.toUpperCase() == "COMPRAR" ? true : false,
+        propertyType: resp.type,
+        tipology: resp.tipology.toUpperCase(),
+        minArea: resp.areaMin !== null ? resp.areaMin.toString() : "",
+        maxArea: resp.areaMax !== null ? resp.areaMax.toString() : "",
+        minPrice: resp.priceMin !== null ? resp.priceMin : "",
+        maxPrice: resp.priceMax !== null ? resp.priceMax : "",
+        workLocation: resp.workAddress,
+        workDistance: resp.workMaxDistance !== null ? resp.workMaxDistance.toString() : ""
+      });
+}
+
+export function getUserPreferences(thisUser, userPref) {
 
     const url = baseURL + '/v1/users/preferences';
     const auth = 'Bearer ' + thisUser.props.user.token;
@@ -247,39 +335,11 @@ export function getUserPreferences(thisUser) {
       (response) => response.json()
     )
     .then((resp) => {
-
-        if(resp.code === '401') {
-            console.error('Jwt expired!');
+        if(userPref) {
+            setUserPreferences(resp, thisUser);
+        } else {
+            setUserPreferencesHouseSearch(resp, thisUser);
         }
-
-        let services = resp.services.map(function(item) {
-            return {
-                service: item.service,
-                distance: item.distance,
-                quantity: item.quantity
-            };
-        });
-
-        if(services.length === 0) {
-            thisUser.setState({getData: false});
-            return;
-        }
-
-        thisUser.setState({
-          goal: resp.finality,
-          propertyType: resp.type,
-          tipology: resp.tipology,
-          minArea: resp.areaMin !== null ? resp.areaMin : "",
-          maxArea: resp.areaMax !== null ? resp.areaMax : "",
-          minPrice: resp.priceMin !== null ? resp.priceMin : "",
-          maxPrice: resp.priceMax !== null ? resp.priceMax : "",
-          hospitalDist: services[0].distance !== null ? services[0].distance : "",
-          hospitalQtn: services[0].quantity !== null ? services[0].quantity : "",
-          schoolDist: services[1].distance !== null ? services[1].distance : "",
-          schoolQtn: services[1].quantity !== null ? services[1].quantity : "",
-          workPlace: resp.workAddress,
-          workDistance: resp.workMaxDistance !== null ? resp.workMaxDistance : ""
-        });
     })
     .catch((error) => console.error(error));
 }

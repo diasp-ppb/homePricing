@@ -84,7 +84,7 @@ class FavoritesScreen extends Component {
   }
 
   componentDidMount() {
-    this.getFavorites(this.props.user.user, this.props.user.token);
+    this.getFavorites(this.props.user.user.id, this.props.user.token);
   }
 
   changeFavorite = (id) => {
@@ -131,12 +131,21 @@ class FavoritesScreen extends Component {
       dataSource={this.state.dataSource}
       renderRow={this.renderRow}
     />;
-    const message = <Text style={styles.noFav}> Ainda não tem favoritos</Text>;
-    return (
-      <Container>
-        {this.state.rows.length > 0 ? list : message}
-      </Container>
-    )
+    const message = <Text style={styles.noFav}>Ainda não tem favoritos</Text>;
+    if(this.state.rows.length > 0) {
+      return (
+        <Container>
+          {list}
+        </Container>
+      )
+    } else {
+      return (
+        <Container style={styles.centerNoFav}>
+          {message}
+        </Container>
+      )
+    }
+    
   }
 }
 

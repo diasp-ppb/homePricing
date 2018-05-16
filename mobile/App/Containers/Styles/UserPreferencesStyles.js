@@ -35,6 +35,18 @@ export default StyleSheet.create({
     marginRight: Metrics.baseMargin,
     backgroundColor: Colors.white
   },
+  pickerFlexPriceRight: {
+    flex: .5,
+    marginRight: Metrics.baseMargin/2,
+    marginTop: Metrics.baseMargin,
+    backgroundColor: Colors.white
+  },
+  pickerFlexPriceLeft: {
+    flex: .5,
+    marginLeft: Metrics.baseMargin/2,
+    marginTop: Metrics.baseMargin,
+    backgroundColor: Colors.white
+  },
   serviceFlex: {
     flex: 0.7, 
     marginTop: Metrics.baseMargin, 

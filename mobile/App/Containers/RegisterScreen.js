@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { Container, Text, Button, Form, Item, Input } from 'native-base'
 
 import { Images } from '../Themes'
-import { WARN_MISSING, ToastWarning } from '../Services/LogToasts'
+import { WARN_MISSING, ToastWarning, ToastError } from '../Services/LogToasts'
 import { registerAPI } from '../Services/Api'
 
 import styles from './Styles/RegisterScreenStyles'
@@ -20,27 +20,40 @@ class RegisterScreen extends Component {
     super(props);
 
     this.state = {
-      name: '',
       email: '',
       password: '',
+      confirmPassword: '',
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   componentWillUnmount() {
-    this.setState({password : ''});
     this.setState({email : ''});
-    this.setState({name : ''});
+    this.setState({password : ''});
+    this.setState({confirmPassword : ''});
   }
 
   handleSubmit(event) {
-    if (this.state.name == '' || this.state.email == '' || this.state.password == '') {
+    if (this.state.email === '' || this.state.password === '') {
       ToastWarning(WARN_MISSING);
-    } else {
-      this.setState({password : ''});
-      registerAPI(this.state.name, this.state.email, this.state.password, this.props);
+      return;
     }
+
+    if(this.state.password !== this.state.confirmPassword){
+      ToastError("Palavras-passe não correspondem!");
+      this.setState({password : ''});
+      this.setState({confirmPassword : ''});
+      return;
+    } else {
+      if(this.state.password.length < 6) {
+        ToastError("Palavra-passe tem de ter mais de 6 caractéres!");
+        this.setState({password : ''});
+        this.setState({confirmPassword : ''});
+        return;
+      } else registerAPI(this.state.email, this.state.password, this);
+    }
+
   }
 
   render () {
@@ -56,13 +69,6 @@ class RegisterScreen extends Component {
             <Form style={{ width: '70%' }}>
               <Item style={{ backgroundColor: 'white', marginBottom: 15 }} regular>
                 <Input
-                  placeholder="Nome de utilizador"
-                  onChangeText={(name) => this.setState({ name })}
-                  value={this.state.name}
-                />
-              </Item>
-              <Item style={{ backgroundColor: 'white', marginBottom: 15 }} regular>
-                <Input
                   keyboardType='email-address'
                   placeholder="E-mail"
                   onChangeText={(email) => this.setState({ email })}
@@ -75,6 +81,14 @@ class RegisterScreen extends Component {
                   placeholder="Palavra-passe"
                   onChangeText={(password) => this.setState({ password })}
                   value={this.state.password}
+                />
+              </Item>
+              <Item style={{ backgroundColor: 'white', marginBottom: 15 }} regular>
+                <Input
+                  secureTextEntry={true}
+                  placeholder="Confirmar palavra-passe"
+                  onChangeText={(confirmPassword) => this.setState({ confirmPassword })}
+                  value={this.state.confirmPassword}
                 />
               </Item>
               <Button primary block style={styles.button} onPress={this.handleSubmit}>

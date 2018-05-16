@@ -6,6 +6,8 @@ import Metrics from '../Themes/Metrics'
 import styles from './Styles/HouseSearchStyles'
 import Colors from '../Themes/Colors'
 
+import { getUserPreferences } from "../Services/Api"
+import { connect } from 'react-redux';
 
 import { MinPrice, MaxPrice } from '@datatypes/Price'
 import { District } from '@datatypes/District'
@@ -13,7 +15,7 @@ import { PropertyType } from '@datatypes/PropertyType'
 import { Tipology } from '@datatypes/Tipology'
 
 
-export default class HouseSearch extends Component {
+class HouseSearch extends Component {
   static navigationOptions = ({ navigation }) => ({
     title: 'Pesquisa',
   });
@@ -34,6 +36,10 @@ export default class HouseSearch extends Component {
       shopping: false,
       transport: false,
     };
+
+    if(this.props.user.loggedIn) {
+      getUserPreferences(this, false);
+    }
   }
 
   addPickerItems(items) {
@@ -265,3 +271,13 @@ export default class HouseSearch extends Component {
     )
   }
 }
+
+function mapStateToProps(state) {
+  return {
+    user: state.login
+  };
+}
+
+
+const connectedRegister = connect(mapStateToProps)(HouseSearch);
+export { connectedRegister as HouseSearch };

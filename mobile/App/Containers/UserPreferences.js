@@ -9,7 +9,7 @@ import { updateUserPreferences, getUserPreferences } from '../Services/Api'
 import { validateArea, validatePrices, validateServices } from "../Services/Api";
 
 import { PropertyType } from "@datatypes/PropertyType";
-import { Price } from "@datatypes/Price";
+import { MinPrice, MaxPrice } from "@datatypes/Price";
 import { Goal } from '@datatypes/Goal'
 import { Tipology } from '@datatypes/Tipology'
 
@@ -32,8 +32,8 @@ class UserPreferences extends Component {
             tipology: undefined,
             minArea: "",
             maxArea: "",
-            minPrice: "",
-            maxPrice: "",
+            minPrice: undefined,
+            maxPrice: undefined,
             hospitalDist: "",
             hospitalQtn: "",
             schoolDist: "",
@@ -42,7 +42,7 @@ class UserPreferences extends Component {
             workDistance: ""
         }
         this.handleSubmit = this.handleSubmit.bind(this);
-        getUserPreferences(this);
+        getUserPreferences(this, true);
     }
 
     addPickerItems = (items) => {
@@ -94,7 +94,7 @@ class UserPreferences extends Component {
                                         onValueChange={(value) => this.setState({goal: value})}
                                         selectedValue={this.state.goal}
                                     >
-                                        <Picker.Item value='undefined' label='Finalidade' />
+                                        <Picker.Item value='undefined' label='Não especificado' />
                                         {this.addPickerItems(Goal)}
                                     </Picker>
                                 </Form>
@@ -114,7 +114,6 @@ class UserPreferences extends Component {
                                         selectedValue={this.state.propertyType}
                                         onValueChange={(value) => this.setState({propertyType: value})}
                                     >
-                                        <Picker.Item value='' label='Tipo de propriedade' />
                                         {this.addPickerItems(PropertyType)}
                                     </Picker>
                                 </Form>
@@ -133,7 +132,6 @@ class UserPreferences extends Component {
                                     selectedValue={this.state.tipology}
                                     onValueChange={(value) => this.setState({tipology: value})}
                                 >
-                                    <Picker.Item value='undefined' label='Tipologia' />
                                     {this.addPickerItems(Tipology)}
                                 </Picker>
                             </View>
@@ -169,20 +167,28 @@ class UserPreferences extends Component {
                             </View>
                             <View style={{marginLeft: Metrics.baseMargin, marginRight: Metrics.baseMargin, flex: .6}}>
                                 <View style={styles.SideBySide}>
-                                        <Input
-                                            style={styles.input}
+                                    <View style={styles.pickerFlexPriceRight}>
+                                        <Picker
+                                            mode='dropdown'
+                                            iosIcon={<Icon name='ios-arrow-down-outline' />}
                                             placeholder='Mínimo'
-                                            keyboardType='numeric'
-                                            onChangeText={(value) => this.setState({minPrice: value})}
-                                            value={`${this.state.minPrice}`}
-                                        />
-                                        <Input
-                                            style={[styles.input, {marginLeft: Metrics.baseMargin}]}
+                                            selectedValue={this.state.minPrice}
+                                            onValueChange={(value) => this.setState({minPrice: value})}
+                                        >
+                                            {this.addPickerItems(MinPrice)}
+                                        </Picker>
+                                    </View>
+                                    <View style={styles.pickerFlexPriceLeft}>
+                                        <Picker
+                                            mode='dropdown'
+                                            iosIcon={<Icon name='ios-arrow-down-outline' />}
                                             placeholder='Máximo'
-                                            keyboardType='numeric'
-                                            onChangeText={(value) => this.setState({maxPrice: value})}
-                                            value={`${this.state.maxPrice}`}
-                                        />
+                                            selectedValue={this.state.maxPrice}
+                                            onValueChange={(value) => this.setState({maxPrice: value})}
+                                        >
+                                            {this.addPickerItems(MaxPrice)}
+                                        </Picker>
+                                    </View>
                                 </View>
                             </View>
                         </View>

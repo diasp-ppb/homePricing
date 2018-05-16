@@ -35,13 +35,12 @@ class LoginScreen extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    console.log("handle login");
 
     if (this.state.email == '' || this.state.password == '') {
       ToastWarning(WARN_MISSING);
-    } else {
       this.setState({password : ''});
-      loginAPI(this.state.email, this.state.password, this.props);
+    } else {
+      loginAPI(this.state.email, this.state.password, this);
     }
   }
 

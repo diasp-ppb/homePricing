@@ -9,7 +9,7 @@ import SearchResults from '../Containers/SearchResults'
 import { RegisterScreen } from '../Containers/RegisterScreen'
 import { LoginScreen } from '../Containers/LoginScreen'
 import HouseInfScreen from '../Containers/HouseInfScreen'
-import HouseSearch from '../Containers/HouseSearch'
+import { HouseSearch } from '../Containers/HouseSearch'
 import GpsScreen from '../Containers/GpsScreen'
 import CameraScreen from '../Containers/CameraScreen'
 import { UserPreferences } from '../Containers/UserPreferences'
@@ -66,5 +66,5 @@ export default DrawerNavigator({
   drawerToggleRoute: 'DrawerToggle',
   headerMode: 'none',
   drawerWidth: 300,
-  drawerPosition: 'left',
+  drawerPosition: 'left'
 });
