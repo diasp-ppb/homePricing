@@ -9,6 +9,11 @@ import { Container, Header, Body, Title, Button, Text, Fab, Icon, Row, Col } fro
 // Styles
 import styles from './Styles/LaunchScreenStyles'
 
+import { logoutAPI } from '../Services/Api';
+import { logout } from '../Redux/LoginRedux';
+
+
+
 // Component
 class LaunchScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -63,7 +68,13 @@ class LaunchScreen extends Component {
                   <Icon ios={'ios-person'} android={'md-person'} style={{ color: 'white' }} />
                 </TouchableHighlight>
               </View>
-              : null }
+              :
+              <View style={{flex: 0.1}} >
+                <TouchableHighlight onPress={() => logoutAPI(this.props)}>
+                  <Icon ios={'ios-power'} android={'md-power'} style={{ color: 'white' }} />
+                </TouchableHighlight>
+              </View>
+              }
               <View style={{flex: 0.1}}>
                 <TouchableHighlight onPress={() => navigate('Camera')}>
                   <Icon ios={'ios-camera'} android={'md-camera'} style={{ color: 'white' }} />
@@ -84,8 +95,10 @@ const mapStateToProps = (state) => ({
   });
 
 function mapDispatchToProps(dispatch) {
-  return {};
-}
+    return {
+      logout: () => dispatch(logout())
+    };
+  }
 
 const connectedLaunch = connect(mapStateToProps, mapDispatchToProps)(LaunchScreen);
 export { connectedLaunch as LaunchScreen };
