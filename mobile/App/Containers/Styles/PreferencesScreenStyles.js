@@ -32,8 +32,8 @@ arrow:{
     color:'black',
   },
   address:{
-    padding:15,
-    fontSize:12 ,
+    padding:10,
+    fontSize:12,
     color: '#595959'
   },
 
