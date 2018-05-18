@@ -20,13 +20,21 @@ export default StyleSheet.create({
     height: '22%'
   },
   signUp: {
+    fontSize: 20,
     marginTop: 15,
-    color: 'white'
+    color: 'white',
+    textShadowColor: 'black',
+    textShadowOffset: { width: -2, height: 2 },
+    textShadowRadius: 10
   },
   link: {
+    fontSize: 20,
     color: 'white',
     fontWeight: 'bold',
-    textDecorationLine: 'underline'
+    textDecorationLine: 'underline',
+    textShadowColor: 'black',
+    textShadowOffset: { width: -2, height: 2 },
+    textShadowRadius: 10
   },
   backgroundImage: {
     position: 'absolute',
