@@ -34,6 +34,8 @@ const images = {
   logo1: require('../Images/logo1.png'),
   login: require('../Images/login.png'),
   camara: require('../Images/camara.png'),
+  greenStar: require('../Images/Icons/full-star-green.png'),
+  greenStarLines: require('../Images/Icons/star-line-green.png') 
 };
 
 export default images

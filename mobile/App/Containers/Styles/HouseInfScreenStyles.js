@@ -85,6 +85,11 @@ export default StyleSheet.create({
     fontSize:13 ,
     padding:2 , 
     color:'#8c8c8c'
+  },
+  star:{
+    width: Metrics.images.normal,
+    height: Metrics.images.normal,
+    marginRight: 15
   }
 
 })
