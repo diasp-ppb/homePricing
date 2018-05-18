@@ -27,19 +27,19 @@ class UserPreferences extends Component {
         this.state = {
             getData: true,
             loaded: false,
-            goal: undefined,
-            propertyType: undefined,
-            tipology: undefined,
-            minArea: "",
-            maxArea: "",
+            goal: null,
+            propertyType: null,
+            tipology: null,
+            minArea: null,
+            maxArea: null,
             minPrice: null,
             maxPrice: null,
-            hospitalDist: "",
-            hospitalQtn: "",
-            schoolDist: "",
-            schoolQtn: "",
-            workPlace: undefined,
-            workDistance: ""
+            hospitalDist: null,
+            hospitalQtn: null,
+            schoolDist: null,
+            schoolQtn: null,
+            workPlace: null,
+            workDistance: null
         }
         this.handleSubmit = this.handleSubmit.bind(this);
         getUserPreferences(this, true);
@@ -94,7 +94,7 @@ class UserPreferences extends Component {
                                         onValueChange={(value) => this.setState({goal: value})}
                                         selectedValue={this.state.goal}
                                     >
-                                        <Picker.Item value='undefined' label='Não especificado' />
+                                        <Picker.Item value='null' label='Não especificado' />
                                         {this.addPickerItems(Goal)}
                                     </Picker>
                                 </Form>

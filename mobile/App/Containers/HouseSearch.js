@@ -30,11 +30,11 @@ class HouseSearch extends Component {
       city: 'Aveiro',
       rent: false,
       buy: false,
-      propertyType: undefined,
-      minArea: undefined,
-      maxArea: undefined,
-      minPrice: undefined,
-      maxPrice: undefined,
+      propertyType: null,
+      minArea: null,
+      maxArea: null,
+      minPrice: null,
+      maxPrice: null,
       hospital: false,
       school: false,
       shopping: false,
@@ -60,24 +60,26 @@ class HouseSearch extends Component {
   submitSearch() {
     const { navigate } = this.props.navigation;
 
+    
     const form = {
       rent: this.state.rent,
       buy: this.state.buy,
-      tipology: (this.state.tipology === undefined) ? (null) : this.state.tipology,
-      propertyType: (this.state.propertyType === undefined) ? (null) : this.state.propertyType,
-      minArea: (this.state.minArea === undefined) ? (null) : this.state.minArea,
-      maxArea: (this.state.maxArea === undefined) ? (null) : this.state.maxArea,
-      minPrice: (this.state.minPrice === undefined) ? (null) : this.state.minPrice,
-      maxPrice: (this.state.maxPrice === undefined) ? (null) : this.state.maxPrice,
+      tipology: (this.state.tipology == null) ? (null) : this.state.tipology,
+      propertyType: (this.state.propertyType == null) ? (null) : this.state.propertyType,
+      minArea: (this.state.minArea == null) ? (null) : this.state.minArea,
+      maxArea: (this.state.maxArea == null) ? (null) : this.state.maxArea,
+      minPrice: (this.state.minPrice == null) ? (null) : this.state.minPrice,
+      maxPrice: (this.state.maxPrice == null) ? (null) : this.state.maxPrice,
       hospital: this.state.hospital,
       school: this.state.school,
       shopping: this.state.shopping,
       transport: this.state.transport,
       city: this.state.city,
-      workDistance: (this.state.workDistance === undefined) ? (null) : this.state.workDistance,
-      workLocation: (this.state.workLocation === undefined) ? (null) : this.state.workLocation,
+      workDistance: (this.state.workDistance == null || this.state.workDistance == "") ? (null) : this.state.workDistance,
+      workLocation: (this.state.workLocation == null) ? (null) : this.state.workLocation,
       bathrooms: null
     }
+
     navigate('SearchResults', { form: form })
   }
 

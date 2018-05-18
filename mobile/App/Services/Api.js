@@ -50,9 +50,9 @@ import { SUCCESS_LOGIN,
       workPlace, workDistance)
       {
           return body = JSON.stringify({          
-              finality: goal != null ? goal : "undefined",
-              type: propertyType != null ? propertyType : "undefined",
-              tipology: tipology != null ? tipology : "undefined",
+              finality: goal,
+              type: propertyType,
+              tipology: tipology,
               areaMin: minArea,
               areaMax: maxArea,
               priceMin: minPrice,
@@ -81,20 +81,20 @@ import { SUCCESS_LOGIN,
   export function validateArea(minArea, maxArea) {
       let valid = true;
   
-      if(minArea !== "") {
+      if(minArea != null) {
           if(isNotNumeric(minArea)) {
               valid = false;
               ToastWarning(error_area('min'));
           }
       }
   
-      if (maxArea !== "") {
+      if (maxArea != null) {
           if(isNotNumeric(maxArea)) {
               valid = false;
               ToastWarning(error_area('max'));
           }
       }
-      if(minArea !== "" && maxArea !== "") {
+      if(minArea != null && maxArea != null) {
           if (parseInt(minArea) >= parseInt(maxArea)) {
               valid = false;
               ToastWarning(ERROR_AREAS);
@@ -107,21 +107,21 @@ import { SUCCESS_LOGIN,
   export function validatePrices(minPrice, maxPrice) {
       let valid = true;
   
-      if(minPrice !== null) {
+      if(minPrice != null) {
           if (isNotNumeric(minPrice)) {
               valid = false;
               ToastWarning(error_price('min'));
           }
       }
   
-      if (maxPrice !== null) {
+      if (maxPrice != null) {
           if(isNotNumeric(maxPrice)) {
               valid = false;
               ToastWarning(error_price('max'));
           }
       }
   
-      if(minPrice !== "" && maxPrice !== "") {
+      if(minPrice != null && maxPrice != null) {
           if (parseInt(minPrice) >= parseInt(maxPrice)) {
               valid = false;
               ToastWarning(ERROR_PRICES);
@@ -134,7 +134,7 @@ import { SUCCESS_LOGIN,
   export function validateService(service, desc) {
       let valid = true;
   
-      if (service !== "") {
+      if (service != null) {
           if(isNotNumeric(service)) {
               valid = false;
               ToastWarning(error_service(desc));
@@ -254,17 +254,17 @@ import { SUCCESS_LOGIN,
         loaded: true,
         goal: resp.finality,
         propertyType: resp.type,
-        tipology: resp.tipology !== null ? resp.tipology.toUpperCase() : "",
-        minArea: resp.areaMin !== null ? resp.areaMin : "",
-        maxArea: resp.areaMax !== null ? resp.areaMax : "",
-        minPrice: resp.priceMin !== null ? resp.priceMin : "",
-        maxPrice: resp.priceMax !== null ? resp.priceMax : "",
-        hospitalDist: services[0].distance !== null ? services[0].distance : "",
-        hospitalQtn: services[0].quantity !== null ? services[0].quantity : "",
-        schoolDist: services[1].distance !== null ? services[1].distance : "",
-        schoolQtn: services[1].quantity !== null ? services[1].quantity : "",
+        tipology: resp.tipology != null ? resp.tipology.toUpperCase() : "",
+        minArea: resp.areaMin != null ? resp.areaMin : "",
+        maxArea: resp.areaMax != null ? resp.areaMax : "",
+        minPrice: resp.priceMin != null ? resp.priceMin : "",
+        maxPrice: resp.priceMax != null ? resp.priceMax : "",
+        hospitalDist: services[0].distance != null ? services[0].distance : "",
+        hospitalQtn: services[0].quantity != null ? services[0].quantity : "",
+        schoolDist: services[1].distance != null ? services[1].distance : "",
+        schoolQtn: services[1].quantity != null ? services[1].quantity : "",
         workPlace: resp.workAddress,
-        workDistance: resp.workMaxDistance !== null ? resp.workMaxDistance : ""
+        workDistance: resp.workMaxDistance != null ? resp.workMaxDistance : ""
       });
   }
   
@@ -305,17 +305,25 @@ import { SUCCESS_LOGIN,
               thisUser.setState({ school: true });
           }   
       }
+
+      var rent = false;
+      var buy = false;
+
+      if (resp.finality != null) {
+        rent = resp.finality.toUpperCase() == "ALUGAR" ? true : false;
+        buy = resp.finality.toUpperCase() == "COMPRAR" ? true : false;
+      }
   
       thisUser.setState({
           loaded: true,
-          rent: resp.finality.toUpperCase() == "ALUGAR" ? true : false,
-          buy: resp.finality.toUpperCase() == "COMPRAR" ? true : false,
+          rent: rent,
+          buy: buy,
           propertyType: resp.type,
-          tipology: resp.tipology.toUpperCase(),
-          minArea: resp.areaMin !== null ? resp.areaMin.toString() : "",
-          maxArea: resp.areaMax !== null ? resp.areaMax.toString() : "",
-          minPrice: resp.priceMin !== null ? resp.priceMin : "",
-          maxPrice: resp.priceMax !== null ? resp.priceMax : "",
+          tipology: resp.tipology != null ? resp.tipology.toUpperCase() : null,
+          minArea: resp.areaMin !== null ? resp.areaMin.toString() : null,
+          maxArea: resp.areaMax !== null ? resp.areaMax.toString() : null,
+          minPrice: resp.priceMin !== null ? resp.priceMin : null,
+          maxPrice: resp.priceMax !== null ? resp.priceMax : null,
           workLocation: resp.workAddress,
           workDistance: resp.workMaxDistance !== null ? resp.workMaxDistance.toString() : ""
         });
