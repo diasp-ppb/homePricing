@@ -377,7 +377,7 @@ export function createFavoriteAPI(user, house, token){
   })
     .then((response) => response.json())
     .then(
-      (responseJson) => responseJson
+      () => { ToastSuccess("House added to favorites!"); }
     )
     .catch((error) => {
       console.error(error);
@@ -398,7 +398,7 @@ export function deleteFavoriteAPI(user, house, token){
       houseId: house
     }),
   })
-    .then()
+    .then(() => { ToastSuccess("House removed from favorites."); })
     .catch((error) => {
       console.error(error);
     });

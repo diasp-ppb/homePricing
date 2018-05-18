@@ -47,8 +47,6 @@ class FavoritesScreen extends Component {
         }),
       });
       let responseJson = await response.json();
-      this.setState({loaded : true});
-
       this.getParseFavorites(responseJson);
       return responseJson;
     } catch (error) {
@@ -78,6 +76,7 @@ class FavoritesScreen extends Component {
       }
       auxId++;
     }
+    this.setState({loaded : true});
     this.setState({ rows: favs });
     this.setState({ dataSource: ds.cloneWithRows(favs) });
     return favs;
@@ -115,7 +114,7 @@ class FavoritesScreen extends Component {
             </Text>
           </View>
           <TouchableOpacity key={rowData.id} onPress={() => this.changeFavorite(rowData.id)}>
-            <Image source={rowData.active === true ? Images.fullStarIcon : Images.starLines} style={styles.star} />
+           <Image source={rowData.active === true ? Images.greenStar : Images.greenStarLines} style={styles.star} />
           </TouchableOpacity>
         </View>
       </TouchableOpacity>

@@ -1,13 +1,15 @@
 import React, { Component } from 'react'
-import { View, Image } from 'react-native'
-
+import { View, Image, ActivityIndicator } from 'react-native'
 
 // Native Base
 import { Container, Content, Button, Text, Icon} from 'native-base'
 
 // Styles
+import activityStyle from './Styles/ActivityIndicatorStyle'
 import styles from './Styles/PreferencesScreenStyles'
+
 import {baseURL} from "../Services/Api";
+
 // Component
 export default class PreferenceScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -18,6 +20,7 @@ export default class PreferenceScreen extends Component {
   constructor (props) {
     super(props);
     this.state = {
+      loaded: false,
       houses: [],
     };
   }
@@ -30,6 +33,7 @@ export default class PreferenceScreen extends Component {
       })
       .then(responseJson => {
         this.setState({ houses: responseJson });
+        this.setState({loaded : true});
       })
       .catch(function (json) {
         console.error(json)
@@ -46,48 +50,55 @@ export default class PreferenceScreen extends Component {
 
     const { navigate } = this.props.navigation;
 
+    if(this.state.loaded) {
+      return (
+        <Container>
 
-    return (
-      <Container>
-
-        <Content padder>
-          <View style={{ marginBottom: 20 }}>
-            {
-              this.state.houses.map((item, index) => {
-                return (
-                <View style={styles.box1} key={index} >
-                  <View style={{ flex:0.5 , width:'90%' , height:100}} >
-                    <Image source={{ uri: item.images[0] }} style={{ height: 200, width: null, flex: 1 }}/>
-                  </View>
-
-                  <View style={{ flex:0.4}}>
-                    <View style={{ flex:0.5}}>
-                      <Text style={styles.address}>
-                          <Icon ios={'ios-pin'} android={'md-pin'} style={styles.address} /> {item.address.town}
-                      </Text>
-                      <Text style={styles.money}>
-                          {item.price}
-                      </Text>
+          <Content padder>
+            <View style={{ marginBottom: 20 }}>
+              {
+                this.state.houses.map((item, index) => {
+                  return (
+                  <View style={styles.box1} key={index} >
+                    <View style={{ flex:0.5 , width:'90%' , height:100}} >
+                      <Image source={{ uri: item.images[0] }} style={{ height: 200, width: null, flex: 1 }}/>
                     </View>
-                  </View>
 
-                  <View style={{flex:0.18, marginTop: 22}} >
-                      <Button transparent onPress={() => this.props.navigation.navigate('HouseInformation',{house: item })}>
-                        <Text>
-                          <Icon style={{fontSize:20, color:'black'}} ios={'ion-ios-arrow-forward'} android={'md-arrow-forward'} />
+                    <View style={{ flex:0.4}}>
+                      <View style={{ flex:0.5}}>
+                        <Text style={styles.address}>
+                            <Icon ios={'ios-pin'} android={'md-pin'} style={styles.address} /> {item.address.town}
                         </Text>
-                      </Button>
+                        <Text style={styles.money}>
+                            {item.price}
+                        </Text>
+                      </View>
+                    </View>
+
+                    <View style={{flex:0.18, marginTop: 22}} >
+                        <Button transparent onPress={() => this.props.navigation.navigate('HouseInformation',{house: item })}>
+                          <Text>
+                            <Icon style={{fontSize:20, color:'black'}} ios={'ion-ios-arrow-forward'} android={'md-arrow-forward'} />
+                          </Text>
+                        </Button>
+                    </View>
+
                   </View>
 
-                </View>
 
-
-                )
-              })
-            }
-          </View>
-        </Content>
-      </Container>
-    )
+                  )
+                })
+              }
+            </View>
+          </Content>
+        </Container>
+      )
+    } else {
+      return (
+        <View style={[activityStyle.container, activityStyle.horizontal]}>
+          <ActivityIndicator size="large" color="#00ff00" />
+        </View>
+      )
+    }
   }
 }

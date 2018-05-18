@@ -20,7 +20,7 @@ export default StyleSheet.create({
     height: '22%'
   },
   signUp: {
-    fontSize: 20,
+    fontSize: 18,
     marginTop: 15,
     color: 'white',
     textShadowColor: 'black',
@@ -28,7 +28,7 @@ export default StyleSheet.create({
     textShadowRadius: 10
   },
   link: {
-    fontSize: 20,
+    fontSize: 18,
     color: 'white',
     fontWeight: 'bold',
     textDecorationLine: 'underline',

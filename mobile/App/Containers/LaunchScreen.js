@@ -39,7 +39,7 @@ class LaunchScreen extends Component {
           </View>
           <View style={styles.row}>
             <Text style={styles.txt}>To Start Exploring</Text>
-            <View style={{ width: '70%' }}>
+            <View style={{ width: '55%' }}>
               <Button primary block style={styles.btn} onPress={() => navigate('HouseSearch')}>
                 <Text>Pesquisar</Text>
               </Button>
@@ -50,7 +50,7 @@ class LaunchScreen extends Component {
           </View>
           <View style={styles.row}>
             <Text style={styles.txt}>Go Further</Text>
-            <View style={{ width: '70%', flexDirection: 'row', justifyContent: 'center' }}>
+            <View style={{ width: '55%', flexDirection: 'row', justifyContent: 'center' }}>
               { !this.props.user.loggedIn ?
                 <Icon ios={'ios-person'} android={'md-person'} style={styles.icon} onPress={() => navigate('Login')} />
               :
