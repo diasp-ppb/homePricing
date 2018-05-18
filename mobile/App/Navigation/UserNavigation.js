@@ -19,6 +19,7 @@ import { FavoritesScreen } from '../Containers/FavoritesScreen'
 import HelpScreen from '../Containers/HelpScreen'
 import { HistoricScreen } from '../Containers/HistoricScreen'
 import PreferenceScreen from '../Containers/PreferenceScreen'
+import UserSettingsScreen from '../Containers/UserSettingsScreen'
 
 import Colors from '../Themes/Colors'
 
@@ -49,6 +50,7 @@ const UserStack = StackNavigator({
   HelpScreen: { screen: HelpScreen },
   PreferenceScreen: { screen: PreferenceScreen},
   HistoricScreen: { screen: HistoricScreen},
+  UserSettings: { screen: UserSettingsScreen }
 }, {
   // Default config for all screens
   headerMode: 'float',

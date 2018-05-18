@@ -147,10 +147,10 @@ export default class LaunchScreen extends Component {
           <CardItem button onPress={() => navigate('HouseInformation', { house: item })}>
             <Left>
               <Body>
-              <Text>{item.title}</Text>
-              <Text style={styles.address}>
-                <Icon ios="ios-pin" android="md-pin" style={styles.address} /> {item.address.zipcode}, {item.address.town}, {item.address.county}
-              </Text>
+                <Text>{item.title}</Text>
+                <Text style={styles.address}>
+                  <Icon ios="ios-pin" android="md-pin" style={styles.address} /> {item.address.zipcode}, {item.address.town}, {item.address.county}
+                </Text>
               </Body>
             </Left>
           </CardItem>
