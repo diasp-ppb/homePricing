@@ -251,6 +251,7 @@ import { SUCCESS_LOGIN,
       }
   
       thisUser.setState({
+        loaded: true,
         goal: resp.finality,
         propertyType: resp.type,
         tipology: resp.tipology !== null ? resp.tipology.toUpperCase() : "",
@@ -306,6 +307,7 @@ import { SUCCESS_LOGIN,
       }
   
       thisUser.setState({
+          loaded: true,
           rent: resp.finality.toUpperCase() == "ALUGAR" ? true : false,
           buy: resp.finality.toUpperCase() == "COMPRAR" ? true : false,
           propertyType: resp.type,
@@ -341,7 +343,7 @@ import { SUCCESS_LOGIN,
             } else {
                 setUserPreferencesHouseSearch(resp, thisUser);
             }
-        }
+        } else thisUser.setState({ getData: false});
       })
       .catch((error) => console.error(error));
   }

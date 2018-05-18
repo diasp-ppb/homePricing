@@ -7,7 +7,6 @@ import createStore from '../Redux'
 import { Root } from "native-base"
 import { YellowBox } from 'react-native';
 
-console.disableYellowBox = true
 YellowBox.ignoreWarnings(['Warning: isMounted(...) is deprecated', 'Module RCTImageLoader']);
 
 // create our store

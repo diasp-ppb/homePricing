@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Image, View, ListView, TouchableOpacity } from 'react-native'
+import { Image, View, ListView, TouchableOpacity, ActivityIndicator } from 'react-native'
 import { Images } from '../Themes'
 import { connect } from 'react-redux';
 import { baseURL, createFavoriteAPI, deleteFavoriteAPI } from "../Services/Api";
@@ -8,6 +8,7 @@ import { baseURL, createFavoriteAPI, deleteFavoriteAPI } from "../Services/Api";
 import { Container, Text } from 'native-base'
 
 // Styles
+import activityStyle from './Styles/ActivityIndicatorStyle'
 import styles from './Styles/FavoriteStyle'
 
 // Row comparison function
@@ -25,6 +26,7 @@ class FavoritesScreen extends Component {
     super(props);
 
     this.state = {
+      loaded: false,
       rows: [],
       dataSource: ds.cloneWithRows([])
     }
@@ -45,6 +47,8 @@ class FavoritesScreen extends Component {
         }),
       });
       let responseJson = await response.json();
+      this.setState({loaded : true});
+
       this.getParseFavorites(responseJson);
       return responseJson;
     } catch (error) {
@@ -125,11 +129,19 @@ class FavoritesScreen extends Component {
       renderRow={this.renderRow}
     />;
     const message = <Text style={styles.noFav}> Ainda não tem favoritos</Text>;
-    return (
-      <Container>
-        {this.state.rows.length > 0 ? list : message}
-      </Container>
-    )
+    if(this.state.loaded) {
+      return (
+        <Container>
+          {this.state.rows.length > 0 ? list : message}
+        </Container>
+      )
+    } else {
+      return (
+        <View style={[activityStyle.container, activityStyle.horizontal]}>
+          <ActivityIndicator size="large" color="#00ff00" />
+        </View>
+      )
+    }
   }
 }
 

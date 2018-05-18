@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, View } from 'react-native'
+import { Text, View, ActivityIndicator } from 'react-native'
 import { Button, Container, Content, Picker, Icon, Input, Form } from 'native-base'
 import { connect } from 'react-redux';
 
@@ -14,6 +14,7 @@ import { Goal } from '@datatypes/Goal'
 import { Tipology } from '@datatypes/Tipology'
 
 // Styles
+import activityStyle from './Styles/ActivityIndicatorStyle';
 import styles from './Styles/UserPreferencesStyles'
 
 class UserPreferences extends Component {
@@ -25,6 +26,7 @@ class UserPreferences extends Component {
         super(props)
         this.state = {
             getData: true,
+            loaded: false,
             goal: undefined,
             propertyType: undefined,
             tipology: undefined,
@@ -72,7 +74,7 @@ class UserPreferences extends Component {
         }
     }
 
-    render () {
+    loaded() {
         return (
             <Container>
                 <Content>
@@ -308,6 +310,18 @@ class UserPreferences extends Component {
                 </Content>
             </Container>
         )
+    }
+
+    render () {
+        if(this.state.loaded && this.state.getData || !this.state.getData) {
+            return this.loaded()
+          } else {
+            return (
+              <View style={[activityStyle.container, activityStyle.horizontal]}>
+                <ActivityIndicator size="large" color="#00ff00" />
+              </View>
+            )
+          }
     }
 }
 

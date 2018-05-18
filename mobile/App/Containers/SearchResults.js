@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
-import { Image, ScrollView } from 'react-native';
+import { Image, ScrollView, ActivityIndicator} from 'react-native';
 
 // Native Base
 import { View, Container, Content, Left, Body, Button, Text, Icon, Item, Input, Card, CardItem } from 'native-base';
 
 // Styles
 import styles from './Styles/SearchResultsStyles';
+import activityStyle from './Styles/ActivityIndicatorStyle';
+
 import { baseURL } from '../Services/Api';
 import GPSMap from '../Components/GPSMap';
 
@@ -19,6 +21,7 @@ export default class LaunchScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      loaded: false,
       houses: [],
       map: false,
       region: {
@@ -50,6 +53,7 @@ export default class LaunchScreen extends Component {
         return response.json();
       })
       .then((houses) => {
+        this.setState({ loaded: true });
         this.setState({ houses });
         this.generateMarkers();
       })
@@ -194,11 +198,19 @@ export default class LaunchScreen extends Component {
 
   // Render the screen
   render() {
-    return (
-      <Container>
-        {this.renderSegment()}
-        {this.renderTab()}
-      </Container>
-    );
+    if(this.state.loaded) {
+      return (
+        <Container>
+          {this.renderSegment()}
+          {this.renderTab()}
+        </Container>
+      );
+    } else {
+      return (
+        <View style={[activityStyle.container, activityStyle.horizontal]}>
+          <ActivityIndicator size="large" color="#00ff00" />
+        </View>
+      )
+    }
   }
 }
