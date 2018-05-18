@@ -43,34 +43,36 @@ import { SUCCESS_LOGIN,
   }
   
   export function createBodyUserPreferences(goal, propertyType, tipology,
-      minArea, maxArea,
-      minPrice, maxPrice,
-      hospitalDist, hospitalQtn,
-      schoolDist, schoolQtn,
-      workPlace, workDistance)
-      {
-          return body = JSON.stringify({          
-              finality: goal,
-              type: propertyType,
-              tipology: tipology,
-              areaMin: minArea,
-              areaMax: maxArea,
-              priceMin: minPrice,
-              priceMax: maxPrice,
-              services: [{
-                  service: 'Hospital',
-                  distance: hospitalDist,
-                  quantity: hospitalQtn
-              },
-              {
-                  service: 'School',
-                  distance: schoolDist,
-                  quantity: schoolQtn
-              }],
-              workAddress: workPlace,
-              workMaxDistance: workDistance
-          });
-      }
+    minArea, maxArea,
+    minPrice, maxPrice,
+    hospitalDist, hospitalQtn,
+    schoolDist, schoolQtn,
+    workPlace, workDistance)
+    {
+        return body = JSON.stringify({
+            finality: goal,
+            type: propertyType,
+            tipology: tipology,
+            areaMin: minArea,
+            areaMax: maxArea,
+            priceMin: minPrice,
+            priceMax: maxPrice,
+            services: [{
+                service: 'Hospital',
+                distance: hospitalDist,
+                quantity: hospitalQtn
+            },
+            {
+                service: 'School',
+                distance: schoolDist,
+                quantity: schoolQtn
+            }],
+            workAddress: workPlace,
+            workMaxDistance: workDistance
+        });
+    }
+
+
   
   
   function isNotNumeric(num){
@@ -81,20 +83,20 @@ import { SUCCESS_LOGIN,
   export function validateArea(minArea, maxArea) {
       let valid = true;
   
-      if(minArea != null) {
+      if(minArea != "") {
           if(isNotNumeric(minArea)) {
               valid = false;
               ToastWarning(error_area('min'));
           }
       }
   
-      if (maxArea != null) {
+      if (maxArea != "") {
           if(isNotNumeric(maxArea)) {
               valid = false;
               ToastWarning(error_area('max'));
           }
       }
-      if(minArea != null && maxArea != null) {
+      if(minArea != "" && maxArea != "") {
           if (parseInt(minArea) >= parseInt(maxArea)) {
               valid = false;
               ToastWarning(ERROR_AREAS);
@@ -107,21 +109,21 @@ import { SUCCESS_LOGIN,
   export function validatePrices(minPrice, maxPrice) {
       let valid = true;
   
-      if(minPrice != null) {
+      if(minPrice != "") {
           if (isNotNumeric(minPrice)) {
               valid = false;
               ToastWarning(error_price('min'));
           }
       }
   
-      if (maxPrice != null) {
+      if (maxPrice != "") {
           if(isNotNumeric(maxPrice)) {
               valid = false;
               ToastWarning(error_price('max'));
           }
       }
   
-      if(minPrice != null && maxPrice != null) {
+      if(minPrice != "" && maxPrice != "") {
           if (parseInt(minPrice) >= parseInt(maxPrice)) {
               valid = false;
               ToastWarning(ERROR_PRICES);
@@ -134,7 +136,7 @@ import { SUCCESS_LOGIN,
   export function validateService(service, desc) {
       let valid = true;
   
-      if (service != null) {
+      if (service != "") {
           if(isNotNumeric(service)) {
               valid = false;
               ToastWarning(error_service(desc));
@@ -222,17 +224,19 @@ import { SUCCESS_LOGIN,
           body: bodyContent,
       })
       .then((response) => response.json())
-      .then(
-          (responseJson) => {
+      .then((responseJson) => {
+          if (responseJson.code == '400') {
+              ToastError("Error: " + responseJson.errors[0].messages[0]);
+            } else {
               ToastSuccess(UPDATE_USER_PREFERENCES);
               const { navigate } = props.navigation;
               navigate('LaunchScreen');
+            }
           })
       .catch((error) => console.error(error));
   }
   
   export function setUserPreferences(resp, thisUser) {
-  
       if(resp.code === '401') {
           console.error('Jwt expired!');
       }
@@ -249,20 +253,22 @@ import { SUCCESS_LOGIN,
           thisUser.setState({getData: false});
           return;
       }
-  
+
+      var tipology = resp.tipology != null ? resp.tipology.toUpperCase() : null;
+
       thisUser.setState({
         loaded: true,
         goal: resp.finality,
         propertyType: resp.type,
-        tipology: resp.tipology != null ? resp.tipology.toUpperCase() : "",
+        tipology: tipology,
         minArea: resp.areaMin != null ? resp.areaMin : "",
         maxArea: resp.areaMax != null ? resp.areaMax : "",
-        minPrice: resp.priceMin != null ? resp.priceMin : "",
-        maxPrice: resp.priceMax != null ? resp.priceMax : "",
-        hospitalDist: services[0].distance != null ? services[0].distance : "",
-        hospitalQtn: services[0].quantity != null ? services[0].quantity : "",
-        schoolDist: services[1].distance != null ? services[1].distance : "",
-        schoolQtn: services[1].quantity != null ? services[1].quantity : "",
+        minPrice: resp.priceMin,
+        maxPrice: resp.priceMax,
+        hospitalDist: services[0].distance,
+        hospitalQtn: services[0].quantity,
+        schoolDist: services[1].distance,
+        schoolQtn: services[1].quantity,
         workPlace: resp.workAddress,
         workDistance: resp.workMaxDistance != null ? resp.workMaxDistance : ""
       });
@@ -282,25 +288,25 @@ import { SUCCESS_LOGIN,
           };
       });
       
-      if (services[0].distance != null) {
+      if (services[0].distance != "") {
           if(services[0].distance > 0) {
               thisUser.setState({ hospital: true });
           }
       }
   
-      if (services[0].quantity != null) {
+      if (services[0].quantity != "") {
           if(services[0].quantity > 0) {
               thisUser.setState({ hospital: true });
           }
       }
   
-      if (services[1].distance != null) {
+      if (services[1].distance != "") {
           if(services[1].distance > 0) {
               thisUser.setState({ school: true });
           }
       }
   
-      if (services[1].quantity != null) {
+      if (services[1].quantity != "") {
           if(services[1].quantity > 0) {
               thisUser.setState({ school: true });
           }   
@@ -309,7 +315,7 @@ import { SUCCESS_LOGIN,
       var rent = false;
       var buy = false;
 
-      if (resp.finality != null) {
+      if (resp.finality != "") {
         rent = resp.finality.toUpperCase() == "ALUGAR" ? true : false;
         buy = resp.finality.toUpperCase() == "COMPRAR" ? true : false;
       }
@@ -320,17 +326,16 @@ import { SUCCESS_LOGIN,
           buy: buy,
           propertyType: resp.type,
           tipology: resp.tipology != null ? resp.tipology.toUpperCase() : null,
-          minArea: resp.areaMin !== null ? resp.areaMin.toString() : null,
-          maxArea: resp.areaMax !== null ? resp.areaMax.toString() : null,
-          minPrice: resp.priceMin !== null ? resp.priceMin : null,
-          maxPrice: resp.priceMax !== null ? resp.priceMax : null,
+          minArea: resp.areaMin,
+          maxArea: resp.areaMax,
+          minPrice: resp.priceMin,
+          maxPrice: resp.priceMax,
           workLocation: resp.workAddress,
-          workDistance: resp.workMaxDistance !== null ? resp.workMaxDistance.toString() : ""
+          workDistance: resp.workMaxDistance
         });
   }
   
   export function getUserPreferences(thisUser, userPref) {
-  
       const url = baseURL + '/v1/users/preferences';
       const auth = 'Bearer ' + thisUser.props.user.token;
   

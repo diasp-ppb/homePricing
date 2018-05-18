@@ -62,6 +62,28 @@ export default class LaunchScreen extends Component {
       });
   }
 
+  insertHistory() {
+    fetch(`${baseURL}/v1/history`, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(form),
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((houses) => {
+        this.setState({ loaded: true });
+        this.setState({ houses });
+        this.generateMarkers();
+      })
+      .catch((json) => {
+        console.error(json);
+      });
+  }
+
   // Clear data here
   componentWillUnmount() {
     this.setState({ houses: [] });

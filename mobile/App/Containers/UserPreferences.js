@@ -30,16 +30,16 @@ class UserPreferences extends Component {
             goal: null,
             propertyType: null,
             tipology: null,
-            minArea: null,
-            maxArea: null,
-            minPrice: null,
-            maxPrice: null,
-            hospitalDist: null,
-            hospitalQtn: null,
-            schoolDist: null,
-            schoolQtn: null,
+            minArea: "",
+            maxArea: "",
+            minPrice: "",
+            maxPrice: "",
+            hospitalDist: "",
+            hospitalQtn: "",
+            schoolDist: "",
+            schoolQtn: "",
             workPlace: null,
-            workDistance: null
+            workDistance: ""
         }
         this.handleSubmit = this.handleSubmit.bind(this);
         getUserPreferences(this, true);
