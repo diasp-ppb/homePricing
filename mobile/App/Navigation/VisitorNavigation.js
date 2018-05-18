@@ -7,7 +7,7 @@ import ControlPanel from '../Containers/ControlPanel/ControlPanel'
 
 // Import all screens
 import { LaunchScreen } from '../Containers/LaunchScreen'
-import SearchResults from '../Containers/SearchResults'
+import { SearchResults } from '../Containers/SearchResults'
 import { RegisterScreen } from '../Containers/RegisterScreen'
 import { LoginScreen } from '../Containers/LoginScreen'
 import { HouseInfScreen } from '../Containers/HouseInfScreen'

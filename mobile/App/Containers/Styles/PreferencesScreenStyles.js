@@ -27,17 +27,20 @@ export default StyleSheet.create({
      elevation: 1,
      borderRadius: 2
   },
-arrow:{
-    fontSize:30.2,
+  arrow:{
+    fontSize:20,
     color:'black',
+    margin: 0,
+    padding: 0
   },
   address:{
-    padding:10,
-    fontSize:12,
+    paddingLeft:10,
+    fontSize:12.5,
     color: '#595959'
   },
 
   money:{
+    marginTop: 10,
     fontSize:14,
     marginLeft: 14,
     color: '#262626'

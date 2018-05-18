@@ -75,10 +75,10 @@ export default class PreferenceScreen extends Component {
                       </View>
                     </View>
 
-                    <View style={{flex:0.18, marginTop: 22}} >
+                    <View style={{flex:0.13, marginTop: 22}} >
                         <Button transparent onPress={() => this.props.navigation.navigate('HouseInformation',{house: item })}>
                           <Text>
-                            <Icon style={{fontSize:20, color:'black'}} ios={'ion-ios-arrow-forward'} android={'md-arrow-forward'} />
+                            <Icon style={styles.arrow} ios={'ion-ios-arrow-forward'} android={'md-arrow-forward'} />
                           </Text>
                         </Button>
                     </View>

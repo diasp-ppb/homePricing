@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Image, ScrollView, ActivityIndicator} from 'react-native';
+import { connect } from 'react-redux';
 
 // Native Base
 import { View, Container, Content, Left, Body, Button, Text, Icon, Item, Input, Card, CardItem } from 'native-base';
@@ -13,7 +14,7 @@ import { baseURL } from '../Services/Api';
 import GPSMap from '../Components/GPSMap';
 
 // Component
-export default class LaunchScreen extends Component {
+class SearchResults extends Component {
   // static navigationOptions = ({ navigation }) => ({
   //   headerStyle: styles.headerStyle
   // })
@@ -67,27 +68,19 @@ export default class LaunchScreen extends Component {
       });
   }
 
-  /*insertHistory() {
+  addHistory(house) {
     fetch(`${baseURL}/v1/history`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(form),
+      body: JSON.stringify({ houseId: house._id, userId: this.props.user.user.id}),
     })
-      .then((response) => {
-        return response.json();
-      })
-      .then((houses) => {
-        this.setState({ loaded: true });
-        this.setState({ houses });
-        this.generateMarkers();
-      })
       .catch((json) => {
         console.error(json);
       });
-  }*/
+  }
 
   // Clear data here
   componentWillUnmount() {
@@ -175,7 +168,7 @@ export default class LaunchScreen extends Component {
     return this.state.houses.length > 0 ? this.state.houses.map((item, index) => {
       return (
         <Card key={index} style={{ flex: 1 }}>
-          <CardItem button onPress={() => navigate('HouseInformation', { house: item })}>
+          <CardItem button onPress={() =>{ this.addHistory(item), navigate('HouseInformation', { house: item })} }>
             <Left>
               <Body>
               <Text>{item.title}</Text>
@@ -241,3 +234,12 @@ export default class LaunchScreen extends Component {
     }
   }
 }
+
+function mapStateToProps(state) {
+  return {
+      user: state.login
+  };
+}
+
+const connectedRegister = connect(mapStateToProps)(SearchResults);
+export { connectedRegister as SearchResults };

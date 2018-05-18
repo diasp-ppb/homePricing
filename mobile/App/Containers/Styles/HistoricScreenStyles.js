@@ -18,29 +18,31 @@ export default StyleSheet.create({
     backgroundColor: '#f2f2f2'
   },
 
-  box1: {
-    flex: 1, flexDirection: 'row',
+  box1:{
+    flex:1, flexDirection:'row',
     padding: 6,
     marginTop: 10,
     marginHorizontal: 10,
-    backgroundColor: '#f2f2f2',
-    elevation: 2,
-    opacity: 0.9,
+    backgroundColor: '#ffffff',
+    elevation: 1,
     borderRadius: 2
-  },
-  arrow: {
-    fontSize: 30.2,
-    color: 'black',
+ },
+  arrow:{
+    fontSize:20,
+    color:'black',
+    margin: 0,
+    padding: 0
   },
   address: {
-    padding: 15,
+    padding: 10,
     fontSize: 12.5,
     color: '#595959'
   },
 
   date: {
-    fontSize: 11.5,
-    marginLeft: 14,
+    fontSize: 12.5,
+    marginLeft: 10,
+    marginTop: 10,
     color: '#262626'
   },
     container: {
