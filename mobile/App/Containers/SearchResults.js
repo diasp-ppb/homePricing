@@ -1,19 +1,19 @@
 import React, { Component } from 'react';
 import { Image, ScrollView } from 'react-native';
 
-
 // Native Base
-import { Container, Header, Left, Body, Button, Text, Icon, Item, Input, Segment, Card, CardItem } from 'native-base';
+import { View, Container, Content, Left, Body, Button, Text, Icon, Item, Input, Card, CardItem } from 'native-base';
 
 // Styles
 import styles from './Styles/SearchResultsStyles';
 import { baseURL } from '../Services/Api';
 import GPSMap from '../Components/GPSMap';
 
-
 // Component
 export default class LaunchScreen extends Component {
-
+  // static navigationOptions = ({ navigation }) => ({
+  //   headerStyle: styles.headerStyle
+  // })
 
   // This component's constructor
   constructor(props) {
@@ -64,7 +64,6 @@ export default class LaunchScreen extends Component {
   }
 
   generateMarkers() {
-
     let minLat = 1000;
     let maxLat = -1000;
     let minLong = 1000;
@@ -107,7 +106,6 @@ export default class LaunchScreen extends Component {
     this.setState({region: region, houses: houses});
   }
 
-
   addMoreMarkers(region) {
     this.setState({ region });
   }
@@ -118,9 +116,31 @@ export default class LaunchScreen extends Component {
     this.setState({ houses });
   }
 
+  renderSegment() {
+    return (
+      <View style={styles.segment}>
+        <Button
+          title={"Lista"}
+          style={[(this.state.map) ? styles.btn : styles.btnSlct, { marginRight: 2.5 }]}
+          active={!this.state.map}
+          onPress={() => this.setState({ map: false })}
+        >
+          <Text>Lista</Text>
+        </Button>
+        <Button
+          title={"Mapa"}
+          style={[(!this.state.map) ? styles.btn : styles.btnSlct, { marginLeft: 2.5 }]}
+          active={this.state.map}
+          onPress={() => this.setState({ map: true })}
+        >
+          <Text>Mapa</Text>
+        </Button>
+      </View>
+    )
+  }
+
   renderResultList() {
     const { navigate } = this.props.navigation;
-
     return this.state.houses.length > 0 ? this.state.houses.map((item, index) => {
       return (
         <Card key={index} style={{ flex: 1 }}>
@@ -129,10 +149,7 @@ export default class LaunchScreen extends Component {
               <Body>
               <Text>{item.title}</Text>
               <Text style={styles.address}>
-                <Icon ios="ios-pin" android="md-pin" style={styles.address} />
-                {item.address.zipcode},
-                {item.address.town},
-                {item.address.county}
+                <Icon ios="ios-pin" android="md-pin" style={styles.address} /> {item.address.zipcode}, {item.address.town}, {item.address.county}
               </Text>
               </Body>
             </Left>
@@ -152,55 +169,34 @@ export default class LaunchScreen extends Component {
           </CardItem>
         </Card>
       )
-    }) : (<Text> A sua pesquisa nao obteve resultados </Text>);
+    }) : (<Text style={{ textAlign: 'center' }}>A sua pesquisa não obteve resultados</Text>);
   }
 
   renderTab() {
     const { navigate } = this.props.navigation;
-
     return this.state.map === true ? (
-      <Container style={{ flex: 1, flexWrap: 'wrap' }}>
-        <GPSMap
-          region={this.state.region}
-          showsUserLocation={false}
-          addMoreMarkers={this.addMoreMarkers}
-          houses={this.state.houses}
-          navigate={navigate}
-          moreInfo={this.moreInfo}
-        />
-      </Container>
+      <GPSMap
+        region={this.state.region}
+        showsUserLocation={false}
+        addMoreMarkers={this.addMoreMarkers}
+        houses={this.state.houses}
+        navigate={navigate}
+        moreInfo={this.moreInfo}
+      />
     ) : (
-      <ScrollView style={{ marginBottom: 20, flex: 1 }}>
-        {
-          this.renderResultList()
-        }
-      </ScrollView>
+      <Content padder>
+        <View style={{ marginBottom: 20 }}>
+          {this.renderResultList()}
+        </View>
+      </Content>
     );
   }
-
 
   // Render the screen
   render() {
     return (
       <Container>
-        <Segment>
-          <Button
-            first
-            title={"Lista"}
-            active={!this.state.map}
-            onPress={() => this.setState({ map: false })}
-          >
-            <Text>Lista</Text>
-          </Button>
-          <Button
-            last
-            title={"Mapa"}
-            active={this.state.map}
-            onPress={() => this.setState({ map: true })}
-          >
-            <Text>Mapa</Text>
-          </Button>
-        </Segment>
+        {this.renderSegment()}
         {this.renderTab()}
       </Container>
     );

@@ -41,12 +41,6 @@ export default StyleSheet.create({
         marginTop:10
     },
     noFav: {
-        textAlign: 'center',
-        fontWeight: 'bold',
         marginTop: 18,
-    },
-    centerNoFav: {
-        justifyContent: 'center',
-        alignItems: 'center'
     }
 })

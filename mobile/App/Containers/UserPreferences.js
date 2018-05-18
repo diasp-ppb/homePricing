@@ -13,8 +13,6 @@ import { MinPrice, MaxPrice } from "@datatypes/Price";
 import { Goal } from '@datatypes/Goal'
 import { Tipology } from '@datatypes/Tipology'
 
-
-
 // Styles
 import styles from './Styles/UserPreferencesStyles'
 
@@ -32,8 +30,8 @@ class UserPreferences extends Component {
             tipology: undefined,
             minArea: "",
             maxArea: "",
-            minPrice: undefined,
-            maxPrice: undefined,
+            minPrice: null,
+            maxPrice: null,
             hospitalDist: "",
             hospitalQtn: "",
             schoolDist: "",

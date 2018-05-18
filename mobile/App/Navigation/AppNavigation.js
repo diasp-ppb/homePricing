@@ -8,7 +8,7 @@ const PrimaryNav = StackNavigator({
   visitorStack: { screen: VisitorStack },
 }, {
   headerMode: 'none',
-  initialRouteName: 'visitorStack',
+  initialRouteName: 'visitorStack'
 });
 
 export default PrimaryNav;

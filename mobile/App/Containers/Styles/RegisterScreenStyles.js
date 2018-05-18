@@ -7,18 +7,17 @@ export default StyleSheet.create({
     flexDirection: 'column'
   },
   topRow: {
-    flex: 0.5,
+    flex: 0.45,
     alignItems: 'center',
     justifyContent: 'center'
   },
   bottomRow: {
-    flex: 0.5,
+    flex: 0.55,
     alignItems: 'center'
   },
   homePricing: {
     width: '70%',
-    height: '22%',
-    marginTop: -40
+    height: '22%'
   },
   backgroundImage: {
     position: 'absolute',
@@ -38,12 +37,11 @@ export default StyleSheet.create({
     marginBottom: 10
   },
   headerStyle: {
-    elevation: 0,
-    position: 'absolute',
-    backgroundColor: 'transparent',
-    zIndex: 100,
     top: 0,
     left: 0,
-    right: 0
+    right: 0,
+    elevation: 0,
+    position: 'absolute',
+    backgroundColor: 'transparent'
   }
 })

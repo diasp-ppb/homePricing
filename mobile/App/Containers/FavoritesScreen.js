@@ -60,14 +60,10 @@ class FavoritesScreen extends Component {
         let response = await fetch(baseURL + "/v1/houses/" + param[i].houseId);
         let responseJson = await response.json();
         if (responseJson.code !== 404) {
-          let aux = responseJson.tipology.concat(" ", responseJson.condition);
           favs.push({
             id: auxId,
             idHouse: param[i].houseId,
-            text: aux,
-            location: responseJson.zone,
-            price: responseJson.price,
-            icon: Images.houseImage,
+            house: responseJson,
             active: true
           });
         } else {
@@ -90,32 +86,29 @@ class FavoritesScreen extends Component {
   changeFavorite = (id) => {
     if (this.state.rows[id].active === true) {
       this.state.rows[id].active = false;
-      deleteFavoriteAPI(this.props.user.user, this.state.rows[id].idHouse, this.props.user.token);
+      console.log("######DELETE:  " + this.state.rows[id].idHouse);
+      deleteFavoriteAPI(this.props.user.user.id, this.state.rows[id].idHouse, this.props.user.token);
     } else {
       this.state.rows[id].active = true;
-      createFavoriteAPI(this.props.user.user, this.state.rows[id].idHouse, this.props.user.token);
+      createFavoriteAPI(this.props.user.user.id, this.state.rows[id].idHouse, this.props.user.token);
     }
     this.setState({ rows: this.state.rows });
     this.setState({ dataSource: ds.cloneWithRows(this.state.rows) });
   }
 
   renderRow = (rowData) => {
+    let image = (rowData.house.images.length != 0) ? rowData.house.images[0] : "https://www.glassyconnections.com/images/no-image-available-lrg.jpg";
     return (
-      <TouchableOpacity key={rowData.id} onPress={() => this.props.navigation.navigate('HouseInfScreen', { id: rowData.idHouse })}>
+      <TouchableOpacity key={rowData.id} onPress={() =>  this.props.navigation.navigate('HouseInformation', { house: rowData.house })}>
         <View style={styles.listItem}>
-          <Image source={rowData.icon} style={styles.image} />
+          <Image source={{uri : image}} style={styles.image} />
           <View style={styles.data}>
             <Text style={styles.title} >
-              {rowData.text}
+              {rowData.house.title}
             </Text>
             <Text style={styles.info}>
-              {rowData.location}
+              {rowData.house.address.zipcode}, {rowData.house.address.town}, {rowData.house.address.county}
             </Text>
-            <View style={styles.price}>
-              <Text style={styles.info}>
-                Preço: {rowData.price}
-              </Text>
-            </View>
           </View>
           <TouchableOpacity key={rowData.id} onPress={() => this.changeFavorite(rowData.id)}>
             <Image source={rowData.active === true ? Images.fullStarIcon : Images.starLines} style={styles.star} />
@@ -131,21 +124,12 @@ class FavoritesScreen extends Component {
       dataSource={this.state.dataSource}
       renderRow={this.renderRow}
     />;
-    const message = <Text style={styles.noFav}>Ainda não tem favoritos</Text>;
-    if(this.state.rows.length > 0) {
-      return (
-        <Container>
-          {list}
-        </Container>
-      )
-    } else {
-      return (
-        <Container style={styles.centerNoFav}>
-          {message}
-        </Container>
-      )
-    }
-    
+    const message = <Text style={styles.noFav}> Ainda não tem favoritos</Text>;
+    return (
+      <Container>
+        {this.state.rows.length > 0 ? list : message}
+      </Container>
+    )
   }
 }
 
@@ -163,5 +147,3 @@ function mapDispatchToProps(dispatch) {
 const connectedRegister = connect(mapStateToProps, mapDispatchToProps)(FavoritesScreen);
 
 export { connectedRegister as FavoritesScreen};
-
-
