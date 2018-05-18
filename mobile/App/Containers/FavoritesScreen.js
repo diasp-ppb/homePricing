@@ -105,12 +105,9 @@ class FavoritesScreen extends Component {
             <Text style={styles.title} >
               {rowData.house.title}
             </Text>
-            <Text style={styles.info}>
-              {rowData.house.address}
-            </Text>
           </View>
           <TouchableOpacity key={rowData.id} onPress={() => this.changeFavorite(rowData.id)}>
-            <Image source={rowData.active === true ? Images.fullStarIcon : Images.starLines} style={styles.star} />
+            <Image source={rowData.active === true ? Images.greenStar : Images.greenStarLines} style={styles.star} />
           </TouchableOpacity>
         </View>
       </TouchableOpacity>

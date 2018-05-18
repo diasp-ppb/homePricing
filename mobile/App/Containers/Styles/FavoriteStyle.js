@@ -40,5 +40,11 @@ export default StyleSheet.create({
     },
     noFav: {
         marginTop: 18,
+    },
+    price:{
+        flex:1,
+        justifyContent: 'flex-end',
+        marginBottom:15
     }
+
 })
