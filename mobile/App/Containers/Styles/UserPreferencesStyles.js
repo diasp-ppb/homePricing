@@ -73,7 +73,6 @@ export default StyleSheet.create({
     borderBottomColor: Colors.coolGray2,
     borderBottomWidth: 5,
   },
-
   topBtn: {
     margin: 2,
     width: 170,

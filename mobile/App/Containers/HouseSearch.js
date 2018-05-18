@@ -43,6 +43,8 @@ class HouseSearch extends Component {
 
     if(this.props.user.loggedIn) {
       getUserPreferences(this, false);
+    } else {
+      this.state.getData = false;
     }
 
   }
