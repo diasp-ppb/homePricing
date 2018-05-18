@@ -2,54 +2,46 @@ import { StyleSheet } from 'react-native'
 import { Metrics, ApplicationStyles } from '../../Themes/'
 
 export default StyleSheet.create({
-  logo: {
-    width: 150,
-    height: 150,
-    resizeMode: 'contain'
-  },
-  content: {
+  container: {
     flex: 1
   },
-  halfRow: {
-    flex: 0.5,
+  row: {
+    flex: 0.33,
     alignItems: 'center',
     justifyContent: 'center'
   },
-  btnGroup: {
-    flexDirection: 'row',
-    justifyContent: 'center'
+  txt: {
+    fontSize: 20,
+    color: 'white',
+    marginBottom: 10,
+    textShadowColor: 'black',
+    textShadowOffset: { width: -2, height: 2 },
+    textShadowRadius: 10
+  },
+  icon: {
+    color: 'white',
+    marginHorizontal: 5,
+    paddingHorizontal: 5
   },
   btn: {
-    margin: 3,
-    width: 100,
-    justifyContent: 'center'
-  },
-  topBtn: {
-    margin: 2,
-    width: 170,
-    justifyContent: 'center',
     elevation: 60,
-    backgroundColor:'#046A38',
-    borderRadius:20,
-    opacity:0.92,
-    marginBottom: 3
+    opacity: 0.92,
+    marginBottom: 15,
+    borderRadius: 20,
+    justifyContent: 'center',
+    backgroundColor: '#046A38'
+  },
+  homePricing: {
+    width: '70%',
+    height: '22%'
   },
   backgroundImage: {
     position: 'absolute',
-    width:'100%',
-    height:'100%',
+    width: '100%',
+    height: '100%',
     top: 0,
     left: 0,
     bottom: 0,
     right: 0
-  },
-  homePricing: {
-    width:'70%',
-    height:'22%',
-    marginTop:-40
-  },
-  otherImage: {
-    width:'72%',
-    height:'68.5%'
   }
 })
