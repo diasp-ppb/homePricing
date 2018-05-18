@@ -33,7 +33,7 @@ arrow:{
   },
   address:{
     padding:15,
-    fontSize:7 ,
+    fontSize:12 ,
     color: '#595959'
   },
 

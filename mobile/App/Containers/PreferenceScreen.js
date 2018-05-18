@@ -9,8 +9,9 @@ import { Container, Content, Button, Text, Icon} from 'native-base'
 import styles from './Styles/PreferencesScreenStyles'
 import {baseURL} from "../Services/Api";
 // Component
-export default class LaunchScreen extends Component {
+export default class PreferenceScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
+    title: 'Recomendações',
   });
 
   // This component's constructor

@@ -51,7 +51,7 @@ class ControlPanel extends Component {
       case 4:  //Favorites
         return 'Favorites';
       case 5:  //Profile Settngs
-        break;
+        return 'UserSettings';
       case 6:  //Help page
         return 'HelpScreen';
       default:
