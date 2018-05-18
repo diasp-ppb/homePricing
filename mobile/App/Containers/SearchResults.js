@@ -8,6 +8,7 @@ import { View, Container, Content, Left, Body, Button, Text, Icon, Item, Input, 
 import styles from './Styles/SearchResultsStyles';
 import activityStyle from './Styles/ActivityIndicatorStyle';
 
+import { ToastError } from '../Services/LogToasts'
 import { baseURL } from '../Services/Api';
 import GPSMap from '../Components/GPSMap';
 
@@ -53,16 +54,20 @@ export default class LaunchScreen extends Component {
         return response.json();
       })
       .then((houses) => {
-        this.setState({ loaded: true });
-        this.setState({ houses });
-        this.generateMarkers();
+        if (houses.code == "400") {
+          ToastError("Error: " + responseJson.errors[0].messages[0]);
+        } else {
+          this.setState({ loaded: true });
+          this.setState({ houses });
+          this.generateMarkers();
+        }
       })
       .catch((json) => {
         console.error(json);
       });
   }
 
-  insertHistory() {
+  /*insertHistory() {
     fetch(`${baseURL}/v1/history`, {
       method: 'POST',
       headers: {
@@ -82,7 +87,7 @@ export default class LaunchScreen extends Component {
       .catch((json) => {
         console.error(json);
       });
-  }
+  }*/
 
   // Clear data here
   componentWillUnmount() {
