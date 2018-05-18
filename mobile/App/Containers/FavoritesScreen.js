@@ -114,7 +114,6 @@ class FavoritesScreen extends Component {
           </TouchableOpacity>
         </View>
       </TouchableOpacity>
-
     )
   }
 

@@ -3,6 +3,8 @@ import { Image, View, TouchableOpacity, Button } from 'react-native';
 import { Images } from '../Themes';
 import ImageSlider from 'react-native-image-slider';
 import { baseURL, createFavoriteAPI, deleteFavoriteAPI } from "../Services/Api";
+import { connect } from 'react-redux';
+
 // Native Base
 
 import { Container, Content, Text } from 'native-base';
@@ -10,14 +12,9 @@ import { Container, Content, Text } from 'native-base';
 import styles from './Styles/HouseInfScreenStyles';
 import HouseInfScreenStyles from './Styles/HouseInfScreenStyles';
 
-export default class LaunchScreen extends Component {
+class HouseInfScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
     title: 'Informação da casa',
-    headerRight: (
-      <TouchableOpacity onPress={() => navigation.state.params.handleClick()}>
-            <Image source={navigation.state.params.favorite ? Images.greenStar : Images.greenStarLines}  style={styles.star} />
-      </TouchableOpacity>
-    ),
   });
 
   constructor(props) {
@@ -28,30 +25,37 @@ export default class LaunchScreen extends Component {
   }
 
   componentDidMount() {
-    let id = "5ae75668eb94fe001dfc20da",
-        token ="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1MjY2NDUyMTIsImlhdCI6MTUyNjY0MTYxMiwic3ViIjoiNWFlNzU2NjhlYjk0ZmUwMDFkZmMyMGRhIn0.8cWrJXkdTwqSmGtEi08XYqH6vh9zgVT4A6rYVOQ3tWI",
-        houseId = this.props.navigation.state.params.house.id;
-    this.props.navigation.setParams({handleClick: this.changeFavorite});
-    this.isFavorite(id, token, houseId);
+    let houseId = this.props.navigation.state.params.house.id;
+    console.log("%%%%%%%%%");
+    console.log(houseId);
+    console.log(this.props.user.user.id);
+    console.log(this.props.user.token);    
+    this.isFavorite(this.props.user.user.id, this.props.user.token, houseId);
   }
 
   changeFavorite = () => {
-    let id = "5ae75668eb94fe001dfc20da",
-        token ="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1MjY2NDUyMTIsImlhdCI6MTUyNjY0MTYxMiwic3ViIjoiNWFlNzU2NjhlYjk0ZmUwMDFkZmMyMGRhIn0.8cWrJXkdTwqSmGtEi08XYqH6vh9zgVT4A6rYVOQ3tWI",
-        houseId = this.props.navigation.state.params.house.id;
+    let houseId = this.props.navigation.state.params.house.id;
     let aux = false;
+    console.log("##################");
+    console.log(houseId);
+    console.log(this.state.favorite);
     if (this.state.favorite) {
       aux = false;
-      deleteFavoriteAPI(id, houseId,token);
+      deleteFavoriteAPI(this.props.user.user.id, houseId,this.props.user.token);
     } else {
       aux = true;
-      createFavoriteAPI(id, houseId,token);
+      createFavoriteAPI(this.props.user.user.id, houseId,this.props.user.token);
     }
     this.props.navigation.setParams({favorite: aux});
     this.setState({ favorite : aux , handleClick: this.changeFavorite});
   }
 
   async isFavorite(id, token, houseId) {
+    console.log("##################");
+    console.log(id);
+    console.log(token);
+    console.log(houseId);
+    console.log(this.state.favorite);
     var auth = 'Bearer ' + token;
     try {
       let response = await fetch(baseURL + "/v1/favorites", {
@@ -68,11 +72,17 @@ export default class LaunchScreen extends Component {
       let responseJson = await response.json();      
       for(let i = 0; i < responseJson.length; i++){
         if(responseJson[i].houseId == houseId){
-          this.setState({ favorite: true });
           this.props.navigation.setParams({favorite: true, handleClick: this.changeFavorite});
+          this.setState({ favorite: true });
+          console.log("#############");
+          console.log(this.props.navigation.params);
+          console.log(this.state);
           return;
         }
         this.props.navigation.setParams({favorite: false, handleClick: this.changeFavorite});
+        console.log("??????????????");
+          console.log(this.props.navigation.params);
+          console.log(this.state);
       }
       return;
     } catch (error) {
@@ -85,6 +95,11 @@ export default class LaunchScreen extends Component {
     const house = navigation.state.params.house;
     const undefined = "Não definido";
     const images = (house.images.length > 0) ? house.images : ["https://www.glassyconnections.com/images/no-image-available-lrg.jpg"];
+    const star = <TouchableOpacity onPress={() => navigation.state.params.handleClick()}>
+    <Image source={navigation.state.params.favorite ? Images.greenStar : Images.greenStarLines}  style={styles.star} />
+  </TouchableOpacity>;
+    console.log("!!!!!!!!!!!!!!!!!!!");
+    console.log(this.props.user);
     return (
       <Container>
         <Content>
@@ -92,10 +107,13 @@ export default class LaunchScreen extends Component {
           <ImageSlider style={{ width: '100%', height: 200 }} images={images} />
 
           <View style={styles.infTab}>
-            <Text style={styles.priceText}> {house.price}€ </Text>
-            <Text style={styles.typeText}>House Rent</Text>
+            
+            <View style = {styles.data}>
+              <Text style={styles.priceText}> {house.price}€ </Text>
+              <Text style={styles.typeText}>House Rent</Text>
+            </View>
+            {this.props.user.loggedIn ? star : <View/>}
           </View>
-
           <View style={styles.box1}>
             <View style={{ flex: 0.8 }}>
               <Text style={styles.streetText}>
@@ -147,3 +165,12 @@ export default class LaunchScreen extends Component {
     );
   }
 }
+
+function mapStateToProps(state) {
+  return {
+    user: state.login
+  };
+}
+
+const connectedRegister = connect(mapStateToProps)(HouseInfScreen);
+export { connectedRegister as HouseInfScreen };
