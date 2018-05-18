@@ -301,7 +301,7 @@ class UserPreferences extends Component {
                         </View>
 
                         <View style={{margin: Metrics.doubleBaseMargin}}>
-                            <Button style={styles.buttonStyle} onPress = {this.handleSubmit}>
+                            <Button style={styles.topBtn} onPress = {this.handleSubmit}>
                                 <Text style={styles.buttonTextStyle}>Alterar preferências</Text>
                             </Button>
                         </View>
