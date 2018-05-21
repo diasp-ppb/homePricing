@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import GpsMap from '../Components/GPSMap';
 import { baseURL } from '../Services/Api';
+import { StyleSheet } from 'react-native';
 import { Fab, Container, Icon, View, Text } from 'native-base';
 
 import styles from './Styles/GpsScreenStyles'
 
 export default class GpsScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
-    title: 'GPS'
+    title: 'Mapa'
   });
 
   constructor(props) {
@@ -131,6 +132,30 @@ export default class GpsScreen extends Component {
     }
   }
 
+  renderModal() {
+    return (
+      <View style={styles.modal}>
+        <Text style={styles.title}>
+          {(this.state.activeModal === 'info') ? 'Informação da Área' : 'Preço Médio'}
+        </Text>
+        <View style={styles.separator}></View>
+        {(this.state.activeModal === 'info') ?
+          <Icon ios={'ios-information'} android={'md-information'} style={styles.icon} />
+          :
+          <Icon ios={'ios-bulb'} android={'md-bulb'} style={styles.icon} />
+        }
+        <Text style={styles.location}>
+          <Icon ios={'ios-pin'} android={'md-pin'} style={{ color: 'white', fontSize: 20 }} /> Localização
+        </Text>
+        {(this.state.activeModal === 'info') ?
+          <Text style={styles.description}>Descrição</Text>
+          :
+          <Text style={styles.price}>10,000 €</Text>
+        }
+      </View>
+    )
+  }
+
   render() {
     const { navigate } = this.props.navigation;
 
@@ -157,27 +182,7 @@ export default class GpsScreen extends Component {
           onPress={() => this.handleModal('avg')}>
           <Icon ios={'ios-bulb'} android={'md-bulb'} />
         </Fab>
-        {(this.state.modalVisible === true) ? 
-          <View style={styles.modal}>
-            <Text style={styles.title}>
-              {(this.state.activeModal === 'info') ? 'Area Information' : 'Average Price'}
-            </Text>
-            <View style={styles.separator}></View>
-            {(this.state.activeModal === 'info') ?
-              <Icon ios={'ios-information'} android={'md-information'} style={styles.icon} />
-              :
-              <Icon ios={'ios-bulb'} android={'md-bulb'} style={styles.icon} />
-            }
-            <Text style={styles.location}>
-              <Icon ios={'ios-pin'} android={'md-pin'} style={{ color: 'white', fontSize: 20 }} /> Location
-          </Text>
-            {(this.state.activeModal === 'info') ?
-              <Text style={styles.description}>Description</Text>
-              :
-              <Text style={styles.price}>10,000 €</Text>
-            }
-          </View>
-        : null}
+        {(this.state.modalVisible === true) ? this.renderModal() : null}
       </Container>
     );
   }

@@ -136,7 +136,6 @@ android {
 }
 
 dependencies {
-    compile project(':react-native-blur')
     compile (project(':react-native-camera')) {
         exclude group: "com.google.android.gms"
         compile 'com.android.support:exifinterface:27.1.0'
