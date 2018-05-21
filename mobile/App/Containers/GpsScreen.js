@@ -1,11 +1,15 @@
 import React, { Component } from 'react';
 import GpsMap from '../Components/GPSMap';
 import { baseURL } from '../Services/Api';
+import { Fab, Container, Icon, View, Text } from 'native-base';
+
+import styles from './Styles/GpsScreenStyles'
 
 export default class GpsScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
-    title: 'Mapa',
+    title: 'GPS'
   });
+
   constructor(props) {
     super(props);
 
@@ -20,6 +24,8 @@ export default class GpsScreen extends Component {
         longitudeDelta: 0.0025,
       },
       houses: [],
+      activeModal: '',
+      modalVisible: false
     };
 
     this.addMoreMarkers = this.addMoreMarkers.bind(this);
@@ -52,7 +58,6 @@ export default class GpsScreen extends Component {
   componentWillUnmount() {
     navigator.geolocation.clearWatch(this.watchId);
   }
-
 
   getMarkerOnLocation() {
     fetch(`${baseURL}/v1/houses/findbygps`, {
@@ -106,20 +111,74 @@ export default class GpsScreen extends Component {
     this.setState({ houses });
   }
 
+  activateModal(modal) {
+    this.setState({ activeModal: modal })
+    this.setState({ modalVisible: true })
+  }
+
+  deactivateModal() {
+    this.setState({ activeModal: '' })
+    this.setState({ modalVisible: false })
+  }
+
+  handleModal(modal) {
+    if (this.state.modalVisible === true && this.state.activeModal === modal) {
+      this.deactivateModal()
+    } else if (this.state.modalVisible === true && this.state.activeModal !== modal) {
+      this.setState({ activeModal: modal })
+    } else if (this.state.modalVisible === false) {
+      this.activateModal(modal)
+    }
+  }
 
   render() {
     const { navigate } = this.props.navigation;
 
     return (
-      <GpsMap
-        region={this.state.region}
-        showsUserLocation
-        addMoreMarkers={this.addMoreMarkers}
-        navigate={navigate}
-        moreInfo={this.moreInfo}
-        focusOnLocation={this.focusOnLocation}
-        houses={this.state.houses}
-      />
+      <Container>
+        <GpsMap
+          region={this.state.region}
+          showsUserLocation
+          addMoreMarkers={this.addMoreMarkers}
+          navigate={navigate}
+          moreInfo={this.moreInfo}
+          focusOnLocation={this.focusOnLocation}
+          houses={this.state.houses}
+        />
+        <Fab
+          position="bottomLeft"
+          style={{ backgroundColor: '#046A38' }}
+          onPress={() => this.handleModal('info')}>
+          <Icon ios={'ios-information'} android={'md-information'} />
+        </Fab>
+        <Fab
+          position="bottomRight"
+          style={{ backgroundColor: '#046A38' }}
+          onPress={() => this.handleModal('avg')}>
+          <Icon ios={'ios-bulb'} android={'md-bulb'} />
+        </Fab>
+        {(this.state.modalVisible === true) ? 
+          <View style={styles.modal}>
+            <Text style={styles.title}>
+              {(this.state.activeModal === 'info') ? 'Area Information' : 'Average Price'}
+            </Text>
+            <View style={styles.separator}></View>
+            {(this.state.activeModal === 'info') ?
+              <Icon ios={'ios-information'} android={'md-information'} style={styles.icon} />
+              :
+              <Icon ios={'ios-bulb'} android={'md-bulb'} style={styles.icon} />
+            }
+            <Text style={styles.location}>
+              <Icon ios={'ios-pin'} android={'md-pin'} style={{ color: 'white', fontSize: 20 }} /> Location
+          </Text>
+            {(this.state.activeModal === 'info') ?
+              <Text style={styles.description}>Description</Text>
+              :
+              <Text style={styles.price}>10,000 €</Text>
+            }
+          </View>
+        : null}
+      </Container>
     );
   }
 }
