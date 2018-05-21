@@ -26,7 +26,11 @@ export default class GpsScreen extends Component {
       },
       houses: [],
       activeModal: '',
-      modalVisible: false
+      modalVisible: false,
+      description: 'Local com criminalidade reduzida'
+                  + '\nTemperatura média: 22ºC'
+                  + '\nShopping e Hospitais na zona'
+                  + '\nTransportes e Metro'
     };
 
     this.addMoreMarkers = this.addMoreMarkers.bind(this);
@@ -145,10 +149,10 @@ export default class GpsScreen extends Component {
           <Icon ios={'ios-bulb'} android={'md-bulb'} style={styles.icon} />
         }
         <Text style={styles.location}>
-          <Icon ios={'ios-pin'} android={'md-pin'} style={{ color: 'white', fontSize: 20 }} /> Localização
+          <Icon ios={'ios-pin'} android={'md-pin'} style={{ color: 'white', fontSize: 20 }} /> Porto, Porto
         </Text>
         {(this.state.activeModal === 'info') ?
-          <Text style={styles.description}>Descrição</Text>
+          <Text style={styles.description}>{this.state.description}</Text>
           :
           <Text style={styles.price}>10,000 €</Text>
         }

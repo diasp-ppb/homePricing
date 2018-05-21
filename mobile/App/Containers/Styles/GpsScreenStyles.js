@@ -33,7 +33,7 @@ export default StyleSheet.create({
 		textAlign: 'center',
 	},
 	description: {
-		fontSize: 15,
+		fontSize: 12,
 		marginTop: 10,
 		color: 'white',
 		textAlign: 'center',
@@ -42,7 +42,7 @@ export default StyleSheet.create({
 		left: x,
 		top: 100,
 		width: '70%',
-		padding: 50,
+		padding: 45,
 		elevation: 40,
 		borderRadius: 50,
 		position: 'absolute',
