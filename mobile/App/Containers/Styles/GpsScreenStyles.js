@@ -47,5 +47,14 @@ export default StyleSheet.create({
 		borderRadius: 50,
 		position: 'absolute',
 		backgroundColor: '#046A38'
+	},
+	overlay: {
+		top: 0,
+		left: 0,
+		opacity: 0.5,
+		width: '100%',
+		height: '100%',
+		position: 'absolute',
+		backgroundColor: 'black'
 	}
 })
