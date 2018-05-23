@@ -205,6 +205,33 @@ houseSchema.statics = {
 
     return house;
   },
+
+  async getAveragePrice(town, page = 1, perPage = 30) {
+    const avgPrice = await this.aggregate(
+      [
+        {
+          $group:
+            {
+              _id: "$address.town",
+              avgAmount: { $avg: "$price" },
+            },
+        },
+        {
+          $match: { _id: town }
+        },
+
+      ])
+      .cursor({ batchSize: 2000000 })
+      .sort({ createdAt: -1 })
+      .skip(perPage * (page - 1))
+      .limit(perPage)
+      .exec()
+      .toArray();
+      
+      console.log("IMPRIME: " + avgPrice);
+
+    return avgPrice;
+  },
 };
 
 /**
