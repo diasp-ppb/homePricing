@@ -1,11 +1,10 @@
 import { Images } from '../Themes'
 import React, { Component } from 'react'
-import { View, Image, Alert, TouchableOpacity, StyleSheet } from 'react-native'
-import Grid from 'react-native-grid-list'
+import { View, Image } from 'react-native'
 import { connect } from 'react-redux';
 
 // Native Base
-import { Container, Header, Left, Right, Body, Title, Content, Button, Text, Icon, Item, Input, Segment, Card, CardItem } from 'native-base'
+import { Container, Content, Button, Text, Icon} from 'native-base'
 
 // Styles
 import styles from './Styles/HistoricScreenStyles'
