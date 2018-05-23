@@ -30,7 +30,8 @@ export default StyleSheet.create({
      paddingTop:8,
      backgroundColor: 'white',
      opacity:0.55, 
-     elevation: 3
+     elevation: 3,
+     flexDirection: 'row'
   },
   priceText:{
     paddingBottom:6,
@@ -85,6 +86,16 @@ export default StyleSheet.create({
     fontSize:13 ,
     padding:2 , 
     color:'#8c8c8c'
+  },
+  star:{
+    width: Metrics.images.normal,
+    height: Metrics.images.normal,
+    marginRight: 20,
+    marginTop:10
+  },
+  data:{
+    flex:1,
+    flexDirection :'column'
   }
 
 })

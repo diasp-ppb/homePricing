@@ -23,24 +23,28 @@ export default StyleSheet.create({
         flexWrap: 'wrap'
     },
     title:{
-        color: Colors.blue6
+        color: Colors.blue6,
+        fontSize: 16
     },
     info:{
         marginTop: 5,
         fontSize:12
     },
-    price:{
-        flex:1,
-        justifyContent: 'flex-end',
-        marginBottom:15
-    },
     star:{
         width: Metrics.images.normal,
         height: Metrics.images.normal,
         marginRight: 20,
-        marginTop:10
+        marginTop:10,
+        marginLeft:5,
+        marginRight:5
     },
     noFav: {
         marginTop: 18,
+    },
+    price:{
+        flex:1,
+        justifyContent: 'flex-end',
+        marginBottom:15
     }
+
 })

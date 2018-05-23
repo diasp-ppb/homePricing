@@ -60,14 +60,10 @@ class FavoritesScreen extends Component {
         let response = await fetch(baseURL + "/v1/houses/" + param[i].houseId);
         let responseJson = await response.json();
         if (responseJson.code !== 404) {
-          let aux = responseJson.tipology.concat(" ", responseJson.condition);
           favs.push({
             id: auxId,
             idHouse: param[i].houseId,
-            text: aux,
-            location: responseJson.zone,
-            price: responseJson.price,
-            icon: Images.houseImage,
+            house: responseJson,
             active: true
           });
         } else {
@@ -84,45 +80,37 @@ class FavoritesScreen extends Component {
   }
 
   componentDidMount() {
-    this.getFavorites(this.props.user.user, this.props.user.token);
+    this.getFavorites(this.props.user.user.id, this.props.user.token);
   }
 
   changeFavorite = (id) => {
     if (this.state.rows[id].active === true) {
       this.state.rows[id].active = false;
-      deleteFavoriteAPI(this.props.user.user, this.state.rows[id].idHouse, this.props.user.token);
+      deleteFavoriteAPI(this.props.user.user.id, this.state.rows[id].idHouse, this.props.user.token);
     } else {
       this.state.rows[id].active = true;
-      createFavoriteAPI(this.props.user.user, this.state.rows[id].idHouse, this.props.user.token);
+      createFavoriteAPI(this.props.user.user.id, this.state.rows[id].idHouse, this.props.user.token);
     }
     this.setState({ rows: this.state.rows });
     this.setState({ dataSource: ds.cloneWithRows(this.state.rows) });
   }
 
   renderRow = (rowData) => {
+    let image = (rowData.house.images.length != 0) ? rowData.house.images[0] : "https://www.glassyconnections.com/images/no-image-available-lrg.jpg";
     return (
-      <TouchableOpacity key={rowData.id} onPress={() => this.props.navigation.navigate('HouseInfScreen', { id: rowData.idHouse })}>
+      <TouchableOpacity key={rowData.id} onPress={() =>  this.props.navigation.navigate('HouseInformation', { house: rowData.house })}>
         <View style={styles.listItem}>
-          <Image source={rowData.icon} style={styles.image} />
+          <Image source={{uri : image}} style={styles.image} />
           <View style={styles.data}>
             <Text style={styles.title} >
-              {rowData.text}
+              {rowData.house.title}
             </Text>
-            <Text style={styles.info}>
-              {rowData.location}
-            </Text>
-            <View style={styles.price}>
-              <Text style={styles.info}>
-                Preço: {rowData.price}
-              </Text>
-            </View>
           </View>
           <TouchableOpacity key={rowData.id} onPress={() => this.changeFavorite(rowData.id)}>
-            <Image source={rowData.active === true ? Images.fullStarIcon : Images.starLines} style={styles.star} />
+            <Image source={rowData.active === true ? Images.greenStar : Images.greenStarLines} style={styles.star} />
           </TouchableOpacity>
         </View>
       </TouchableOpacity>
-
     )
   }
 
