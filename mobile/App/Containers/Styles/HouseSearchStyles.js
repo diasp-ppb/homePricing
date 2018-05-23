@@ -5,10 +5,7 @@ export default StyleSheet.create({
   title: {
     fontSize: 20,
     color: 'white',
-    textAlign: 'center',
-    textShadowColor: 'black',
-    textShadowOffset: {width: -2, height: 2},
-    textShadowRadius: 10
+    textAlign: 'center'
   },
   pkr: {
     margin: 15,
@@ -19,26 +16,6 @@ export default StyleSheet.create({
     backgroundColor: 'white'
   },
   pkrGrp: {
-    flex: 1,
-    margin: 15,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  btn: {
-    opacity: 0.92,
-    borderRadius: 20,
-    backgroundColor: '#046A38'
-  },
-  btnSlct: {
-    opacity: 0.92,
-    borderRadius: 20,
-    backgroundColor: '#43B02A'
-  },
-  halfBtn: {
-    flex: 0.5
-  },
-  btnGrp: {
     flex: 1,
     margin: 15,
     flexDirection: 'row',

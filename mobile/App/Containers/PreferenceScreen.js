@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { View, Image, ActivityIndicator } from 'react-native'
 
 // Native Base
-import { Container, Content, Button, Text, Icon} from 'native-base'
+import { Container, Content, Card, CardItem, Body, Button, Text, Icon, Left } from 'native-base'
 
 // Styles
 import activityStyle from './Styles/ActivityIndicatorStyle'
@@ -13,7 +13,7 @@ import {baseURL} from "../Services/Api";
 // Component
 export default class PreferenceScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
-    title: 'Recomendações',
+    header: null
   });
 
   // This component's constructor
@@ -47,7 +47,6 @@ export default class PreferenceScreen extends Component {
 
   // Render the screen
   render () {
-
     const { navigate } = this.props.navigation;
 
     if(this.state.loaded) {

@@ -1,48 +1,47 @@
 // a library to wrap and simplify api calls
 
 import { SUCCESS_LOGIN,
-    ERROR_INVALID_EMAIL, ERROR_INVALID_PARAM_LOGIN,
-    SUCCESS_REGISTER,
-    ERROR_INVALID_PARAM_REGISTER, ERROR_EMAIL_EXISTS_REGISTER,
-    LOGOUT_SUCCESS,
-    UPDATE_USER_PREFERENCES,
-    ERROR_AREAS, ERROR_PRICES,
-    error_area, error_price, error_service,
-    ToastWarning } from './LogToasts'
-  import { ToastSuccess, ToastError } from './LogToasts'
-  import { login } from '../Redux/LoginRedux'
-  
-  export const baseURL = "http://172.30.6.8:3000"
-  
-  export function checkRegisterResponse(responseJson, thisUser) {
-      if (responseJson.code == '400') {
-          ToastError(ERROR_INVALID_PARAM_REGISTER);
-      } else if (responseJson.code == '409') {
-          ToastError(ERROR_EMAIL_EXISTS_REGISTER);
-      } else {
-          const { navigate } = thisUser.props.navigation;
-          navigate('Login');
-          ToastSuccess(SUCCESS_REGISTER);
-      }
-  }
-  
-  export function checkLoginResponse(responseJson, thisUser) {
-  
-      if (responseJson.code == '400') {
-          thisUser.setState({password : ''});
-          ToastError(ERROR_INVALID_EMAIL);
-      } else if (responseJson.code == '401') {
-          thisUser.setState({password : ''});
-          ToastError(ERROR_INVALID_PARAM_LOGIN);
-      } else {
-          const { navigate } = thisUser.props.navigation;
-          ToastSuccess(SUCCESS_LOGIN);
-          thisUser.props.login(responseJson.user, responseJson.token.accessToken);
-          navigate('userStack');
-      }
-  }
-  
-  export function createBodyUserPreferences(goal, propertyType, tipology,
+  ERROR_INVALID_EMAIL, ERROR_INVALID_PARAM_LOGIN,
+  SUCCESS_REGISTER,
+  ERROR_INVALID_PARAM_REGISTER, ERROR_EMAIL_EXISTS_REGISTER,
+  LOGOUT_SUCCESS,
+  UPDATE_USER_PREFERENCES,
+  ERROR_AREAS, ERROR_PRICES,
+  error_area, error_price, error_service,
+  ToastWarning } from './LogToasts'
+import { ToastSuccess, ToastError } from './LogToasts'
+import { login } from '../Redux/LoginRedux'
+
+export const baseURL = "http://172.30.8.9:3000"
+
+export function checkRegisterResponse(responseJson, props) {
+    if (responseJson.code === '400') {
+        ToastError(ERROR_INVALID_PARAM_REGISTER);
+    } else if (responseJson.code === '409') {
+        ToastError(ERROR_EMAIL_EXISTS_REGISTER);
+    } else {
+        const { navigate } = props.navigation;
+        navigate('Login');
+        ToastSuccess(SUCCESS_REGISTER);
+    }
+}
+
+export function checkLoginResponse(responseJson, props) {
+
+    if (responseJson.code === '400') {
+        ToastError(ERROR_INVALID_EMAIL);
+    } else if (responseJson.code === '401') {
+        ToastError(ERROR_INVALID_PARAM_LOGIN);
+    } else {
+        const { navigate } = props.navigation;
+
+        ToastSuccess(SUCCESS_LOGIN);
+        props.login(responseJson.user, responseJson.token.accessToken);
+        navigate('userStack');
+    }
+}
+
+export function createBodyUserPreferences(goal, propertyType, tipology,
     minArea, maxArea,
     minPrice, maxPrice,
     hospitalDist, hospitalQtn,

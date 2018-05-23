@@ -10,9 +10,9 @@ import styles from './Styles/UserSettingsStyles'
 
 // Component
 export default class UserSettingsScreen extends Component {
-    static navigationOptions = ({ navigation }) => ({
-        title: 'Configurações de conta',
-    });
+	static navigationOptions = ({ navigation }) => ({
+		header: null
+	})
 
 	render() {
 		const { navigate } = this.props.navigation;
