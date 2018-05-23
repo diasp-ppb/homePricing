@@ -1,0 +1,36 @@
+version: "2"
+services:
+
+   mongodb:
+    container_name: mongodb
+    image: mongo
+    ports:
+    - "27017:27017"
+  
+   crawler:
+    container_name: crawler
+    build: ./crawler
+    tty: true
+    stdin_open: true
+    depends_on: 
+    - mongodb
+    volumes:
+    - ./crawler:/usr/src/app
+
+   api:
+    command: npm run dev
+    container_name: api
+    build:
+        context: ./api/
+        dockerfile: ./Dockerfile
+    environment: 
+    - MONGO_URI=mongodb://mongodb:27017/
+    ports:
+    - "3000:3000"
+    depends_on: 
+    - mongodb
+    volumes:
+    - ./api/:/usr/src/app
+    - /usr/src/app/node_modules/
+    
+
