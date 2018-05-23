@@ -2,13 +2,30 @@ import { StyleSheet } from 'react-native'
 import { Metrics, ApplicationStyles } from '../../Themes/'
 
 export default StyleSheet.create({
-  info: {
-    fontSize: 15,
-    color: 'black'
+  // ...ApplicationStyles.screen,
+  pageTitle:{
+    fontSize:15,
+    marginLeft:-40,
+    fontFamily: 'tahoma'
   },
-  address: {
-    color: 'gray',
-    fontSize: 13.5
+
+  btns: {
+    flex: 1,
+    flexDirection: 'row'
+  },
+
+  headerBG:{
+    backgroundColor:'#f2f2f2'
+  }, 
+
+  box1:{
+     flex:1, flexDirection:'row',
+     padding: 6,
+     marginTop: 10,
+     marginHorizontal: 10,
+     backgroundColor: '#ffffff',
+     elevation: 1,
+     borderRadius: 2
   },
   arrow:{
     fontSize:20,
