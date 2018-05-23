@@ -1,5 +1,7 @@
-import { StackNavigator, DrawerNavigator } from 'react-navigation'
+import React from 'react'
+import { View } from 'react-native'
 
+import { StackNavigator, DrawerNavigator } from 'react-navigation'
 import { ControlPanel } from '../Containers/ControlPanel/ControlPanel'
 
 
@@ -17,6 +19,7 @@ import { FavoritesScreen } from '../Containers/FavoritesScreen'
 import HelpScreen from '../Containers/HelpScreen'
 import { HistoricScreen } from '../Containers/HistoricScreen'
 import PreferenceScreen from '../Containers/PreferenceScreen'
+import UserSettingsScreen from '../Containers/UserSettingsScreen'
 
 import Colors from '../Themes/Colors'
 
@@ -25,12 +28,11 @@ import styles from './Styles/NavigationStyles'
 
 const navigationOptions = ({ navigation }) => ({
   headerStyle: { backgroundColor: '#1a1a1a' },
+  headerTitleStyle: { alignSelf: 'center' },
+  headerRight: (<View />),
   headerTintColor: '#f2f2f2',
   fontSize: 6,
-  textAlignVertical: 'center',
-  headerTitleStyle: {
-    fontSize: 12,
-  },
+  textAlignVertical: 'center'
 });
 
 // Manifest of possible screens
@@ -48,6 +50,7 @@ const UserStack = StackNavigator({
   HelpScreen: { screen: HelpScreen },
   PreferenceScreen: { screen: PreferenceScreen},
   HistoricScreen: { screen: HistoricScreen},
+  UserSettings: { screen: UserSettingsScreen }
 }, {
   // Default config for all screens
   headerMode: 'float',

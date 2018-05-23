@@ -78,7 +78,7 @@ class RegisterScreen extends Component {
                 />
               </Item>
               <Button primary block style={styles.button} onPress={this.handleSubmit}>
-                <Text style={{ fontSize: 12 }}>Registar</Text>
+                <Text>Registar</Text>
               </Button>
             </Form>
           </View>

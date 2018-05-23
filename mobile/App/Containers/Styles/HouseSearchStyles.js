@@ -2,127 +2,115 @@ import { StyleSheet } from 'react-native'
 import { Metrics, ApplicationStyles, Colors, Fonts } from '../../Themes/'
 
 export default StyleSheet.create({
-  root: {
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignContent: 'center'
-  },
-
-  text: {
-    color: Colors.blue6,
-    alignContent: 'center'
-  },
-
-  serviceButton: {
-    marginRight: Metrics.baseMargin / 2,
-    backgroundColor: Colors.white,
-    borderWidth: 0,
-    borderColor: Colors.transparent,
-    height: 85,
-    width: 85,
-    flexDirection: 'column'
-  },
-
-  serviceButtonSelected: {
-    marginRight: Metrics.baseMargin / 2,
-    backgroundColor: Colors.blue5,
-    borderWidth: 0,
-    borderColor: Colors.transparent,
-    height: 85,
-    width: 85,
-    flexDirection: 'column'
-  },
-
-  servicesPanel: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignContent: 'center',
-    width: Metrics.screenWidth
-  },
-
-  obectivePanel: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignContent: 'center',
-    marginRight: Metrics.baseMargin,
-    marginLeft: Metrics.baseMargin,
-    width: Metrics.screenWidth - 2 * Metrics.baseMargin ,
-  },
-
   title: {
-    color: Colors.blue6,
-    fontSize: Fonts.size.h6,
-    alignSelf: 'center',
-    marginTop: Metrics.doubleBaseMargin,
-    marginBottom: Metrics.baseMargin
+    fontSize: 20,
+    color: 'white',
+    textAlign: 'center'
   },
-
-  objectiveButton: {
-    backgroundColor: Colors.white,
-    borderWidth: 0,
-    borderColor: Colors.transparent,
-    alignSelf: 'stretch',
+  pkr: {
+    margin: 15,
+    backgroundColor: 'white'
+  },
+  halfPkr: {
+    flex: 0.5,
+    backgroundColor: 'white'
+  },
+  pkrGrp: {
     flex: 1,
-    alignContent: 'center',
-    justifyContent: 'center'
-  },
-
-  objectiveButtonSelected: {
-    backgroundColor: Colors.blue5,
-    borderWidth: 0,
-    borderColor: Colors.transparent,
-    alignSelf: 'stretch',
-    flex: 1,
-    alignContent: 'center',
-    justifyContent: 'center'
-  },
-
-  objectiveButtonSelectedText: {
-    color: Colors.white
-  },
-  icon: {
-    fontSize: Metrics.icons.medium,
-    color: Colors.blue2,
-    marginTop: Metrics.baseMargin
-  },
-
-  iconSelected: {
-    fontSize: Metrics.icons.medium,
-    color: Colors.white,
-    marginTop: Metrics.baseMargin
-  },
-
-
-
-  buttonText: {
-    alignSelf: 'center'
-  },
-  SideBySide: {
+    margin: 15,
     flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  btn: {
+    opacity: 0.92,
+    borderRadius: 20,
+    backgroundColor: '#046A38'
+  },
+  btnSlct: {
+    opacity: 0.92,
+    borderRadius: 20,
+    backgroundColor: '#43B02A'
+  },
+  halfBtn: {
+    flex: 0.5
+  },
+  btnGrp: {
+    flex: 1,
+    margin: 15,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  ipt: {
+    margin: 15,
+    backgroundColor: 'white'
+  },
+  halfIpt: {
+    flex: 0.5,
+    backgroundColor: 'white'
+  },
+  iptGrp: {
+    flex: 1,
+    margin: 15,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  chc: {
+    height: 70,
+    opacity: 0.92,
+    borderRadius: 50,
+    flexDirection: 'column',
+    backgroundColor: '#046A38'
+  },
+  chcSlct: {
+    height: 70,
+    opacity: 0.92,
+    borderRadius: 50,
+    flexDirection: 'column',
+    backgroundColor: '#43B02A'
+  },
+  chcLbl: {
+    fontSize: 12,
+    textAlign: 'center'
+  },
+  qrtChc: {
+    flex: 0.5
+  },
+  chcGrp: {
+    flex: 1,
+    margin: 15,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  chcRow: {
+    flex: 0.5,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  done: {
+    marginTop: 15,
+    marginBottom: 25,
+    marginHorizontal: 15,
     alignSelf: 'center'
   },
-  input: {
-    width: 200,
-    color: Colors.blue6,
-    backgroundColor: Colors.white
+  backgroundImage: {
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+    top: 0,
+    left: 0,
+    bottom: 0,
+    right: 0
   },
-  pickerFinalidade: {
-  color: Colors.blue6
-  },
-
-  pickerBackground: {
-    backgroundColor: Colors.white
-  },
-
-  serviceButtonText: {
-    margin: Metrics.baseMargin,
-    color: Colors.blue4,
-    fontSize: 10
-  },
-  serviceButtonTextSelected: {
-    margin: Metrics.baseMargin,
-    color: Colors.white,
-    fontSize: 10
-  },
-
+  headerStyle: {
+    top: 0,
+    left: 0,
+    right: 0,
+    elevation: 0,
+    position: 'absolute',
+    backgroundColor: 'transparent'
+  }
 })

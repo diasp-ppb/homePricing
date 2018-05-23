@@ -1,16 +1,17 @@
 import React, { Component } from 'react'
 import { View, Image } from 'react-native'
 
-
 // Native Base
-import { Container, Content, Button, Text, Icon} from 'native-base'
+import { Container, Content, Card, CardItem, Body, Button, Text, Icon, Left } from 'native-base'
 
 // Styles
 import styles from './Styles/PreferencesScreenStyles'
 import {baseURL} from "../Services/Api";
+
 // Component
 export default class LaunchScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
+    header: null
   });
 
   // This component's constructor
@@ -42,45 +43,39 @@ export default class LaunchScreen extends Component {
 
   // Render the screen
   render () {
-
     const { navigate } = this.props.navigation;
-
-
     return (
       <Container>
-
         <Content padder>
           <View style={{ marginBottom: 20 }}>
             {
               this.state.houses.map((item, index) => {
                 return (
-                <View style={styles.box1} key={index} >
-                  <View style={{ flex:0.5 , width:'90%' , height:100}} >
-                    <Image source={{ uri: 'http://cdn.bracioroom.com/2016/05/18/indian-house-images-download-new-design-indian-house-hd-wallpapers-s-f561c74472fc5f74.jpg' }} style={{ height: 200, width: null, flex: 1 }}/>
-                  </View>
-
-                  <View style={{ flex:0.4}}>
-                    <View style={{ flex:0.5}}>
-                      <Text style={styles.address}>
-                          <Icon ios={'ios-pin'} android={'md-pin'} style={styles.address} /> {item.address.town}
-                      </Text>
-                      <Text style={styles.money}>
-                          {item.price}
-                      </Text>
-                    </View>
-                  </View>
-
-                  <View style={{flex:0.18, marginTop: 22}} >
-                      <Button transparent onPress={() => navigate('HouseInfScreen',{id: item.id })}>
-                        <Text>
-                          <Icon style={{fontSize:20, color:'black'}} ios={'ion-ios-arrow-forward'} android={'md-arrow-forward'} />
+                  <Card key={index} style={{ flex: 1 }}>
+                    <CardItem button onPress={() => navigate('HouseInformation', { house: item })}>
+                      <Left>
+                        <Body>
+                          <Text>{item.title}</Text>
+                          <Text style={styles.address}>
+                            <Icon ios="ios-pin" android="md-pin" style={styles.address} /> {item.address.zipcode}, {item.address.town}, {item.address.county}
+                          </Text>
+                        </Body>
+                      </Left>
+                    </CardItem>
+                    <CardItem cardBody>
+                      <Image
+                        source={{ uri: item.images[0] }}
+                        style={{ height: 200, width: null, flex: 1 }}
+                      />
+                    </CardItem>
+                    <CardItem>
+                      <Left>
+                        <Text style={styles.info}>
+                          <Icon ios="ios-cash" android="md-cash" style={styles.info} /> {item.price} €
                         </Text>
-                      </Button>
-                  </View>
-
-                </View>
-
-
+                      </Left>
+                    </CardItem>
+                  </Card>
                 )
               })
             }
