@@ -35,7 +35,7 @@ export default StyleSheet.create({
   },
   address: {
     padding: 10,
-    fontSize: 14,
+    fontSize: 15,
     color: '#595959'
   },
 

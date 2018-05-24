@@ -78,7 +78,7 @@ class HistoricScreen extends Component {
                 let image = (item.house.images.length != 0) ? item.house.images[0] : "https://www.glassyconnections.com/images/no-image-available-lrg.jpg";
                 return (
                   <View style={styles.box1} key={index} >
-                    <View style={{ flex: 0.4, width: '90%', height: 100 }} >
+                    <View style={{ flex:0.37, width:'90%' , height:125}} >
                       {<Image style={{ height: 200, width: null, flex: 1 }} source={{ uri: image }} />}
                     </View>
 
@@ -92,7 +92,7 @@ class HistoricScreen extends Component {
                         </Text>
 
                     </View>
-                    <View style={{flex:0.13, marginTop: 22}} >
+                    <View style={{flex:0.13, marginTop: 40}} >
                         <Button transparent onPress={() => this.props.navigation.navigate('HouseInformation',{house: item.house })}>
                           <Text>
                             <Icon style={styles.arrow} ios={'ion-ios-arrow-forward'} android={'md-arrow-forward'} />

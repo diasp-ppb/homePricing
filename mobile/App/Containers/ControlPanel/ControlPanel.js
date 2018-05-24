@@ -43,7 +43,7 @@ class ControlPanel extends Component {
       case 0: //Return Home
         return 'LaunchScreen';
       case 1:
-        return 'PreferenceScreen';
+        return 'RecommendationScreen';
       case 2:
         return 'HistoricScreen';
       case 3:
