@@ -84,7 +84,7 @@ class HistoricScreen extends Component {
 
                     <View style={{ flex: 0.5 }}>
                         <Text style={styles.address}>
-                          <Icon ios={'ios-pin'} android={'md-pin'} style={styles.address} /> {item.house.address.town}
+                          <Icon ios={'ios-pin'} android={'md-pin'} style={styles.icon} /> {item.house.address.town}
                         </Text>
 
                         <Text style={styles.date}>

@@ -67,7 +67,7 @@ export default class RecommendationScreen extends Component {
                     <View style={{ flex:0.5}}>
                       <View style={{ flex:0.5}}>
                         <Text style={styles.address}>
-                            <Icon ios={'ios-pin'} android={'md-pin'} style={styles.address} /> {item.address.town}
+                            <Icon ios={'ios-pin'} android={'md-pin'} style={styles.icon} /> {item.address.town}
                         </Text>
                         <Text style={styles.money}>
                             {item.price} &#8364;

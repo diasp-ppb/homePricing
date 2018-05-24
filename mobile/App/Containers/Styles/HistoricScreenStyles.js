@@ -29,7 +29,7 @@ export default StyleSheet.create({
  },
   arrow:{
     fontSize:20,
-    color:'black',
+    color:'#046A38',
     margin: 0,
     padding: 0
   },
@@ -38,9 +38,13 @@ export default StyleSheet.create({
     fontSize: 15,
     color: '#595959'
   },
-
+  icon: {
+    paddingLeft:10,
+    fontSize:15,
+    color: '#046A38'
+  },
   date: {
-    fontSize: 12.5,
+    fontSize: 13,
     marginLeft: 10,
     marginTop: 10,
     color: '#262626'

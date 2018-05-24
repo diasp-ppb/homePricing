@@ -38,6 +38,11 @@ export default StyleSheet.create({
     fontSize:15,
     color: '#595959'
   },
+  icon: {
+    paddingLeft:10,
+    fontSize:15,
+    color: '#046A38'
+  },
   money:{
     marginTop: 10,
     fontSize:14,
