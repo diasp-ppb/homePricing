@@ -69,6 +69,7 @@ class SearchResults extends Component {
   }
 
   addHistory(house) {
+    if(this.props.user.loggedIn) {
     fetch(`${baseURL}/v1/history`, {
       method: 'POST',
       headers: {
@@ -80,6 +81,7 @@ class SearchResults extends Component {
       .catch((json) => {
         console.error(json);
       });
+    }
   }
 
   // Clear data here

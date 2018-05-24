@@ -29,7 +29,9 @@ class HouseInfScreen extends Component {
   componentDidMount() {
     let houseId = this.props.navigation.state.params.house.id;  
 
-    this.isFavorite(this.props.user.user.id, this.props.user.token, houseId);
+    if (this.props.user.loggedIn) {
+      this.isFavorite(this.props.user.user.id, this.props.user.token, houseId);
+    }
   }
 
   changeFavorite = () => {
