@@ -68,22 +68,6 @@ class SearchResults extends Component {
       });
   }
 
-  addHistory(house) {
-    if(this.props.user.loggedIn) {
-    fetch(`${baseURL}/v1/history`, {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ houseId: house._id, userId: this.props.user.user.id}),
-    })
-      .catch((json) => {
-        console.error(json);
-      });
-    }
-  }
-
   // Clear data here
   componentWillUnmount() {
     this.setState({ houses: [] });
@@ -170,7 +154,7 @@ class SearchResults extends Component {
     return this.state.houses.length > 0 ? this.state.houses.map((item, index) => {
       return (
         <Card key={index} style={{ flex: 1 }}>
-          <CardItem button onPress={() =>{ this.addHistory(item), navigate('HouseInformation', { house: item })} }>
+          <CardItem button onPress={() =>{ navigate('HouseInformation', { house: item })} }>
             <Left>
               <Body>
               <Text>{item.title}</Text>

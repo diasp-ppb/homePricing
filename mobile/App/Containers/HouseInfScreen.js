@@ -34,7 +34,24 @@ class HouseInfScreen extends Component {
     }
 
     if (this.props.user.loggedIn) {
+      this.addHistory(houseId);
       this.isFavorite(this.props.user.user.id, this.props.user.token, houseId);
+    }
+  }
+
+  addHistory(houseId) {
+    if(this.props.user.loggedIn) {
+    fetch(`${baseURL}/v1/history`, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ houseId: houseId, userId: this.props.user.user.id}),
+    })
+      .catch((json) => {
+        console.error(json);
+      });
     }
   }
 

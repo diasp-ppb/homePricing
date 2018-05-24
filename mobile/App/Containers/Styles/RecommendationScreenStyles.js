@@ -48,6 +48,8 @@ export default StyleSheet.create({
     fontSize:14,
     marginLeft: 10,
     color: '#262626'
+  },
+  noFav: {
+      marginTop: 18,
   }
-
 })

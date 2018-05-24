@@ -12,7 +12,7 @@ import { SUCCESS_LOGIN,
   import { ToastSuccess, ToastError } from './LogToasts'
   import { login } from '../Redux/LoginRedux'
   
-  export const baseURL = "http://172.30.5.172:3000"
+  export const baseURL = "http://192.168.43.209:3000"
   
   export function checkRegisterResponse(responseJson, thisUser) {
       if (responseJson.code == '400') {
@@ -381,7 +381,7 @@ export function createFavoriteAPI(user, house, token){
   })
     .then((response) => response.json())
     .then(
-      () => { ToastSuccess("House added to favorites!"); }
+      () => { ToastSuccess("Casa adicionada aos favoritos!"); }
     )
     .catch((error) => {
       console.error(error);
@@ -402,7 +402,7 @@ export function deleteFavoriteAPI(user, house, token){
       houseId: house
     }),
   })
-    .then(() => { ToastSuccess("House removed from favorites."); })
+    .then(() => { ToastSuccess("Casa removida dos favoritos."); })
     .catch((error) => {
       console.error(error);
     });

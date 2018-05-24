@@ -127,7 +127,7 @@ class FavoritesScreen extends Component {
       dataSource={this.state.dataSource}
       renderRow={this.renderRow}
     />;
-    const message = <Text style={styles.noFav}> Ainda não tem favoritos</Text>;
+    const message = <Text style={styles.noFav}> Ainda não tem favoritos.</Text>;
     if(this.state.loaded) {
       return (
         <Container>
