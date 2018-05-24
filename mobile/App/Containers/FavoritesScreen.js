@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Image, View, ListView, TouchableOpacity } from 'react-native'
+import { Image, View, ListView, TouchableOpacity, ActivityIndicator } from 'react-native'
 import { Images } from '../Themes'
 import { connect } from 'react-redux';
 import { baseURL, createFavoriteAPI, deleteFavoriteAPI } from "../Services/Api";
@@ -8,6 +8,7 @@ import { baseURL, createFavoriteAPI, deleteFavoriteAPI } from "../Services/Api";
 import { Container, Text } from 'native-base'
 
 // Styles
+import activityStyle from './Styles/ActivityIndicatorStyle'
 import styles from './Styles/FavoriteStyle'
 
 // Row comparison function
@@ -25,6 +26,7 @@ class FavoritesScreen extends Component {
     super(props);
 
     this.state = {
+      loaded: false,
       rows: [],
       dataSource: ds.cloneWithRows([])
     }
@@ -60,14 +62,10 @@ class FavoritesScreen extends Component {
         let response = await fetch(baseURL + "/v1/houses/" + param[i].houseId);
         let responseJson = await response.json();
         if (responseJson.code !== 404) {
-          let aux = responseJson.tipology.concat(" ", responseJson.condition);
           favs.push({
             id: auxId,
             idHouse: param[i].houseId,
-            text: aux,
-            location: responseJson.zone,
-            price: responseJson.price,
-            icon: Images.houseImage,
+            house: responseJson,
             active: true
           });
         } else {
@@ -78,47 +76,45 @@ class FavoritesScreen extends Component {
       }
       auxId++;
     }
+    this.setState({ loaded : true });
     this.setState({ rows: favs });
     this.setState({ dataSource: ds.cloneWithRows(favs) });
     return favs;
   }
 
   componentDidMount() {
-    this.getFavorites(this.props.user.user, this.props.user.token);
+    this.getFavorites(this.props.user.user.id, this.props.user.token);
   }
 
   changeFavorite = (id) => {
     if (this.state.rows[id].active === true) {
       this.state.rows[id].active = false;
-      deleteFavoriteAPI(this.props.user.user, this.state.rows[id].idHouse, this.props.user.token);
+      console.log("######DELETE:  " + this.state.rows[id].idHouse);
+      deleteFavoriteAPI(this.props.user.user.id, this.state.rows[id].idHouse, this.props.user.token);
     } else {
       this.state.rows[id].active = true;
-      createFavoriteAPI(this.props.user.user, this.state.rows[id].idHouse, this.props.user.token);
+      createFavoriteAPI(this.props.user.user.id, this.state.rows[id].idHouse, this.props.user.token);
     }
     this.setState({ rows: this.state.rows });
     this.setState({ dataSource: ds.cloneWithRows(this.state.rows) });
   }
 
   renderRow = (rowData) => {
+    let image = (rowData.house.images.length != 0) ? rowData.house.images[0] : "https://www.glassyconnections.com/images/no-image-available-lrg.jpg";
     return (
-      <TouchableOpacity key={rowData.id} onPress={() => this.props.navigation.navigate('HouseInfScreen', { id: rowData.idHouse })}>
+      <TouchableOpacity key={rowData.id} onPress={() =>  this.props.navigation.navigate('HouseInformation', { house: rowData.house })}>
         <View style={styles.listItem}>
-          <Image source={rowData.icon} style={styles.image} />
+          <Image source={{uri : image}} style={styles.image} />
           <View style={styles.data}>
             <Text style={styles.title} >
-              {rowData.text}
+              {rowData.house.title}
             </Text>
             <Text style={styles.info}>
-              {rowData.location}
+              {rowData.house.address.zipcode}, {rowData.house.address.town}, {rowData.house.address.county}
             </Text>
-            <View style={styles.price}>
-              <Text style={styles.info}>
-                Preço: {rowData.price}
-              </Text>
-            </View>
           </View>
           <TouchableOpacity key={rowData.id} onPress={() => this.changeFavorite(rowData.id)}>
-            <Image source={rowData.active === true ? Images.fullStarIcon : Images.starLines} style={styles.star} />
+           <Image source={rowData.active === true ? Images.greenStar : Images.greenStarLines} style={styles.star} />
           </TouchableOpacity>
         </View>
       </TouchableOpacity>
@@ -131,12 +127,20 @@ class FavoritesScreen extends Component {
       dataSource={this.state.dataSource}
       renderRow={this.renderRow}
     />;
-    const message = <Text style={styles.noFav}> Ainda não tem favoritos</Text>;
-    return (
-      <Container>
-        {this.state.rows.length > 0 ? list : message}
-      </Container>
-    )
+    const message = <Text style={styles.noFav}> Ainda não tem favoritos.</Text>;
+    if(this.state.loaded) {
+      return (
+        <Container>
+          {this.state.rows.length > 0 ? list : message}
+        </Container>
+      )
+    } else {
+      return (
+        <View style={[activityStyle.container, activityStyle.horizontal]}>
+          <ActivityIndicator size="large" color="#00ff00" />
+        </View>
+      )
+    }
   }
 }
 
@@ -154,5 +158,3 @@ function mapDispatchToProps(dispatch) {
 const connectedRegister = connect(mapStateToProps, mapDispatchToProps)(FavoritesScreen);
 
 export { connectedRegister as FavoritesScreen};
-
-

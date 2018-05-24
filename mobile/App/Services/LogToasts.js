@@ -7,7 +7,7 @@ export const ERROR_INVALID_EMAIL = 'E-mail inválido!';
 export const ERROR_INVALID_PARAM_LOGIN = 'E-mail ou palavra-passe incorreto(s)!';
 
 export const SUCCESS_REGISTER = 'Registo bem-sucedido :)';
-export const ERROR_INVALID_PARAM_REGISTER = 'Parâmetro(s) inválido(s)!';
+export const ERROR_INVALID_PARAM_REGISTER = 'E-mail inválido!';
 export const ERROR_EMAIL_EXISTS_REGISTER = 'E-mail já existe!';
 
 export const UPDATE_USER_PREFERENCES = 'Preferências atualizadas com sucesso!';

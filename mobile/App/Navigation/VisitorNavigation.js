@@ -7,18 +7,18 @@ import ControlPanel from '../Containers/ControlPanel/ControlPanel'
 
 // Import all screens
 import { LaunchScreen } from '../Containers/LaunchScreen'
-import SearchResults from '../Containers/SearchResults'
+import { SearchResults } from '../Containers/SearchResults'
 import { RegisterScreen } from '../Containers/RegisterScreen'
 import { LoginScreen } from '../Containers/LoginScreen'
-import HouseInfScreen from '../Containers/HouseInfScreen'
-import HouseSearch from '../Containers/HouseSearch'
+import { HouseInfScreen } from '../Containers/HouseInfScreen'
+import { HouseSearch } from '../Containers/HouseSearch'
 import GpsScreen from '../Containers/GpsScreen'
 import CameraScreen from '../Containers/CameraScreen'
 import { UserPreferences } from '../Containers/UserPreferences'
 import { FavoritesScreen } from '../Containers/FavoritesScreen'
 import HelpScreen from '../Containers/HelpScreen'
 import { HistoricScreen } from '../Containers/HistoricScreen'
-import PreferenceScreen from '../Containers/PreferenceScreen'
+import { RecommendationScreen } from '../Containers/RecommendationScreen'
 import UserSettingsScreen from '../Containers/UserSettingsScreen'
 
 import Colors from '../Themes/Colors'
@@ -48,7 +48,7 @@ const visitorStack = StackNavigator({
   UserPreferences: { screen: UserPreferences},
   Favorites: {screen: FavoritesScreen},
   HelpScreen: { screen: HelpScreen },
-  PreferenceScreen: { screen: PreferenceScreen},
+  RecommendationScreen: { screen: RecommendationScreen},
   HistoricScreen: { screen: HistoricScreen},
   UserSettings: { screen: UserSettingsScreen }
 }, {

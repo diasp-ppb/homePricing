@@ -9,6 +9,7 @@ const images = {
   igniteClear: require('../Images/ignite-logo-transparent.png'),
   tileBg: require('../Images/tile_bg.png'),
   background: require('../Images/bgHP.jpg'),
+  backgroundBlur: require('../Images/bgHPBlur.jpg'),
   buttonBackground: require('../Images/button-bg.png'),
   api: require('../Images/Icons/icon-api-testing.png'),
   components: require('../Images/Icons/icon-components.png'),
@@ -34,6 +35,8 @@ const images = {
   logo1: require('../Images/logo1.png'),
   login: require('../Images/login.png'),
   camara: require('../Images/camara.png'),
+  greenStar: require('../Images/Icons/full-star-green2.png'),
+  greenStarLines: require('../Images/Icons/star-line-green2.png') 
 };
 
 export default images

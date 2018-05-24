@@ -107,7 +107,6 @@ module.exports = {
      */
     list: async function(params) {
         var recommendHouses = [];
-
         const favorites = await Favorite.get(params);
         var houseIdArray = this.getHousesId(favorites);
         recommendHouses = this.analyseFavorites(houseIdArray);

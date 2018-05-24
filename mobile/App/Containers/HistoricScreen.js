@@ -1,14 +1,18 @@
 import { Images } from '../Themes'
 import React, { Component } from 'react'
-import { View, Image } from 'react-native'
+import { View, Image, ActivityIndicator } from 'react-native'
+import Grid from 'react-native-grid-list'
 import { connect } from 'react-redux';
 
 // Native Base
-import { Container, Content, Button, Text, Icon} from 'native-base'
+import { Container, Content, Button, Text, Icon } from 'native-base'
 
 // Styles
+import activityStyle from './Styles/ActivityIndicatorStyle'
 import styles from './Styles/HistoricScreenStyles'
+
 import { baseURL } from "../Services/Api";
+
 // Component
 class HistoricScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -20,6 +24,7 @@ class HistoricScreen extends Component {
 
     super(props)
     this.state = {
+      loaded: false,
       houses: []
     }
   }
@@ -32,6 +37,7 @@ class HistoricScreen extends Component {
       })
       .then(responseJson => {
         this.setState({ houses: responseJson });
+        this.setState({ loaded : true });
       })
     .catch(function (json) {
       console.error(json)
@@ -61,15 +67,9 @@ class HistoricScreen extends Component {
     return parsed;
   }
 
-  // Render the screen
-  render() {
-
-    const { navigate } = this.props.navigation;
-
-
+  renderHistoryHouses () {
     return (
       <Container>
-
         <Content padder>
           <View style={{ marginBottom: 20 }}>
             {
@@ -77,22 +77,26 @@ class HistoricScreen extends Component {
                 let image = (item.house.images.length != 0) ? item.house.images[0] : "https://www.glassyconnections.com/images/no-image-available-lrg.jpg";
                 return (
                   <View style={styles.box1} key={index} >
-                    <View style={{ flex: 0.35, width: '10%', height: 50 }} >
-                      {<Image style={{ height: 100, width: null, flex: 1 }} source={{ uri: image }} />}
+                    <View style={{ flex:0.37, width:'90%' , height:125}} >
+                      {<Image style={{ height: 200, width: null, flex: 1 }} source={{ uri: image }} />}
                     </View>
 
-                    <View style={{ flex: 0.65 }}>
-
-
-                      <Button transparent onPress={() => navigate('HouseInformation', { house: item.house })}>
+                    <View style={{ flex: 0.5 }}>
                         <Text style={styles.address}>
-                          <Icon ios={'ios-pin'} android={'md-pin'} style={styles.address} /> {item.house.address.town}
+                          <Icon ios={'ios-pin'} android={'md-pin'} style={styles.icon} /> {item.house.address.town}
                         </Text>
-                      </Button>
 
-                      <Text style={styles.date}>
-                        {"Seen on: " + this.parseDate(item.createdAt).date + " " + this.parseDate(item.createdAt).time}
-                      </Text>
+                        <Text style={styles.date}>
+                          {"Seen on: " + this.parseDate(item.createdAt).date + " " + this.parseDate(item.createdAt).time}
+                        </Text>
+
+                    </View>
+                    <View style={{flex:0.13, marginTop: 40}} >
+                        <Button transparent onPress={() => this.props.navigation.navigate('HouseInformation',{house: item.house })}>
+                          <Text>
+                            <Icon style={styles.arrow} ios={'ion-ios-arrow-forward'} android={'md-arrow-forward'} />
+                          </Text>
+                        </Button>
                     </View>
                   </View>
                 )
@@ -101,7 +105,28 @@ class HistoricScreen extends Component {
           </View>
         </Content>
       </Container>
-    )
+    );
+  }
+
+  // Render the screen
+  render() {
+    const { navigate } = this.props.navigation;
+
+    if(this.state.loaded) {
+      if (this.state.houses.length > 0) {
+        return this.renderHistoryHouses();
+      } else return (
+      <Container> 
+        <Text style={styles.noFav}> Ainda não tem histórico.</Text>
+      </Container>)
+    } else {
+      return (
+        <View style={[activityStyle.container, activityStyle.horizontal]}>
+          <ActivityIndicator size="large" color="#00ff00" />
+        </View>
+      )
+    }
+    
   }
 }
 

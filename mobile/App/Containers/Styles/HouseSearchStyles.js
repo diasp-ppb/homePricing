@@ -5,7 +5,10 @@ export default StyleSheet.create({
   title: {
     fontSize: 20,
     color: 'white',
-    textAlign: 'center'
+    textAlign: 'center',
+    textShadowColor: 'black',
+    textShadowOffset: {width: -2, height: 2},
+    textShadowRadius: 10
   },
   pkr: {
     margin: 15,

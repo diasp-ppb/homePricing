@@ -115,6 +115,20 @@ exports.findbygps = async (req, res, next ) => {
     next(error);
   }
 }
+
+/**
+ * Find houses by town and calculate the average prices
+ * @public
+ */
+exports.getAveragePrice = async (req, res, next) => {
+  try {
+    const avgPrice = await House.getAveragePrice(req.params.town);
+    res.json(avgPrice);
+  } catch (error) {
+    next(error);
+  }
+}
+
 /**
  * Delete house
  * @public

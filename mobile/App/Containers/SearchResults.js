@@ -1,16 +1,20 @@
 import React, { Component } from 'react';
-import { Image, ScrollView } from 'react-native';
+import { Image, ScrollView, ActivityIndicator} from 'react-native';
+import { connect } from 'react-redux';
 
 // Native Base
 import { View, Container, Content, Left, Body, Button, Text, Icon, Item, Input, Card, CardItem } from 'native-base';
 
 // Styles
 import styles from './Styles/SearchResultsStyles';
+import activityStyle from './Styles/ActivityIndicatorStyle';
+
+import { ToastError } from '../Services/LogToasts'
 import { baseURL } from '../Services/Api';
 import GPSMap from '../Components/GPSMap';
 
 // Component
-export default class LaunchScreen extends Component {
+class SearchResults extends Component {
   // static navigationOptions = ({ navigation }) => ({
   //   headerStyle: styles.headerStyle
   // })
@@ -19,6 +23,7 @@ export default class LaunchScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      loaded: false,
       houses: [],
       map: false,
       region: {
@@ -50,8 +55,13 @@ export default class LaunchScreen extends Component {
         return response.json();
       })
       .then((houses) => {
-        this.setState({ houses });
-        this.generateMarkers();
+        if (houses.code == "400") {
+          ToastError("Error: " + responseJson.errors[0].messages[0]);
+        } else {
+          this.setState({ loaded: true });
+          this.setState({ houses });
+          this.generateMarkers();
+        }
       })
       .catch((json) => {
         console.error(json);
@@ -144,13 +154,13 @@ export default class LaunchScreen extends Component {
     return this.state.houses.length > 0 ? this.state.houses.map((item, index) => {
       return (
         <Card key={index} style={{ flex: 1 }}>
-          <CardItem button onPress={() => navigate('HouseInformation', { house: item })}>
+          <CardItem button onPress={() =>{ navigate('HouseInformation', { house: item })} }>
             <Left>
               <Body>
-                <Text>{item.title}</Text>
-                <Text style={styles.address}>
-                  <Icon ios="ios-pin" android="md-pin" style={styles.address} /> {item.address.zipcode}, {item.address.town}, {item.address.county}
-                </Text>
+              <Text>{item.title}</Text>
+              <Text style={styles.address}>
+                <Icon ios="ios-pin" android="md-pin" style={styles.address} /> {item.address.zipcode}, {item.address.town}, {item.address.county}
+              </Text>
               </Body>
             </Left>
           </CardItem>
@@ -194,11 +204,28 @@ export default class LaunchScreen extends Component {
 
   // Render the screen
   render() {
-    return (
-      <Container>
-        {this.renderSegment()}
-        {this.renderTab()}
-      </Container>
-    );
+    if(this.state.loaded) {
+      return (
+        <Container>
+          {this.renderSegment()}
+          {this.renderTab()}
+        </Container>
+      );
+    } else {
+      return (
+        <View style={[activityStyle.container, activityStyle.horizontal]}>
+          <ActivityIndicator size="large" color="#00ff00" />
+        </View>
+      )
+    }
   }
 }
+
+function mapStateToProps(state) {
+  return {
+      user: state.login
+  };
+}
+
+const connectedRegister = connect(mapStateToProps)(SearchResults);
+export { connectedRegister as SearchResults };

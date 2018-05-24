@@ -43,7 +43,7 @@ class ControlPanel extends Component {
       case 0: //Return Home
         return 'LaunchScreen';
       case 1:
-        return 'PreferenceScreen';
+        return 'RecommendationScreen';
       case 2:
         return 'HistoricScreen';
       case 3:
@@ -51,7 +51,7 @@ class ControlPanel extends Component {
       case 4:  //Favorites
         return 'Favorites';
       case 5:  //Profile Settngs
-        break;
+        return 'UserSettings';
       case 6:  //Help page
         return 'HelpScreen';
       default:
@@ -66,14 +66,22 @@ class ControlPanel extends Component {
   }
 
   renderRow (rowData) {
-    return (
+    if (rowData.id == 1) {
+      return (
+        <TouchableOpacity style={styles.option} key={rowData.id} onPress={() => this.props.navigation.navigate(this.navPath(rowData.id), { id: this.props.user.user.id })}>
+          <Icon style={styles.optionIcon} ios={rowData.ios} android={rowData.android}/>
+          <Text style={styles.text}>
+            {rowData.text}
+          </Text>
+        </TouchableOpacity>
+      )
+    } else return (
       <TouchableOpacity style={styles.option} key={rowData.id} onPress={() => this.props.navigation.navigate(this.navPath(rowData.id))}>
         <Icon style={styles.optionIcon} ios={rowData.ios} android={rowData.android}/>
         <Text style={styles.text}>
           {rowData.text}
         </Text>
       </TouchableOpacity>
-
     )
   };
 

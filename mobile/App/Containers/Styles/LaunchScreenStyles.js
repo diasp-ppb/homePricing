@@ -11,8 +11,12 @@ export default StyleSheet.create({
     justifyContent: 'center'
   },
   txt: {
+    fontSize: 20,
     color: 'white',
-    marginBottom: 10
+    marginBottom: 10,
+    textShadowColor: 'black',
+    textShadowOffset: { width: -2, height: 2 },
+    textShadowRadius: 10
   },
   icon: {
     color: 'white',

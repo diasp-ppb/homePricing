@@ -4,7 +4,7 @@ import { Metrics, ApplicationStyles, Colors, Fonts } from '../../Themes/'
 export default StyleSheet.create({
   mainTitle: {
     textAlign: 'center',
-    color: Colors.blue6,
+    color: '#046A38',
     fontSize: Fonts.size.h5,
     fontWeight: 'bold',
     marginTop: Metrics.doubleBaseMargin,
@@ -35,6 +35,18 @@ export default StyleSheet.create({
     marginRight: Metrics.baseMargin,
     backgroundColor: Colors.white
   },
+  pickerFlexPriceRight: {
+    flex: .5,
+    marginRight: Metrics.baseMargin/2,
+    marginTop: Metrics.baseMargin,
+    backgroundColor: Colors.white
+  },
+  pickerFlexPriceLeft: {
+    flex: .5,
+    marginLeft: Metrics.baseMargin/2,
+    marginTop: Metrics.baseMargin,
+    backgroundColor: Colors.white
+  },
   serviceFlex: {
     flex: 0.7, 
     marginTop: Metrics.baseMargin, 
@@ -61,14 +73,15 @@ export default StyleSheet.create({
     borderBottomColor: Colors.coolGray2,
     borderBottomWidth: 5,
   },
-
-  buttonStyle: {
-    marginRight: Metrics.baseMargin / 2,
-    backgroundColor: Colors.blue5,
-    borderWidth: 0,
-    borderColor: Colors.transparent,
-    height: 85,
-    width: 85,
+  topBtn: {
+    margin: 2,
+    width: 170,
+    justifyContent: 'center',
+    elevation: 60,
+    backgroundColor:'#046A38',
+    borderRadius:20,
+    opacity:0.92,
+    marginBottom: 3,
     flexDirection: 'column',
     alignSelf: 'center', 
     width: Metrics.screenWidth * 0.5, 

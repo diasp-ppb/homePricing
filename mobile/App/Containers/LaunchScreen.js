@@ -9,6 +9,11 @@ import { Container, Header, Body, Title, Button, Text, Fab, Icon, Row, Col } fro
 // Styles
 import styles from './Styles/LaunchScreenStyles'
 
+import { logoutAPI } from '../Services/Api';
+import { logout } from '../Redux/LoginRedux';
+
+
+
 // Component
 class LaunchScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -34,7 +39,7 @@ class LaunchScreen extends Component {
           </View>
           <View style={styles.row}>
             <Text style={styles.txt}>To Start Exploring</Text>
-            <View style={{ width: '70%' }}>
+            <View style={{ width: '55%' }}>
               <Button primary block style={styles.btn} onPress={() => navigate('HouseSearch')}>
                 <Text>Pesquisar</Text>
               </Button>
@@ -45,10 +50,12 @@ class LaunchScreen extends Component {
           </View>
           <View style={styles.row}>
             <Text style={styles.txt}>Go Further</Text>
-            <View style={{ width: '70%', flexDirection: 'row', justifyContent: 'center' }}>
+            <View style={{ width: '55%', flexDirection: 'row', justifyContent: 'center' }}>
               { !this.props.user.loggedIn ?
                 <Icon ios={'ios-person'} android={'md-person'} style={styles.icon} onPress={() => navigate('Login')} />
-              : null }
+              :
+                <Icon ios={'ios-power'} android={'md-power'} style={styles.icon} onPress={() => logoutAPI(this.props)} />
+              }
               <Icon ios={'ios-camera'} android={'md-camera'} style={styles.icon} onPress={() => navigate('Camera')} />
             </View>
           </View>
@@ -63,8 +70,10 @@ const mapStateToProps = (state) => ({
   });
 
 function mapDispatchToProps(dispatch) {
-  return {};
-}
+    return {
+      logout: () => dispatch(logout())
+    };
+  }
 
 const connectedLaunch = connect(mapStateToProps, mapDispatchToProps)(LaunchScreen);
 export { connectedLaunch as LaunchScreen };

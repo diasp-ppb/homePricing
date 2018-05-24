@@ -20,8 +20,7 @@ export default StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#1a1a1a',
-    tintColor: '#f2f2f2'
+    backgroundColor: '#1a1a1a'
   },
   btn: {
     opacity: 0.92,
