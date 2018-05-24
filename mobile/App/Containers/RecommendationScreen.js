@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { View, Image, ActivityIndicator } from 'react-native'
+import { connect } from 'react-redux';
 
 // Native Base
 import { Container, Content, Button, Text, Icon} from 'native-base'
@@ -11,7 +12,7 @@ import styles from './Styles/RecommendationScreenStyles'
 import {baseURL} from "../Services/Api";
 
 // Component
-export default class RecommendationScreen extends Component {
+class RecommendationScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
     title: 'Recomendações',
   });
@@ -27,13 +28,25 @@ export default class RecommendationScreen extends Component {
 
   // Fetch data here
   componentDidMount () {
-    fetch(baseURL + "/v1/houses")
+    var auth = 'Bearer ' + this.props.user.token;
+
+    fetch(baseURL + "/v1/recommendations", {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': auth
+        },
+        body: JSON.stringify({
+          userId: this.props.user.user.id
+        }),
+      })
       .then(function (response) {
         return response.json();
       })
       .then(responseJson => {
         this.setState({ houses: responseJson });
-        this.setState({loaded : true});
+        this.setState({ loaded : true });
       })
       .catch(function (json) {
         console.error(json)
@@ -102,3 +115,14 @@ export default class RecommendationScreen extends Component {
     }
   }
 }
+
+function mapStateToProps(state) {
+  return {
+    user: state.login
+  };
+}
+
+
+const connectedRegister = connect(mapStateToProps)(RecommendationScreen);
+
+export { connectedRegister as RecommendationScreen};

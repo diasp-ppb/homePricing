@@ -18,7 +18,7 @@ import { UserPreferences } from '../Containers/UserPreferences'
 import { FavoritesScreen } from '../Containers/FavoritesScreen'
 import HelpScreen from '../Containers/HelpScreen'
 import { HistoricScreen } from '../Containers/HistoricScreen'
-import RecommendationScreen from '../Containers/RecommendationScreen'
+import { RecommendationScreen } from '../Containers/RecommendationScreen'
 import UserSettingsScreen from '../Containers/UserSettingsScreen'
 
 import Colors from '../Themes/Colors'
