@@ -27,7 +27,11 @@ class HouseInfScreen extends Component {
   }
 
   componentDidMount() {
-    let houseId = this.props.navigation.state.params.house.id;  
+    let houseId = this.props.navigation.state.params.house._id;
+
+    if(houseId == undefined) {
+      houseId = this.props.navigation.state.params.house.id;
+    }
 
     if (this.props.user.loggedIn) {
       this.isFavorite(this.props.user.user.id, this.props.user.token, houseId);
@@ -35,7 +39,11 @@ class HouseInfScreen extends Component {
   }
 
   changeFavorite = () => {
-    let houseId = this.props.navigation.state.params.house.id; 
+    let houseId = this.props.navigation.state.params.house._id; 
+
+    if(houseId == undefined) {
+      houseId = this.props.navigation.state.params.house.id;
+    }
 
     let aux = false;
     if (this.state.favorite) {

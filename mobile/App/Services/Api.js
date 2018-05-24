@@ -330,12 +330,12 @@ import { SUCCESS_LOGIN,
           buy: buy,
           propertyType: resp.type,
           tipology: resp.tipology != null ? resp.tipology.toUpperCase() : null,
-          minArea: resp.areaMin,
-          maxArea: resp.areaMax,
+          minArea: resp.areaMin != null ? resp.areaMin : "",
+          maxArea: resp.areaMax != null ? resp.areaMax : "",
           minPrice: resp.priceMin,
           maxPrice: resp.priceMax,
           workLocation: resp.workAddress,
-          workDistance: resp.workMaxDistance
+          workDistance: resp.workMaxDistance != null ? resp.workMaxDistance : ""
         });
   }
   
@@ -381,7 +381,7 @@ export function createFavoriteAPI(user, house, token){
   })
     .then((response) => response.json())
     .then(
-      () => { ToastSuccess("House added to favorites!"); }
+      (resp) => { ToastSuccess("House added to favorites!" + resp); }
     )
     .catch((error) => {
       console.error(error);
