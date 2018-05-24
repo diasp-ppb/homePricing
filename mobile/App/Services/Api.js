@@ -381,7 +381,7 @@ export function createFavoriteAPI(user, house, token){
   })
     .then((response) => response.json())
     .then(
-      (resp) => { ToastSuccess("House added to favorites!" + resp); }
+      () => { ToastSuccess("House added to favorites!"); }
     )
     .catch((error) => {
       console.error(error);
