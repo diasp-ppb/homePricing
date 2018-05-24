@@ -16,8 +16,12 @@ import { SUCCESS_LOGIN,
   
   export function checkRegisterResponse(responseJson, thisUser) {
       if (responseJson.code == '400') {
+          thisUser.setState({password : ''});
+          thisUser.setState({confirmPassword : ''});
           ToastError(ERROR_INVALID_PARAM_REGISTER);
       } else if (responseJson.code == '409') {
+          thisUser.setState({password : ''});
+          thisUser.setState({confirmPassword : ''});
           ToastError(ERROR_EMAIL_EXISTS_REGISTER);
       } else {
           const { navigate } = thisUser.props.navigation;

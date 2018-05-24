@@ -31,14 +31,15 @@ class HouseSearch extends Component {
       rent: false,
       buy: false,
       propertyType: null,
-      minArea: null,
-      maxArea: null,
+      minArea: "",
+      maxArea: "",
       minPrice: null,
       maxPrice: null,
       hospital: false,
       school: false,
       shopping: false,
       transport: false,
+      workDistance: ""
     };
 
     if(this.props.user.loggedIn) {
@@ -66,8 +67,8 @@ class HouseSearch extends Component {
       buy: this.state.buy,
       tipology: (this.state.tipology == null) ? (null) : this.state.tipology,
       propertyType: (this.state.propertyType == null) ? (null) : this.state.propertyType,
-      minArea: (this.state.minArea == "") ? (null) : this.state.minArea,
-      maxArea: (this.state.maxArea == "") ? (null) : this.state.maxArea,
+      minArea: (this.state.minArea == "") ? (null) : parseInt(this.state.minArea),
+      maxArea: (this.state.maxArea == "") ? (null) : parseInt(this.state.maxArea),
       minPrice: (this.state.minPrice == "") ? (null) : this.state.minPrice,
       maxPrice: (this.state.maxPrice == "") ? (null) : this.state.maxPrice,
       hospital: this.state.hospital,
@@ -75,7 +76,7 @@ class HouseSearch extends Component {
       shopping: this.state.shopping,
       transport: this.state.transport,
       city: this.state.city,
-      workDistance: (this.state.workDistance == "") ? (null) : this.state.workDistance,
+      workDistance: (this.state.workDistance == "") ? (null) : parseInt(this.state.workDistance),
       workLocation: (this.state.workLocation == null) ? (null) : this.state.workLocation,
       bathrooms: null
     }
@@ -152,14 +153,14 @@ class HouseSearch extends Component {
                     placeholder='Mínimo'
                     keyboardType='numeric'
                     onChangeText={(value) => this.setState({ minArea: value })}
-                    value={this.state.minArea} />
+                    value={`${this.state.minArea}`} />
                 </View>
                 <View style={[styles.halfIpt, { marginLeft: 2.5 }]}>
                   <Input
                     placeholder='Máximo'
                     keyboardType='numeric'
                     onChangeText={(value) => this.setState({ maxArea: value })}
-                    value={this.state.maxArea} />
+                    value={`${this.state.maxArea}`} />
                 </View>
               </View>
               <Text style={styles.title}>Preço (€)</Text>
@@ -233,7 +234,7 @@ class HouseSearch extends Component {
                   placeholder='Máximo de (KM)'
                   keyboardType='numeric'
                   onChangeText={(value) => this.setState({ workDistance: value })}
-                  value={this.state.workDistance} />
+                  value={`${this.state.workDistance}`} />
               </View>
               <Button style={[styles.btn, styles.done]} onPress={() => this.submitSearch()}>
                 <Text>Mostrar Resultados</Text>
