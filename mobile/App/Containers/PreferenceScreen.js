@@ -60,7 +60,7 @@ export default class PreferenceScreen extends Component {
                 this.state.houses.map((item, index) => {
                   return (
                   <View style={styles.box1} key={index} >
-                    <View style={{ flex:0.5 , width:'90%' , height:100}} >
+                    <View style={{ flex:0.48, width:'90%' , height:125}} >
                       <Image source={{ uri: item.images[0] }} style={{ height: 200, width: null, flex: 1 }}/>
                     </View>
 
@@ -70,12 +70,12 @@ export default class PreferenceScreen extends Component {
                             <Icon ios={'ios-pin'} android={'md-pin'} style={styles.address} /> {item.address.town}
                         </Text>
                         <Text style={styles.money}>
-                            {item.price}
+                            {item.price} &#8364;
                         </Text>
                       </View>
                     </View>
 
-                    <View style={{flex:0.13, marginTop: 22}} >
+                    <View style={{flex:0.12, marginTop: 40}} >
                         <Button transparent onPress={() => this.props.navigation.navigate('HouseInformation',{house: item })}>
                           <Text>
                             <Icon style={styles.arrow} ios={'ion-ios-arrow-forward'} android={'md-arrow-forward'} />

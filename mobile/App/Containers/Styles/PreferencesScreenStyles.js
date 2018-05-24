@@ -19,30 +19,29 @@ export default StyleSheet.create({
   }, 
 
   box1:{
-     flex:1, flexDirection:'row',
-     padding: 6,
-     marginTop: 10,
-     marginHorizontal: 10,
-     backgroundColor: '#ffffff',
-     elevation: 1,
-     borderRadius: 2
+    flex:1, flexDirection:'row',
+    padding: 6,
+    marginTop: 10,
+    marginHorizontal: 10,
+    backgroundColor: '#ffffff',
+    elevation: 1,
+    borderRadius: 2
   },
   arrow:{
     fontSize:20,
-    color:'black',
+    color:'#046A38',
     margin: 0,
     padding: 0
   },
   address:{
     paddingLeft:10,
-    fontSize:12.5,
+    fontSize:15,
     color: '#595959'
   },
-
   money:{
     marginTop: 10,
     fontSize:14,
-    marginLeft: 14,
+    marginLeft: 10,
     color: '#262626'
   }
 

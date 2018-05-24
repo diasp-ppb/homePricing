@@ -35,7 +35,7 @@ export default StyleSheet.create({
   },
   address: {
     padding: 10,
-    fontSize: 12.5,
+    fontSize: 14,
     color: '#595959'
   },
 
@@ -45,36 +45,36 @@ export default StyleSheet.create({
     marginTop: 10,
     color: '#262626'
   },
-    container: {
-        flex: 1,
-        marginBottom: 20,
-        flexWrap: 'wrap',
-        flexDirection: 'row'
-    },
-    cell: {
-        margin: '2%',
-        width: '46%',
-        elevation: 7,
-        opacity: 0.85,
-        backgroundColor: 'white'
-    },
-    img:{
-        height: 100,
-        width: undefined
-    },
-    header:{
-        padding: 0
-    },
-    footer:{
-        padding: 5
-    },
-    place:{
-      fontSize: 11,
-      color: 'black',
-      marginBottom: -7
-    },
-    price:{
-      fontSize:7,
-      color: '#666666'
-    }
+  container: {
+    flex: 1,
+    marginBottom: 20,
+    flexWrap: 'wrap',
+    flexDirection: 'row'
+  },
+  cell: {
+    margin: '2%',
+    width: '46%',
+    elevation: 7,
+    opacity: 0.85,
+    backgroundColor: 'white'
+  },
+  img:{
+      height: 100,
+      width: undefined
+  },
+  header:{
+      padding: 0
+  },
+  footer:{
+      padding: 5
+  },
+  place:{
+    fontSize: 11,
+    color: 'black',
+    marginBottom: -7
+  },
+  price:{
+    fontSize:7,
+    color: '#666666'
+  }
 })
