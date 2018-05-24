@@ -76,7 +76,7 @@ class FavoritesScreen extends Component {
       }
       auxId++;
     }
-    this.setState({loaded : true});
+    this.setState({ loaded : true });
     this.setState({ rows: favs });
     this.setState({ dataSource: ds.cloneWithRows(favs) });
     return favs;

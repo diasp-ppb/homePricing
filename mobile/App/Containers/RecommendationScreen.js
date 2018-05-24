@@ -28,28 +28,16 @@ class RecommendationScreen extends Component {
 
   // Fetch data here
   componentDidMount () {
-    var auth = 'Bearer ' + this.props.user.token;
-
-    fetch(baseURL + "/v1/recommendations", {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-          'Authorization': auth
-        },
-        body: JSON.stringify({
-          userId: this.props.user.user.id
-        }),
-      })
+    fetch(baseURL + "/v1/recommendations")
       .then(function (response) {
         return response.json();
       })
       .then(responseJson => {
-        this.setState({ houses: responseJson });
+        this.setState({ houses : responseJson });
         this.setState({ loaded : true });
       })
       .catch(function (json) {
-        console.error(json)
+        console.error(json);
       })
   }
 

@@ -66,14 +66,22 @@ class ControlPanel extends Component {
   }
 
   renderRow (rowData) {
-    return (
+    if (rowData.id == 1) {
+      return (
+        <TouchableOpacity style={styles.option} key={rowData.id} onPress={() => this.props.navigation.navigate(this.navPath(rowData.id), { userId: this.props.user.user.id })}>
+          <Icon style={styles.optionIcon} ios={rowData.ios} android={rowData.android}/>
+          <Text style={styles.text}>
+            {rowData.text}
+          </Text>
+        </TouchableOpacity>
+      )
+    } else return (
       <TouchableOpacity style={styles.option} key={rowData.id} onPress={() => this.props.navigation.navigate(this.navPath(rowData.id))}>
         <Icon style={styles.optionIcon} ios={rowData.ios} android={rowData.android}/>
         <Text style={styles.text}>
           {rowData.text}
         </Text>
       </TouchableOpacity>
-
     )
   };
 

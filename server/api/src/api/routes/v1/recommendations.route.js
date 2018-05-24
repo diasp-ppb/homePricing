@@ -10,19 +10,18 @@ const controller = require('../../controllers/recommendations.controller');
  */
 router.param('userId', controller.load);
 
+/**
+ * @api {get} v1/recommendations
+ * @apiDescription Get a list of recommendations
+ * @apiVersion 1.0.0
+ * @apiName ListRecommendations
+ * @apiGroup Recommendations
+ * @apiPermission anyone 
+ *
+ * @apiSuccess {Object[]} recommendations List of Recommendations.
+*/
 router
     .route('/')
-    .get(controller.list)
-    /**
-     * @api {get} v1/recommendations
-     * @apiDescription Get a list of recommendations
-     * @apiVersion 1.0.0
-     * @apiName ListRecommendations
-     * @apiGroup Recommendations
-     * @apiPermission anyone 
-     *
-     * @apiSuccess {Object[]} recommendations List of Recommendations.
-    */
-    .post(authorize(LOGGED_USER), controller.list);
+    .get(controller.list);
 
 module.exports = router;
