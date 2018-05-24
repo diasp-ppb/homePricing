@@ -24,7 +24,6 @@ exports.load = async (req, res, next, id) => {
 
 exports.list = async (req, res, next) => {
     try {
-        console.log('############' + req.get('userId'));
         const recommendations = await Recommendations.list(req.query);
         const transformedHouses = recommendations.map(house => house.transform());
         res.json(transformedHouses);

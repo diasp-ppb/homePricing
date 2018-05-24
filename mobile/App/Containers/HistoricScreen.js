@@ -1,6 +1,6 @@
 import { Images } from '../Themes'
 import React, { Component } from 'react'
-import { View, Image, Alert, TouchableOpacity, StyleSheet } from 'react-native'
+import { View, Image, ActivityIndicator } from 'react-native'
 import Grid from 'react-native-grid-list'
 import { connect } from 'react-redux';
 
@@ -8,8 +8,11 @@ import { connect } from 'react-redux';
 import { Container, Header, Left, Right, Body, Title, Content, Button, Text, Icon, Item, Input, Segment, Card, CardItem, StyleProvider } from 'native-base'
 
 // Styles
+import activityStyle from './Styles/ActivityIndicatorStyle'
 import styles from './Styles/HistoricScreenStyles'
+
 import { baseURL } from "../Services/Api";
+
 // Component
 class HistoricScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -21,6 +24,7 @@ class HistoricScreen extends Component {
 
     super(props)
     this.state = {
+      loaded: false,
       houses: []
     }
   }
@@ -33,6 +37,7 @@ class HistoricScreen extends Component {
       })
       .then(responseJson => {
         this.setState({ houses: responseJson });
+        this.setState({ loaded : true });
       })
     .catch(function (json) {
       console.error(json)
@@ -62,15 +67,9 @@ class HistoricScreen extends Component {
     return parsed;
   }
 
-  // Render the screen
-  render() {
-
-    const { navigate } = this.props.navigation;
-
-
+  renderHistoryHouses () {
     return (
       <Container>
-
         <Content padder>
           <View style={{ marginBottom: 20 }}>
             {
@@ -106,7 +105,28 @@ class HistoricScreen extends Component {
           </View>
         </Content>
       </Container>
-    )
+    );
+  }
+
+  // Render the screen
+  render() {
+    const { navigate } = this.props.navigation;
+
+    if(this.state.loaded) {
+      if (this.state.houses.length > 0) {
+        return this.renderHistoryHouses();
+      } else return (
+      <Container> 
+        <Text style={styles.noFav}> Ainda não tem histórico.</Text>
+      </Container>)
+    } else {
+      return (
+        <View style={[activityStyle.container, activityStyle.horizontal]}>
+          <ActivityIndicator size="large" color="#00ff00" />
+        </View>
+      )
+    }
+    
   }
 }
 

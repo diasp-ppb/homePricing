@@ -80,5 +80,8 @@ export default StyleSheet.create({
   price:{
     fontSize:7,
     color: '#666666'
+  },
+  noFav: {
+      marginTop: 18,
   }
 })

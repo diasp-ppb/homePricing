@@ -109,7 +109,9 @@ module.exports = {
         var recommendHouses = [];
         const favorites = await Favorite.get(userId);
         var houseIdArray = this.getHousesId(favorites);
-        recommendHouses = this.analyseFavorites(houseIdArray);
+
+        if (houseIdArray.length > 0)
+            recommendHouses = this.analyseFavorites(houseIdArray);
 
         return recommendHouses;
     },

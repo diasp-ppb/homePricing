@@ -58,7 +58,7 @@ class RecommendationScreen extends Component {
     this.setState({ houses: [] })
   }
 
-  recommendationHouses () {
+  renderRecommendationHouses () {
     return (
       <Container>
 
@@ -103,17 +103,15 @@ class RecommendationScreen extends Component {
 
   // Render the screen
   render () {
-
     const { navigate } = this.props.navigation;
 
     if(this.state.loaded) {
       if (this.state.houses.length > 0) {
-        return this.recommendationHouses();
+        return this.renderRecommendationHouses();
       } else return (
       <Container> 
         <Text style={styles.noFav}> Ainda não tem recomendações.</Text>
       </Container>)
-
     } else {
       return (
         <View style={[activityStyle.container, activityStyle.horizontal]}>
