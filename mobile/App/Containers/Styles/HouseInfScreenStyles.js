@@ -17,7 +17,10 @@ export default StyleSheet.create({
   headerBG:{
     backgroundColor:'#53565A'
   }, 
-
+  title: {
+    color: 'black',
+    marginBottom: 5
+  },
   arrow:{
     fontSize:18.2,
     marginTop:8,
@@ -42,6 +45,18 @@ export default StyleSheet.create({
     fontSize:12,
     color:'#262626'
   },
+  mainBox:{
+    flex:1, flexDirection:'column',
+    padding: 15,
+    marginTop: 10,
+    marginHorizontal: 10,
+    backgroundColor: 'white',
+    elevation: 2,
+    borderRadius: 2
+  },
+  mainBoxAux:{
+    flex:1, flexDirection:'row',
+  },
   box1:{
      flex:1, flexDirection:'row',
      padding: 15,
@@ -53,18 +68,17 @@ export default StyleSheet.create({
   },
   box2:{
     flexDirection:'row',
-    marginBottom: 15,
-    flex:1,
-    padding: 15,
     marginTop: 10,
     marginHorizontal: 10,
+    flex:1,
+    padding: 15,
     backgroundColor: 'white',
     elevation: 2,
     borderRadius: 2
   },
   streetText:{
-    fontSize:13 ,
-    color: '#262626'
+    fontSize:13,
+    color: '#505050'
   },
   properties:{
     fontSize:13,
@@ -78,14 +92,15 @@ export default StyleSheet.create({
     color:'#8c8c8c'
   },
   descriptionTitle:{
+    fontSize: 17,
     marginBottom: 6,
     fontWeight: 'bold',
     color: '#262626'
   },
   descriptionText:{
-    fontSize:13 ,
-    padding:2 , 
-    color:'#8c8c8c'
+    fontSize:15,
+    padding:2, 
+    color:'#505050'
   },
   star:{
     width: Metrics.images.normal,

@@ -113,26 +113,27 @@ class HouseInfScreen extends Component {
     return (
       <Container>
         <Content>
-
           <ImageSlider style={{ width: '100%', height: 200 }} images={images} />
 
           <View style={styles.infTab}>
-            
             <View style = {styles.data}>
-              <Text style={styles.priceText}> {house.price}€ </Text>
-              <Text style={styles.typeText}>House Rent</Text>
+              <Text style={styles.priceText}> {house.price} € </Text>
+              <Text style={styles.typeText}>.</Text>
             </View>
             {this.props.user.loggedIn ? star : <View/>}
           </View>
-          <View style={styles.box1}>
-            <View style={{ flex: 0.8 }}>
-              <Text style={styles.streetText}>
-                {house.address.zipcode}, {" "}
-                {house.address.town}, {" "}
-                {house.address.county} </Text>
-            </View>
-            <View style={{ flex: 0.1 }}>
-              <Image source={Images.gps} style={{ marginLeft: 8, width: 32, height: 30 }} />
+          <View style={styles.mainBox}>
+            <Text style={styles.title}>{house.title}</Text>
+            <View style={styles.mainBoxAux}>
+              <View style={{ flex: 0.8 }}>
+                <Text style={styles.streetText}>
+                  {house.address.zipcode}, {" "}
+                  {house.address.town}, {" "}
+                  {house.address.county} </Text>
+              </View>
+              <View style={{ flex: 0.1 }}>
+                <Image source={Images.gps} style={{ marginLeft: 8, width: 32, height: 30 }} />
+              </View>
             </View>
           </View>
 
@@ -156,20 +157,21 @@ class HouseInfScreen extends Component {
 
           <View style={styles.box2}>
             <View>
-              <Text style={styles.descriptionTitle}> Descrição </Text>
-              <Text style={styles.descriptionText}> {house.description} </Text>
+              <Text style={styles.descriptionTitle}> Caraterísticas </Text>
+              {house.characteristics.length != 0 && house.characteristics.map(function (item, index) {
+                return <Text key={index} style={styles.descriptionText}>&#9658; {item} </Text>
+              })}
+              {house.characteristics.length == 0 && <Text style={styles.descriptionText}> {undefined} </Text>}
             </View>
           </View>
 
           <View style={styles.box2}>
             <View>
-              <Text style={styles.descriptionTitle}> Caraterísticas </Text>
-              {house.characteristics.length != 0 && house.characteristics.map(function (item, index) {
-                return <Text key={index} style={styles.descriptionText}> {item} </Text>
-              })}
-              {house.characteristics.length == 0 && <Text style={styles.descriptionText}> {undefined} </Text>}
+              <Text style={styles.descriptionTitle}> Descrição </Text>
+              <Text style={styles.descriptionText}> {house.description.trim()} </Text>
             </View>
           </View>
+
         </Content>
       </Container>
     );
