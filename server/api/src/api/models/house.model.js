@@ -206,7 +206,7 @@ houseSchema.statics = {
     return house;
   },
 
-  async getAveragePrice(town, page = 1, perPage = 30) {
+  async getAveragePriceByTownAndType(town, type, page = 1, perPage = 30) {
     const avgPrice = await this.aggregate(
       [
         {
@@ -217,7 +217,7 @@ houseSchema.statics = {
             },
         },
         {
-          $match: { _id: town }
+          $match: { $and: [{ _id: town }, { type: type } ]}
         },
 
       ])

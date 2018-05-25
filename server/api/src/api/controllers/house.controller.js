@@ -121,8 +121,9 @@ exports.findbygps = async (req, res, next ) => {
  * @public
  */
 exports.getAveragePrice = async (req, res, next) => {
+  console.log("$$$$$$: " + req.params.type);
   try {
-    const avgPrice = await House.getAveragePrice(req.params.town);
+    const avgPrice = await House.getAveragePriceByTownAndType(req.params.town, req.params.type);
     res.json(avgPrice);
   } catch (error) {
     next(error);
