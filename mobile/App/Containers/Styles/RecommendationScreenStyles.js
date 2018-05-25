@@ -33,15 +33,10 @@ export default StyleSheet.create({
     margin: 0,
     padding: 0
   },
-  address:{
+  title:{
     paddingLeft:10,
     fontSize:15,
-    color: '#595959'
-  },
-  icon: {
-    paddingLeft:10,
-    fontSize:15,
-    color: '#046A38'
+    color: 'black'
   },
   money:{
     marginTop: 10,

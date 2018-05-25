@@ -23,8 +23,7 @@ export default StyleSheet.create({
         flexWrap: 'wrap'
     },
     title:{
-        color: '#00331A',
-        fontWeight: 'bold',
+        color: '#00331A'
     },
     info:{
         marginTop: 5,
