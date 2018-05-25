@@ -104,6 +104,7 @@ router
    *
    * @apiHeader {String} Athorization  User's access token
    *
+   * @apiSuccess {String}  district
    * @apiSuccess {String}  finality
    * @apiSuccess {String}  type
    * @apiSuccess {String}  tipology

@@ -46,7 +46,7 @@ import { SUCCESS_LOGIN,
       }
   }
   
-  export function createBodyUserPreferences(goal, propertyType, tipology,
+  export function createBodyUserPreferences(district, goal, propertyType, tipology,
     minArea, maxArea,
     minPrice, maxPrice,
     hospitalDist, hospitalQtn,
@@ -54,6 +54,7 @@ import { SUCCESS_LOGIN,
     workPlace, workDistance)
     {
         return body = JSON.stringify({
+            district: district,
             finality: goal,
             type: propertyType,
             tipology: tipology,
@@ -262,6 +263,7 @@ import { SUCCESS_LOGIN,
 
       thisUser.setState({
         loaded: true,
+        district: resp.district,
         goal: resp.finality,
         propertyType: resp.type,
         tipology: tipology,
@@ -323,11 +325,68 @@ import { SUCCESS_LOGIN,
         rent = resp.finality.toUpperCase() == "ALUGAR" ? true : false;
         buy = resp.finality.toUpperCase() == "COMPRAR" ? true : false;
       }
+
+      var district = "Aveiro";
+
+      switch (resp.district) {
+          case 'beja':
+            district = 'Beja';
+            break;
+          case 'braga':
+            district = 'Braga';
+            break;
+          case 'bragança':
+            district = 'Bragança';
+            break;
+          case 'castelo branco':
+            district = 'Castelo Branco';
+            break;
+          case 'coimbra':
+            district = 'Coimbra';
+            break;
+          case 'evora':
+            district = 'Évora';
+            break;
+          case 'faro':
+            district = 'Faro';
+            break;
+          case 'guarda':
+            district = 'Guarda';
+            break;
+          case 'leiria':
+            district = 'Leiria';
+            break;
+          case 'lisboa':
+            district = 'Lisboa';
+            break;
+          case 'portalegre':
+            district = 'Portalegre';
+            break;
+          case 'porto':
+            district = 'Porto';
+            break;
+          case 'santarem':
+            district = 'Santarém';
+            break;
+          case 'setubal':
+            district = 'Setúbal';
+            break;
+          case 'viana do castelo':
+            district = 'Viana do Castelo';
+            break;
+          case 'vila real':
+            district = 'Vila Real';
+            break;
+          case 'viseu':
+            district = 'Viseu';
+            break;
+      }
   
       thisUser.setState({
           loaded: true,
           rent: rent,
           buy: buy,
+          city: district,
           propertyType: resp.type,
           tipology: resp.tipology != null ? resp.tipology.toUpperCase() : null,
           minArea: resp.areaMin != null ? resp.areaMin : "",

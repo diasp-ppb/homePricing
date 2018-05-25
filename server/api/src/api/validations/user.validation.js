@@ -27,6 +27,7 @@ module.exports = {
   // PATCH /v1/user/preferences/
   updateUserPreferences: {
     body: {
+      district: Joi.string().allow(null).min(1),
       finality: Joi.string().allow(null).min(1),
       type: Joi.string().allow(null).max(128),
       tipology: Joi.string().allow(null).max(128)

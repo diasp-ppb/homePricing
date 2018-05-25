@@ -17,6 +17,27 @@ import { Tipology } from '@datatypes/Tipology'
 import activityStyle from './Styles/ActivityIndicatorStyle';
 import styles from './Styles/UserPreferencesStyles'
 
+const District = [
+    { value: 'aveiro', label: 'Aveiro' },
+    { value: 'beja', label: 'Beja' },
+    { value: 'braga', label: 'Braga' },
+    { value: 'bragança', label: 'Bragança' },
+    { value: 'castelo branco', label: 'Castelo Branco' },
+    { value: 'coimbra', label: 'Coimbra' },
+    { value: 'evora', label: 'Évora' },
+    { value: 'faro', label: 'Faro' },
+    { value: 'guarda', label: 'Guarda' },
+    { value: 'leiria', label: 'Leiria' },
+    { value: 'lisboa', label: 'Lisboa' },
+    { value: 'portalegre', label: 'Portalegre' },
+    { value: 'porto', label: 'Porto' },
+    { value: 'santarem', label: 'Santarém' },
+    { value: 'setubal', label: 'Setúbal' },
+    { value: 'viana do castelo', label: 'Viana do Castelo' },
+    { value: 'vila real', label: 'Vila Real' },
+    { value: 'viseu', label: 'Viseu' }
+  ];
+
 class UserPreferences extends Component {
     static navigationOptions = ({ navigation }) => ({
         title: 'Preferências de utilizador',
@@ -27,6 +48,7 @@ class UserPreferences extends Component {
         this.state = {
             getData: true,
             loaded: false,
+            district: null,
             goal: null,
             propertyType: null,
             tipology: null,
@@ -63,7 +85,7 @@ class UserPreferences extends Component {
             this.state.workDistance);
 
         if(validAreas && validPrices && validServices) {
-            var body = createBodyUserPreferences(this.state.goal, this.state.propertyType, this.state.tipology,
+            var body = createBodyUserPreferences(this.state.district, this.state.goal, this.state.propertyType, this.state.tipology,
                 this.state.minArea, this.state.maxArea,
                 this.state.minPrice, this.state.maxPrice,
                 this.state.hospitalDist, this.state.hospitalQtn,
@@ -80,6 +102,26 @@ class UserPreferences extends Component {
                 <Content>
                     <View>
                         <Text style={styles.mainTitle}>Preferências de casa</Text>
+
+                        <View style={styles.alignInput}>
+                            <View style={styles.labelFlex1}>
+                                <Text style={styles.label}>Distrito: </Text>
+                            </View>
+                            <View style={styles.pickerFlex}>
+                                <Form>
+                                    <Picker
+                                        mode='dropdown'
+                                        iosIcon={<Icon name='ios-arrow-down-outline' />}
+                                        placeholder='Distrito'
+                                        onValueChange={(value) => this.setState({district: value})}
+                                        selectedValue={this.state.district}
+                                    >
+                                        <Picker.Item value='null' label='Não especificado' />
+                                        {this.addPickerItems(District)}
+                                    </Picker>
+                                </Form>
+                            </View>
+                        </View>
 
                         <View style={styles.alignInput}>
                             <View style={styles.labelFlex1}>
