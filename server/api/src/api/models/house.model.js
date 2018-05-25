@@ -213,7 +213,7 @@ houseSchema.statics = {
           $group:
             {
               _id: "$address.town",
-              avgAmount: { $avg: "$price" },
+              avgAmount: { $avg: { $divide:  ["$price", "$area"]} },
             },
         },
         {
