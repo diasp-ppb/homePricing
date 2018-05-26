@@ -11,7 +11,7 @@ exports.load = async (req, res, next, id) => {
   try {
     const history = await History.find({ userId: id })
       .sort({ createdAt: -1 })
-      .exec();;
+      .exec();
     req.locals = { history };
     return next();
   } catch (error) {
@@ -46,10 +46,10 @@ exports.get = async (req, res, next) => {
 // TODO: Verify if userId and houseId are valid and exist
 exports.create = async (req, res, next) => {
   try {
-    const history = await (new History(req.body)).save();
-    const historyTransformed = history.transform();
-    res.status(httpStatus.CREATED);
-    return res.json(history);
+      const history = await (new History(req.body)).save();
+      const historyTransformed = history.transform();
+      res.status(httpStatus.CREATED);
+      return res.json(history);
   } catch (error) {
     return res.json(error);
   }

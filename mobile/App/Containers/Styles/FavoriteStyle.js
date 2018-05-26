@@ -23,11 +23,11 @@ export default StyleSheet.create({
         flexWrap: 'wrap'
     },
     title:{
-        color: Colors.blue6
+        color: '#00331A'
     },
     info:{
         marginTop: 5,
-        fontSize:12
+        fontSize:13
     },
     price:{
         flex:1,

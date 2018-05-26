@@ -51,6 +51,12 @@ const userSchema = new mongoose.Schema({
     type: String,
     trim: true,
   },
+  district: {
+    type: String,
+    lowercase: true,
+    minlength: 1,
+    maxlength: 128,
+  },
   finality: {
     type: String,
     lowercase: true,
@@ -139,7 +145,7 @@ userSchema.method({
 
   transformPreferences() {
     const transformed = {};
-    const fields = ['finality', 'type', 'tipology', 'areaMin', 'areaMax', 'priceMin', 'priceMax', 'services', 'workAddress', 'workMaxDistance'];
+    const fields = ['district', 'finality', 'type', 'tipology', 'areaMin', 'areaMax', 'priceMin', 'priceMax', 'services', 'workAddress', 'workMaxDistance'];
 
     fields.forEach((field) => {
       transformed[field] = this[field];

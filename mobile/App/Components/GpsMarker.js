@@ -26,7 +26,7 @@ class GpsMarker extends React.Component {
 
 
   render() {
-    const { fontSize, amount, moreInfo, image } = this.props;
+    const { fontSize, title, amount, moreInfo, image } = this.props;
 
     const renderSelector = moreInfo ?
       (
@@ -38,7 +38,7 @@ class GpsMarker extends React.Component {
             >
               <View style={styles.textcontainer}>
                 <Text style={styles.streetText}>{amount} €</Text>
-                <Text style={styles.streetText}>Escritorio, Vila Do Conde</Text>
+                <Text style={styles.titleText}>{title}</Text>
               </View>
             </ImageBackground>
 
@@ -89,8 +89,12 @@ const styles = StyleSheet.create({
     opacity:0.80
   },
   streetText:{
-    fontSize:13 ,
-    color: Colors.black
+    fontSize:13,
+    color: '#262626'
+  },
+  titleText: {
+    fontSize:12,
+    color: '#505050'
   }
 });
 

@@ -1,19 +1,20 @@
 import React, { Component } from 'react'
 import { View, Image, ActivityIndicator } from 'react-native'
+import { connect } from 'react-redux';
 
 // Native Base
-import { Container, Content, Card, CardItem, Body, Button, Text, Icon, Left } from 'native-base'
+import { Container, Content, Button, Text, Icon} from 'native-base'
 
 // Styles
 import activityStyle from './Styles/ActivityIndicatorStyle'
-import styles from './Styles/PreferencesScreenStyles'
+import styles from './Styles/RecommendationScreenStyles'
 
 import {baseURL} from "../Services/Api";
 
 // Component
-export default class PreferenceScreen extends Component {
+class RecommendationScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
-    header: null
+    title: 'Recomendações',
   });
 
   // This component's constructor
@@ -27,16 +28,18 @@ export default class PreferenceScreen extends Component {
 
   // Fetch data here
   componentDidMount () {
-    fetch(baseURL + "/v1/houses")
+    let userId = this.props.navigation.state.params.id;
+
+    fetch(baseURL + "/v1/recommendations?userId=" + userId)
       .then(function (response) {
         return response.json();
       })
       .then(responseJson => {
-        this.setState({ houses: responseJson });
-        this.setState({loaded : true});
+        this.setState({ houses : responseJson });
+        this.setState({ loaded : true });
       })
       .catch(function (json) {
-        console.error(json)
+        console.error(json);
       })
   }
 
@@ -45,13 +48,9 @@ export default class PreferenceScreen extends Component {
     this.setState({ houses: [] })
   }
 
-  // Render the screen
-  render () {
-    const { navigate } = this.props.navigation;
-
-    if(this.state.loaded) {
-      return (
-        <Container>
+  renderRecommendationHouses () {
+    return (
+      <Container>
 
           <Content padder>
             <View style={{ marginBottom: 20 }}>
@@ -59,22 +58,22 @@ export default class PreferenceScreen extends Component {
                 this.state.houses.map((item, index) => {
                   return (
                   <View style={styles.box1} key={index} >
-                    <View style={{ flex:0.5 , width:'90%' , height:100}} >
+                    <View style={{ flex:0.37, width:'90%' , height:125}} >
                       <Image source={{ uri: item.images[0] }} style={{ height: 200, width: null, flex: 1 }}/>
                     </View>
 
-                    <View style={{ flex:0.4}}>
+                    <View style={{ flex:0.5}}>
                       <View style={{ flex:0.5}}>
-                        <Text style={styles.address}>
-                            <Icon ios={'ios-pin'} android={'md-pin'} style={styles.address} /> {item.address.town}
+                        <Text style={styles.title}>
+                            {item.title}
                         </Text>
                         <Text style={styles.money}>
-                            {item.price}
+                            {item.price} &#8364;
                         </Text>
                       </View>
                     </View>
 
-                    <View style={{flex:0.13, marginTop: 22}} >
+                    <View style={{flex:0.13, marginTop: 40}} >
                         <Button transparent onPress={() => this.props.navigation.navigate('HouseInformation',{house: item })}>
                           <Text>
                             <Icon style={styles.arrow} ios={'ion-ios-arrow-forward'} android={'md-arrow-forward'} />
@@ -83,15 +82,26 @@ export default class PreferenceScreen extends Component {
                     </View>
 
                   </View>
-
-
                   )
                 })
               }
             </View>
           </Content>
         </Container>
-      )
+    );
+  }
+
+  // Render the screen
+  render () {
+    const { navigate } = this.props.navigation;
+
+    if(this.state.loaded) {
+      if (this.state.houses.length > 0) {
+        return this.renderRecommendationHouses();
+      } else return (
+      <Container> 
+        <Text style={styles.noFav}> Ainda não tem recomendações.</Text>
+      </Container>)
     } else {
       return (
         <View style={[activityStyle.container, activityStyle.horizontal]}>
@@ -101,3 +111,14 @@ export default class PreferenceScreen extends Component {
     }
   }
 }
+
+function mapStateToProps(state) {
+  return {
+    user: state.login
+  };
+}
+
+
+const connectedRegister = connect(mapStateToProps)(RecommendationScreen);
+
+export { connectedRegister as RecommendationScreen};

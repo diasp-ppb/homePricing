@@ -1,11 +1,16 @@
 import React, { Component } from 'react';
 import GpsMap from '../Components/GPSMap';
 import { baseURL } from '../Services/Api';
+import { StyleSheet, TouchableWithoutFeedback } from 'react-native';
+import { Fab, Container, Icon, View, Text } from 'native-base';
+
+import styles from './Styles/GpsScreenStyles'
 
 export default class GpsScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
-    title: 'Mapa',
+    title: 'Mapa'
   });
+
   constructor(props) {
     super(props);
 
@@ -20,6 +25,12 @@ export default class GpsScreen extends Component {
         longitudeDelta: 0.0025,
       },
       houses: [],
+      activeModal: '',
+      modalVisible: false,
+      description: 'Local com criminalidade reduzida'
+                  + '\nTemperatura média: 22ºC'
+                  + '\nShopping e Hospitais na zona'
+                  + '\nTransportes e Metro'
     };
 
     this.addMoreMarkers = this.addMoreMarkers.bind(this);
@@ -52,7 +63,6 @@ export default class GpsScreen extends Component {
   componentWillUnmount() {
     navigator.geolocation.clearWatch(this.watchId);
   }
-
 
   getMarkerOnLocation() {
     fetch(`${baseURL}/v1/houses/findbygps`, {
@@ -106,20 +116,83 @@ export default class GpsScreen extends Component {
     this.setState({ houses });
   }
 
+  activateModal(modal) {
+    this.setState({ activeModal: modal })
+    this.setState({ modalVisible: true })
+  }
+
+  deactivateModal() {
+    this.setState({ activeModal: '' })
+    this.setState({ modalVisible: false })
+  }
+
+  handleModal(modal) {
+    if (this.state.modalVisible === true && this.state.activeModal === modal) {
+      this.deactivateModal()
+    } else if (this.state.modalVisible === true && this.state.activeModal !== modal) {
+      this.setState({ activeModal: modal })
+    } else if (this.state.modalVisible === false) {
+      this.activateModal(modal)
+    }
+  }
+
+  renderModal() {
+    return (
+      <TouchableWithoutFeedback onPress={() => this.deactivateModal()}>
+        <View style={StyleSheet.absoluteFill}>
+          <View style={styles.overlay}></View>
+          <View style={styles.modal}>
+            <Text style={styles.title}>
+              {(this.state.activeModal === 'info') ? 'Informação da Área' : 'Preço Médio'}
+            </Text>
+            <View style={styles.separator}></View>
+            {(this.state.activeModal === 'info') ?
+              <Icon ios={'ios-information'} android={'md-information'} style={styles.icon} />
+              :
+              <Icon ios={'ios-bulb'} android={'md-bulb'} style={styles.icon} />
+            }
+            <Text style={styles.location}>
+              <Icon ios={'ios-pin'} android={'md-pin'} style={{ color: 'white', fontSize: 20 }} /> Porto, Porto
+          </Text>
+            {(this.state.activeModal === 'info') ?
+              <Text style={styles.description}>{this.state.description}</Text>
+              :
+              <Text style={styles.price}>10,000 €</Text>
+            }
+          </View>
+        </View>
+      </TouchableWithoutFeedback>
+    )
+  }
 
   render() {
     const { navigate } = this.props.navigation;
 
     return (
-      <GpsMap
-        region={this.state.region}
-        showsUserLocation
-        addMoreMarkers={this.addMoreMarkers}
-        navigate={navigate}
-        moreInfo={this.moreInfo}
-        focusOnLocation={this.focusOnLocation}
-        houses={this.state.houses}
-      />
+      <Container>
+        <GpsMap
+          region={this.state.region}
+          showsUserLocation
+          addMoreMarkers={this.addMoreMarkers}
+          navigate={navigate}
+          moreInfo={this.moreInfo}
+          focusOnLocation={this.focusOnLocation}
+          houses={this.state.houses}
+        />
+        <Fab
+          position="bottomLeft"
+          style={{ backgroundColor: '#046A38' }}
+          onPress={() => this.activateModal('info')}>
+          <Icon ios={'ios-information'} android={'md-information'} />
+        </Fab>
+        <Fab
+          position="bottomRight"
+          style={{ backgroundColor: '#046A38' }}
+          onPress={() => this.activateModal('avg')}>
+          <Icon ios={'ios-bulb'} android={'md-bulb'} />
+        </Fab>
+        {(this.state.modalVisible === true) ? this.renderModal() : null}
+      </Container>
     );
   }
 }

@@ -17,7 +17,6 @@ export default class GpsMap extends Component {
     const {
       region, showUserLocation, addMoreMarkers, navigate, houses, moreInfo, focusOnLocation,
     } = this.props;
-
     return (
       <Container>
         <MapView
@@ -41,6 +40,7 @@ export default class GpsMap extends Component {
                 onPress={() => moreInfo(i)}
               >
                 <GpsMarker
+                  title={house.title}
                   amount={house.price}
                   moreInfo={house.moreInfo}
                   image={house.images[0]}

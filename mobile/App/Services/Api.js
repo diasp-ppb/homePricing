@@ -1,47 +1,52 @@
 // a library to wrap and simplify api calls
 
 import { SUCCESS_LOGIN,
-  ERROR_INVALID_EMAIL, ERROR_INVALID_PARAM_LOGIN,
-  SUCCESS_REGISTER,
-  ERROR_INVALID_PARAM_REGISTER, ERROR_EMAIL_EXISTS_REGISTER,
-  LOGOUT_SUCCESS,
-  UPDATE_USER_PREFERENCES,
-  ERROR_AREAS, ERROR_PRICES,
-  error_area, error_price, error_service,
-  ToastWarning } from './LogToasts'
-import { ToastSuccess, ToastError } from './LogToasts'
-import { login } from '../Redux/LoginRedux'
-
-export const baseURL = "http://172.30.8.9:3000"
-
-export function checkRegisterResponse(responseJson, props) {
-    if (responseJson.code === '400') {
-        ToastError(ERROR_INVALID_PARAM_REGISTER);
-    } else if (responseJson.code === '409') {
-        ToastError(ERROR_EMAIL_EXISTS_REGISTER);
-    } else {
-        const { navigate } = props.navigation;
-        navigate('Login');
-        ToastSuccess(SUCCESS_REGISTER);
-    }
-}
-
-export function checkLoginResponse(responseJson, props) {
-
-    if (responseJson.code === '400') {
-        ToastError(ERROR_INVALID_EMAIL);
-    } else if (responseJson.code === '401') {
-        ToastError(ERROR_INVALID_PARAM_LOGIN);
-    } else {
-        const { navigate } = props.navigation;
-
-        ToastSuccess(SUCCESS_LOGIN);
-        props.login(responseJson.user, responseJson.token.accessToken);
-        navigate('userStack');
-    }
-}
-
-export function createBodyUserPreferences(goal, propertyType, tipology,
+    ERROR_INVALID_EMAIL, ERROR_INVALID_PARAM_LOGIN,
+    SUCCESS_REGISTER,
+    ERROR_INVALID_PARAM_REGISTER, ERROR_EMAIL_EXISTS_REGISTER,
+    LOGOUT_SUCCESS,
+    UPDATE_USER_PREFERENCES,
+    ERROR_AREAS, ERROR_PRICES,
+    error_area, error_price, error_service,
+    ToastWarning } from './LogToasts'
+  import { ToastSuccess, ToastError } from './LogToasts'
+  import { login } from '../Redux/LoginRedux'
+  
+  export const baseURL = "http://172.30.5.172:3000"
+  
+  export function checkRegisterResponse(responseJson, thisUser) {
+      if (responseJson.code == '400') {
+          thisUser.setState({password : ''});
+          thisUser.setState({confirmPassword : ''});
+          ToastError(ERROR_INVALID_PARAM_REGISTER);
+      } else if (responseJson.code == '409') {
+          thisUser.setState({password : ''});
+          thisUser.setState({confirmPassword : ''});
+          ToastError(ERROR_EMAIL_EXISTS_REGISTER);
+      } else {
+          const { navigate } = thisUser.props.navigation;
+          navigate('Login');
+          ToastSuccess(SUCCESS_REGISTER);
+      }
+  }
+  
+  export function checkLoginResponse(responseJson, thisUser) {
+  
+      if (responseJson.code == '400') {
+          thisUser.setState({password : ''});
+          ToastError(ERROR_INVALID_EMAIL);
+      } else if (responseJson.code == '401') {
+          thisUser.setState({password : ''});
+          ToastError(ERROR_INVALID_PARAM_LOGIN);
+      } else {
+          const { navigate } = thisUser.props.navigation;
+          ToastSuccess(SUCCESS_LOGIN);
+          thisUser.props.login(responseJson.user, responseJson.token.accessToken);
+          navigate('userStack');
+      }
+  }
+  
+  export function createBodyUserPreferences(district, goal, propertyType, tipology,
     minArea, maxArea,
     minPrice, maxPrice,
     hospitalDist, hospitalQtn,
@@ -49,6 +54,7 @@ export function createBodyUserPreferences(goal, propertyType, tipology,
     workPlace, workDistance)
     {
         return body = JSON.stringify({
+            district: district,
             finality: goal,
             type: propertyType,
             tipology: tipology,
@@ -257,6 +263,7 @@ export function createBodyUserPreferences(goal, propertyType, tipology,
 
       thisUser.setState({
         loaded: true,
+        district: resp.district,
         goal: resp.finality,
         propertyType: resp.type,
         tipology: tipology,
@@ -318,19 +325,76 @@ export function createBodyUserPreferences(goal, propertyType, tipology,
         rent = resp.finality.toUpperCase() == "ALUGAR" ? true : false;
         buy = resp.finality.toUpperCase() == "COMPRAR" ? true : false;
       }
+
+      var district = "Aveiro";
+
+      switch (resp.district) {
+          case 'beja':
+            district = 'Beja';
+            break;
+          case 'braga':
+            district = 'Braga';
+            break;
+          case 'bragança':
+            district = 'Bragança';
+            break;
+          case 'castelo branco':
+            district = 'Castelo Branco';
+            break;
+          case 'coimbra':
+            district = 'Coimbra';
+            break;
+          case 'evora':
+            district = 'Évora';
+            break;
+          case 'faro':
+            district = 'Faro';
+            break;
+          case 'guarda':
+            district = 'Guarda';
+            break;
+          case 'leiria':
+            district = 'Leiria';
+            break;
+          case 'lisboa':
+            district = 'Lisboa';
+            break;
+          case 'portalegre':
+            district = 'Portalegre';
+            break;
+          case 'porto':
+            district = 'Porto';
+            break;
+          case 'santarem':
+            district = 'Santarém';
+            break;
+          case 'setubal':
+            district = 'Setúbal';
+            break;
+          case 'viana do castelo':
+            district = 'Viana do Castelo';
+            break;
+          case 'vila real':
+            district = 'Vila Real';
+            break;
+          case 'viseu':
+            district = 'Viseu';
+            break;
+      }
   
       thisUser.setState({
           loaded: true,
           rent: rent,
           buy: buy,
+          city: district,
           propertyType: resp.type,
           tipology: resp.tipology != null ? resp.tipology.toUpperCase() : null,
-          minArea: resp.areaMin,
-          maxArea: resp.areaMax,
+          minArea: resp.areaMin != null ? resp.areaMin : "",
+          maxArea: resp.areaMax != null ? resp.areaMax : "",
           minPrice: resp.priceMin,
           maxPrice: resp.priceMax,
           workLocation: resp.workAddress,
-          workDistance: resp.workMaxDistance
+          workDistance: resp.workMaxDistance != null ? resp.workMaxDistance : ""
         });
   }
   
@@ -376,7 +440,7 @@ export function createFavoriteAPI(user, house, token){
   })
     .then((response) => response.json())
     .then(
-      () => { ToastSuccess("House added to favorites!"); }
+      () => { ToastSuccess("Casa adicionada aos favoritos!"); }
     )
     .catch((error) => {
       console.error(error);
@@ -397,7 +461,7 @@ export function deleteFavoriteAPI(user, house, token){
       houseId: house
     }),
   })
-    .then(() => { ToastSuccess("House removed from favorites."); })
+    .then(() => { ToastSuccess("Casa removida dos favoritos."); })
     .catch((error) => {
       console.error(error);
     });
