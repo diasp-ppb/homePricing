@@ -6,7 +6,10 @@ import logging
 class ImovirtualCrawler(scrapy.Spider):
     name = "imovirtual"
     urls = [
-            'https://www.imovirtual.com/comprar/apartamento/porto/'
+            'https://www.imovirtual.com/comprar/apartamento/porto/',
+            'https://www.imovirtual.com/arrendar/apartamento/porto/',
+            'https://www.imovirtual.com/comprar/moradia/porto/',
+            'https://www.imovirtual.com/arrendar/moradia/porto/'
     ]
     test_url = ""
 
@@ -15,15 +18,15 @@ class ImovirtualCrawler(scrapy.Spider):
         self.test_url = test_url
 
     def start_requests(self):
-        for url in self.urls:
-            if not self.test_url:
+        if not self.test_url:
+            for url in self.urls:
                 yield scrapy.Request(url=url, callback=self.parse)
-            else:
-                yield scrapy.Request(url=self.test_url, callback=self.parseAdvertisement)
+        else:
+            yield scrapy.Request(url=self.test_url, callback=self.parseAdvertisement)
 
     def parse(self, response):
         print("\n\nStarted parse: " + response.url +  "\n")
-        listing = response.css('div.listing');
+        listing = response.css('div.listing')
         advertisements = response.css('div.listing .row')[0].css('article');
         for advertisement in advertisements:
             advertisement_page = advertisement.xpath('@data-url').extract_first()
@@ -47,9 +50,12 @@ class ImovirtualCrawler(scrapy.Spider):
             'address' : self.extract_address(response),
             'webpage' : response.url,
             'images' : self.extract_images(response),
-            'coordinates' : self.extract_coordinates(response)
+            'coordinates' : self.extract_coordinates(response),
+            'selling_type' : self.extract_selling_type(response),
+            'property_type' : self.extract_house_type(response)
         }
         result.update(self.extract_secondary_parameters(response))
+        print(result)
         yield result
 
     def format_labels(self, parameters = []):
@@ -155,8 +161,8 @@ class ImovirtualCrawler(scrapy.Spider):
         return self.format_area(area)
 
     def extract_tipology(self, response):
-        parametersSelector = response.css('.section-offer-params .params-list li')
-        tipology = parametersSelector.css('.main-list li span strong::text').extract()[2]
+        parametersSelector = response.css('.section-offer-title .room-lane')
+        tipology = parametersSelector.css('.big::text').extract_first()
         return tipology
 
     def extract_characteristics(self, response):
@@ -199,6 +205,24 @@ class ImovirtualCrawler(scrapy.Spider):
             return self.format_coordinates([latitude, longitude])
         else:
             return []
+
+    def extract_selling_type(self, response):
+        titleSelector = response.css('.section-offer-title')
+        search_type = titleSelector.css('p.address-links a.title::text').extract_first()
+        print(search_type)
+        if "comprar" in search_type:
+            return "buy"
+        elif "arrendar" in search_type:
+            return "rent"
+
+    def extract_house_type(self, response):
+        titleSelector = response.css('.section-offer-title')
+        search_type = titleSelector.css('p.address-links a.title::text').extract_first()
+        print(search_type)
+        if "Apartamento" in search_type:
+            return "apartment"
+        elif "Moradia" in search_type:
+            return "house"
 
     def check_zipcode(self, extracted_string):
         zipcode_list = extracted_string.split("-")

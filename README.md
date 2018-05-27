@@ -146,6 +146,8 @@ sudo udevadm control --reload-rules
    * `negotiable` : Indicates if the price is negotiable or not
    * `grossArea` : Gross area of the property *(m²)*
    * `coordinates` : Latitude and Longitude of the property
+   * `selling_type` : Type of selling *(Buy or Rent)*
+   * `property_type` : Type of property *(Apartment or House)*
  * Example:
 ```
 [
@@ -160,6 +162,8 @@ sudo udevadm control --reload-rules
 "energyCertificate": "B", 
 "year": 2003, 
 "condition": "Usado",
-"coordinates": [41.1556608, -8.6022932]}
+"property_type": "apartment",
+"selling_type": "buy",
+"coordinates": [41.1863614, -8.6927064]
 ]
 ```
