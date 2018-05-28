@@ -157,18 +157,18 @@ class HouseInfScreen extends Component {
 
           <View style={styles.box2}>
             <View>
-              <Text style={styles.descriptionTitle}> Caraterísticas </Text>
-              {house.characteristics.length != 0 && house.characteristics.map(function (item, index) {
-                return <Text key={index} style={styles.descriptionText}>&#9658; {item} </Text>
-              })}
-              {house.characteristics.length == 0 && <Text style={styles.descriptionText}> {undefined} </Text>}
+              <Text style={styles.descriptionTitle}> Descrição </Text>
+              <Text style={styles.descriptionText}> {house.description.trim()} </Text>
             </View>
           </View>
 
           <View style={styles.box2}>
             <View>
-              <Text style={styles.descriptionTitle}> Descrição </Text>
-              <Text style={styles.descriptionText}> {house.description.trim()} </Text>
+              <Text style={styles.descriptionTitle}> Caraterísticas </Text>
+              {house.characteristics.length != 0 && house.characteristics.map(function (item, index) {
+                return <Text key={index} style={styles.descriptionText}>&#9658; {item} </Text>
+              })}
+              {house.characteristics.length == 0 && <Text style={styles.descriptionText}> {undefined} </Text>}
             </View>
           </View>
 

@@ -35,7 +35,7 @@ export default StyleSheet.create({
   },
   title:{
     paddingLeft:10,
-    fontSize:15,
+    fontSize:14,
     color: 'black'
   },
   icon: {
