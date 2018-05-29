@@ -89,7 +89,7 @@ router.route('/:houseId')
  */
   .patch(authorize(ADMIN), validate(updateHouse), controller.update)
 
-router.route('/average/:town')
+router.route('/average/:town&:type')
   .get(controller.getAveragePrice)
 
 module.exports = router

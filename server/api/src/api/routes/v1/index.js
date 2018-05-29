@@ -35,7 +35,6 @@ router.use('/houses', houseRoutes);
  */
 router.use('/user/preferences', userPreferencesRoutes);
 
-
 /**
  * GET v1/favorites
  */

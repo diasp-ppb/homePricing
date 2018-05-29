@@ -89,7 +89,6 @@ class FavoritesScreen extends Component {
   changeFavorite = (id) => {
     if (this.state.rows[id].active === true) {
       this.state.rows[id].active = false;
-      console.log("######DELETE:  " + this.state.rows[id].idHouse);
       deleteFavoriteAPI(this.props.user.user.id, this.state.rows[id].idHouse, this.props.user.token);
     } else {
       this.state.rows[id].active = true;
@@ -118,7 +117,6 @@ class FavoritesScreen extends Component {
           </TouchableOpacity>
         </View>
       </TouchableOpacity>
-
     )
   }
 

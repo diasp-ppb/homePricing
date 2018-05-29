@@ -206,14 +206,14 @@ houseSchema.statics = {
     return house;
   },
 
-  async getAveragePrice(town, page = 1, perPage = 30) {
+  async getAveragePriceByTownAndType(town, type, page = 1, perPage = 30) {
     const avgPrice = await this.aggregate(
       [
         {
           $group:
             {
-              _id: "$address.town",
-              avgAmount: { $avg: "$price" },
+              _id: "$address.county",
+              avgAmount: { $avg: { $divide:  ["$price", "$area"]} },
             },
         },
         {
