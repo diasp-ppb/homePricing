@@ -4,7 +4,7 @@ module.exports = {
   jwtSecret:"bA2xcjpf8y5aSUFsNB2qN5yymUBSs6es3qHoFpGkec75RCeBb8cpKauGefw5qy4",
   jwtExpirationInterval: 60,
   mongo: {
-    uri: "mongodb://mongodb:27017/"
+    uri: "mongodb://localhost:27017/"
   },
   logs: 'combined',
   googlePlacesKey: "AIzaSyA_fgmevMEaWv19X13yXXSC_pYmm5EaSwA",

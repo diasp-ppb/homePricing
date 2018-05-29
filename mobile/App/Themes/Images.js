@@ -36,7 +36,8 @@ const images = {
   login: require('../Images/login.png'),
   camara: require('../Images/camara.png'),
   greenStar: require('../Images/Icons/full-star-green2.png'),
-  greenStarLines: require('../Images/Icons/star-line-green2.png') 
+  greenStarLines: require('../Images/Icons/star-line-green2.png'),
+  spinner: require('../Images/Blocks-1s-200px.gif'),
 };
 
 export default images

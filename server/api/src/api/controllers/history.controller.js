@@ -32,7 +32,7 @@ exports.get = async (req, res, next) => {
       const house = await history[result].transform();
       transformedHistory.push(house);
     }
-
+    console.warn(transformedHistory)
     res.json(transformedHistory);
   } catch (error) {
     next(error);

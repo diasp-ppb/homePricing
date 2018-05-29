@@ -64,6 +64,7 @@ historySchema.statics = {
                 history = await this.find(id).exec();
             }
             if (history) {
+              console.error(history);
                 return history;
             }
 

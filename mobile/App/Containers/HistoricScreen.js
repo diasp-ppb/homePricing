@@ -38,6 +38,7 @@ class HistoricScreen extends Component {
       .then(responseJson => {
         this.setState({ houses: responseJson });
         this.setState({ loaded : true });
+
       })
     .catch(function (json) {
       console.error(json)
@@ -116,7 +117,7 @@ class HistoricScreen extends Component {
       if (this.state.houses.length > 0) {
         return this.renderHistoryHouses();
       } else return (
-      <Container> 
+      <Container>
         <Text style={styles.noFav}> Ainda não tem histórico.</Text>
       </Container>)
     } else {
@@ -126,7 +127,7 @@ class HistoricScreen extends Component {
         </View>
       )
     }
-    
+
   }
 }
 
