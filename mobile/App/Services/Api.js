@@ -12,7 +12,7 @@ import { SUCCESS_LOGIN,
 import { ToastSuccess, ToastError } from './LogToasts'
 import { login } from '../Redux/LoginRedux'
 
-export const baseURL = "http://192.168.1.66:3000"
+export const baseURL = "http://172.30.5.172:3000"
 
 export function checkRegisterResponse(responseJson, thisUser) {
   if (responseJson.code == '400') {
@@ -322,7 +322,7 @@ export function setUserPreferencesHouseSearch(resp, thisUser)
   var rent = false;
   var buy = false;
 
-  if (resp.finality != "") {
+  if (resp.finality != null) {
     rent = resp.finality.toUpperCase() == "ALUGAR" ? true : false;
     buy = resp.finality.toUpperCase() == "COMPRAR" ? true : false;
   }
