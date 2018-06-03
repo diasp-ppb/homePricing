@@ -12,7 +12,7 @@ import { SUCCESS_LOGIN,
 import { ToastSuccess, ToastError } from './LogToasts'
 import { login } from '../Redux/LoginRedux'
 
-export const baseURL = "http://172.30.5.172:3000"
+export const baseURL = "http://192.168.1.3:3000"
 
 export function checkRegisterResponse(responseJson, thisUser) {
   if (responseJson.code == '400') {

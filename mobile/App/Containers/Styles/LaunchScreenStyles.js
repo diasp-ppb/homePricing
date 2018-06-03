@@ -11,9 +11,10 @@ export default StyleSheet.create({
     justifyContent: 'center'
   },
   txt: {
-    fontSize: 20,
+    fontSize: 13,
     color: 'white',
-    marginBottom: 10,
+    elevation: 3,
+    padding: 15,
     textShadowColor: 'black',
     textShadowOffset: { width: -2, height: 2 },
     textShadowRadius: 10
@@ -24,10 +25,11 @@ export default StyleSheet.create({
     paddingHorizontal: 5
   },
   btn: {
+    height: 60,
     elevation: 60,
     opacity: 0.92,
-    marginBottom: 15,
-    borderRadius: 20,
+    marginBottom: 10,
+    borderRadius: 30,
     justifyContent: 'center',
     backgroundColor: '#046A38'
   },

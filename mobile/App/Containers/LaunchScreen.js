@@ -38,8 +38,8 @@ class LaunchScreen extends Component {
             <Image source={Images.logo1} style={styles.homePricing} resizeMode='contain' />
           </View>
           <View style={styles.row}>
-            <Text style={styles.txt}>To Start Exploring</Text>
-            <View style={{ width: '55%' }}>
+            <Text style={styles.txt}>To   S t a r t     E x p l o r i n g</Text>
+            <View style={{ width: '50%' }}>
               <Button primary block style={styles.btn} onPress={() => navigate('HouseSearch')}>
                 <Text>Pesquisar</Text>
               </Button>
@@ -49,7 +49,7 @@ class LaunchScreen extends Component {
             </View>
           </View>
           <View style={styles.row}>
-            <Text style={styles.txt}>Go Further</Text>
+            <Text style={styles.txt}>G o   F u r t h e r</Text>
             <View style={{ width: '55%', flexDirection: 'row', justifyContent: 'center' }}>
               { !this.props.user.loggedIn ?
                 <Icon ios={'ios-person'} android={'md-person'} style={styles.icon} onPress={() => navigate('Login')} />
