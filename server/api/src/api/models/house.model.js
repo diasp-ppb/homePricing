@@ -206,7 +206,8 @@ houseSchema.statics = {
     return house;
   },
 
-  async getAveragePriceByTownAndType(town, type, page = 1, perPage = 30) {
+  async getAveragePriceByTownAndCounty(district, county, page = 1, perPage = 30) {
+    const addrDist = "address.city";
     const avgPrice = await this.aggregate(
       [
         {
@@ -217,9 +218,8 @@ houseSchema.statics = {
             },
         },
         {
-          $match: { _id: town }
-        },
-
+          $match: { _id: county }
+        }
       ])
       .cursor({ batchSize: 2000000 })
       .sort({ createdAt: -1 })

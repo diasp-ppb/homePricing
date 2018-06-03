@@ -15,6 +15,7 @@ export default class GpsScreen extends Component {
     super(props);
 
     this.state = {
+      getAvgData: false,
       avgPrice: null,
       latitude: null,
       longitude: null,
@@ -120,6 +121,10 @@ export default class GpsScreen extends Component {
   activateModal(modal) {
     this.setState({ activeModal: modal })
     this.setState({ modalVisible: true })
+
+    if (modal === 'avg') {
+      this.getAvgPrice('Porto', 'Porto');
+    }
   }
 
   deactivateModal() {
@@ -137,15 +142,8 @@ export default class GpsScreen extends Component {
     }
   }
 
-  async getAvgPrice(town) {
-    let type = 'null';
-
-    const data = {
-      town: town,
-      type: type
-    };
-
-    let url = `${baseURL}/v1/houses/average/${town}&${type}`;
+  async getAvgPrice(district, county) {
+    let url = `${baseURL}/v1/houses/average/${district}&${county}`;
     let response = await fetch(url, {
       method: 'GET',
       headers: {
@@ -153,20 +151,16 @@ export default class GpsScreen extends Component {
         'Content-Type': 'application/json'
       },
       params: {
-        town: town,
-        type: type
+        district: district,
+        county: county
       },
     });
     let responseJson = await response.json();
-
     let avgPrice = Math.round(responseJson[0].avgAmount * 100) / 100;
     this.setState({ avgPrice : avgPrice});
   }
 
   renderModal() {
-    if (this.state.activeModal === 'avg') {
-      this.getAvgPrice('Porto');
-    }
     return (
       <TouchableWithoutFeedback onPress={() => this.deactivateModal()}>
         <View style={StyleSheet.absoluteFill}>
