@@ -60,6 +60,10 @@ class UserPreferences extends Component {
             hospitalQtn: "",
             schoolDist: "",
             schoolQtn: "",
+            shopDist: "",
+            shopQtn: "",
+            transpDist: "",
+            transpQtn: "",
             workPlace: null,
             workDistance: ""
         }
@@ -82,6 +86,8 @@ class UserPreferences extends Component {
         var validPrices = validatePrices(this.state.minPrice, this.state.maxPrice);
         var validServices = validateServices(this.state.hospitalDist, this.state.hospitalQtn,
             this.state.schoolDist, this.state.schoolQtn,
+            this.state.shopDist, this.state.shopQtn,
+            this.state.transpDist, this.state.transpQtn,
             this.state.workDistance);
 
         if(validAreas && validPrices && validServices) {
@@ -90,6 +96,8 @@ class UserPreferences extends Component {
                 this.state.minPrice, this.state.maxPrice,
                 this.state.hospitalDist, this.state.hospitalQtn,
                 this.state.schoolDist, this.state.schoolQtn,
+                this.state.shopDist, this.state.shopQtn,
+                this.state.transpDist, this.state.transpQtn,
                 this.state.workPlace, this.state.workDistance);
 
             updateUserPreferences(body, this.props);
@@ -298,6 +306,74 @@ class UserPreferences extends Component {
                                         keyboardType='numeric'
                                         onChangeText={(value) => this.setState({schoolQtn: value})}
                                         value={`${this.state.schoolQtn}`}
+                                    />
+                                </View>
+
+                                <View style={{flex: 0.3}}>
+                                    <Text>na área da propriedade</Text>
+                                </View>
+                            </View>
+                        </View>
+
+                        <View style={styles.alignInput}>
+                            <View style={styles.labelFlex2}>
+                                <Text style={styles.label}>Shopping: </Text>
+                            </View>
+
+                            <View style={[styles.SideBySide, styles.serviceFlex]}>
+                                <View style={[styles.input, {flex: 0.3}]}>
+                                    <Input
+                                        placeholder='Distância'
+                                        keyboardType='numeric'
+                                        onChangeText={(value) => this.setState({shopDist: value})}
+                                        value={`${this.state.shopDist}`}
+                                    />
+                                </View>
+
+                                <View style={{flex: 0.1}}>
+                                    <Text>km</Text>
+                                </View>
+
+                                <View style={[styles.input, {flex: 0.3}]}>
+                                    <Input
+                                        placeholder='n/a'
+                                        keyboardType='numeric'
+                                        onChangeText={(value) => this.setState({shopQtn: value})}
+                                        value={`${this.state.shopQtn}`}
+                                    />
+                                </View>
+
+                                <View style={{flex: 0.3}}>
+                                    <Text>na área da propriedade</Text>
+                                </View>
+                            </View>
+                        </View>
+
+                        <View style={styles.alignInput}>
+                            <View style={styles.labelFlex2}>
+                                <Text style={styles.label}>Transporte: </Text>
+                            </View>
+
+                            <View style={[styles.SideBySide, styles.serviceFlex]}>
+                                <View style={[styles.input, {flex: 0.3}]}>
+                                    <Input
+                                        placeholder='Distância'
+                                        keyboardType='numeric'
+                                        onChangeText={(value) => this.setState({transpDist: value})}
+                                        value={`${this.state.transpDist}`}
+                                    />
+                                </View>
+
+                                <View style={{flex: 0.1}}>
+                                    <Text>km</Text>
+                                </View>
+
+                                <View style={[styles.input, {flex: 0.3}]}>
+                                    <Input
+                                        placeholder='n/a'
+                                        keyboardType='numeric'
+                                        onChangeText={(value) => this.setState({transpQtn: value})}
+                                        value={`${this.state.transpQtn}`}
                                     />
                                 </View>
 

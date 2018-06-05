@@ -207,7 +207,7 @@ houseSchema.statics = {
   },
 
   async getAveragePriceByTownAndCounty(district, county, page = 1, perPage = 30) {
-    const addrDist = "address.city";
+
     const avgPrice = await this.aggregate(
       [
         {

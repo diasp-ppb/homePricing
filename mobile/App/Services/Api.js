@@ -7,12 +7,12 @@ import { SUCCESS_LOGIN,
   LOGOUT_SUCCESS,
   UPDATE_USER_PREFERENCES,
   ERROR_AREAS, ERROR_PRICES,
-  error_area, error_price, error_service,
+  error_area, error_service,
   ToastWarning } from './LogToasts'
 import { ToastSuccess, ToastError } from './LogToasts'
 import { login } from '../Redux/LoginRedux'
 
-export const baseURL = "http://192.168.1.3:3000"
+export const baseURL = "http://172.30.5.172:3000"
 
 export function checkRegisterResponse(responseJson, thisUser) {
   if (responseJson.code == '400') {
@@ -52,6 +52,8 @@ export function createBodyUserPreferences(district, goal, propertyType, tipology
                                           minPrice, maxPrice,
                                           hospitalDist, hospitalQtn,
                                           schoolDist, schoolQtn,
+                                          shopDist, shopQtn,
+                                          transpDist, transpQtn,
                                           workPlace, workDistance)
 {
   return body = JSON.stringify({
@@ -68,18 +70,26 @@ export function createBodyUserPreferences(district, goal, propertyType, tipology
       distance: hospitalDist,
       quantity: hospitalQtn
     },
-      {
-        service: 'School',
-        distance: schoolDist,
-        quantity: schoolQtn
-      }],
+    {
+      service: 'School',
+      distance: schoolDist,
+      quantity: schoolQtn
+    },
+    {
+      service: 'Shopping',
+      distance: shopDist,
+      quantity: shopQtn
+    },
+    {
+      service: 'Transport',
+      distance: transpDist,
+      quantity: transpQtn
+    }
+    ],
     workAddress: workPlace,
     workMaxDistance: workDistance
   });
 }
-
-
-
 
 function isNotNumeric(num){
   return isNaN(num);
@@ -93,6 +103,9 @@ export function validateArea(minArea, maxArea) {
     if(isNotNumeric(minArea)) {
       valid = false;
       ToastWarning(error_area('min'));
+    } else if (minArea < 0) {
+      valid = false;
+      ToastWarning(error_area('min'));
     }
   }
 
@@ -100,8 +113,12 @@ export function validateArea(minArea, maxArea) {
     if(isNotNumeric(maxArea)) {
       valid = false;
       ToastWarning(error_area('max'));
+    } else if (maxArea < 0) {
+      valid = false;
+      ToastWarning(error_area('max'));
     }
   }
+
   if(minArea != "" && maxArea != "") {
     if (parseInt(minArea) >= parseInt(maxArea)) {
       valid = false;
@@ -115,25 +132,9 @@ export function validateArea(minArea, maxArea) {
 export function validatePrices(minPrice, maxPrice) {
   let valid = true;
 
-  if(minPrice != "") {
-    if (isNotNumeric(minPrice)) {
-      valid = false;
-      ToastWarning(error_price('min'));
-    }
-  }
-
-  if (maxPrice != "") {
-    if(isNotNumeric(maxPrice)) {
-      valid = false;
-      ToastWarning(error_price('max'));
-    }
-  }
-
-  if(minPrice != "" && maxPrice != "") {
-    if (parseInt(minPrice) >= parseInt(maxPrice)) {
-      valid = false;
-      ToastWarning(ERROR_PRICES);
-    }
+  if (parseInt(minPrice) >= parseInt(maxPrice)) {
+    valid = false;
+    ToastWarning(ERROR_PRICES);
   }
 
   return valid;
@@ -146,22 +147,36 @@ export function validateService(service, desc) {
     if(isNotNumeric(service)) {
       valid = false;
       ToastWarning(error_service(desc));
+    } else if (service < 0) {
+      valid = false;
+      ToastWarning(error_service(desc));
     }
   }
 
   return valid;
 }
 
-export function validateServices(hospitalDist, hospitalQtn, schoolDistance, schoolQuantity, workDistance) {
+export function validateServices(hospitalDist, hospitalQtn, 
+  schoolDistance, schoolQuantity, 
+  shoppingDist, shoppingQtn, 
+  transportDist, transportQtn, 
+  workDistance) {
   let hospDist = validateService(hospitalDist, 'hosp_dist');
   let hospQtn = validateService(hospitalQtn, 'hosp_qtn');
   let schoolDist = validateService(schoolDistance, 'school_dist');
   let schoolQtn = validateService(schoolQuantity, 'school_qtn');
+  let shopDist = validateService(shoppingDist, 'shop_dist');
+  let shopQtn = validateService(shoppingQtn, 'shop_qtn');
+  let transpDist = validateService(transportDist, 'transp_dist');
+  let transpQtn = validateService(transportQtn, 'transp_qtn');
   let work = validateService(workDistance, 'work');
 
-  if (hospDist && hospQtn && schoolDist && schoolQtn && work)
+  if (hospDist && hospQtn && schoolDist && schoolQtn && shopDist && shopQtn && transpDist && transpQtn && work)
     return true;
-  else return false;
+  else 
+  { 
+    return false;
+  }
 }
 
 export function registerAPI(email, password, thisUser) {
@@ -268,68 +283,84 @@ export function setUserPreferences(resp, thisUser) {
     goal: resp.finality,
     propertyType: resp.type,
     tipology: tipology,
-    minArea: resp.areaMin != null ? resp.areaMin : "",
-    maxArea: resp.areaMax != null ? resp.areaMax : "",
+    minArea: resp.areaMin != undefined ? resp.areaMin : "",
+    maxArea: resp.areaMax != undefined ? resp.areaMax : "",
     minPrice: resp.priceMin,
     maxPrice: resp.priceMax,
-    hospitalDist: services[0].distance,
-    hospitalQtn: services[0].quantity,
-    schoolDist: services[1].distance,
-    schoolQtn: services[1].quantity,
+    hospitalDist: services.length >= 0 ? services[0].distance : "",
+    hospitalQtn: services.length >= 0 ? services[0].quantity : "",
+    schoolDist: services.length >= 1 ? services[1].distance : "",
+    schoolQtn: services.length >= 1 ? services[1].quantity : "",
+    shopDist: services.length >= 2 ? services[2].distance : "",
+    shopQtn: services.length >= 2 ? services[2].quantity : "",
+    transpDist: services.length >= 3 ? services[3].distance : "",
+    transpQtn: services.length >= 3 ? services[3].quantity : "",
     workPlace: resp.workAddress,
     workDistance: resp.workMaxDistance != null ? resp.workMaxDistance : ""
   });
 }
 
-export function setUserPreferencesHouseSearch(resp, thisUser)
-{
-  if(resp.code === '401') {
-    console.error('Jwt expired!');
-  }
+function setServicesHouseSearch(services, thisUser) {
+  if (services.length >= 0) {
+    if (services[0].distance != "") {
+      if(services[0].distance > 0) {
+        thisUser.setState({ hospital: true });
+      }
+    }
 
-  let services = resp.services.map(function(item) {
-    return {
-      service: item.service,
-      distance: item.distance,
-      quantity: item.quantity
-    };
-  });
-
-  if (services[0].distance != "") {
-    if(services[0].distance > 0) {
-      thisUser.setState({ hospital: true });
+    if (services[0].quantity != "") {
+      if(services[0].quantity > 0) {
+        thisUser.setState({ hospital: true });
+      }
     }
   }
 
-  if (services[0].quantity != "") {
-    if(services[0].quantity > 0) {
-      thisUser.setState({ hospital: true });
+  if (services.length >= 1) {
+    if (services[1].distance != "") {
+      if(services[1].distance > 0) {
+        thisUser.setState({ school: true });
+      }
+    }
+
+    if (services[1].quantity != "") {
+      if(services[1].quantity > 0) {
+        thisUser.setState({ school: true });
+      }
     }
   }
 
-  if (services[1].distance != "") {
-    if(services[1].distance > 0) {
-      thisUser.setState({ school: true });
+  if (services.length >= 2) {
+    if (services[2].distance != "") {
+      if(services[2].distance > 0) {
+        thisUser.setState({ shopping: true });
+      }
+    }
+
+    if (services[2].quantity != "") {
+      if(services[2].quantity > 0) {
+        thisUser.setState({ shopping: true });
+      }
     }
   }
 
-  if (services[1].quantity != "") {
-    if(services[1].quantity > 0) {
-      thisUser.setState({ school: true });
+  if (services.length >= 3) {
+    if (services[3].distance != "") {
+      if(services[3].distance > 0) {
+        thisUser.setState({ transport: true });
+      }
+    }
+
+    if (services[3].quantity != "") {
+      if(services[3].quantity > 0) {
+        thisUser.setState({ transport: true });
+      }
     }
   }
+}
 
-  var rent = false;
-  var buy = false;
-
-  if (resp.finality != null) {
-    rent = resp.finality.toUpperCase() == "ALUGAR" ? true : false;
-    buy = resp.finality.toUpperCase() == "COMPRAR" ? true : false;
-  }
-
-  var district = "Aveiro";
-
-  switch (resp.district) {
+function parseDistrict(respDistrict) {
+  let district = "Aveiro";
+  switch (respDistrict) {
     case 'beja':
       district = 'Beja';
       break;
@@ -382,6 +413,35 @@ export function setUserPreferencesHouseSearch(resp, thisUser)
       district = 'Viseu';
       break;
   }
+
+  return district;
+}
+
+export function setUserPreferencesHouseSearch(resp, thisUser)
+{
+  if(resp.code === '401') {
+    console.error('Jwt expired!');
+  }
+
+  let services = resp.services.map(function(item) {
+    return {
+      service: item.service,
+      distance: item.distance,
+      quantity: item.quantity
+    };
+  });
+
+  setServicesHouseSearch(services, thisUser);
+
+  var rent = false;
+  var buy = false;
+
+  if (resp.finality != null) {
+    rent = resp.finality.toUpperCase() == "ALUGAR" ? true : false;
+    buy = resp.finality.toUpperCase() == "COMPRAR" ? true : false;
+  }
+
+  let district = parseDistrict(resp.district);
 
   thisUser.setState({
     loaded: true,

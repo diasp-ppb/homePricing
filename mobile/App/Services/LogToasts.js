@@ -28,12 +28,6 @@ export function error_area(area) {
     } else return 'Área máxima inválida.';
 }
 
-export function error_price(price) {
-    if(price == 'min') {
-        return 'Preço mínimo inválido.';
-    } else return 'Preço máximo inválido.';
-}
-
 export function error_service(service) {
     if(service == "hosp_dist") {
         return 'Raio de distância de hospitais inválido.';
@@ -43,6 +37,14 @@ export function error_service(service) {
         return 'Raio de distância de escolas inválido.'
     } else if (service == "school_qtn") {
         return 'Quantidade de escolas inválida.';
+    } else if (service == "shop_dist") {
+        return 'Raio de distância a shoppings inválido.'
+    } else if (service == "shop_qtn") {
+        return 'Quantidade de shoppings inválida.';
+    } else if (service == "transp_dist") {
+        return 'Raio de distância a transportes inválido.'
+    } else if (service == "transp_qtn") {
+        return 'Quantidade de transportes inválida.';
     } else if (service == "work") {
         return 'Raio de distância ao trabalho inválida.';
     }

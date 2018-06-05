@@ -86,7 +86,8 @@ const styles = StyleSheet.create({
   textcontainer: {
     marginTop: 30,
     backgroundColor: Colors.white,
-    opacity:0.80
+    opacity:0.80,
+    height: 50
   },
   streetText:{
     fontSize:13,

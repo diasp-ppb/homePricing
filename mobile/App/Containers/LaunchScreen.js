@@ -38,7 +38,7 @@ class LaunchScreen extends Component {
             <Image source={Images.logo1} style={styles.homePricing} resizeMode='contain' />
           </View>
           <View style={styles.row}>
-            <Text style={styles.txt}>To   S t a r t     E x p l o r i n g</Text>
+            <Text style={styles.txt}>T o   S t a r t     E x p l o r i n g</Text>
             <View style={{ width: '50%' }}>
               <Button primary block style={styles.btn} onPress={() => navigate('HouseSearch')}>
                 <Text>Pesquisar</Text>
