@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Image, ActivityIndicator } from 'react-native'
-import { Button, Container, Content, Picker, Icon, Input, Item, Text, View } from 'native-base'
+import { Button, Container, Content, Picker, Icon, Input, Text, View } from 'native-base'
 import { connect } from 'react-redux'
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 

@@ -8,7 +8,11 @@ export default StyleSheet.create({
     marginLeft:-40,
     fontFamily: 'tahoma'
   },
-
+  btn: {
+    opacity: 0.92,
+    borderRadius: 20,
+    backgroundColor: '#046A38',
+  },
   btns: {
     flex: 1,
     flexDirection: 'row'
@@ -16,7 +20,7 @@ export default StyleSheet.create({
 
   headerBG:{
     backgroundColor:'#53565A'
-  }, 
+  },
   title: {
     color: 'black',
     marginBottom: 5
@@ -32,7 +36,7 @@ export default StyleSheet.create({
      paddingBottom:8,
      paddingTop:8,
      backgroundColor: 'white',
-     opacity:0.55, 
+     opacity:0.55,
      elevation: 3,
      flexDirection: 'row'
   },
@@ -88,7 +92,7 @@ export default StyleSheet.create({
   },
   data:{
     fontSize:13 ,
-    padding:2 , 
+    padding:2 ,
     color:'#8c8c8c'
   },
   descriptionTitle:{
@@ -99,7 +103,7 @@ export default StyleSheet.create({
   },
   descriptionText:{
     fontSize:15,
-    padding:2, 
+    padding:2,
     color:'#505050'
   },
   star:{

@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { Image, ScrollView, ActivityIndicator} from 'react-native';
+import { Image, ActivityIndicator} from 'react-native';
 import { connect } from 'react-redux';
 
 // Native Base
-import { View, Container, Content, Left, Body, Button, Text, Icon, Item, Input, Card, CardItem } from 'native-base';
+import { View, Container, Content, Left, Body, Button, Text, Icon, Card, CardItem } from 'native-base';
 
 // Styles
 import styles from './Styles/SearchResultsStyles';

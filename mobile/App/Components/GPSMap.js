@@ -55,6 +55,7 @@ export default class GpsMap extends Component {
           }
         </MapView>
           <View>
+            { showUserLocation ?
             <TouchableOpacity
               style={{
                 borderWidth: 0,
@@ -72,7 +73,7 @@ export default class GpsMap extends Component {
                 style={{ color: Colors.blue6, borderColor: Colors.transparent }}
                 size={Metrics.icons.medium}
               />
-            </TouchableOpacity>
+            </TouchableOpacity> : null }
           </View>
       </Container>
 

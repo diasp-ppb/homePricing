@@ -21,7 +21,7 @@ export default class GpsScreen extends Component {
       longitude: null,
       error: null,
       region: {
-        latitude: 41.1743667,
+        latitude:  41.1743667,
         longitude: -8.58457610000005,
         latitudeDelta: 0.0050,
         longitudeDelta: 0.0025,
@@ -196,7 +196,7 @@ export default class GpsScreen extends Component {
       <Container>
         <GpsMap
           region={this.state.region}
-          showsUserLocation
+          showUserLocation={true}
           addMoreMarkers={this.addMoreMarkers}
           navigate={navigate}
           moreInfo={this.moreInfo}
