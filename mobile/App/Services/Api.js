@@ -12,7 +12,7 @@ import { SUCCESS_LOGIN,
 import { ToastSuccess, ToastError } from './LogToasts'
 import { login } from '../Redux/LoginRedux'
 
-export const baseURL = "http://172.30.5.172:3000"
+export const baseURL = "http://192.168.1.75:3000";
 
 export function checkRegisterResponse(responseJson, thisUser) {
   if (responseJson.code == '400') {
@@ -25,7 +25,8 @@ export function checkRegisterResponse(responseJson, thisUser) {
     ToastError(ERROR_EMAIL_EXISTS_REGISTER);
   } else {
     const { navigate } = thisUser.props.navigation;
-    navigate('Login');
+    thisUser.props.login(responseJson.user, responseJson.token.accessToken);
+    navigate('userStack');
     ToastSuccess(SUCCESS_REGISTER);
   }
 }
@@ -156,10 +157,10 @@ export function validateService(service, desc) {
   return valid;
 }
 
-export function validateServices(hospitalDist, hospitalQtn, 
-  schoolDistance, schoolQuantity, 
-  shoppingDist, shoppingQtn, 
-  transportDist, transportQtn, 
+export function validateServices(hospitalDist, hospitalQtn,
+  schoolDistance, schoolQuantity,
+  shoppingDist, shoppingQtn,
+  transportDist, transportQtn,
   workDistance) {
   let hospDist = validateService(hospitalDist, 'hosp_dist');
   let hospQtn = validateService(hospitalQtn, 'hosp_qtn');
@@ -173,8 +174,8 @@ export function validateServices(hospitalDist, hospitalQtn,
 
   if (hospDist && hospQtn && schoolDist && schoolQtn && shopDist && shopQtn && transpDist && transpQtn && work)
     return true;
-  else 
-  { 
+  else
+  {
     return false;
   }
 }

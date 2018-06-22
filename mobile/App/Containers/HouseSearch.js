@@ -70,7 +70,6 @@ class HouseSearch extends Component {
         renderDescription={row => row.description} // custom description render
         onPress={(data, details = null) => { // 'details' is provided when fetchDetails = true
           this.setState({ workLocation: data.place_id});
-          console.warn(data)
         }}
 
         getDefaultValue={() => ''}

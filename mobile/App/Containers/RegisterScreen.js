@@ -9,6 +9,7 @@ import { WARN_MISSING, ToastWarning, ToastError } from '../Services/LogToasts'
 import { registerAPI } from '../Services/Api'
 
 import styles from './Styles/RegisterScreenStyles'
+import {login} from "../Redux/LoginRedux";
 
 class RegisterScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -108,5 +109,11 @@ function mapStateToProps(state) {
   };
 }
 
-const connectedRegister = connect(mapStateToProps)(RegisterScreen);
+function mapDispatchToProps(dispatch) {
+  return {
+    login: (user,token) => dispatch(login(user,token))
+  };
+}
+
+const connectedRegister = connect(mapStateToProps, mapDispatchToProps)(RegisterScreen);
 export { connectedRegister as RegisterScreen };
