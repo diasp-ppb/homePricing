@@ -1,5 +1,4 @@
 import { StyleSheet, Dimensions } from 'react-native'
-import { Header } from 'react-navigation'
 
 let x = (Dimensions.get('window').width - (Dimensions.get('window').width * 0.7)) / 2
 

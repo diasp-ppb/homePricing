@@ -1,18 +1,16 @@
 import React, { Component } from 'react'
-import { Image, View,TouchableHighlight } from 'react-native'
+import { Image, View } from 'react-native'
 import { connect } from 'react-redux';
 import { Images } from '../Themes'
 
 // Native Base
-import { Container, Header, Body, Title, Button, Text, Fab, Icon, Row, Col } from 'native-base'
+import { Container, Button, Text, Icon } from 'native-base'
 
 // Styles
 import styles from './Styles/LaunchScreenStyles'
 
 import { logoutAPI } from '../Services/Api';
 import { logout } from '../Redux/LoginRedux';
-
-
 
 // Component
 class LaunchScreen extends Component {
@@ -38,8 +36,8 @@ class LaunchScreen extends Component {
             <Image source={Images.logo1} style={styles.homePricing} resizeMode='contain' />
           </View>
           <View style={styles.row}>
-            <Text style={styles.txt}>T o   S t a r t     E x p l o r i n g</Text>
-            <View style={{ width: '50%' }}>
+            <Text style={styles.txt}>To Start Exploring</Text>
+            <View style={{ width: '60%' }}>
               <Button primary block style={styles.btn} onPress={() => navigate('HouseSearch')}>
                 <Text>Pesquisar</Text>
               </Button>
@@ -49,11 +47,11 @@ class LaunchScreen extends Component {
             </View>
           </View>
           <View style={styles.row}>
-            <Text style={styles.txt}>G o   F u r t h e r</Text>
-            <View style={{ width: '55%', flexDirection: 'row', justifyContent: 'center' }}>
-              { !this.props.user.loggedIn ?
+            <Text style={styles.txt}>Go Further</Text>
+            <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+              {!this.props.user.loggedIn ?
                 <Icon ios={'ios-person'} android={'md-person'} style={styles.icon} onPress={() => navigate('Login')} />
-              :
+                :
                 <Icon ios={'ios-power'} android={'md-power'} style={styles.icon} onPress={() => logoutAPI(this.props)} />
               }
               <Icon ios={'ios-camera'} android={'md-camera'} style={styles.icon} onPress={() => navigate('Camera')} />

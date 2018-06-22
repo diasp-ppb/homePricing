@@ -15,9 +15,9 @@ import GPSMap from '../Components/GPSMap';
 
 // Component
 class SearchResults extends Component {
-  // static navigationOptions = ({ navigation }) => ({
-  //   headerStyle: styles.headerStyle
-  // })
+  static navigationOptions = ({ navigation }) => ({
+    title: 'Resultados'
+  })
 
   // This component's constructor
   constructor(props) {
@@ -179,7 +179,7 @@ class SearchResults extends Component {
           </CardItem>
         </Card>
       )
-    }) : (<Text style={{ textAlign: 'center' }}>A sua pesquisa não obteve resultados</Text>);
+    }) : (<Text style={{ textAlign: 'center' }}>A sua pesquisa não obteve resultados!</Text>);
   }
 
   renderTab() {

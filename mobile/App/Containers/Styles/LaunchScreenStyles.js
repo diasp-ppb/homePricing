@@ -1,5 +1,4 @@
 import { StyleSheet } from 'react-native'
-import { Metrics, ApplicationStyles } from '../../Themes/'
 
 export default StyleSheet.create({
   container: {
@@ -11,10 +10,9 @@ export default StyleSheet.create({
     justifyContent: 'center'
   },
   txt: {
-    fontSize: 13,
+    fontSize: 20,
     color: 'white',
-    elevation: 3,
-    padding: 15,
+    marginBottom: 10,
     textShadowColor: 'black',
     textShadowOffset: { width: -2, height: 2 },
     textShadowRadius: 10
@@ -25,11 +23,10 @@ export default StyleSheet.create({
     paddingHorizontal: 5
   },
   btn: {
-    height: 60,
     elevation: 60,
     opacity: 0.92,
-    marginBottom: 10,
-    borderRadius: 30,
+    marginBottom: 15,
+    borderRadius: 20,
     justifyContent: 'center',
     backgroundColor: '#046A38'
   },
