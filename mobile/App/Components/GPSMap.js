@@ -15,7 +15,7 @@ export default class GpsMap extends Component {
 
   render() {
     const {
-      region, showUserLocation, addMoreMarkers, navigate, houses, moreInfo, focusOnLocation,
+      region, showsUserLocation, addMoreMarkers, navigate, houses, moreInfo, focusOnLocation,
     } = this.props;
     return (
       <Container>
@@ -23,7 +23,7 @@ export default class GpsMap extends Component {
           provider={PROVIDER_GOOGLE}
           style={styles.map}
           initialRegion={region}
-          showsUserLocation={showUserLocation}
+          showsUserLocation={showsUserLocation}
           onRegionChangeComplete={(newRegion) => addMoreMarkers(newRegion)}
           loadingEnabled
           loadingIndicatorColor="#666666"
@@ -55,7 +55,7 @@ export default class GpsMap extends Component {
           }
         </MapView>
           <View>
-            { showUserLocation ?
+            { showsUserLocation ?
             <TouchableOpacity
               style={{
                 borderWidth: 0,
