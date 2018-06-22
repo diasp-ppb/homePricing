@@ -30,9 +30,9 @@ export default class GpsScreen extends Component {
       activeModal: '',
       modalVisible: false,
       description: 'Local com criminalidade reduzida'
-                  + '\nTemperatura média: 22ºC'
-                  + '\nShopping e Hospitais na zona'
-                  + '\nTransportes e Metro'
+      + '\nTemperatura média: 22ºC'
+      + '\nShopping e Hospitais na zona'
+      + '\nTransportes e Metro'
     };
 
     this.addMoreMarkers = this.addMoreMarkers.bind(this);
@@ -154,10 +154,15 @@ export default class GpsScreen extends Component {
         district: district,
         county: county
       },
-    });
-    let responseJson = await response.json();
-    let avgPrice = Math.round(responseJson[0].avgAmount * 100) / 100;
-    this.setState({ avgPrice : avgPrice});
+    }).then((response) => {
+      return response.json();
+    }).then((data) => {
+      const avgPrice = Math.round(data[0].avgAmount * 100) / 100;
+      this.setState({ avgPrice : avgPrice});
+    })
+      .catch((json) => {
+        console.error(json);
+      });
   }
 
   renderModal() {
@@ -177,11 +182,15 @@ export default class GpsScreen extends Component {
             }
             <Text style={styles.location}>
               <Icon ios={'ios-pin'} android={'md-pin'} style={{ color: 'white', fontSize: 20 }} /> Porto, Porto
-          </Text>
+            </Text>
             {(this.state.activeModal === 'info') ?
               <Text style={styles.description}>{this.state.description}</Text>
               :
-              <Text style={styles.price}>{this.state.avgPrice} €/m²</Text>
+              (this.state.avgPrice)?
+                <Text style={styles.price}>{this.state.avgPrice} €/m²</Text>
+                :
+                <Text style={styles.price}>{this.state.avgPrice} Sem informação disponivel</Text>
+
             }
           </View>
         </View>
@@ -196,7 +205,7 @@ export default class GpsScreen extends Component {
       <Container>
         <GpsMap
           region={this.state.region}
-          showUserLocation={true}
+          showsUserLocation={true}
           addMoreMarkers={this.addMoreMarkers}
           navigate={navigate}
           moreInfo={this.moreInfo}

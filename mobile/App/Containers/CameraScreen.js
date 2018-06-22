@@ -53,7 +53,11 @@ export default class CameraScreen extends Component {
   }
 
   getMarkerOnLocation() {
-    if (this.state.latitude == null || this.state.longitude == null) { alert("null"); return; }
+    if (this.state.latitude == null || this.state.longitude == null)
+    {
+      console.warn("not yet ready");
+      return;
+    }
 
     fetch(`${baseURL}/v1/houses/findbygps`, {
       method: 'POST',
@@ -91,62 +95,62 @@ export default class CameraScreen extends Component {
       });
   }
 
-  takePicture = async function () {
-    if (this.camera) {
-      this.setState( {ready: false, msg: 'A calcular...'} );
-      const options = { quality: 0.5, base64: true };
-      const data = await this.camera.takePictureAsync(options);
-      this.getMarkerOnLocation();
-    }
-  };
+
 
   setModalVisible(visible) {
     this.setState({ viewResult: visible });
   }
 
-  renderModal() {
-    return (
-      <TouchableWithoutFeedback onPress={() => this.setModalVisible(false)}>
-        <View style={StyleSheet.absoluteFill}>
-          <View style={styles.overlay} />
-          <Text style={styles.title}> {this.state.avg} €/m² </Text>
-          <View style={styles.separator} />
-          <Text style={styles.location}>
-            Valor aproximado
-          </Text>
-
-        </View>
-
-      </TouchableWithoutFeedback>
-    );
+  async takePicture() {
+    if (this.camera) {
+      this.setState({ ready: false, msg: 'A calcular...' })
+      setTimeout(() => {this.getMarkerOnLocation()}, 1000)
+    }
   }
 
+renderModal() {
+  return (
+    <TouchableWithoutFeedback onPress={() => this.setModalVisible(false)}>
+      <View style={StyleSheet.absoluteFill}>
+        <View style={styles.overlay} />
+        <Text style={styles.title}> {this.state.avg} €/m² </Text>
+        <View style={styles.separator} />
+        <Text style={styles.location}>
+          Valor aproximado
+        </Text>
 
-  render() {
-    return (
-      <View style={styles.container}>
-        <RNCamera
-          ref={(ref) => {
-            this.camera = ref;
-          }}
-          style={styles.preview}
-          type={RNCamera.Constants.Type.back}
-          flashMode={RNCamera.Constants.FlashMode.on}
-          permissionDialogTitle="Permission to use camera"
-          permissionDialogMessage="We need your permission to use your camera phone"
-        />
+      </View>
 
-        {(this.state.ready !== true) ?
-          (
-            <View style={StyleSheet.absoluteFill}>
-              <View style={styles.overlay} />
-              <Image source={Images.spinner} style={styles.spinner} />
-              <Text style={styles.location}> {this.state.msg} </Text>
-            </View>
-          )
-          :
-          (
-            (this.state.viewResult === false) ?
+    </TouchableWithoutFeedback>
+  );
+}
+
+
+render() {
+  return (
+    <View style={styles.container}>
+      <RNCamera
+        ref={(ref) => {
+          this.camera = ref;
+        }}
+        style={styles.preview}
+        type={RNCamera.Constants.Type.back}
+        flashMode={RNCamera.Constants.FlashMode.on}
+        permissionDialogTitle="Permission to use camera"
+        permissionDialogMessage="We need your permission to use your camera phone"
+      />
+
+      {(this.state.ready !== true) ?
+        (
+          <View style={StyleSheet.absoluteFill}>
+            <View style={styles.overlay} />
+            <Image source={Images.spinner} style={styles.spinner} />
+            <Text style={styles.location}> {this.state.msg} </Text>
+          </View>
+        )
+        :
+        (
+          (this.state.viewResult === false) ?
             (
               <View style={{ flex: 0, flexDirection: 'row', justifyContent: 'center' }}>
                 <TouchableOpacity
@@ -157,14 +161,14 @@ export default class CameraScreen extends Component {
                 </TouchableOpacity>
               </View>
             )
-          :
-          (this.renderModal())
-          )
-        }
+            :
+            (this.renderModal())
+        )
+      }
 
-      </View>
-    );
-  }
+    </View>
+  );
+}
 }
 
 const x = (Dimensions.get('window').width - (Dimensions.get('window').width * 0.7)) / 2;
