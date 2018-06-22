@@ -11,6 +11,7 @@ import { SUCCESS_LOGIN,
   ToastWarning } from './LogToasts'
 import { ToastSuccess, ToastError } from './LogToasts'
 import { login } from '../Redux/LoginRedux'
+import {Keyboard} from 'react-native'
 
 export const baseURL = "http://192.168.1.75:3000";
 
@@ -43,6 +44,7 @@ export function checkLoginResponse(responseJson, thisUser) {
     const { navigate } = thisUser.props.navigation;
     ToastSuccess(SUCCESS_LOGIN);
     thisUser.props.login(responseJson.user, responseJson.token.accessToken);
+    Keyboard.dismiss();
     navigate('userStack');
   }
 }
