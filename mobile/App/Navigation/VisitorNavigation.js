@@ -2,8 +2,6 @@ import React from 'react'
 import { View } from 'react-native'
 
 import { StackNavigator, DrawerNavigator } from 'react-navigation'
-import ControlPanel from '../Containers/ControlPanel/ControlPanel'
-
 
 // Import all screens
 import { LaunchScreen } from '../Containers/LaunchScreen'
@@ -20,11 +18,6 @@ import HelpScreen from '../Containers/HelpScreen'
 import { HistoricScreen } from '../Containers/HistoricScreen'
 import { RecommendationScreen } from '../Containers/RecommendationScreen'
 import UserSettingsScreen from '../Containers/UserSettingsScreen'
-
-import Colors from '../Themes/Colors'
-
-// Styles
-import styles from './Styles/NavigationStyles'
 
 const navigationOptions = ({ navigation }) => ({
   headerStyle: { backgroundColor: '#1a1a1a' },

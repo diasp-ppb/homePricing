@@ -1,7 +1,5 @@
-import { Images } from '../Themes'
 import React, { Component } from 'react'
 import { View, Image, ActivityIndicator } from 'react-native'
-import Grid from 'react-native-grid-list'
 import { connect } from 'react-redux';
 
 // Native Base

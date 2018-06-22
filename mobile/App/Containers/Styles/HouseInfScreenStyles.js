@@ -1,8 +1,7 @@
 import { StyleSheet } from 'react-native'
-import { Metrics, ApplicationStyles } from '../../Themes/'
+import { Metrics } from '../../Themes/'
 
 export default StyleSheet.create({
-  // ...ApplicationStyles.screen,
   pageTitle:{
     fontSize:15,
     marginLeft:-40,
@@ -31,14 +30,12 @@ export default StyleSheet.create({
     color:'white'
   },
   infTab:{
-     marginTop:-61,
-     paddingLeft:18,
-     paddingBottom:8,
-     paddingTop:8,
-     backgroundColor: 'white',
-     opacity:0.55,
-     elevation: 3,
-     flexDirection: 'row'
+    elevation: 3,
+    opacity: 0.55,
+    paddingLeft: 18,
+    paddingVertical: 8,
+    flexDirection: 'row',
+    backgroundColor: 'white',
   },
   priceText:{
     paddingBottom:6,
@@ -50,10 +47,9 @@ export default StyleSheet.create({
     color:'#262626'
   },
   mainBox:{
-    flex:1, flexDirection:'column',
+    flex:1,
+    flexDirection:'row',
     padding: 15,
-    marginTop: 10,
-    marginHorizontal: 10,
     backgroundColor: 'white',
     elevation: 2,
     borderRadius: 2
@@ -65,7 +61,6 @@ export default StyleSheet.create({
      flex:1, flexDirection:'row',
      padding: 15,
      marginTop: 10,
-     marginHorizontal: 10,
      backgroundColor: 'white',
      elevation: 2,
      borderRadius: 2
@@ -73,7 +68,6 @@ export default StyleSheet.create({
   box2:{
     flexDirection:'row',
     marginTop: 10,
-    marginHorizontal: 10,
     flex:1,
     padding: 15,
     backgroundColor: 'white',
@@ -115,6 +109,31 @@ export default StyleSheet.create({
   data:{
     flex:1,
     flexDirection :'column'
+  },
+  imgModal: {
+    zIndex: 5,
+    width: '100%',
+    height: '100%',
+    alignItems: 'center',
+    position: 'absolute',
+    backgroundColor: 'black'
+  },
+  sv: {
+    width: '100%',
+    height: '100%'
+  },
+  closeImg: {
+    top: 20,
+    right: 20,
+    zIndex: 6,
+    fontSize: 35,
+    color: 'white',
+    fontWeight: 'bold',
+    position: 'absolute'
+  },
+  pressImg: {
+    width: '100%',
+    height: '50%',
+    resizeMode: 'contain'
   }
-
 })

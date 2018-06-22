@@ -1,19 +1,19 @@
 import React, { Component } from 'react';
-import { Image, View, TouchableOpacity} from 'react-native';
+import { Image, View, TouchableOpacity, Dimensions } from 'react-native';
 import { connect } from 'react-redux';
 import ImageSlider from 'react-native-image-slider';
+import ImageZoom from 'react-native-image-pan-zoom';
 
-import {Images, Metrics} from '../Themes';
+import { Images } from '../Themes';
 import { baseURL, createFavoriteAPI, deleteFavoriteAPI } from '../Services/Api';
 
 // Native Base
-import { Container, Content, Text, Button } from 'native-base';
+import { Container, Content, Text, Button, Icon } from 'native-base';
 
 import GPSMap from '../Components/GPSMap';
 
 // Styles
 import styles from './Styles/HouseInfScreenStyles';
-import Colors from "../Themes/Colors";
 
 class HouseInfScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -23,8 +23,11 @@ class HouseInfScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      currURL: '',
+      showImg: false,
       favorite: false,
       showOnMap: false,
+      infTabHeight: 0
     };
 
     this.changeFavorite = this.changeFavorite.bind(this);
@@ -130,43 +133,73 @@ class HouseInfScreen extends Component {
     this.setState({ houses });
   }
 
+  renderIf() {
+    if (this.state.showImg) {
+      return (
+        <ImageZoom
+          imageWidth={400}
+          imageHeight={400}
+          cropWidth={Dimensions.get('window').width}
+          cropHeight={Dimensions.get('window').height}
+        >
+          <Image source={{ uri: this.state.currURL }} style={(this.state.showImg) ? styles.pressImg : null} />
+        </ImageZoom>
+      )
+    }
+  }
+
   render() {
     const {navigation} = this.props;
     const {navigate} = this.props.navigation;
     const house = this.props.navigation.state.params.house;
     const undefined = 'Não definido';
     const images = (house.images.length > 0) ? house.images : ['https://www.glassyconnections.com/images/no-image-available-lrg.jpg'];
-    const star = (<TouchableOpacity onPress={() => this.changeFavorite()}>
-      <Image source={this.state.favorite ? Images.greenStar : Images.greenStarLines} style={styles.star}/>
-    </TouchableOpacity>);
-
+    const star = (
+      <TouchableOpacity onPress={() => this.changeFavorite()}>
+        <Image source={this.state.favorite ? Images.greenStar : Images.greenStarLines} style={styles.star}/>
+      </TouchableOpacity>
+    );
 
     const houseDetails = (
       <Container>
-        <Content>
-          <ImageSlider style={{width: '100%', height: 200}} images={images}/>
-          <View style={styles.infTab}>
-            <View style={styles.data}>
-              <Text style={styles.priceText}> {house.price} € </Text>
-              <Text style={styles.typeText}>.</Text>
-            </View>
-            {this.props.user.loggedIn ? star : <View/>}
+        <ImageSlider images={images} onPress={(img) => {
+          this.setState({ showImg: true })
+          this.setState({ currURL: img.image })
+        }} />
+
+        <View style={[styles.infTab, { marginTop: this.state.infTabHeight }]} onLayout={(event) => {
+          var h = event.nativeEvent.layout.height * -1
+          this.setState({ infTabHeight: h })
+        }}>
+          <View style={styles.data}>
+            <Text style={styles.priceText}> {house.price} € </Text>
+            <Text style={styles.typeText}>.</Text>
           </View>
+          {this.props.user.loggedIn ? star : <View />}
+        </View>
+
+        <View style={(this.state.showImg) ? styles.imgModal : null}>
+          <Icon ios={'ios-close'} android={'md-close'} style={styles.closeImg} onPress={() => {
+            this.setState({ currURL: '' })
+            this.setState({ showImg: false })
+          }} />
+          {this.renderIf()}
+        </View>
+
+        <Content padder>
           <View style={styles.mainBox}>
-            <Text style={styles.title}>{house.title}</Text>
-            <View style={styles.mainBoxAux}>
-              <View style={{flex: 0.8}}>
-                <Text style={styles.streetText}>
-                  {house.address.zipcode}, {' '}
-                  {house.address.town}, {' '}
-                  {house.address.county}
-                </Text>
-              </View>
-              <View style={{flex: 0.1}}>
-                <TouchableOpacity onPress={() => this.setState({showOnMap: true})}>
-                  <Image source={Images.gps} style={{marginLeft: 8, width: 32, height: 30}}/>
-                </TouchableOpacity>
-              </View>
+            <View style={{ flex: 0.9 }}>
+              <Text style={styles.title}>{house.title}</Text>
+              <Text style={styles.streetText}>
+                <Icon ios={'ios-pin'} android={'md-pin'} style={styles.streetText} />
+                {' '}
+                {house.address.zipcode}, {' '}
+                {house.address.town}, {' '}
+                {house.address.county}
+              </Text>
+            </View>
+            <View style={{ flex: 0.1, alignItems: 'center', justifyContent: 'center' }}>
+              <Icon ios={'ios-map'} android={'md-map'} onPress={() => this.setState({ showOnMap: true })} />
             </View>
           </View>
 
@@ -174,7 +207,7 @@ class HouseInfScreen extends Component {
             <View style={{flex: 0.5}}>
               <Text style={styles.properties}>Área: </Text>
               <Text style={styles.properties}>WCs: </Text>
-              <Text style={styles.properties}>Certificado Ener: </Text>
+              <Text style={styles.properties}>Certificado Energia: </Text>
               <Text style={styles.properties}>Tipologia: </Text>
               <Text style={styles.properties}>Condições: </Text>
             </View>

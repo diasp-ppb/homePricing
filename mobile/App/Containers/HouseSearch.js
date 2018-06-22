@@ -144,7 +144,7 @@ class HouseSearch extends Component {
     if(this.state.loaded && this.state.getData || !this.state.getData) {
       return (
         <Container>
-          <Image source={Images.backgroundBlur} style={styles.backgroundImage} resizeMode='stretch' />
+          <Image source={Images.background} style={styles.backgroundImage} resizeMode='stretch' />
           <Content padder style={{ paddingTop: 25 }}>
             <View style={{ paddingBottom: 25 }}>
               <Text style={styles.title}>Distrito</Text>
