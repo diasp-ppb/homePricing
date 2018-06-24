@@ -55,7 +55,7 @@ export default class CameraScreen extends Component {
   getMarkerOnLocation() {
     if (this.state.latitude == null || this.state.longitude == null)
     {
-      console.warn("not yet ready");
+      this.setState( {msg: "Sem permissoes"} );
       return;
     }
 
@@ -68,8 +68,8 @@ export default class CameraScreen extends Component {
       body: JSON.stringify({
         latitude: this.state.latitude,
         longitude: this.state.longitude,
-        latitudeDelta: 0.0125,
-        longitudeDelta: 0.0125,
+        latitudeDelta: 0.025,
+        longitudeDelta: 0.025,
       }),
     })
       .then((response) => {
